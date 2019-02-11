@@ -1,58 +1,58 @@
 <Page actionBarHidden="true" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:sd="nativescript-ui-sidedrawer" loaded="pageLoaded" xmlns:x="nativescript-statusbar">
 
-	<x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,0.8)" />
-	<ActionBar title="MeteoUniparthenope" backgroundColor="red"/>
+    <x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,0.8)" />
+    <ActionBar title="MeteoUniparthenope" backgroundColor="red"/>
 
-	<sd:RadSideDrawer id="sideDrawer">
-		<sd:RadSideDrawer.drawerContent>
-			<ScrollView>
-				<StackLayout class="white_background">
-					<Image src="~/images/logo.png" horizontalAlignment="center"></Image>
-					<DatePicker class="list_picker" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
-					<Label text="Settings"/>
-					<Label text="Info"/>
+    <sd:RadSideDrawer id="sideDrawer">
+        <sd:RadSideDrawer.drawerContent>
+            <ScrollView>
+                <StackLayout class="white_background">
+                    <Image src="~/images/logo.png" horizontalAlignment="center"></Image>
+                    <DatePicker class="list_picker" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
+                    <Label text="Settings"/>
+                    <Label text="Info"/>
 
-				</StackLayout>
-			</ScrollView>
-		</sd:RadSideDrawer.drawerContent>
+                </StackLayout>
+            </ScrollView>
+        </sd:RadSideDrawer.drawerContent>
 
-		<!-- The main content -->
-		<sd:RadSideDrawer.mainContent>
-			<StackLayout>
-				<GridLayout rows="*,auto" columns="*" verticalAlignment="top" width="100%" height="100%">
-					<ContentView row="0" col="0" rowSpan="3" class="map">
-						<web-view id="webView"></web-view>
-					</ContentView>
+        <!-- The main content -->
+        <sd:RadSideDrawer.mainContent>
+            <StackLayout>
+                <GridLayout rows="*,auto" columns="*" verticalAlignment="top" width="100%" height="100%">
+                    <ContentView row="0" col="0" rowSpan="3" class="map">
+                        <web-view id="webView"></web-view>
+                    </ContentView>
 
-					<StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="80" width="220">
+                    <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="80" width="220">
 
-						<StackLayout orientation="horizontal" height="80">
+                        <StackLayout orientation="horizontal" height="80">
 
-							<StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
-								<Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
-							</StackLayout>
-							<StackLayout orientation="vertical" verticalAlignment="center" horizontalAlignment="right">
-								<Label text="{{ position }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1; font-size: 16" margin="0 5 0 5"/>
-								<Label text="{{ temp }}" horizontalAlignment="center" verticalAlignment="center" style="font-size: 24"/>
+                            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
+                                <Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
+                            </StackLayout>
+                            <StackLayout orientation="vertical" verticalAlignment="center" horizontalAlignment="right">
+                                <Label text="{{ position }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1; font-size: 16" margin="0 5 0 5"/>
+                                <Label text="{{ temp }}" horizontalAlignment="center" verticalAlignment="center" style="font-size: 24"/>
 
-								<StackLayout orientation="horizontal" horizontalAlignment="center">
-									<Label text="{{ wind_direction }}" style="font-weight:bold;" horizontalAlignment="center" verticalAlignment="center" marginBottom="5" marginRight="10"/>
-									<Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" marginBottom="5"/>
-								</StackLayout>
-							</StackLayout>
-						</StackLayout>
-					</StackLayout>
+                                <StackLayout orientation="horizontal" horizontalAlignment="center">
+                                    <Label text="{{ wind_direction }}" style="font-weight:bold;" horizontalAlignment="center" verticalAlignment="center" marginBottom="5" marginRight="10"/>
+                                    <Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" marginBottom="5"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
 
-					<StackLayout margin="0 10 15 10" class="blue_background" horizontalAlignment="center" row="0" col="0" verticalAlignment="bottom" orientation="horizontal" height="50">
-						<Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 40 10 10" tap="onTapBack"></Image>
-						<Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
-						<Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
+                    <StackLayout margin="0 10 15 10" class="blue_background" horizontalAlignment="center" row="0" col="0" verticalAlignment="bottom" orientation="horizontal" height="50">
+                        <Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 40 10 10" tap="onTapBack"></Image>
+                        <Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
+                        <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
 
-					</StackLayout>
-				</GridLayout>
-			</StackLayout>
-		</sd:RadSideDrawer.mainContent>
+                    </StackLayout>
+                </GridLayout>
+            </StackLayout>
+        </sd:RadSideDrawer.mainContent>
 
-	</sd:RadSideDrawer>
+    </sd:RadSideDrawer>
 
 </Page>
