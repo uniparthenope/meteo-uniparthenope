@@ -1,13 +1,17 @@
-/*
-In NativeScript, the app.js file is the entry point to your application.
-You can use this file to perform app-level initialization, but the primary
-purpose of the file is to pass control to the app’s first module.
-*/
-const application = require("tns-core-modules/application");
+let application = require("tns-core-modules/application");
+var frame = require("ui/frame");
+
+if (application.android)
+{
+    application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
+}
+function backEvent(args)
+{
+    var currentPage = frame.topmost().currentPage;
+    if (currentPage && currentPage.exports && typeof currentPage.exports.backEvent === "function")
+    {
+        currentPage.exports.backEvent(args);
+    }
+}
 
 application.run({ moduleName: "app-root" });
-
-/*
-Do not place any code after the application has been started as it will not
-be executed on iOS.
-*/

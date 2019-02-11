@@ -1,11 +1,11 @@
-const observableModule = require("tns-core-modules/data/observable");
+var observableModule = require("tns-core-modules/data/observable");
 
 function HomeViewModel() {
-    const viewModel = observableModule.fromObject({
-        /* Add your view model properties here */
-    });
+  var viewModel = observableModule.fromObject({
 
-    return viewModel;
+  });
+
+  return viewModel;
 }
 
 module.exports = HomeViewModel;

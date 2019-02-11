@@ -1,12 +1,61 @@
-<Page class="page"
-    navigatingTo="onNavigatingTo"  
-    xmlns="http://schemas.nativescript.org/tns.xsd">
+<Page actionBarHidden="true" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:sd="nativescript-ui-sidedrawer" loaded="pageLoaded">
 
-    <ActionBar class="action-bar">
-        <Label class="action-bar-title" text="Home"></Label>
-    </ActionBar>
+	<ActionBar class="c-bg-white">
+		<Label class="c-blue" text="Meteo Uniparthenope" fontSize="20"></Label>
+		<ActionItem tap="onTapLog"
+					ios.position = "right"
+					text="Info" android.position="popup">
+		</ActionItem>
+		<ActionItem tap="onTapAbout"
+					ios.position = "right"
+					text="Setting" android.position="popup">
+		</ActionItem>
+	</ActionBar>
 
-    <GridLayout>
-        <!-- Add your page content here -->
-    </GridLayout>
+
+	<sd:RadSideDrawer id="sideDrawer">
+		<sd:RadSideDrawer.drawerContent>
+			<ScrollView>
+				<StackLayout backgroundColor="rgba(64,153,255,0.8)">
+					<Image src="~/images/logo.png" horizontalAlignment="center"></Image>
+					<DatePicker class="list_picker" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
+					<TimePicker loaded="onPickerLoaded" hour="{{ tphour }}" minute="{{ tpminute }}" minuteInterval="30" class="list_picker"></TimePicker>
+					<Label text="Settings" />
+
+
+					<Label text="Info"/>
+				</StackLayout>
+			</ScrollView>
+		</sd:RadSideDrawer.drawerContent>
+
+		<!-- The main content -->
+		<sd:RadSideDrawer.mainContent>
+			<StackLayout>
+				<GridLayout rows="*,auto" columns="*" verticalAlignment="top" width="100%" height="100%">
+					<ContentView row="0" col="0" rowSpan="3" class="map">
+						<web-view id="webView"></web-view>
+					</ContentView>
+
+					<StackLayout marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0" backgroundColor="rgba(64,153,255,0.6)" height="70" width="210">
+						<FlexboxLayout flexWrap="wrap" flexDirection="row" height="20">
+							<Label text="Posizione attuale: " verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+							<Label text="{{ position }}" verticalAlignment="center" />
+						</FlexboxLayout>
+						<FlexboxLayout flexWrap="wrap" flexDirection="row" height="20">
+							<Label text="Temperatura: " verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+							<Label text="{{ temp }}" verticalAlignment="center" />
+							<Image src="{{ icon }}" verticalAlignment="center" height="20" marginLeft="5"/>
+						</FlexboxLayout>
+						<FlexboxLayout flexWrap="wrap" flexDirection="row" height="20">
+							<Label text="Vento: " verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+							<Label text="{{ wind }}" verticalAlignment="center" />
+						</FlexboxLayout>
+					</StackLayout>
+					<Button row="0" col="0" verticalAlignment="bottom" text="{{ data }}" marginBottom="10" backgroundColor="rgba(64,153,255,0.6)" tap="toggleDrawer"></Button>
+				</GridLayout>
+			</StackLayout>
+		</sd:RadSideDrawer.mainContent>
+
+	</sd:RadSideDrawer>
+
 </Page>
