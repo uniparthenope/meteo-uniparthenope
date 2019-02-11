@@ -24,25 +24,25 @@
 						<web-view id="webView"></web-view>
 					</ContentView>
 
-					<StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="70" width="210">
-						<FlexboxLayout flexWrap="wrap" flexDirection="row" height="20">
-							<Label text="Posizione attuale: " verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-							<Label text="{{ position }}" verticalAlignment="center" />
-						</FlexboxLayout>
-						<FlexboxLayout flexWrap="wrap" flexDirection="row" height="20">
-							<Label text="Temperatura: " verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-							<Label text="{{ temp }}" verticalAlignment="center" />
-							<Image src="{{ icon }}" verticalAlignment="center" height="20" marginLeft="5"/>
-						</FlexboxLayout>
-						<FlexboxLayout flexWrap="wrap" flexDirection="row" height="20">
-							<Label text="Vento: " verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-							<Label text="{{ wind }}" verticalAlignment="center" />
-						</FlexboxLayout>
+					<StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="70" width="220">
+
+						<StackLayout orientation="horizontal" height="70">
+
+							<StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
+								<Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
+							</StackLayout>
+							<StackLayout orientation="vertical" verticalAlignment="center" horizontalAlignment="right">
+								<Label text="{{ position }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1; font-size: 16" margin="0 5 0 5"/>
+								<Label text="{{ temp }}" horizontalAlignment="center" verticalAlignment="center" style="font-size: 24"/>
+								<Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" />
+							</StackLayout>
+						</StackLayout>
 					</StackLayout>
+
 					<StackLayout margin="0 10 15 10" class="blue_background" horizontalAlignment="center" row="0" col="0" verticalAlignment="bottom" orientation="horizontal" height="50">
-						<Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 10 10 10" tap="onTapBack"></Image>
+						<Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 40 10 10" tap="onTapBack"></Image>
 						<Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
-						<Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 10" tap="onTapNext"></Image>
+						<Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
 
 					</StackLayout>
 				</GridLayout>
