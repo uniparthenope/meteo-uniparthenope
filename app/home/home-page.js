@@ -60,6 +60,8 @@ exports.pageLoaded = function(args)
 
   data = new Date();
   ora = data.getHours();
+  if(ora < 10)
+    ora = '0' + ora;
   mese = data.getMonth() + 1;
   if(mese < 10)
     mese = '0' + mese;

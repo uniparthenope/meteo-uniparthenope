@@ -274,7 +274,7 @@ function addInfoLayer()
                     {
                         if (feature.properties)
                         {
-                            //console.log(feature.properties);
+                            //console.log(feature.properties.wd10);
                             country = feature.properties.country;
                             city = feature.properties.name;
                             id = feature.properties.id;
@@ -308,7 +308,7 @@ function addInfoLayer()
                             popupString +=
                                 "<tr>" +
                                 "<td class='tg-j0tj'>TEMP</td>" +
-                                "<td class='tg-j0tj'>" + temp + "°C</td>" +
+                                "<td class='tg-j0tj'>" + temp + " C</td>" +
                                 "</tr>" +
                                 "<tr>" +
                                 "<td class='tg-7un6'>METEO</td>" +
@@ -328,7 +328,7 @@ function addInfoLayer()
                                 "</tr>" +
                                 "<tr>" +
                                 "<td class='tg-7un6'>WIND DIRECTION</td>" +
-                                "<td class='tg-7un6'>" + wind_direction + " °N</td>" +
+                                "<td class='tg-7un6'>" + wind_direction + " N</td>" +
                                 "</tr>" +
                                 "<tr>" +
                                 "<td class='tg-j0tj'>WIND SPEED</td>" +
