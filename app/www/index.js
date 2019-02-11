@@ -548,7 +548,7 @@
 
         map = new L.Map('map', {zoomControl: false});
 
-        map.setView(center, zoom);
+        map.setView(new L.LatLng(40.85, 14.28), 5);
 
         var layerInstance = Esri_WorldImagery;
         layerInstance.addTo(map);
