@@ -263,7 +263,7 @@
 	}
 .leaflet-bar a,
 .leaflet-bar a:hover {
-	background-color: #fff;
+	background-color: blue;
 	border-bottom: 1px solid #ccc;
 	width: 26px;
 	height: 26px;
@@ -280,7 +280,7 @@
 	display: block;
 	}
 .leaflet-bar a:hover {
-	background-color: #f4f4f4;
+	background-color: blue;
 	}
 .leaflet-bar a:first-child {
 	border-top-left-radius: 4px;
@@ -327,8 +327,9 @@
 
 .leaflet-control-layers {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-	background: #fff;
-	border-radius: 5px;
+	background: rgba(30,76,117,0.8);
+	border-radius: 10dp;
+
 	}
 .leaflet-control-layers-toggle {
 	background-image: url(images/layers.png);
@@ -354,7 +355,8 @@
 .leaflet-control-layers-expanded {
 	padding: 6px 10px 6px 6px;
 	color: #333;
-	background: #fff;
+	background: rgba(30,76,117,0.8);
+	color: white;
 	}
 .leaflet-control-layers-scrollbar {
 	overflow-y: scroll;
@@ -486,8 +488,8 @@
 	}
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-	background: white;
-	color: #333;
+	background: rgba(30,76,117,0.8);
+	color: white;
 	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
 	}
 .leaflet-container a.leaflet-popup-close-button {

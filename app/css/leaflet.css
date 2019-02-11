@@ -339,7 +339,7 @@
 
 .leaflet-control-layers {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-	background: #fff;
+	background: blue;
 	border-radius: 5px;
 	}
 .leaflet-control-layers-toggle {
@@ -366,7 +366,7 @@
 .leaflet-control-layers-expanded {
 	padding: 6px 10px 6px 6px;
 	color: #333;
-	background: #fff;
+	background: blue;
 	}
 .leaflet-control-layers-scrollbar {
 	overflow-y: scroll;

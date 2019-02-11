@@ -28,6 +28,14 @@ components that have the btn class name.
 .description-label{
     margin-bottom: 15;
 }
+.white_background{
+    background-color: rgba(255,255,255,0.8);
+}
+.blue_background{
+    background-color: rgba(30,76,117,0.8);
+    color: white;
+    border-radius: 10dp;
+}
 
 .list_picker{
     color: rgba(0, 96, 16, 1);

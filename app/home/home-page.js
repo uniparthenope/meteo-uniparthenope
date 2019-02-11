@@ -89,6 +89,7 @@ exports.pageLoaded = function(args)
     geolocation.isEnabled().then(function(isEnabled)
     {
       var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).
+          console.log(location);
       then(function(loc) {
         if (loc) {
           var latitudine = loc.latitude;
