@@ -155,6 +155,7 @@ exports.pageLoaded = function(args)
   {
     home.set("current_position", "collapsed");
     oLangWebViewInterface.emit('data', {anno:anno,mese:mese, giorno:giorno, ora:ora});
+    oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0)});
     console.log("Error: " + (e.message || e));
   });
 
