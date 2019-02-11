@@ -43,17 +43,18 @@ function close(args)
 }
 exports.close = close;
 
-function setupWebViewInterface(page, path)
+function setupWebViewInterface(page)
 {
   var webView = page.getViewById('webView');
-  oLangWebViewInterface = new nativescript_webview_interface_1.WebViewInterface(webView, path);
+  oLangWebViewInterface = new nativescript_webview_interface_1.WebViewInterface(webView, '~/www/index.html');
 }
 
 exports.pageLoaded = function(args)
 {
   const page = args.object;
-  setupWebViewInterface(page, '~/webview/index.html');
+  setupWebViewInterface(page);
   drawer = view.getViewById(page, "sideDrawer");
+
 
   home = new Observable.fromObject({});
   home.set("current_position", "collapsed");
@@ -88,16 +89,14 @@ exports.pageLoaded = function(args)
   {
     geolocation.isEnabled().then(function(isEnabled)
     {
-      var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).
-          console.log(location);
-      then(function(loc) {
+      var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).then(function(loc) {
         if (loc) {
           var latitudine = loc.latitude;
           var longitudine = loc.longitude;
           var place, id;
 
-          //console.log("Latitude: " + latitudine);
-          //console.log("Longitude: " + longitudine);
+          console.log("Latitude: " + latitudine);
+          console.log("Longitude: " + longitudine);
 
           if(myConnectionType==1 || myConnectionType==2)
           {
