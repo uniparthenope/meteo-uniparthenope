@@ -6,6 +6,7 @@ var nativescript_webview_interface_1 = require("nativescript-webview-interface")
 var Observable = require("data/observable");
 var ObservableArray = require("data/observable-array").ObservableArray;
 const connectivityModule = require("tns-core-modules/connectivity");
+const appSetting = require("application-settings");
 
 var view = require("ui/core/view");
 var drawer;
@@ -31,23 +32,6 @@ function navigatedFrom()
   oLangWebViewInterface.destroy();
 }
 exports.navigatedFrom = navigatedFrom;
-
-function backEvent(args)
-{
-  console.log('Exiting');
-  oLangWebViewInterface.destroy();
-  geolocation.clearWatch();
-}
-exports.backEvent=backEvent;
-
-function close(args)
-{
-  oLangWebViewInterface.destroy();
-  geolocation.clearWatch();
-  backEvent();
-  //alert('Press again to Exit!!','WARNING')
-}
-exports.close = close;
 
 function setupWebViewInterface(page)
 {
@@ -119,8 +103,22 @@ exports.pageLoaded = function(args)
                 if (data1.result == "ok")
                 {
                   home.set("current_position", "visible");
-                  home.set("temp", data1.forecast.t2c + " °C");
-                  home.set("wind", data1.forecast.ws10n + " knt");
+                  if(appSetting.getNumber("Temperatura", 0) == 0)
+                    home.set("temp", data1.forecast.t2c + " °C");
+                  else if(appSetting.getNumber("Temperatura",0) == 1) {
+                    home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+                  }
+
+                  if(appSetting.getNumber("Vento", 0) == 0)
+                    home.set("wind", data1.forecast.ws10n + " knt");
+                  else if(appSetting.getNumber("Vento", 0) == 1)
+                  {
+                    home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " Km/H");
+                  }
+                  else if(appSetting.getNumber("Vento", 0) == 2) {
+                    home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+                  }
+
                   home.set("wind_direction", data1.forecast.winds);
                   home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
                 }
@@ -142,6 +140,11 @@ exports.pageLoaded = function(args)
           setTimeout(function()
           {
             oLangWebViewInterface.emit('location', {lat:latitudine,lang:longitudine});
+          }, 800);
+
+          setTimeout(function()
+          {
+            oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0)});
           }, 800);
         }
       }, function(e){
@@ -251,3 +254,17 @@ function onTapBack(args)
     oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
 }
 exports.onTapBack = onTapBack;
+
+
+const Button = require("tns-core-modules/ui/button").Button;
+const Page = require("tns-core-modules/ui/page").Page;
+function onTapSettings(args)
+{
+  var button = args.object;
+  const page = button.page;
+
+  console.log("Click!!");
+
+ page.frame.navigate("settings/setting-page");
+}
+exports.onTapSettings = onTapSettings;

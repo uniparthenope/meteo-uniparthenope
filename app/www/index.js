@@ -1,14 +1,13 @@
-
-    App.load('home');
-    App.controller('home', function (page) {
-        history.pushState('home', null, '#home');
-    });
+App.load('home');
+App.controller('home', function (page) {
+    history.pushState('home', null, '#home');
+});
 
     var oWebViewInterface1 = window.nsWebViewInterface;
 
     var url_api = "https://api.meteo.uniparthenope.it/";
 
-    var sizeIco = [50, 50];
+    var sizeIco = [35, 35];
 
     var position = L.icon({
         iconUrl: '../images/position.png',
@@ -177,17 +176,23 @@
     var snowLayer = null;
     var infoLayer = null;
     var currData = null;
+    var gradi;
+    var vento;
+    var pressione;
+    var temp = 0;
+    var wind_speed;
+    var pressure;
 
     var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: ''
     });
 
-    var Esri_DarkGreyCanvas = L.tileLayer("https://{s}.sm.mapstack.stamen.com/" + "(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/" + "{z}/{x}/{y}.png", {
-        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, ' + 'NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+    var Esri_DarkGreyCanvas = L.tileLayer("http://{s}.sm.mapstack.stamen.com/" + "(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/" + "{z}/{x}/{y}.png", {
+        attribution: ''
     });
 
     var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution: ''
     });
 
     var baseLayers = {
@@ -275,12 +280,56 @@
                                 dateTime = feature.properties.dateTime;
                                 humidity = feature.properties.rh2; //umidity
                                 pressure = feature.properties.slp; //pressure
-                                temp = feature.properties.t2c; //temp
+                                gradi_sim = null;
+                                wind_sim = null;
+
+                                if(gradi == 0)
+                                {
+                                    temp = feature.properties.t2c; //temp
+                                    gradi_sim = "&#176C";
+                                }
+                                else if(gradi == 1)
+                                {
+                                    temp = (feature.properties.t2c * 1.8) + 32;
+                                    var d = Math.pow(10,2);
+                                    tem = (parseInt(temp*d)/d);
+                                    gradi_sim = "&#176F";
+                                }
                                 text = feature.properties.text;
                                 wind_direction = feature.properties.wd10; // wind_deg
-                                wind_speed = feature.properties.ws10n; //wind_speed
-                                wind_chill = feature.properties.wchill; //wind_chill
+                                if(vento == 0)
+                                {
+                                    wind_speed = feature.properties.ws10n; //wind_speed
+                                    wind_sim = "knt";
+                                }
+                                else if(vento == 1)
+                                {
+                                    wind_speed = (feature.properties.ws10n * 1.852);
+                                    var d = Math.pow(10,2);
+                                    wind_speed = (parseInt(wind_speed*d)/d);
+                                    wind_sim = "Km/H";
+                                }
+                                else if(vento == 2)
+                                {
+                                    wind_speed = (feature.properties.ws10n * 0.514444);
+                                    var d = Math.pow(10,2);
+                                    wind_speed = (parseInt(wind_speed*d)/d);
+                                    wind_sim = "m/s";
+                                }
+                                if(gradi == 0)
+                                {
+                                    wind_chill = feature.properties.wchill; //temp
+                                    gradi_sim = "&#176C";
+                                }
+                                else if(gradi == 1)
+                                {
+                                    wind_chill = (feature.properties.wchill * 1.8) + 32;
+                                    var d = Math.pow(10,2);
+                                    wind_chill = (parseInt(wind_chill*d)/d);
+                                    gradi_sim = "&#176F";
+                                }
                                 winds = feature.properties.winds; //winds
+
 
                                 popupString = "<div class='popup'>" +
                                     "<table class='tg' style='undefined;table-layout: fixed; width: 230px'>" +
@@ -301,7 +350,7 @@
                                 popupString +=
                                     "<tr>" +
                                     "<td class='tg-j0tj'>TEMP</td>" +
-                                    "<td class='tg-j0tj'>" + temp + " C</td>" +
+                                    "<td class='tg-j0tj'>" + temp + " " + gradi_sim + " </td>" +
                                     "</tr>" +
                                     "<tr>" +
                                     "<td class='tg-7un6'>METEO</td>" +
@@ -325,10 +374,10 @@
                                     "</tr>" +
                                     "<tr>" +
                                     "<td class='tg-j0tj'>WIND SPEED</td>" +
-                                    "<td class='tg-j0tj'>" + wind_speed + " knt</td>" +
+                                    "<td class='tg-j0tj'>" + wind_speed + " " + wind_sim + "</td>" +
                                     "</tr>" +
                                     "<td class='tg-7un6'>WIND CHILL</td>" +
-                                    "<td class='tg-7un6'>" + wind_chill + " *C</td>" +
+                                    "<td class='tg-7un6'>" + wind_chill + " " + gradi_sim +" </td>" +
                                     "</tr>" +
                                     "<td class='tg-j0tj'>WIND</td>" +
                                     "<td class='tg-j0tj'>" + winds + "</td>" +
@@ -362,7 +411,7 @@
 
         $.getJSON(url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData, function (data) {
             windLayer = L.velocityLayer({
-                displayValues: true,
+                displayValues: false,
                 displayOptions: {
                     velocityType: 'Wind 10m',
                     position: 'bottomleft',
@@ -511,7 +560,7 @@
         console.log("Data: " + currData);
 
         if (map == null) {
-            map = new L.Map('map', {zoomControl: false});
+            map = new L.Map('map', {zoomControl: false, attributionControl:false});
 
 
             map.setView(center, zoom);
@@ -554,7 +603,7 @@
         controlLayers.remove();
 
 
-        map = new L.Map('map', {zoomControl: false});
+        map = new L.Map('map', {zoomControl: false, attributionControl:false});
 
         map.setView(new L.LatLng(40.85, 14.28), 5);
 
@@ -589,4 +638,11 @@
     oWebViewInterface1.on('location', function (cor) {
         var DynaMarker = L.marker([cor.lat,cor.lang], {icon: position});
         DynaMarker.setLatLng([cor.lat, cor.lang]) .addTo(map);
+    });
+
+    oWebViewInterface1.on('settings', function (cor) {
+       console.log(cor.gradi);
+       gradi = cor.gradi;
+       console.log(cor.vento);
+       vento = cor.vento;
     });

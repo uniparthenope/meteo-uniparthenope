@@ -9,8 +9,8 @@
                 <StackLayout class="white_background">
                     <Image src="~/images/logo.png" horizontalAlignment="center"></Image>
                     <DatePicker class="list_picker" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
-                    <Label text="Settings"/>
-                    <Label text="Info"/>
+                    <Label text="Settings" tap="onTapSettings"/>
+                    <Label text="Info" tap="onTapInfo"/>
 
                 </StackLayout>
             </ScrollView>

@@ -1,0 +1,43 @@
+<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd">
+    <ActionBar class="c-bg-aqua" >
+        <Label class="c-white" text="Settings" fontSize="20"></Label>
+    </ActionBar>
+
+    <ScrollView>
+        <StackLayout orientation="vertical">
+            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+                <Label text="Temperatura: " verticalAlignment="center" marginRight="5" marginLeft="5"></Label>
+                <SegmentedBar row="0"  class="m-5" selectedIndex="{{ tempSelection }}" horizontalAlignment="right">
+                    <SegmentedBar.items>
+                        <SegmentedBarItem title="Celsius"/>
+                        <SegmentedBarItem title="Fahrenheit" />
+                    </SegmentedBar.items>
+                </SegmentedBar>
+            </StackLayout>
+
+
+            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+                <Label text="Vento: " verticalAlignment="center" marginRight="5" marginLeft="5"></Label>
+                <SegmentedBar row="0"  class="m-5" selectedIndex="{{ windSelection }}" horizontalAlignment="right">
+                    <SegmentedBar.items>
+                        <SegmentedBarItem title="Nodi"/>
+                        <SegmentedBarItem title="Km/h" />
+                        <SegmentedBarItem title="m/s" />
+                    </SegmentedBar.items>
+                </SegmentedBar>
+            </StackLayout>
+
+
+            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+                <Label text="Pressione: " verticalAlignment="center" marginRight="5" marginLeft="5"></Label>
+                <SegmentedBar row="0"  class="m-5" selectedIndex="{{ pressureSelection }}" horizontalAlignment="right">
+                    <SegmentedBar.items>
+                        <SegmentedBarItem title="HPa"/>
+                        <SegmentedBarItem title="bar"/>
+                        <SegmentedBarItem title="atm"/>
+                    </SegmentedBar.items>
+                </SegmentedBar>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</Page>

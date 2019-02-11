@@ -1,0 +1,49 @@
+var frameModule = require("ui/frame");
+var observableModule = require("data/observable");
+var ObservableArray = require("data/observable-array").ObservableArray;
+var Observable = require("data/observable");
+var PageSettingViewModel = require("./settings-view-model");
+var settingViewModel = new PageSettingViewModel();
+const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
+const segmentedBarModule = require("tns-core-modules/ui/segmented-bar");
+const appSettings = require("application-settings");
+
+function pageLoaded(args)
+{
+    var page = args.object;
+    var setting = new Observable.fromObject({});
+    var temp = appSettings.getNumber("Temperatura", 0);
+    var wind = appSettings.getNumber("Vento", 0);
+    var pressione = appSettings.getNumber("Pressione", 0);
+
+    setting.set("tempSelection", temp);
+    setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
+    {
+        if (propertyChangeData.propertyName === "tempSelection")
+        {
+            appSettings.setNumber("Temperatura", propertyChangeData.value);
+        }
+    });
+
+    setting.set("windSelection", wind);
+    setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
+    {
+        if (propertyChangeData.propertyName === "windSelection")
+        {
+            appSettings.setNumber("Vento", propertyChangeData.value);
+        }
+    });
+
+    setting.set("pressureSelection", pressione);
+    setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
+    {
+        if (propertyChangeData.propertyName === "pressureSelection")
+        {
+            appSettings.setNumber("Pressione", propertyChangeData.value);
+        }
+    });
+
+    page.bindingContext = setting;
+}
+
+exports.pageLoaded = pageLoaded;
