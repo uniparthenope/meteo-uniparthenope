@@ -15,8 +15,11 @@ var mese;
 var giorno;
 var ora;
 var currData;
+var print_data;
 var data;
 var home;
+var nome_giorno = ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"];
+var temp_data;
 
 var homeViewModel = new HomeViewModel();
 
@@ -60,27 +63,26 @@ exports.pageLoaded = function(args)
   home.set("current_position", "collapsed");
 
   data = new Date();
-  ora = data.getHours();
+  ora = data.getUTCHours();
   if(ora < 10)
     ora = '0' + ora;
-  mese = data.getMonth() + 1;
+  mese = data.getUTCMonth() + 1;
   if(mese < 10)
     mese = '0' + mese;
-  giorno = data.getDate();
+  giorno = data.getUTCDate();
   if(giorno < 10)
     giorno = '0' + giorno;
-  anno = data.getFullYear();
+  anno = data.getUTCFullYear();
   home.set("date_pick", data);
   home.set("minDate", new Date(2018, 0, 29));
   home.set("maxDate", new Date(2030, 4, 12));
 
-  home.set("tphour", ora);
-  home.set("tpminute", 0);
+  print_data = nome_giorno[data.getUTCDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00";
 
   currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-  console.log(currData);
+  console.log(print_data);
 
-  home.set("data", data);
+  home.set("data", print_data);
 
   const myConnectionType = connectivityModule.getConnectionType();
   console.log("Connection: " + myConnectionType);
@@ -95,8 +97,8 @@ exports.pageLoaded = function(args)
           var longitudine = loc.longitude;
           var place, id;
 
-          console.log("Latitude: " + latitudine);
-          console.log("Longitude: " + longitudine);
+          //console.log("Latitude: " + latitudine);
+          //console.log("Longitude: " + longitudine);
 
           if(myConnectionType==1 || myConnectionType==2)
           {
@@ -166,7 +168,8 @@ function onDatePickerLoaded(args)
       giorno = args.value;
 
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    home.set("data", new Date(anno, mese-1, giorno, ora));
+    temp_data = new Date(anno, mese, giorno);
+    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
     oLangWebViewInterface.emit('prova', {data:currData});
   });
   datePicker.on("monthChange", (args) => {
@@ -176,29 +179,53 @@ function onDatePickerLoaded(args)
     else
       mese = args.value;
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    home.set("data", new Date(anno, mese-1, giorno, ora));
+    temp_data = new Date(anno, mese, giorno);
+    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
     oLangWebViewInterface.emit('prova', {data:currData});
   });
   datePicker.on("yearChange", (args) => {
     currData = "";
     anno = args.value;
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    home.set("data", new Date(anno, mese-1, giorno, ora));
+    temp_data = new Date(anno, mese, giorno);
+    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
     oLangWebViewInterface.emit('prova', {data:currData});
   });
 }
 exports.onDatePickerLoaded = onDatePickerLoaded;
 
-function onPickerLoaded(eventData)
+function onTapNext(args)
 {
-  const timePicker = eventData.object;
-  timePicker.on("timeChange", (args) => {
-    ora = timePicker.hour;
-    if(ora<10)
-      ora = "0" + ora;
-    currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    home.set("data", new Date(anno, mese-1, giorno, ora));
-    oLangWebViewInterface.emit('prova', {data:currData});
-  });
+  if(ora+1 >23)
+    ora = "0";
+  else
+    ora++;
+
+  if(ora < 10)
+    ora = "0" + ora;
+
+  currData = anno+""+mese+""+giorno+"Z"+ora+"00";
+  temp_data = new Date(anno, mese, giorno);
+
+  home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+  oLangWebViewInterface.emit('prova', {data:currData});
 }
-exports.onPickerLoaded = onPickerLoaded;
+exports.onTapNext = onTapNext;
+
+function onTapBack(args)
+{
+  if(ora-1 < 0)
+    ora = 23;
+  else
+    ora--;
+
+  if(ora < 10)
+    ora = "0" + ora;
+
+  currData = anno+""+mese+""+giorno+"Z"+ora+"00";
+  temp_data = new Date(anno, mese, giorno);
+
+  home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+  oLangWebViewInterface.emit('prova', {data:currData});
+}
+exports.onTapBack = onTapBack;

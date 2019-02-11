@@ -9,11 +9,9 @@
 				<StackLayout class="white_background">
 					<Image src="~/images/logo.png" horizontalAlignment="center"></Image>
 					<DatePicker class="list_picker" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
-					<TimePicker loaded="onPickerLoaded" hour="{{ tphour }}" minute="{{ tpminute }}" minuteInterval="30" class="list_picker"></TimePicker>
 					<Label text="Settings" />
-
-
 					<Label text="Info"/>
+
 				</StackLayout>
 			</ScrollView>
 		</sd:RadSideDrawer.drawerContent>
@@ -41,7 +39,12 @@
 							<Label text="{{ wind }}" verticalAlignment="center" />
 						</FlexboxLayout>
 					</StackLayout>
-					<Button class="blue_background" row="0" col="0" verticalAlignment="bottom" text="{{ data }}" margin="0 10 15 10"  tap="toggleDrawer"></Button>
+					<StackLayout margin="0 10 15 10" class="blue_background" horizontalAlignment="center" row="0" col="0" verticalAlignment="bottom" orientation="horizontal" height="50">
+						<Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 10 10 10" tap="onTapBack"></Image>
+						<Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
+						<Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 10" tap="onTapNext"></Image>
+
+					</StackLayout>
 				</GridLayout>
 			</StackLayout>
 		</sd:RadSideDrawer.mainContent>
