@@ -10,6 +10,13 @@
 
     var sizeIco = [50, 50];
 
+    var position = L.icon({
+        iconUrl: '../images/position.png',
+        iconSize:[25,25],
+        iconAnchor: [9, 21],
+        popupAnchor: [20, -17]
+    });
+
     var sunny_night_png = L.icon({
         iconUrl: 'meteo_icon/sunny_night.png',
         iconSize: sizeIco,
@@ -509,6 +516,7 @@
 
             map.setView(center, zoom);
 
+
             var layerInstance = Esri_WorldImagery;
             layerInstance.addTo(map);
 
@@ -576,4 +584,9 @@
         addT2CLayer();
         addSnowLayer();
         addWindLayer();
+    });
+
+    oWebViewInterface1.on('location', function (cor) {
+        var DynaMarker = L.marker([cor.lat,cor.lang], {icon: position});
+        DynaMarker.setLatLng([cor.lat, cor.lang]) .addTo(map);
     });

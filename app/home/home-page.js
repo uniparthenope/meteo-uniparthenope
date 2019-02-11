@@ -20,6 +20,9 @@ var data;
 var home;
 var nome_giorno = ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"];
 var temp_data;
+var gps_on = false;
+var latitudine;
+var longitudine;
 
 var homeViewModel = new HomeViewModel();
 
@@ -91,10 +94,13 @@ exports.pageLoaded = function(args)
   {
     geolocation.isEnabled().then(function(isEnabled)
     {
+      gps_on = isEnabled;
+      console.log("GPS: " + gps_on);
+
       var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).then(function(loc) {
         if (loc) {
-          var latitudine = loc.latitude;
-          var longitudine = loc.longitude;
+          latitudine = loc.latitude;
+          longitudine = loc.longitude;
           var place, id;
 
           //console.log("Latitude: " + latitudine);
@@ -115,6 +121,7 @@ exports.pageLoaded = function(args)
                   home.set("current_position", "visible");
                   home.set("temp", data1.forecast.t2c + " °C");
                   home.set("wind", data1.forecast.ws10n + " knt");
+                  home.set("wind_direction", data1.forecast.winds);
                   home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
                 }
                 else if (data1.result == "error")
@@ -129,10 +136,12 @@ exports.pageLoaded = function(args)
 
           setTimeout(function()
           {
-            //console.log(currData);
-            console.log("QUI");
-
             oLangWebViewInterface.emit('data', {anno:anno,mese:mese, giorno:giorno, ora:ora});
+          }, 800);
+
+          setTimeout(function()
+          {
+            oLangWebViewInterface.emit('location', {lat:latitudine,lang:longitudine});
           }, 800);
         }
       }, function(e){
@@ -171,6 +180,8 @@ function onDatePickerLoaded(args)
     temp_data = new Date(anno, mese, giorno);
     home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
     oLangWebViewInterface.emit('prova', {data:currData});
+    if(gps_on)
+      oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
   });
   datePicker.on("monthChange", (args) => {
     currData = "";
@@ -182,6 +193,8 @@ function onDatePickerLoaded(args)
     temp_data = new Date(anno, mese, giorno);
     home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
     oLangWebViewInterface.emit('prova', {data:currData});
+    if(gps_on)
+      oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
   });
   datePicker.on("yearChange", (args) => {
     currData = "";
@@ -190,6 +203,8 @@ function onDatePickerLoaded(args)
     temp_data = new Date(anno, mese, giorno);
     home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
     oLangWebViewInterface.emit('prova', {data:currData});
+    if(gps_on)
+      oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
   });
 }
 exports.onDatePickerLoaded = onDatePickerLoaded;
@@ -209,6 +224,9 @@ function onTapNext(args)
 
   home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
   oLangWebViewInterface.emit('prova', {data:currData});
+
+  if(gps_on)
+    oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
 }
 exports.onTapNext = onTapNext;
 
@@ -227,5 +245,9 @@ function onTapBack(args)
 
   home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
   oLangWebViewInterface.emit('prova', {data:currData});
+
+
+  if(gps_on)
+    oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
 }
 exports.onTapBack = onTapBack;
