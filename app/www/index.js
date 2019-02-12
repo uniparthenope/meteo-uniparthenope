@@ -425,13 +425,16 @@ App.controller('home', function (page) {
         controlLayers.addOverlay(infoLayer, "Info");
     }
 
-    function addWindLayer() {
-        if (windLayer != null) {
-            controlLayers.removeLayer(windLayer);
-            map.removeLayer(windLayer);
-        }
-
+    function addWindLayer()
+    {
         $.getJSON(url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData, function (data) {
+            if (windLayer != null)
+            {
+                controlLayers.removeLayer(windLayer);
+                map.removeLayer(windLayer);
+            }
+
+
             windLayer = L.velocityLayer({
                 displayValues: false,
                 displayOptions: {
@@ -610,12 +613,23 @@ App.controller('home', function (page) {
     });
 
 
-    oWebViewInterface1.on('prova', function (cor) {
+    oWebViewInterface1.on('prova', function (cor)
+    {
         console.log(cor.data);
         currData = cor.data;
+
+        domain = "d01";
+        prefix = "reg";
+
+
+        map.removeLayer(windLayer);
+        map.removeLayer(snowLayer);
+        map.removeLayer(t2cLayer);
+        map.removeLayer(infoLayer);
+        map.removeLayer(cloudLayer);
+        map.removeLayer(rainLayer);
         map.remove();
         controlLayers.remove();
-
 
         map = new L.Map('map', {zoomControl: false, attributionControl:false});
 
@@ -660,3 +674,10 @@ App.controller('home', function (page) {
        vento = cor.vento;
        pressione = cor.pressione;
     });
+
+addInfoLayer();
+addWindLayer();
+addT2CLayer();
+addCloudLayer();
+addRainLayer();
+addSnowLayer();
