@@ -277,3 +277,9 @@ function onTapSettings(args)
  page.frame.navigate("settings/setting-page");
 }
 exports.onTapSettings = onTapSettings;
+
+function onTapCenter()
+{
+  oLangWebViewInterface.emit('centro');
+}
+exports.onTapCenter = onTapCenter;

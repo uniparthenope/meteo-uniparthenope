@@ -633,7 +633,7 @@ App.controller('home', function (page) {
 
         map = new L.Map('map', {zoomControl: false, attributionControl:false});
 
-        map.setView(new L.LatLng(40.85, 14.28), 5);
+        map.setView(new L.LatLng(40.85, 14.28), 5, { animation: true });
 
         var layerInstance = Esri_WorldImagery;
         layerInstance.addTo(map);
@@ -673,6 +673,17 @@ App.controller('home', function (page) {
        gradi = cor.gradi;
        vento = cor.vento;
        pressione = cor.pressione;
+    });
+
+    oWebViewInterface1.on('centro', function()
+    {
+        map.setView(new L.LatLng(40.85, 14.28), 5, { animation: true });
+        addInfoLayer();
+        addWindLayer();
+        addT2CLayer();
+        addCloudLayer();
+        addRainLayer();
+        addSnowLayer();
     });
 
 addInfoLayer();

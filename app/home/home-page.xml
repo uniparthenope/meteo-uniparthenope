@@ -24,10 +24,8 @@
                         <web-view id="webView"></web-view>
                     </ContentView>
 
-                    <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="80" width="220">
-
+                    <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="80" width="220" tap="onTapCenter">
                         <StackLayout orientation="horizontal" height="80">
-
                             <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
                                 <Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
                             </StackLayout>
