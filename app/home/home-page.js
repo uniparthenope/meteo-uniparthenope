@@ -186,7 +186,7 @@ function onDatePickerLoaded(args)
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
     temp_data = new Date(anno, mese, giorno);
     home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
-    oLangWebViewInterface.emit('prova', {data:currData});
+    oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
   });
@@ -199,7 +199,7 @@ function onDatePickerLoaded(args)
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
     temp_data = new Date(anno, mese, giorno);
     home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
-    oLangWebViewInterface.emit('prova', {data:currData});
+    oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
   });
@@ -209,7 +209,7 @@ function onDatePickerLoaded(args)
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
     temp_data = new Date(anno, mese, giorno);
     home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
-    oLangWebViewInterface.emit('prova', {data:currData});
+    oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
   });
@@ -235,7 +235,7 @@ function onTapNext(args)
   temp_data = new Date(anno, mese, giorno);
 
   home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
-  oLangWebViewInterface.emit('prova', {data:currData});
+  oLangWebViewInterface.emit('new_data', {data:currData});
 
   if(gps_on)
     oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
@@ -259,7 +259,7 @@ function onTapBack(args)
   temp_data = new Date(anno, mese, giorno);
 
   home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
-  oLangWebViewInterface.emit('prova', {data:currData});
+  oLangWebViewInterface.emit('new_data', {data:currData});
 
 
   if(gps_on)

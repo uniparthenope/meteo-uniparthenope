@@ -3,25 +3,25 @@ App.controller('home', function (page) {
     history.pushState('home', null, '#home');
 });
 
-    var oWebViewInterface1 = window.nsWebViewInterface;
+var oWebViewInterface1 = window.nsWebViewInterface;
 
-    var url_api = "https://api.meteo.uniparthenope.it/";
+var url_api = "https://api.meteo.uniparthenope.it/";
 
-    var sizeIco = [35, 35];
+var sizeIco = [35, 35];
 
-    var position = L.icon({
-        iconUrl: '../images/position.png',
-        iconSize:[25,25],
-        iconAnchor: [9, 21],
-        popupAnchor: [20, -17]
-    });
+var position = L.icon({
+    iconUrl: '../images/position.png',
+    iconSize:[25,25],
+    iconAnchor: [9, 21],
+    popupAnchor: [20, -17]
+});
 
-    var sunny_night_png = L.icon({
-        iconUrl: 'meteo_icon/sunny_night.png',
-        iconSize: sizeIco,
-        iconAnchor: [9, 21],
-        popupAnchor: [20, -17]
-    });
+var sunny_night_png = L.icon({
+    iconUrl: 'meteo_icon/sunny_night.png',
+    iconSize: sizeIco,
+    iconAnchor: [9, 21],
+    popupAnchor: [20, -17]
+});
 
     var shower1_night = L.icon({
         iconUrl: 'meteo_icon/shower1_night.png',
@@ -493,7 +493,7 @@ App.controller('home', function (page) {
             });
 
             map.addLayer(windLayer);
-            controlLayers.addOverlay(windLayer, 'Wind');
+            controlLayers.addOverlay(windLayer, 'Vento');
         });
     }
 
@@ -523,7 +523,7 @@ App.controller('home', function (page) {
         );
 
         map.addLayer(cloudLayer);
-        controlLayers.addOverlay(cloudLayer, "Cloud");
+        controlLayers.addOverlay(cloudLayer, "Nuvolosit&agrave");
     }
 
     function addT2CLayer() {
@@ -551,7 +551,7 @@ App.controller('home', function (page) {
             }
         );
 
-        controlLayers.addOverlay(t2cLayer, "Temperature");
+        controlLayers.addOverlay(t2cLayer, "Temperatura");
     }
 
     function addRainLayer() {
@@ -578,7 +578,7 @@ App.controller('home', function (page) {
                 LOGSCALE: "false"
             }
         );
-        controlLayers.addOverlay(rainLayer, "Rain");
+        controlLayers.addOverlay(rainLayer, "Pioggia");
     }
 
     function addSnowLayer() {
@@ -605,7 +605,7 @@ App.controller('home', function (page) {
                 LOGSCALE: "false"
             }
         );
-        controlLayers.addOverlay(snowLayer, "Snow");
+        controlLayers.addOverlay(snowLayer, "Neve");
     }
 
     oWebViewInterface1.on('data', function (cor)
@@ -650,7 +650,7 @@ App.controller('home', function (page) {
     });
 
 
-    oWebViewInterface1.on('prova', function (cor)
+    oWebViewInterface1.on('new_data', function (cor)
     {
         console.log(cor.data);
         currData = cor.data;

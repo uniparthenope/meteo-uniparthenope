@@ -1,0 +1,9 @@
+<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd">
+    <ActionBar class="blue_background_action_bar">
+        <Label class="" text="Copyright" fontSize="20"></Label>
+    </ActionBar>
+
+    <HtmlView html="{{ htmlString }}">
+
+    </HtmlView>
+</Page>
