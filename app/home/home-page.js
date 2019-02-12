@@ -108,7 +108,6 @@ exports.pageLoaded = function(args)
                   else if(appSetting.getNumber("Temperatura",0) == 1) {
                     home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
                   }
-
                   if(appSetting.getNumber("Vento", 0) == 0)
                     home.set("wind", data1.forecast.ws10n + " kn");
                   else if(appSetting.getNumber("Vento", 0) == 1)
@@ -117,6 +116,10 @@ exports.pageLoaded = function(args)
                   }
                   else if(appSetting.getNumber("Vento", 0) == 2) {
                     home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+                  }
+                  else if(appSetting.getNumber("Vento",0) == 3)
+                  {
+                    home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
                   }
 
                   home.set("wind_direction", data1.forecast.winds);
@@ -272,14 +275,51 @@ function onTapSettings(args)
   var button = args.object;
   const page = button.page;
 
-  console.log("Click!!");
-
- page.frame.navigate("settings/setting-page");
+  page.frame.navigate("settings/setting-page");
 }
 exports.onTapSettings = onTapSettings;
+
+function onTapInfo(args)
+{
+    const button = args.object;
+    const  page = button.page;
+
+    page.frame.navigate("info/info-page");
+}
+exports.onTapInfo = onTapInfo;
 
 function onTapCenter()
 {
   oLangWebViewInterface.emit('centro');
 }
 exports.onTapCenter = onTapCenter;
+
+function get_beaufort(nodi)
+{
+  if(nodi < 1)
+    return 0;
+  if(nodi>= 1 && nodi<=2)
+    return 1;
+  if(nodi>=3 && nodi <=6)
+    return 2;
+  if(nodi>=7 && nodi <=10)
+    return 3;
+  if(nodi>=11 && nodi <=15)
+    return 4;
+  if(nodi>=16 && nodi <=20)
+    return 5;
+  if(nodi>=21 && nodi <=26)
+    return 6;
+  if(nodi>=27 && nodi <=33)
+    return 7;
+  if(nodi>=34 && nodi <=40)
+    return 8;
+  if(nodi>=41 && nodi <=47)
+    return 9;
+  if(nodi>=48 && nodi <=55)
+    return 10;
+  if(nodi>=56 && nodi <=63)
+    return 11;
+  if(nodi>=64)
+    return 12;
+}

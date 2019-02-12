@@ -202,6 +202,36 @@ App.controller('home', function (page) {
         "Open Street Map": osmLayer
     };
 
+    function get_beaufort(nodi)
+    {
+        if(nodi < 1)
+            return 0;
+        if(nodi>= 1 && nodi<=2)
+            return 1;
+        if(nodi>=3 && nodi <=6)
+            return 2;
+        if(nodi>=7 && nodi <=10)
+            return 3;
+        if(nodi>=11 && nodi <=15)
+            return 4;
+        if(nodi>=16 && nodi <=20)
+            return 5;
+        if(nodi>=21 && nodi <=26)
+            return 6;
+        if(nodi>=27 && nodi <=33)
+            return 7;
+        if(nodi>=34 && nodi <=40)
+            return 8;
+        if(nodi>=41 && nodi <=47)
+            return 9;
+        if(nodi>=48 && nodi <=55)
+            return 10;
+        if(nodi>=56 && nodi <=63)
+            return 11;
+        if(nodi>=64)
+            return 12;
+    }
+
     function change_domain(bounds)
     {
         var new_prefix = "reg";
@@ -339,6 +369,11 @@ App.controller('home', function (page) {
                                 {
                                     wind_speed = (feature.properties.ws10n * 0.514444).toFixed(2);
                                     wind_sim = "m/s";
+                                }
+                                else if(vento == 3)
+                                {
+                                    wind_speed = get_beaufort(feature.properties.ws10n);
+                                    wind_sim = "beaufort";
                                 }
                                 if(gradi == 0)
                                 {

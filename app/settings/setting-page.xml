@@ -1,36 +1,35 @@
 <Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd">
-    <ActionBar class="c-bg-aqua" >
-        <Label class="c-white" text="Settings" fontSize="20"></Label>
+    <ActionBar class="blue_background_action_bar">
+        <Label class="" text="Impostazioni" fontSize="20"></Label>
     </ActionBar>
 
     <ScrollView>
         <StackLayout orientation="vertical">
-            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
-                <Label text="Temperatura: " verticalAlignment="center" marginRight="5" marginLeft="5"></Label>
-                <SegmentedBar row="0"  class="m-5" selectedIndex="{{ tempSelection }}" horizontalAlignment="right">
+            <StackLayout orientation="horizontal" verticalAlignment="center" >
+                <Label class="blue_col" width="90" text="Temperatura: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
+                <SegmentedBar selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ tempSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
-                        <SegmentedBarItem title="Celsius"/>
-                        <SegmentedBarItem title="Fahrenheit" />
+                        <SegmentedBarItem title="°C"/>
+                        <SegmentedBarItem title="°F" />
                     </SegmentedBar.items>
                 </SegmentedBar>
             </StackLayout>
 
-
-            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
-                <Label text="Vento: " verticalAlignment="center" marginRight="5" marginLeft="5"></Label>
-                <SegmentedBar row="0"  class="m-5" selectedIndex="{{ windSelection }}" horizontalAlignment="right">
+            <StackLayout orientation="horizontal" verticalAlignment="center">
+                <Label class="blue_col" width="90" text="Vento: " verticalAlignment="center" horizontalAlignment="left" marginRight="5" marginLeft="15" style="font-weight: bold"></Label>
+                <SegmentedBar row="0"  selectedBackgroundColor="rgba(30,76,117,1)" selectedIndex="{{ windSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
-                        <SegmentedBarItem title="Nodi"/>
-                        <SegmentedBarItem title="Km/h" />
+                        <SegmentedBarItem title="kn"/>
+                        <SegmentedBarItem title="km/h" />
                         <SegmentedBarItem title="m/s" />
+                        <SegmentedBarItem title="bft" />
                     </SegmentedBar.items>
                 </SegmentedBar>
             </StackLayout>
 
-
             <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
-                <Label text="Pressione: " verticalAlignment="center" marginRight="5" marginLeft="5"></Label>
-                <SegmentedBar row="0"  class="m-5" selectedIndex="{{ pressureSelection }}" horizontalAlignment="right">
+                <Label class="blue_col" width="85" text="Pressione: " verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
+                <SegmentedBar selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ pressureSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
                         <SegmentedBarItem title="HPa"/>
                         <SegmentedBarItem title="mb"/>
