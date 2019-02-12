@@ -33,8 +33,8 @@
                 <SegmentedBar row="0"  class="m-5" selectedIndex="{{ pressureSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
                         <SegmentedBarItem title="HPa"/>
-                        <SegmentedBarItem title="bar"/>
-                        <SegmentedBarItem title="atm"/>
+                        <SegmentedBarItem title="mb"/>
+                        <SegmentedBarItem title="mmHg"/>
                     </SegmentedBar.items>
                 </SegmentedBar>
             </StackLayout>

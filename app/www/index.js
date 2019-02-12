@@ -176,6 +176,7 @@ App.controller('home', function (page) {
     var snowLayer = null;
     var infoLayer = null;
     var currData = null;
+    var t2cLayer = null;
     var gradi;
     var vento;
     var pressione;
@@ -201,36 +202,48 @@ App.controller('home', function (page) {
         "Open Street Map": osmLayer
     };
 
-    function change_domain(bounds) {
+    function change_domain(bounds)
+    {
         var new_prefix = "reg";
-        if (zoom >= 0 && zoom <= 6) {
+        if (zoom >= 0 && zoom <= 6)
+        {
             new_prefix = 'reg';
-        } else if (zoom >= 7 && zoom <= 10) {
+        }
+        else if (zoom >= 7 && zoom <= 10)
+        {
             new_prefix = 'prov';
-        } else {
+        }
+        else {
             new_prefix = 'com';
         }
-        //console.log("new_prefix:"+new_prefix);
 
-        if (new_prefix != prefix) {
+        if (new_prefix != prefix)
+        {
             prefix = new_prefix;
+            addWindLayer();
+            addCloudLayer();
+            addRainLayer();
             addInfoLayer();
+            addSnowLayer();
+            addT2CLayer();
+
         }
 
-        //console.log("domain:"+domain);
         var new_domain = "d01";
         var boundsD01 = L.latLngBounds(L.latLng(27.64, -19.68), L.latLng(63.48, 34.80));
         var boundsD02 = L.latLngBounds(L.latLng(34.40, 3.58), L.latLng(47.83, 22.26));
         var boundsD03 = L.latLngBounds(L.latLng(39.15, 13.56), L.latLng(41.62, 16.31));
 
-        if (boundsD03.contains(bounds)) {
+        if (boundsD03.contains(bounds))
+        {
             new_domain = "d03";
-        } else if (boundsD02.contains(bounds)) {
+        } else if (boundsD02.contains(bounds))
+        {
             new_domain = "d02";
-        } else {
+        }
+        else {
             new_domain = "d01";
         }
-        //console.log("new_domain:"+new_domain);
 
         if (new_domain != domain) {
             domain = new_domain;
@@ -238,6 +251,8 @@ App.controller('home', function (page) {
             addCloudLayer();
             addRainLayer();
             addInfoLayer();
+            addSnowLayer();
+            addT2CLayer();
         }
     }
 
@@ -279,7 +294,22 @@ App.controller('home', function (page) {
                                 clouds = parseInt(feature.properties.clf * 100); //clouds
                                 dateTime = feature.properties.dateTime;
                                 humidity = feature.properties.rh2; //umidity
-                                pressure = feature.properties.slp; //pressure
+                                press_sim = null;
+                                if(pressione == 0)
+                                {
+                                    pressure = feature.properties.slp; //pressure
+                                    press_sim = "hPa";
+                                }
+                                else if(pressione == 1)
+                                {
+                                    pressure = feature.properties.slp;
+                                    press_sim = "millibar";
+                                }
+                                else if(pressione == 2)
+                                {
+                                    pressure = (feature.properties.slp * 0.75006).toFixed(2);
+                                    press_sim = "mmHg";
+                                }
                                 gradi_sim = null;
                                 wind_sim = null;
 
@@ -290,9 +320,7 @@ App.controller('home', function (page) {
                                 }
                                 else if(gradi == 1)
                                 {
-                                    temp = (feature.properties.t2c * 1.8) + 32;
-                                    var d = Math.pow(10,2);
-                                    tem = (parseInt(temp*d)/d);
+                                    temp = ((feature.properties.t2c * 1.8) + 32).toFixed(2);
                                     gradi_sim = "&#176F";
                                 }
                                 text = feature.properties.text;
@@ -300,20 +328,16 @@ App.controller('home', function (page) {
                                 if(vento == 0)
                                 {
                                     wind_speed = feature.properties.ws10n; //wind_speed
-                                    wind_sim = "knt";
+                                    wind_sim = "kn";
                                 }
                                 else if(vento == 1)
                                 {
-                                    wind_speed = (feature.properties.ws10n * 1.852);
-                                    var d = Math.pow(10,2);
-                                    wind_speed = (parseInt(wind_speed*d)/d);
-                                    wind_sim = "Km/H";
+                                    wind_speed = (feature.properties.ws10n * 1.852).toFixed(2);
+                                    wind_sim = "km/h";
                                 }
                                 else if(vento == 2)
                                 {
-                                    wind_speed = (feature.properties.ws10n * 0.514444);
-                                    var d = Math.pow(10,2);
-                                    wind_speed = (parseInt(wind_speed*d)/d);
+                                    wind_speed = (feature.properties.ws10n * 0.514444).toFixed(2);
                                     wind_sim = "m/s";
                                 }
                                 if(gradi == 0)
@@ -323,9 +347,7 @@ App.controller('home', function (page) {
                                 }
                                 else if(gradi == 1)
                                 {
-                                    wind_chill = (feature.properties.wchill * 1.8) + 32;
-                                    var d = Math.pow(10,2);
-                                    wind_chill = (parseInt(wind_chill*d)/d);
+                                    wind_chill = ((feature.properties.wchill * 1.8) + 32).toFixed(2);
                                     gradi_sim = "&#176F";
                                 }
                                 winds = feature.properties.winds; //winds
@@ -366,7 +388,7 @@ App.controller('home', function (page) {
                                     "</tr>" +
                                     "<tr>" +
                                     "<td class='tg-j0tj'>PRESSURE</td>" +
-                                    "<td class='tg-j0tj'>" + pressure + " HPa</td>" +
+                                    "<td class='tg-j0tj'>" + pressure + " " + press_sim + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
                                     "<td class='tg-7un6'>WIND DIRECTION</td>" +
@@ -474,7 +496,7 @@ App.controller('home', function (page) {
             map.removeLayer(t2cLayer);
         }
 
-        var t2cLayer = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc', {
+        t2cLayer = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc', {
                 layers: 'T2C',
                 styles: 'default-scalar/tspBars',
                 format: 'image/png',
@@ -546,39 +568,31 @@ App.controller('home', function (page) {
         controlLayers.addOverlay(snowLayer, "Snow");
     }
 
-    oWebViewInterface1.on('data', function (cor) {
-        //console.log("Anno: " + cor.anno);
+    oWebViewInterface1.on('data', function (cor)
+    {
         var anno = cor.anno;
-        //console.log("Mese: " + cor.mese);
         var mese = cor.mese;
-        //console.log("Giorno: " + cor.giorno);
         var giorno = cor.giorno;
-        //console.log("Ora: " + cor.ora);
         var ora = cor.ora;
 
         currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
         console.log("Data: " + currData);
 
-        if (map == null) {
+        if (map == null)
+        {
             map = new L.Map('map', {zoomControl: false, attributionControl:false});
-
-
             map.setView(center, zoom);
-
-
             var layerInstance = Esri_WorldImagery;
             layerInstance.addTo(map);
 
             map.on('zoomend', function () {
                 zoom = map.getZoom();
                 change_domain(map.getBounds());
-                //console.log(zoom);
             });
 
             map.on('moveend', function (e) {
                 center = map.getBounds().getCenter();
                 change_domain(map.getBounds());
-                //console.log(center);
             });
 
             controlLayers = L.control.layers(baseLayers, overlayMaps, {
@@ -588,11 +602,11 @@ App.controller('home', function (page) {
         }
 
         addInfoLayer();
-        addRainLayer();
-        addCloudLayer();
-        addT2CLayer();
-        addSnowLayer();
         addWindLayer();
+        addT2CLayer();
+        addCloudLayer();
+        addRainLayer();
+        addSnowLayer();
     });
 
 
@@ -628,11 +642,11 @@ App.controller('home', function (page) {
         ).addTo(map);
 
         addInfoLayer();
-        addRainLayer();
-        addCloudLayer();
-        addT2CLayer();
-        addSnowLayer();
         addWindLayer();
+        addT2CLayer();
+        addCloudLayer();
+        addRainLayer();
+        addSnowLayer();
     });
 
     oWebViewInterface1.on('location', function (cor) {
@@ -640,9 +654,9 @@ App.controller('home', function (page) {
         DynaMarker.setLatLng([cor.lat, cor.lang]) .addTo(map);
     });
 
-    oWebViewInterface1.on('settings', function (cor) {
-       console.log(cor.gradi);
+    oWebViewInterface1.on('settings', function (cor)
+    {
        gradi = cor.gradi;
-       console.log(cor.vento);
        vento = cor.vento;
+       pressione = cor.pressione;
     });

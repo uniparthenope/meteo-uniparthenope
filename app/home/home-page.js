@@ -110,10 +110,10 @@ exports.pageLoaded = function(args)
                   }
 
                   if(appSetting.getNumber("Vento", 0) == 0)
-                    home.set("wind", data1.forecast.ws10n + " knt");
+                    home.set("wind", data1.forecast.ws10n + " kn");
                   else if(appSetting.getNumber("Vento", 0) == 1)
                   {
-                    home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " Km/H");
+                    home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
                   }
                   else if(appSetting.getNumber("Vento", 0) == 2) {
                     home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
@@ -144,7 +144,7 @@ exports.pageLoaded = function(args)
 
           setTimeout(function()
           {
-            oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0)});
+            oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione", 0)});
           }, 800);
         }
       }, function(e){
@@ -215,13 +215,18 @@ exports.onDatePickerLoaded = onDatePickerLoaded;
 
 function onTapNext(args)
 {
-  if(ora+1 >23)
-    ora = "0";
+  if((parseInt(ora)+1) >23)
+  {
+    ora =0;
+    giorno++;
+  }
   else
     ora++;
 
   if(ora < 10)
     ora = "0" + ora;
+  if(giorno < 10)
+    giorno = "0" + giorno;
 
   currData = anno+""+mese+""+giorno+"Z"+ora+"00";
   temp_data = new Date(anno, mese, giorno);
@@ -236,8 +241,11 @@ exports.onTapNext = onTapNext;
 
 function onTapBack(args)
 {
-  if(ora-1 < 0)
+  if((parseInt(ora)-1) < 0)
+  {
     ora = 23;
+    giorno--;
+  }
   else
     ora--;
 
