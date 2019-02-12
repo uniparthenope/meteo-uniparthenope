@@ -183,6 +183,8 @@ App.controller('home', function (page) {
     var temp = 0;
     var wind_speed;
     var pressure;
+    var latitudine;
+    var longitudine;
 
     var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: ''
@@ -699,6 +701,8 @@ App.controller('home', function (page) {
     });
 
     oWebViewInterface1.on('location', function (cor) {
+        latitudine = cor.lat;
+        longitudine = cor.lang;
         var DynaMarker = L.marker([cor.lat,cor.lang], {icon: position});
         DynaMarker.setLatLng([cor.lat, cor.lang]) .addTo(map);
     });
@@ -712,7 +716,7 @@ App.controller('home', function (page) {
 
     oWebViewInterface1.on('centro', function()
     {
-        map.setView(new L.LatLng(40.85, 14.28), 5, { animation: true });
+        map.setView(new L.LatLng(latitudine, longitudine), 11 , { animation: true });
         addInfoLayer();
         addWindLayer();
         addT2CLayer();
