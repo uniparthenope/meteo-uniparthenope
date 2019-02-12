@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "it.uniparthenope.dist.meteouniparthenope",
+    "id": "it.meteo.uniparthenope",
     "tns-ios": {
       "version": "5.1.1"
     },
