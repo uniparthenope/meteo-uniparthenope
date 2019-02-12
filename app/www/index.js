@@ -395,10 +395,10 @@ App.controller('home', function (page) {
                                     "<col style='width: 60px'>" +
                                     "</colgroup>" +
                                     "<tr>" +
-                                    "<th class='tg-baqh' colspan='2'>" + city + "</th>" +
+                                    "<th class='tg-baqh' colspan='2' align='center'>" + city + "</th>" +
                                     "</tr>" +
                                     "<tr>" +
-                                    "<td class='tg-7un6'>COUNTRY</td>" +
+                                    "<td class='tg-7un6'>PAESE</td>" +
                                     "<td class='tg-7un6'>" + country + "</td>" +
                                     "</tr>";
 
@@ -406,7 +406,7 @@ App.controller('home', function (page) {
 
                                 popupString +=
                                     "<tr>" +
-                                    "<td class='tg-j0tj'>TEMP</td>" +
+                                    "<td class='tg-j0tj'>TEMPERATURA</td>" +
                                     "<td class='tg-j0tj'>" + temp + " " + gradi_sim + " </td>" +
                                     "</tr>" +
                                     "<tr>" +
@@ -414,29 +414,29 @@ App.controller('home', function (page) {
                                     "<td class='tg-7un6'>" + text + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
-                                    "<td class='tg-j0tj'>CLOUDS</td>" +
+                                    "<td class='tg-j0tj'>NUVOLOSIT&Agrave</td>" +
                                     "<td class='tg-j0tj'>" + clouds + "%</td>" +
                                     "</tr>" +
                                     "<tr>" +
-                                    "<td class='tg-7un6'>HUMIDITY</td>" +
+                                    "<td class='tg-7un6'>UMIDIT&Agrave</td>" +
                                     "<td class='tg-7un6'>" + humidity + "%</td>" +
                                     "</tr>" +
                                     "<tr>" +
-                                    "<td class='tg-j0tj'>PRESSURE</td>" +
+                                    "<td class='tg-j0tj'>PRESSIONE</td>" +
                                     "<td class='tg-j0tj'>" + pressure + " " + press_sim + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
-                                    "<td class='tg-7un6'>WIND DIRECTION</td>" +
+                                    "<td class='tg-7un6'>DIREZIONE VENTO</td>" +
                                     "<td class='tg-7un6'>" + wind_direction + " N</td>" +
                                     "</tr>" +
                                     "<tr>" +
-                                    "<td class='tg-j0tj'>WIND SPEED</td>" +
+                                    "<td class='tg-j0tj'>VELOCIT&Agrave VENTO</td>" +
                                     "<td class='tg-j0tj'>" + wind_speed + " " + wind_sim + "</td>" +
                                     "</tr>" +
-                                    "<td class='tg-7un6'>WIND CHILL</td>" +
+                                    "<td class='tg-7un6'>TEMP. PERCEPITA</td>" +
                                     "<td class='tg-7un6'>" + wind_chill + " " + gradi_sim +" </td>" +
                                     "</tr>" +
-                                    "<td class='tg-j0tj'>WIND</td>" +
+                                    "<td class='tg-j0tj'>VENTO</td>" +
                                     "<td class='tg-j0tj'>" + winds + "</td>" +
                                     "</tr>" +
                                     "</table>" +

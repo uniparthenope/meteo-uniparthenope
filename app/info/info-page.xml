@@ -2,4 +2,16 @@
     <ActionBar class="blue_background_action_bar">
         <Label class="" text="Info" fontSize="20"></Label>
     </ActionBar>
+
+    <ScrollView>
+        <StackLayout orientation="vertical">
+            <Image src="~/images/logo.png" horizontalAlignment="center" margin="20 20 20 20"></Image>
+            <Image src="~/images/logo_parthenope.png" horizontalAlignment="center" margin="0 30 30 30" width="30%"></Image>
+            <Label textAlignment="center" textWrap="true" text="Centro per il Monitoraggio e la Modellistica Marina e Atmosferica dell'Università Parthenope."></Label>
+            <Label textAlignment="center" textWrap="true" text="Previsioni Meteomarine" marginTop="5"></Label>
+            <Label textAlignment="center" textWrap="true" text="https://meteo.uniparthenope.it" marginTop="5" color="blue" tap="meteo_web"></Label>
+            <Label textAlignment="center" textWrap="true" text="Applicazione sviluppata da Ciro Giuseppe De Vita e Gennaro Mellone (tesi di laurea triennale in Informatica)" marginTop="10"></Label>
+        </StackLayout>
+    </ScrollView>
+
 </Page>
