@@ -17,6 +17,7 @@ components that have the btn class name.
 */
 .btn {
     font-size: 18;
+    color: rgba(30,76,117,1);
 }
 
 .home-panel{

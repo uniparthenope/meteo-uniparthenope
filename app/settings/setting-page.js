@@ -47,8 +47,8 @@ function pageLoaded(args)
                     okButtonText: "Ok",
                     cancelButtonText: "Cancel",
                     defaultText: "URL",
-                    inputType: "text", // email, number, text, password, or email
-                    capitalizationType: "sentences" // all, none, sentences or words
+                    inputType: "text",
+                    capitalizationType: "sentences"
                 };
                 prompt(promptOptions).then((r) => {
                     console.log("Dialog result: ", r.result);
