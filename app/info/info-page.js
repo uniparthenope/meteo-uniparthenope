@@ -23,6 +23,7 @@ exports.meteo_web = meteo_web;
 
 const Button = require("tns-core-modules/ui/button").Button;
 const Page = require("tns-core-modules/ui/page").Page;
+
 function onTapCopy(args)
 {
     var button = args.object;
@@ -31,3 +32,12 @@ function onTapCopy(args)
     page.frame.navigate("copyrights/copyrights-page");
 }
 exports.onTapCopy = onTapCopy;
+
+function onTapDisclaimer(args)
+{
+    var button = args.object;
+    const page = button.page;
+
+    page.frame.navigate("disclaimer/disclaimer-page");
+}
+exports.onTapDisclaimer = onTapDisclaimer;

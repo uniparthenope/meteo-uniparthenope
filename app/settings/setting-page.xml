@@ -27,13 +27,22 @@
                 </SegmentedBar>
             </StackLayout>
 
-            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
-                <Label class="blue_col" width="85" text="Pressione: " verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
+            <StackLayout orientation="horizontal" verticalAlignment="center">
+                <Label class="blue_col" width="85" text="Pressione: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
                 <SegmentedBar selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ pressureSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
                         <SegmentedBarItem title="HPa"/>
                         <SegmentedBarItem title="mb"/>
                         <SegmentedBarItem title="mmHg"/>
+                    </SegmentedBar.items>
+                </SegmentedBar>
+            </StackLayout>
+            <StackLayout orientation="horizontal" verticalAlignment="center" >
+                <Label class="blue_col" width="85" text="Posizione: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
+                <SegmentedBar selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ gpsSelection }}" horizontalAlignment="right">
+                    <SegmentedBar.items>
+                        <SegmentedBarItem title="GPS Interno"/>
+                        <SegmentedBarItem title="SignalK"/>
                     </SegmentedBar.items>
                 </SegmentedBar>
             </StackLayout>

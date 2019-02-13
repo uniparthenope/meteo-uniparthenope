@@ -34,15 +34,39 @@ function pageLoaded(args)
         }
     });
 
-    setting.set("pressureSelection", pressione);
+    //setting.set("gpsSelection", pressione);
     setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
     {
-        if (propertyChangeData.propertyName === "pressureSelection")
+        if (propertyChangeData.propertyName === "gpsSelection")
         {
-            appSettings.setNumber("Pressione", propertyChangeData.value);
+            if (propertyChangeData.value == 1)
+            {
+                const promptOptions = {
+                    title: "SignalK",
+                    message: "Inserire URL server",
+                    okButtonText: "Ok",
+                    cancelButtonText: "Cancel",
+                    defaultText: "URL",
+                    inputType: "text", // email, number, text, password, or email
+                    capitalizationType: "sentences" // all, none, sentences or words
+                };
+                prompt(promptOptions).then((r) => {
+                    console.log("Dialog result: ", r.result);
+                    console.log("Text: ", r.text);
+                });
+            }
+
         }
     });
 
+    setting.set("windSelection", wind);
+    setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
+    {
+        if (propertyChangeData.propertyName === "windSelection")
+        {
+            appSettings.setNumber("Vento", propertyChangeData.value);
+        }
+    });
     page.bindingContext = setting;
 }
 

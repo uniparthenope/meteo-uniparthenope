@@ -1,0 +1,10 @@
+<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd">
+    <ActionBar class="blue_background_action_bar">
+        <Label class="" text="Disclaimer" fontSize="20"></Label>
+    </ActionBar>
+
+    <ScrollView>
+        <Label text="{{ policy }}" textWrap="true" fontSize="13" textAlignment="center" verticalAlignment="center" margin="0 5 0 5"/>
+    </ScrollView>
+
+</Page>
