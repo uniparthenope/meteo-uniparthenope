@@ -627,8 +627,8 @@ var sunny_night_png = L.icon({
                 image: "icon.png",
                 link: "http://meteo.uniparthenope.it",
                 text: "  ",
-                width: "36",
-                height: "36"
+                width: "39",
+                height: "39"
             }).addTo(map);
 
 
@@ -682,13 +682,13 @@ var sunny_night_png = L.icon({
 
         map.setView(new L.LatLng(40.85, 14.28), 5, { animation: true });
 
-        /*var credit = L.controlCredits({
+        var credit = L.controlCredits({
             image: "icon.png",
             link: "http://meteo.uniparthenope.it",
-            text: "Meteo",
-            width: "32",
-            height: "72"
-        }).addTo(map);*/
+            text: "  ",
+            width: "39",
+            height: "39"
+        }).addTo(map);
 
 
         var layerInstance = Esri_WorldImagery;
