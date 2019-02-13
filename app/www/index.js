@@ -620,7 +620,7 @@ var sunny_night_png = L.icon({
 
         if (map == null)
         {
-            map = new L.Map('map', {zoomControl: false, attributionControl:false});
+            map = new L.Map('map', {zoomControl: false, attributionControl:true});
             map.setView(center, zoom);
             var layerInstance = Esri_WorldImagery;
             layerInstance.addTo(map);
@@ -668,7 +668,7 @@ var sunny_night_png = L.icon({
         map.remove();
         controlLayers.remove();
 
-        map = new L.Map('map', {zoomControl: false, attributionControl:false});
+        map = new L.Map('map', {zoomControl: false, attributionControl:true});
 
         map.setView(new L.LatLng(40.85, 14.28), 5, { animation: true });
 

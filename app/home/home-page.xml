@@ -4,6 +4,7 @@
     <ActionBar title="MeteoUniparthenope"/>
 
     <sd:RadSideDrawer id="sideDrawer">
+
         <sd:RadSideDrawer.drawerContent>
             <ScrollView>
                 <StackLayout class="white_background">
