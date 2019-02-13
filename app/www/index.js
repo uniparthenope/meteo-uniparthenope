@@ -622,6 +622,16 @@ var sunny_night_png = L.icon({
         {
             map = new L.Map('map', {zoomControl: false, attributionControl:true});
             map.setView(center, zoom);
+
+            var credit = L.controlCredits({
+                image: "icon.png",
+                link: "http://meteo.uniparthenope.it",
+                text: "  ",
+                width: "36",
+                height: "36"
+            }).addTo(map);
+
+
             var layerInstance = Esri_WorldImagery;
             layerInstance.addTo(map);
 
@@ -671,6 +681,15 @@ var sunny_night_png = L.icon({
         map = new L.Map('map', {zoomControl: false, attributionControl:true});
 
         map.setView(new L.LatLng(40.85, 14.28), 5, { animation: true });
+
+        /*var credit = L.controlCredits({
+            image: "icon.png",
+            link: "http://meteo.uniparthenope.it",
+            text: "Meteo",
+            width: "32",
+            height: "72"
+        }).addTo(map);*/
+
 
         var layerInstance = Esri_WorldImagery;
         layerInstance.addTo(map);
