@@ -34,6 +34,15 @@ function pageLoaded(args)
         }
     });
 
+    setting.set("pressureSelection", pressione);
+    setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
+    {
+        if (propertyChangeData.propertyName === "pressureSelection")
+        {
+            appSettings.setNumber("Pressione", propertyChangeData.value);
+        }
+    });
+
     //setting.set("gpsSelection", pressione);
     setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
     {
@@ -59,14 +68,6 @@ function pageLoaded(args)
         }
     });
 
-    setting.set("windSelection", wind);
-    setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
-    {
-        if (propertyChangeData.propertyName === "windSelection")
-        {
-            appSettings.setNumber("Vento", propertyChangeData.value);
-        }
-    });
     page.bindingContext = setting;
 }
 
