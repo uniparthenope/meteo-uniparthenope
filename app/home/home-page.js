@@ -239,6 +239,8 @@ function onTapNext(args)
 
   if(gps_on)
     oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
+
+  oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0)});
 }
 exports.onTapNext = onTapNext;
 
@@ -261,9 +263,10 @@ function onTapBack(args)
   home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
   oLangWebViewInterface.emit('new_data', {data:currData});
 
-
   if(gps_on)
     oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
+
+  oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0)});
 }
 exports.onTapBack = onTapBack;
 
