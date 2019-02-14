@@ -318,7 +318,6 @@ function addInfoLayer() {
                     },
                     onEachFeature: function (feature, layer) {
                         if (feature.properties) {
-                            //console.log(feature.properties.wd10);
                             country = feature.properties.country;
                             city = feature.properties.name;
                             id = feature.properties.id;
@@ -329,19 +328,16 @@ function addInfoLayer() {
                             if(pressione == 0)
                             {
                                 pressure = feature.properties.slp; //pressure
-                                console.log(pressure);
                                 press_sim = "hPa";
                             }
                             else if(pressione == 1)
                             {
                                 pressure = feature.properties.slp;
-                                console.log(pressure);
                                 press_sim = "millibar";
                             }
                             else if(pressione == 2)
                             {
                                 pressure = (feature.properties.slp * 0.75006).toFixed(2);
-                                console.log(pressure);
                                 press_sim = "mmHg";
                             }
                             gradi_sim = null;
@@ -391,8 +387,7 @@ function addInfoLayer() {
                             }
                             winds = feature.properties.winds; //winds
 
-
-                            popupString = "<div class='popup'>" +
+                            popupString = "<div class='popup' onclick='onClick()'>" +
                                 "<table class='tg' style='undefined;table-layout: fixed; width: 230px'>" +
                                 "<colgroup>" +
                                 "<col style='width: 85px'>" +
@@ -451,18 +446,23 @@ function addInfoLayer() {
                             layer.bindPopup(popupString);
                         }
                     }
-
                 }).addTo(map);
         });
-    })
-        .on("tileunload", function (event) {
+    }).on("tileunload", function (event) {
             if (event.tile.geojson && map)
                 map.removeLayer(event.tile.geojson);
-        });
+    });
 
     map.addLayer(infoLayer);
     controlLayers.addOverlay(infoLayer, "Info");
 }
+
+
+function onClick()
+{
+    oWebViewInterface1.emit('detail', "Prova");
+}
+
 
 function addWindLayer()
 {

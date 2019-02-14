@@ -1,12 +1,12 @@
 var frameModule = require("tns-core-modules/ui/frame");
 var HomeViewModel = require("./home-view-model");
-const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
 var geolocation = require("nativescript-geolocation");
 var nativescript_webview_interface_1 = require("nativescript-webview-interface");
 var Observable = require("data/observable");
 var ObservableArray = require("data/observable-array").ObservableArray;
 const connectivityModule = require("tns-core-modules/connectivity");
 const appSetting = require("application-settings");
+const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
 
 var view = require("ui/core/view");
 var drawer;
@@ -24,7 +24,7 @@ var temp_data;
 var gps_on = false;
 var latitudine;
 var longitudine;
-
+let page;
 var homeViewModel = new HomeViewModel();
 
 function navigatedFrom()
@@ -37,11 +37,12 @@ function setupWebViewInterface(page)
 {
   var webView = page.getViewById('webView');
   oLangWebViewInterface = new nativescript_webview_interface_1.WebViewInterface(webView, '~/www/index.html');
+  listenLangWebViewEvents();
 }
 
 exports.pageLoaded = function(args)
 {
-  const page = args.object;
+  page = args.object;
   setupWebViewInterface(page);
   drawer = view.getViewById(page, "sideDrawer");
 
@@ -278,9 +279,6 @@ function onTapBack(args)
 }
 exports.onTapBack = onTapBack;
 
-
-const Button = require("tns-core-modules/ui/button").Button;
-const Page = require("tns-core-modules/ui/page").Page;
 function onTapSettings(args)
 {
   var button = args.object;
@@ -334,3 +332,15 @@ function get_beaufort(nodi)
   if(nodi>=64)
     return 12;
 }
+
+function listenLangWebViewEvents()
+{
+  oLangWebViewInterface.on('detail', function(eventData)
+  {
+    console.log(eventData);
+    page.frame.navigate("detail/detail-page");
+  });
+}
+
+
+
