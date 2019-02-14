@@ -14,7 +14,7 @@ function pageLoaded(args)
     var setting = new Observable.fromObject({});
     var temp = appSettings.getNumber("Temperatura", 0);
     var wind = appSettings.getNumber("Vento", 0);
-    var pressione = appSettings.getNumber("Pressione", 0);
+    var press = appSettings.getNumber("Pressione", 0);
 
     setting.set("tempSelection", temp);
     setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
@@ -34,7 +34,7 @@ function pageLoaded(args)
         }
     });
 
-    setting.set("pressureSelection", pressione);
+    setting.set("pressureSelection", press);
     setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
     {
         if (propertyChangeData.propertyName === "pressureSelection")
@@ -43,7 +43,7 @@ function pageLoaded(args)
         }
     });
 
-    //setting.set("gpsSelection", pressione);
+    //setting.set("gpsSelection", press);
     setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
     {
         if (propertyChangeData.propertyName === "gpsSelection")

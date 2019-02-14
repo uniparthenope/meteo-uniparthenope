@@ -329,16 +329,19 @@ function addInfoLayer() {
                             if(pressione == 0)
                             {
                                 pressure = feature.properties.slp; //pressure
+                                console.log(pressure);
                                 press_sim = "hPa";
                             }
                             else if(pressione == 1)
                             {
                                 pressure = feature.properties.slp;
+                                console.log(pressure);
                                 press_sim = "millibar";
                             }
                             else if(pressione == 2)
                             {
                                 pressure = (feature.properties.slp * 0.75006).toFixed(2);
+                                console.log(pressure);
                                 press_sim = "mmHg";
                             }
                             gradi_sim = null;

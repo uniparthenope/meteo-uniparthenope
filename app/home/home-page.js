@@ -147,7 +147,7 @@ exports.pageLoaded = function(args)
 
           setTimeout(function()
           {
-            oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione", 0)});
+            oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
           }, 800);
         }
       }, function(e){
@@ -158,7 +158,7 @@ exports.pageLoaded = function(args)
   {
     home.set("current_position", "collapsed");
     oLangWebViewInterface.emit('data', {anno:anno,mese:mese, giorno:giorno, ora:ora});
-    oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0)});
+    oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
     console.log("Error: " + (e.message || e));
   });
 
@@ -189,7 +189,12 @@ function onDatePickerLoaded(args)
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
+
+    oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
   });
+
+
+
   datePicker.on("monthChange", (args) => {
     currData = "";
     if (mese < 10)
@@ -202,6 +207,7 @@ function onDatePickerLoaded(args)
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
+    oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
   });
   datePicker.on("yearChange", (args) => {
     currData = "";
@@ -212,6 +218,8 @@ function onDatePickerLoaded(args)
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
+
+    oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
   });
 }
 exports.onDatePickerLoaded = onDatePickerLoaded;
@@ -240,7 +248,7 @@ function onTapNext(args)
   if(gps_on)
     oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
 
-  oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0)});
+  oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
 }
 exports.onTapNext = onTapNext;
 
@@ -266,7 +274,7 @@ function onTapBack(args)
   if(gps_on)
     oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
 
-  oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0)});
+  oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
 }
 exports.onTapBack = onTapBack;
 
