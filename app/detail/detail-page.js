@@ -4,10 +4,15 @@ var frameModule = require("tns-core-modules/ui/frame");
 const PageDatilViewModel = require("./detail-view-model");
 const detailViewModel = new PageDatilViewModel;
 
+let place;
+
 function pageLoaded(args)
 {
     const page = args.object;
     const detail = new Observable.fromObject({});
+
+    place = page.navigationContext.place;
+    console.log(place);
 
     page.bindingContext = detail;
 }

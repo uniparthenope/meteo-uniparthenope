@@ -337,8 +337,15 @@ function listenLangWebViewEvents()
 {
   oLangWebViewInterface.on('detail', function(eventData)
   {
-    console.log(eventData);
-    page.frame.navigate("detail/detail-page");
+    const nav =
+        {
+          moduleName: "detail/detail-page",
+          context: {
+            place: eventData
+          }
+        };
+
+    page.frame.navigate(nav);
   });
 }
 

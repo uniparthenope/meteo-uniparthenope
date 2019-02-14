@@ -185,6 +185,7 @@ var wind_speed;
 var pressure;
 var latitudine;
 var longitudine;
+var id;
 
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: ''
@@ -397,6 +398,10 @@ function addInfoLayer() {
                                 "<th class='tg-baqh' colspan='2' align='center'>" + city + "</th>" +
                                 "</tr>" +
                                 "<tr>" +
+                                "<td class='tg-7un6'>ID</td>" +
+                                "<td class='tg-7un6'>" + id + "</td>" +
+                                "</tr>"
+                                "<tr>" +
                                 "<td class='tg-7un6'>PAESE</td>" +
                                 "<td class='tg-7un6'>" + country + "</td>" +
                                 "</tr>";
@@ -460,7 +465,7 @@ function addInfoLayer() {
 
 function onClick()
 {
-    oWebViewInterface1.emit('detail', "Prova");
+    oWebViewInterface1.emit('detail', id);
 }
 
 
