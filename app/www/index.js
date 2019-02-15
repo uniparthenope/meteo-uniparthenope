@@ -186,6 +186,7 @@ var pressure;
 var latitudine;
 var longitudine;
 let info_id = null;
+let citta = null;
 
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: ''
@@ -395,7 +396,7 @@ function addInfoLayer() {
                                 "<col style='width: 60px'>" +
                                 "</colgroup>" +
                                 "<tr>" +
-                                "<th class='tg-baqh' colspan='2' align='center'>" + city + "</th>" +
+                                "<th class='tg-baqh' colspan='2' align='center' id='citta'>" + city + "</th>" +
                                 "</tr>" +
                                 "<tr>" +
                                 "<td class='tg-7un6'>ID</td>" +
@@ -455,8 +456,10 @@ function addInfoLayer() {
                                 //var content = popup.getContent();
 
 
+                                citta = L.DomUtil.get('citta').innerHTML;
                                 info_id = L.DomUtil.get('info_id').innerHTML;
                                 console.log(info_id);
+                                console.log(citta);
                             })
                         }
                     }
@@ -473,7 +476,10 @@ function addInfoLayer() {
 
 function onClick()
 {
-    oWebViewInterface1.emit('detail', info_id);
+    var array = [];
+    array.push(info_id);
+    array.push(citta);
+    oWebViewInterface1.emit('detail', array);
 }
 
 

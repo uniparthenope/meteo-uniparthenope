@@ -8,7 +8,7 @@ var press;
 var temp;
 var pageData;
 var place;
-
+var id;
 
 var tempColors = [
     "#2400d8",
@@ -43,11 +43,13 @@ function pageLoaded(args) {
     });
 
     place = page.navigationContext.place;
+    id = page.navigationContext.id;
     console.log(place);
+    console.log(id);
     pageData.set("place", place);
 
 
-    fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/"+ place +"?step=24")
+    fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/"+ id +"?step=24")
         .then((response) => response.json())
         .then((data) => {
             var timeSeries=data['timeseries'];
@@ -59,7 +61,7 @@ function pageLoaded(args) {
                 let sDateTime=year + "-" + month + "-" + day;
 
                 let color = temp2color(timeSeries[i].t2c);
-                console.log(color);
+                //console.log(color);
                 pageData.set("color_temp", color);
 
                 temp.push({key: sDateTime, val: timeSeries[i].t2c});

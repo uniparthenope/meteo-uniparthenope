@@ -337,11 +337,14 @@ function listenLangWebViewEvents()
 {
   oLangWebViewInterface.on('detail', function(eventData)
   {
+    console.log(eventData);
+
     const nav =
         {
           moduleName: "detail/detail-page",
           context: {
-            place: eventData
+            id: eventData[0],
+            place: eventData[1]
           }
         };
 

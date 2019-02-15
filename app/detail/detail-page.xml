@@ -48,18 +48,20 @@
                     <chart:Palette seriesName="Temp">
                         <chart:Palette.entries>
                             <chart:PaletteEntry
-                                    android:fillColor="violet"
-                                    ios:fillColor="violet"
-                                    strokeColor="violet" strokeWidth="3"
+                                    android:fillColor="red"
+                                    ios:fillColor="red"
+                                    strokeColor="red" strokeWidth="3"
                                     android:strokeWidth="6" />
                         </chart:Palette.entries>
                     </chart:Palette>
+
                     <chart:Palette seriesName="Press">
                         <chart:Palette.entries>
-                            <chart:PaletteEntry android:fillColor="blue"
-                                                ios:fillColor="blue"
-                                                strokeColor="blue" strokeWidth="3"
-                                                android:strokeWidth="6" />
+                            <chart:PaletteEntry
+                                    android:fillColor="blue"
+                                    ios:fillColor="blue"
+                                    strokeColor="blue" strokeWidth="3"
+                                    android:strokeWidth="6" />
                         </chart:Palette.entries>
                     </chart:Palette>
                 </chart:RadCartesianChart.palettes>
