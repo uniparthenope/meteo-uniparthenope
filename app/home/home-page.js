@@ -345,7 +345,7 @@ function listenLangWebViewEvents()
           }
         };
 
-    //page.frame.navigate(nav);
+    page.frame.navigate(nav);
   });
 }
 

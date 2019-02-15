@@ -1,6 +1,4 @@
 <Page actionBarHidden="true" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:sd="nativescript-ui-sidedrawer" loaded="pageLoaded" xmlns:x="nativescript-statusbar">
-
-    <x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,0.8)" />
     <ActionBar title="MeteoUniparthenope"/>
 
     <sd:RadSideDrawer id="sideDrawer">

@@ -7,6 +7,7 @@ var detailViewModel = new DetailViewModel();
 var press;
 var temp;
 var pageData;
+var place;
 
 function pageLoaded(args) {
     var page = args.object;
@@ -18,8 +19,12 @@ function pageLoaded(args) {
         press: press
     });
 
+    place = page.navigationContext.place;
+    console.log(place);
+    pageData.set("place", place);
 
-    fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/com63049?step=24")
+
+    fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/"+ place +"?step=24")
         .then((response) => response.json())
         .then((data) => {
             var timeSeries=data['timeseries'];

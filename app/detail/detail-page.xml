@@ -1,8 +1,11 @@
 <Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart">
-    <ActionBar title="Dettagli"></ActionBar>
+    <ActionBar class="blue_background_action_bar">
+        <Label class="" text="Dettagli" fontSize="20"></Label>
+    </ActionBar>
 
     <ScrollView>
         <StackLayout class="p-20">
+            <Label text="{{ place }}" fontSize="20" marginBottom="10"></Label>
             <chart:RadCartesianChart class="m-t-5" height="300">
                 <chart:RadCartesianChart.series>
                     <chart:BarSeries
