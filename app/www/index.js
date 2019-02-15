@@ -451,8 +451,9 @@ function addInfoLayer() {
                             layer.bindPopup(popupString);
 
                             layer.on("click", function (e) {
-                                var popup = e.target.getPopup();
-                                var content = popup.getContent();
+                                //var popup = e.target.getPopup();
+                                //var content = popup.getContent();
+
 
                                 info_id = L.DomUtil.get('info_id').innerHTML;
                                 console.log(info_id);
