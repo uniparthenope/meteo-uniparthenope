@@ -185,7 +185,7 @@ var wind_speed;
 var pressure;
 var latitudine;
 var longitudine;
-var id;
+let info_id = null;
 
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: ''
@@ -399,7 +399,7 @@ function addInfoLayer() {
                                 "</tr>" +
                                 "<tr>" +
                                 "<td class='tg-7un6'>ID</td>" +
-                                "<td class='tg-7un6'>" + id + "</td>" +
+                                "<td class='tg-7un6' id='info_id'>" + id + "</td>" +
                                 "</tr>"
                                 "<tr>" +
                                 "<td class='tg-7un6'>PAESE</td>" +
@@ -449,6 +449,14 @@ function addInfoLayer() {
                             popupString += "</table>" + "</div>";
 
                             layer.bindPopup(popupString);
+
+                            layer.on("click", function (e) {
+                                var popup = e.target.getPopup();
+                                var content = popup.getContent();
+
+                                info_id = L.DomUtil.get('info_id').innerHTML;
+                                console.log(info_id);
+                            })
                         }
                     }
                 }).addTo(map);
@@ -462,10 +470,9 @@ function addInfoLayer() {
     controlLayers.addOverlay(infoLayer, "Info");
 }
 
-
 function onClick()
 {
-    oWebViewInterface1.emit('detail', id);
+    oWebViewInterface1.emit('detail', info_id);
 }
 
 
