@@ -39,7 +39,8 @@ function pageLoaded(args) {
 
     pageData = new Observable.fromObject({
         temp: temp,
-        press: press
+        press: press,
+        items: items
     });
 
     place = page.navigationContext.place;
@@ -120,19 +121,21 @@ function temp2color(temp) {
     return tempColors[index];
 }
 
-var items = new ObservableArray([]);
+var items;
 function onTextChanged(args)
 {
     console.log(args.text);
     fetch("http://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
     {
         console.log(data.length);
+        items = new ObservableArray([]);
         for(let i=0; i<data.length; i++) {
-            console.log(data[i].label);
-            items.push(new autocompleteModule.TokenModel(data[i].label, undefined));
+            //console.log(data[i].label);
+            items.push(new autocompleteModule.TokenModel(data[i].label));
         }
-        pageData.set("places", items);
+
+        console.log(items._array);
+        pageData.set("posti", items);
     });
 }
-
 exports.onTextChanged = onTextChanged;
