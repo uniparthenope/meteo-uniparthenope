@@ -476,10 +476,7 @@ function addInfoLayer() {
 
 function onClick()
 {
-    var array = [];
-    array.push(info_id);
-    array.push(citta);
-    oWebViewInterface1.emit('detail', array);
+    oWebViewInterface1.emit('detail', {info_id:info_id, citta:citta});
 }
 
 

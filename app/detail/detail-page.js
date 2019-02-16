@@ -58,6 +58,7 @@ function pageLoaded(args) {
                 let year = date.substring(0, 4);
                 let month = date.substring(4, 6);
                 let day = date.substring(6, 8);
+                let ora = date.substring(9,11);
                 let sDateTime=year + "-" + month + "-" + day;
 
                 let color = temp2color(timeSeries[i].t2c);
@@ -78,7 +79,6 @@ exports.pageLoaded = pageLoaded;
 function temp2color(temp) {
     var index=0;
 
-    // -40 -30 -20 -15 -10 -5 0 3 6 9 12 15 18 21 25 30 40 50
     if (temp>=-40 && temp<-30) {
         index=0;
     } else if (temp>=-30 && temp<-20) {

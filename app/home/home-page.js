@@ -343,8 +343,8 @@ function listenLangWebViewEvents()
         {
           moduleName: "detail/detail-page",
           context: {
-            id: eventData[0],
-            place: eventData[1]
+            id: eventData.info_id,
+            place: eventData.citta
           }
         };
 
