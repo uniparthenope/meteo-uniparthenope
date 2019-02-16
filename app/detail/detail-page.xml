@@ -66,6 +66,22 @@
                     </chart:Palette>
                 </chart:RadCartesianChart.palettes>
             </chart:RadCartesianChart>
+
+            <StackLayout xmlns:lv="nativescript-ui-autocomplete">
+                <Label text="Seleziona posto: "></Label>
+                <lv:RadAutoCompleteTextView id="autocomplete" textChanged="onTextChanged" items="{{ places }}" completionMode="Contains" suggestMode="Suggest" displayMode="Plain">
+                <lv:RadAutoCompleteTextView.suggestionView>
+                        <lv:SuggestionView suggestionViewHeight="100">
+                            <lv:SuggestionView.suggestionItemTemplate>
+                                <StackLayout orientation="vertical" padding="10">
+                                    <Label text="{{ text }}"></Label>
+                                </StackLayout>
+                            </lv:SuggestionView.suggestionItemTemplate>
+                        </lv:SuggestionView>
+                    </lv:RadAutoCompleteTextView.suggestionView>
+                </lv:RadAutoCompleteTextView>
+            </StackLayout>
+
         </StackLayout>
     </ScrollView>
 </Page>

@@ -7,6 +7,7 @@ var ObservableArray = require("data/observable-array").ObservableArray;
 const connectivityModule = require("tns-core-modules/connectivity");
 const appSetting = require("application-settings");
 const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
+var autocompleteModule = require("nativescript-ui-autocomplete");
 
 var view = require("ui/core/view");
 var drawer;
@@ -46,9 +47,16 @@ exports.pageLoaded = function(args)
   setupWebViewInterface(page);
   drawer = view.getViewById(page, "sideDrawer");
 
-
   home = new Observable.fromObject({});
   home.set("current_position", "collapsed");
+
+  var items = new ObservableArray([]);
+  var artists = ["Arcade Fire", "Bon Iver", "Daft Punk", "Elbow"];
+
+  for (var i = 0; i < artists.length; i++) {
+    items.push(new autocompleteModule.TokenModel(artists[i]));
+  };
+  home.set("places", items);
 
   data = new Date();
   ora = data.getUTCHours();
@@ -193,8 +201,6 @@ function onDatePickerLoaded(args)
 
     oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
   });
-
-
 
   datePicker.on("monthChange", (args) => {
     currData = "";
@@ -351,6 +357,3 @@ function listenLangWebViewEvents()
     page.frame.navigate(nav);
   });
 }
-
-
-

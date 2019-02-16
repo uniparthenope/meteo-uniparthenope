@@ -1,8 +1,7 @@
-<Page actionBarHidden="true" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:sd="nativescript-ui-sidedrawer" loaded="pageLoaded" xmlns:x="nativescript-statusbar">
+<Page actionBarHidden="true" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:sd="nativescript-ui-sidedrawer" loaded="pageLoaded" xmlns:lv="nativescript-ui-autocomplete">
     <ActionBar title="MeteoUniparthenope"/>
 
     <sd:RadSideDrawer id="sideDrawer">
-
         <sd:RadSideDrawer.drawerContent>
             <ScrollView>
                 <StackLayout class="white_background">
@@ -45,7 +44,6 @@
                         <Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 40 10 10" tap="onTapBack"></Image>
                         <Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
                         <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
-
                     </StackLayout>
                 </GridLayout>
             </StackLayout>

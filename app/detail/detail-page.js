@@ -3,6 +3,7 @@ var DetailViewModel = require("./detail-view-model");
 var Observable = require("data/observable");
 var ObservableArray = require("data/observable-array").ObservableArray;
 var detailViewModel = new DetailViewModel();
+var autocompleteModule = require("nativescript-ui-autocomplete");
 
 var press;
 var temp;
@@ -35,7 +36,6 @@ function pageLoaded(args) {
     var page = args.object;
     temp = new ObservableArray();
     press = new ObservableArray();
-
 
     pageData = new Observable.fromObject({
         temp: temp,
@@ -119,3 +119,20 @@ function temp2color(temp) {
 
     return tempColors[index];
 }
+
+var items = new ObservableArray([]);
+function onTextChanged(args)
+{
+    console.log(args.text);
+    fetch("http://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+    {
+        console.log(data.length);
+        for(let i=0; i<data.length; i++) {
+            console.log(data[i].label);
+            items.push(new autocompleteModule.TokenModel(data[i].label, undefined));
+        }
+        pageData.set("places", items);
+    });
+}
+
+exports.onTextChanged = onTextChanged;
