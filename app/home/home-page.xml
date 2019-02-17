@@ -23,8 +23,8 @@
                         <web-view id="webView"></web-view>
                     </ContentView>
 
-                    <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="80" width="220" tap="onTapCenter">
-                        <StackLayout orientation="horizontal" height="80">
+                    <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="100" width="220" tap="onTapCenter">
+                        <StackLayout orientation="horizontal" height="55" marginTop="5">
                             <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
                                 <Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
                             </StackLayout>
@@ -33,10 +33,24 @@
                                 <Label text="{{ temp }}" horizontalAlignment="center" verticalAlignment="center" style="font-size: 24"/>
 
                                 <StackLayout orientation="horizontal" horizontalAlignment="center">
-                                    <Label text="{{ wind_direction }}" style="font-weight:bold;" horizontalAlignment="center" verticalAlignment="center" marginBottom="5" marginRight="10"/>
-                                    <Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" marginBottom="5"/>
+                                    <Label text="{{ wind_direction }}" style="font-weight:bold;" horizontalAlignment="center" verticalAlignment="center" marginRight="10"/>
+                                    <Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" />
                                 </StackLayout>
                             </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="top" horizontalAlignment="center" row="0" col="0" margin="0 10 0 10" width="210">
+                            <lv:RadAutoCompleteTextView hint="Ricerca Luogo ..." id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
+                                <lv:RadAutoCompleteTextView.suggestionView>
+                                    <lv:SuggestionView suggestionViewHeight="150" class="blue_col">
+                                        <lv:SuggestionView.suggestionItemTemplate>
+                                            <StackLayout orientation="vertical" padding="10" class="blue_col">
+                                                <Label text="{{ text }}"></Label>
+                                            </StackLayout>
+                                        </lv:SuggestionView.suggestionItemTemplate>
+                                    </lv:SuggestionView>
+                                </lv:RadAutoCompleteTextView.suggestionView>
+                            </lv:RadAutoCompleteTextView>
                         </StackLayout>
                     </StackLayout>
 
@@ -46,20 +60,6 @@
                         <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
                     </StackLayout>
 
-                    <StackLayout class="blue_background" xmlns:lv="nativescript-ui-autocomplete" horizontalAlignment="left" row="0" col="0" verticalAlignment="top" marginTop="100" marginLeft="10" width="220">
-                        <Label text="Seleziona posto: "></Label>
-                        <lv:RadAutoCompleteTextView style="color:white;" id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
-                            <lv:RadAutoCompleteTextView.suggestionView>
-                                <lv:SuggestionView suggestionViewHeight="150" class="blue_background_action_bar">
-                                    <lv:SuggestionView.suggestionItemTemplate>
-                                        <StackLayout orientation="vertical" padding="10" class="blue_background_action_bar">
-                                            <Label text="{{ text }}"></Label>
-                                        </StackLayout>
-                                    </lv:SuggestionView.suggestionItemTemplate>
-                                </lv:SuggestionView>
-                            </lv:RadAutoCompleteTextView.suggestionView>
-                        </lv:RadAutoCompleteTextView>
-                    </StackLayout>
                 </GridLayout>
             </StackLayout>
         </sd:RadSideDrawer.mainContent>

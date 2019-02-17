@@ -15,6 +15,11 @@ refer to http://docs.nativescript.org/ui/theme.
 For example, the following CSS rule changes the font size of all UI
 components that have the btn class name.
 */
+SearchBar{
+    color: white;
+    tab-text-color: white;
+    textColorHint:white;
+}
 .btn {
     font-size: 18;
     color: rgba(30,76,117,1);
