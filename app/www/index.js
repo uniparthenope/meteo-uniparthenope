@@ -761,6 +761,26 @@ oWebViewInterface1.on('centro', function()
     addSnowLayer();
 });
 
+oWebViewInterface1.on('place_searched', function (cor)
+{
+    let latitudine;
+    let longitudine;
+    fetch("http://193.205.230.6/places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
+    {
+        longitudine = data[0].pos.coordinates[0];
+        latitudine = data[0].pos.coordinates[1];
+    });
+
+
+    map.setView(new L.LatLng(cor.lat, cor.lang), 11 , { animation: true });
+    addInfoLayer();
+    addWindLayer();
+    addT2CLayer();
+    addCloudLayer();
+    addRainLayer();
+    addSnowLayer();
+});
+
 addInfoLayer();
 addWindLayer();
 addT2CLayer();

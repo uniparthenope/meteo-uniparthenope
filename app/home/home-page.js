@@ -374,7 +374,10 @@ function onTextChanged(args)
 }
 exports.onTextChanged = onTextChanged;
 
+
 function didAutoComplete  (args) {
-  console.log(args);
+  let name = (args.text);
+  console.log(name);
+  oLangWebViewInterface.emit('place_searched', {name:name});
 }
 exports.didAutoComplete   = didAutoComplete;
