@@ -357,3 +357,24 @@ function listenLangWebViewEvents()
     page.frame.navigate(nav);
   });
 }
+
+var items;
+function onTextChanged(args)
+{
+  fetch("http://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+  {
+    items = new ObservableArray([]);
+    for(let i=0; i<data.length; i++) {
+      //console.log(data[i].label);
+      items.push(new autocompleteModule.TokenModel(data[i].label));
+    }
+  });
+
+  home.set("posti", items);
+}
+exports.onTextChanged = onTextChanged;
+
+function didAutoComplete  (args) {
+  console.log(args);
+}
+exports.didAutoComplete   = didAutoComplete;

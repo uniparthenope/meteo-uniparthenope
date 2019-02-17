@@ -3,7 +3,6 @@ var DetailViewModel = require("./detail-view-model");
 var Observable = require("data/observable");
 var ObservableArray = require("data/observable-array").ObservableArray;
 var detailViewModel = new DetailViewModel();
-var autocompleteModule = require("nativescript-ui-autocomplete");
 
 var press;
 var temp;
@@ -120,23 +119,3 @@ function temp2color(temp) {
 
     return tempColors[index];
 }
-
-
-var items;
-function onTextChanged(args)
-{
-    console.log(args.text);
-    fetch("http://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
-    {
-        console.log(data.length);
-        items = new ObservableArray([]);
-        for(let i=0; i<data.length; i++) {
-            //console.log(data[i].label);
-            items.push(new autocompleteModule.TokenModel(data[i].label));
-        }
-        console.log(items._array);
-    });
-
-    pageData.set("posti", items);
-}
-exports.onTextChanged = onTextChanged;

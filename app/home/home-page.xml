@@ -45,6 +45,21 @@
                         <Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
                         <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
                     </StackLayout>
+
+                    <StackLayout class="blue_background" xmlns:lv="nativescript-ui-autocomplete" horizontalAlignment="left" row="0" col="0" verticalAlignment="top" marginTop="100" marginLeft="10" width="220">
+                        <Label text="Seleziona posto: "></Label>
+                        <lv:RadAutoCompleteTextView style="color:white;" id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete = "didAutoComplete  ">
+                            <lv:RadAutoCompleteTextView.suggestionView>
+                                <lv:SuggestionView suggestionViewHeight="150" class="blue_background_action_bar">
+                                    <lv:SuggestionView.suggestionItemTemplate>
+                                        <StackLayout orientation="vertical" padding="10" class="blue_background_action_bar">
+                                            <Label text="{{ text }}"></Label>
+                                        </StackLayout>
+                                    </lv:SuggestionView.suggestionItemTemplate>
+                                </lv:SuggestionView>
+                            </lv:RadAutoCompleteTextView.suggestionView>
+                        </lv:RadAutoCompleteTextView>
+                    </StackLayout>
                 </GridLayout>
             </StackLayout>
         </sd:RadSideDrawer.mainContent>
