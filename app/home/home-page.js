@@ -307,7 +307,8 @@ exports.onTapInfo = onTapInfo;
 
 function onTapCenter()
 {
-  oLangWebViewInterface.emit('centro');
+  var position = home.get("position");
+  oLangWebViewInterface.emit('centro', {position:position });
 }
 exports.onTapCenter = onTapCenter;
 
