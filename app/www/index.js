@@ -763,22 +763,28 @@ oWebViewInterface1.on('centro', function()
 
 oWebViewInterface1.on('place_searched', function (cor)
 {
-    let latitudine;
-    let longitudine;
     fetch("http://193.205.230.6/places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
     {
-        longitudine = data[0].pos.coordinates[0];
-        latitudine = data[0].pos.coordinates[1];
+        center = new L.LatLng(data[0].pos.coordinates[1], data[0].pos.coordinates[0]);
+
+        map.setView(center, zoom);
+        map.fitBounds([
+            [data[0].bbox.coordinates[0][1], data[0].bbox.coordinates[0][0]],
+            [data[0].bbox.coordinates[1][1], data[0].bbox.coordinates[1][0]],
+            [data[0].bbox.coordinates[2][1], data[0].bbox.coordinates[2][0]],
+            [data[0].bbox.coordinates[3][1], data[0].bbox.coordinates[3][0]],
+            [data[0].bbox.coordinates[4][1], data[0].bbox.coordinates[4][0]]
+        ]);
+        zoom = map.getZoom();
+        center = map.getBounds().getCenter();
+
+        addInfoLayer();
+        addWindLayer();
+        addT2CLayer();
+        addCloudLayer();
+        addRainLayer();
+        addSnowLayer();
     });
-
-
-    map.setView(new L.LatLng(cor.lat, cor.lang), 11 , { animation: true });
-    addInfoLayer();
-    addWindLayer();
-    addT2CLayer();
-    addCloudLayer();
-    addRainLayer();
-    addSnowLayer();
 });
 
 addInfoLayer();
