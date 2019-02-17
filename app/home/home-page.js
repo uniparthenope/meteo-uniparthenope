@@ -49,6 +49,7 @@ exports.pageLoaded = function(args)
 
   home = new Observable.fromObject({});
   home.set("current_position", "collapsed");
+  home.set("search", "collapsed");
 
   var items = new ObservableArray([]);
   var artists = ["Arcade Fire", "Bon Iver", "Daft Punk", "Elbow"];
@@ -166,6 +167,7 @@ exports.pageLoaded = function(args)
   }, function(e)
   {
     home.set("current_position", "collapsed");
+    home.set("search", "visible");
     oLangWebViewInterface.emit('data', {anno:anno,mese:mese, giorno:giorno, ora:ora});
     oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
     console.log("Error: " + (e.message || e));

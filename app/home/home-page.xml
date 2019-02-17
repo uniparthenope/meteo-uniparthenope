@@ -54,6 +54,22 @@
                         </StackLayout>
                     </StackLayout>
 
+                    <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{search}}" row="0" col="0"  height="50" width="220" tap="onTapCenter">
+                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="center" horizontalAlignment="center" row="0" col="0" margin="0 10 0 10" width="210">
+                            <lv:RadAutoCompleteTextView hint="Ricerca Luogo ..." id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
+                                <lv:RadAutoCompleteTextView.suggestionView>
+                                    <lv:SuggestionView suggestionViewHeight="150" class="blue_col">
+                                        <lv:SuggestionView.suggestionItemTemplate>
+                                            <StackLayout orientation="vertical" padding="10" class="blue_col">
+                                                <Label text="{{ text }}"></Label>
+                                            </StackLayout>
+                                        </lv:SuggestionView.suggestionItemTemplate>
+                                    </lv:SuggestionView>
+                                </lv:RadAutoCompleteTextView.suggestionView>
+                            </lv:RadAutoCompleteTextView>
+                        </StackLayout>
+                    </StackLayout>
+
                     <StackLayout margin="0 10 15 10" class="blue_background" horizontalAlignment="center" row="0" col="0" verticalAlignment="bottom" orientation="horizontal" height="50">
                         <Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 40 10 10" tap="onTapBack"></Image>
                         <Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
