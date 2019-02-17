@@ -70,7 +70,7 @@
 
             <StackLayout xmlns:lv="nativescript-ui-autocomplete">
                 <Label text="Seleziona posto: "></Label>
-                <lv:RadAutoCompleteTextView id="autocomplete" textChanged="onTextChanged" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" >
+                <lv:RadAutoCompleteTextView id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged">
                 <lv:RadAutoCompleteTextView.suggestionView>
                         <lv:SuggestionView suggestionViewHeight="100">
                             <lv:SuggestionView.suggestionItemTemplate>

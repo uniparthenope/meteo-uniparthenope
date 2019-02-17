@@ -39,8 +39,7 @@ function pageLoaded(args) {
 
     pageData = new Observable.fromObject({
         temp: temp,
-        press: press,
-        items: items
+        press: press
     });
 
     place = page.navigationContext.place;
@@ -48,6 +47,7 @@ function pageLoaded(args) {
     console.log(place);
     console.log(id);
     pageData.set("place", place);
+
 
 
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/"+ id +"?step=24")
@@ -121,6 +121,7 @@ function temp2color(temp) {
     return tempColors[index];
 }
 
+
 var items;
 function onTextChanged(args)
 {
@@ -133,10 +134,9 @@ function onTextChanged(args)
             //console.log(data[i].label);
             items.push(new autocompleteModule.TokenModel(data[i].label));
         }
-
         console.log(items._array);
-        pageData.set("posti", items);
     });
+
+    pageData.set("posti", items);
 }
 exports.onTextChanged = onTextChanged;
-
