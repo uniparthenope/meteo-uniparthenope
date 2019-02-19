@@ -50,7 +50,6 @@ exports.pageLoaded = function(args)
   home = new Observable.fromObject({});
   home.set("current_position", "collapsed");
   home.set("search", "collapsed");
-  home.set("places", items);
 
   data = new Date();
   ora = data.getUTCHours();
@@ -354,12 +353,12 @@ function listenLangWebViewEvents()
   });
 }
 
-var items;
+var items = new ObservableArray([]);
 function onTextChanged(args)
 {
   fetch("http://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
   {
-    items = new ObservableArray([]);
+    items.splice(0);
     for(let i=0; i<data.length; i++) {
       //console.log(data[i].label);
       items.push(new autocompleteModule.TokenModel(data[i].label));
@@ -367,6 +366,7 @@ function onTextChanged(args)
   });
 
   home.set("posti", items);
+  //items.splice(0);
 }
 exports.onTextChanged = onTextChanged;
 
