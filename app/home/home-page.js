@@ -94,12 +94,12 @@ exports.pageLoaded = function(args)
 
           if(myConnectionType==1 || myConnectionType==2)
           {
-            fetch("http://193.205.230.6/places/search/bycoords/" + latitudine +"/" + longitudine + "?filter=com").then((response) => response.json()).then((data) =>
+            fetch("https://api.meteo.uniparthenope.it/places/search/bycoords/" + latitudine +"/" + longitudine + "?filter=com").then((response) => response.json()).then((data) =>
             {
               place = data[0].name.it;
               id = data[0].id;
               home.set("position", place);
-              fetch("http://193.205.230.6/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) =>
+              fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) =>
               {
                 //console.log(data1);
                 if (data1.result == "ok")
@@ -356,7 +356,7 @@ function listenLangWebViewEvents()
 var items = new ObservableArray([]);
 function onTextChanged(args)
 {
-  fetch("http://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+  fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
   {
     items.splice(0);
     for(let i=0; i<data.length; i++) {
