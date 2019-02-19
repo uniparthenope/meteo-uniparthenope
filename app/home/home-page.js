@@ -50,13 +50,6 @@ exports.pageLoaded = function(args)
   home = new Observable.fromObject({});
   home.set("current_position", "collapsed");
   home.set("search", "collapsed");
-
-  var items = new ObservableArray([]);
-  var artists = ["Arcade Fire", "Bon Iver", "Daft Punk", "Elbow"];
-
-  for (var i = 0; i < artists.length; i++) {
-    items.push(new autocompleteModule.TokenModel(artists[i]));
-  };
   home.set("places", items);
 
   data = new Date();

@@ -1,8 +1,12 @@
+var chart = require("nativescript-ui-chart");
 var frameModule = require("tns-core-modules/ui/frame");
 var DetailViewModel = require("./detail-view-model");
 var Observable = require("data/observable");
 var ObservableArray = require("data/observable-array").ObservableArray;
 var detailViewModel = new DetailViewModel();
+var Color = require("tns-core-modules/color");
+const view = require("tns-core-modules/ui/core/view");
+var getViewById = require("tns-core-modules/ui/core/view").getViewById;
 
 var press;
 var temp;
@@ -43,11 +47,7 @@ function pageLoaded(args) {
 
     place = page.navigationContext.place;
     id = page.navigationContext.id;
-    console.log(place);
-    console.log(id);
     pageData.set("place", place);
-
-
 
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/"+ id +"?step=24")
         .then((response) => response.json())
@@ -62,14 +62,17 @@ function pageLoaded(args) {
                 let sDateTime=year + "-" + month + "-" + day;
 
                 let color = temp2color(timeSeries[i].t2c);
-                //console.log(color);
-                pageData.set("color_temp", color);
+                console.log(color);
+
+                //bar.fillColor = color;
 
                 temp.push({key: sDateTime, val: timeSeries[i].t2c});
                 press.push({key: sDateTime, val: timeSeries[i].slp});
             }
         })
         .catch(error => console.error("ERROR DATA ", error));
+
+    const bar = view.getViewById(page, "color_temp");
 
     page.bindingContext = pageData;
 }

@@ -23,15 +23,14 @@
                         <web-view id="webView"></web-view>
                     </ContentView>
 
-                    <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="100" width="220" tap="onTapCenter">
-                        <StackLayout orientation="horizontal" height="55" marginTop="5">
+                    <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0"  height="120" width="220" tap="onTapCenter">
+                        <StackLayout orientation="horizontal" height="75" marginTop="5">
                             <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
                                 <Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
                             </StackLayout>
                             <StackLayout orientation="vertical" verticalAlignment="center" horizontalAlignment="right">
                                 <Label text="{{ position }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1; font-size: 16" margin="0 5 0 5"/>
                                 <Label text="{{ temp }}" horizontalAlignment="center" verticalAlignment="center" style="font-size: 24"/>
-
                                 <StackLayout orientation="horizontal" horizontalAlignment="center">
                                     <Label text="{{ wind_direction }}" style="font-weight:bold;" horizontalAlignment="center" verticalAlignment="center" marginRight="10"/>
                                     <Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" />

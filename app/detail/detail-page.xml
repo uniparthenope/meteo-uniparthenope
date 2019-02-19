@@ -16,7 +16,7 @@
                             valueProperty="val"
                             showLabels="false">
                         <chart:BarSeries.labelStyle>
-                            <chart:BarSeriesStyle fillColor="red" margin="10" fontStyle="Bold" textColor="White" />
+                            <chart:BarSeriesStyle margin="10" fontStyle="Bold" textColor="White" />
                         </chart:BarSeries.labelStyle>
                         <chart:BarSeries.horizontalAxis>
                             <chart:CategoricalAxis labelFitMode="Rotate" />
@@ -47,13 +47,10 @@
                 <chart:RadCartesianChart.palettes>
                     <chart:Palette seriesName="Temp">
                         <chart:Palette.entries>
-                            <chart:PaletteEntry
-                                    android:fillColor="red"
-                                    ios:fillColor="red"
-                                    strokeColor="red" strokeWidth="3"
-                                    android:strokeWidth="6" />
+                            <chart:PaletteEntry fillColor="red" strokeColor="red"/>
                         </chart:Palette.entries>
                     </chart:Palette>
+
 
                     <chart:Palette seriesName="Press">
                         <chart:Palette.entries>
