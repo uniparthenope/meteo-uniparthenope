@@ -411,16 +411,8 @@ function addInfoLayer() {
 
                             popupString +=
                                 "<tr>" +
-                                "<td class='tg-j0tj'>TEMPERATURA</td>" +
-                                "<td class='tg-j0tj'>" + temp + " " + gradi_sim + " </td>" +
-                                "</tr>" +
-                                "<tr>" +
-                                "<td class='tg-7un6'>METEO</td>" +
-                                "<td class='tg-7un6'>" + text + "</td>" +
-                                "</tr>" +
-                                "<tr>" +
-                                "<td class='tg-j0tj'>NUVOLOSIT&Agrave</td>" +
-                                "<td class='tg-j0tj'>" + clouds + "%</td>" +
+                                "<td class='tg-7un6'>TEMPERATURA</td>" +
+                                "<td class='tg-7un6'>" + temp + "%</td>" +
                                 "</tr>" +
                                 "<tr>" +
                                 "<td class='tg-7un6'>UMIDIT&Agrave</td>" +
@@ -434,13 +426,6 @@ function addInfoLayer() {
                                 "<td class='tg-7un6'>DIREZIONE VENTO</td>" +
                                 "<td class='tg-7un6'>" + wind_direction + " N</td>" +
                                 "</tr>" +
-                                "<tr>" +
-                                "<td class='tg-j0tj'>VELOCIT&Agrave VENTO</td>" +
-                                "<td class='tg-j0tj'>" + wind_speed + " " + wind_sim + "</td>" +
-                                "</tr>" +
-                                "<td class='tg-7un6'>TEMP. PERCEPITA</td>" +
-                                "<td class='tg-7un6'>" + wind_chill + " " + gradi_sim +" </td>" +
-                                "</tr>" +
                                 "<td class='tg-j0tj'>VENTO</td>" +
                                 "<td class='tg-j0tj'>" + winds + "</td>" +
                                 "</tr>" +
@@ -451,11 +436,7 @@ function addInfoLayer() {
 
                             layer.bindPopup(popupString);
 
-                            layer.on("click", function (e) {
-                                //var popup = e.target.getPopup();
-                                //var content = popup.getContent();
-
-
+                            layer.on("click", function () {
                                 citta = L.DomUtil.get('citta').innerHTML;
                                 info_id = L.DomUtil.get('info_id').innerHTML;
                                 console.log(info_id);

@@ -580,7 +580,6 @@ exports.onTextChanged = onTextChanged;
 
 function didAutoComplete  (args) {
   let name = (args.text);
-  console.log(name);
   var name_new;
   if (name.includes("Municipalità")) {
     var tmp = name.split("-");
@@ -592,8 +591,6 @@ function didAutoComplete  (args) {
     oLangWebViewInterface.emit('place_searched', {name:name});
   }
 
-  console.log("GPS: " + gps_on);
-  console.log(name_new);
   if(gps_on) {
     fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + name_new).then((response) => response.json()).then((data) => {
       id = data[0].id;
@@ -627,7 +624,8 @@ function didAutoComplete  (args) {
     });
   }
 
-  console.log(args.text);
+  console.log("Testo: " + args.text);
+  home.set("text", " ");
 }
 exports.didAutoComplete   = didAutoComplete;
 
