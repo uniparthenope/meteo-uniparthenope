@@ -8,7 +8,6 @@ const connectivityModule = require("tns-core-modules/connectivity");
 const appSetting = require("application-settings");
 const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
 var autocompleteModule = require("nativescript-ui-autocomplete");
-
 var view = require("ui/core/view");
 var drawer;
 var oLangWebViewInterface;
@@ -45,11 +44,13 @@ exports.pageLoaded = function(args)
 {
   page = args.object;
   setupWebViewInterface(page);
-  drawer = view.getViewById(page, "sideDrawer");
 
   home = new Observable.fromObject({});
   home.set("current_position", "collapsed");
   home.set("search", "collapsed");
+
+
+  drawer = view.getViewById(page,"sideDrawer");
 
   data = new Date();
   ora = data.getUTCHours();
@@ -447,3 +448,31 @@ function didAutoComplete  (args) {
   console.log(args.text);
 }
 exports.didAutoComplete   = didAutoComplete;
+
+exports.toggleDrawer = function() {
+  console.log("Tap");
+  drawer.toggleDrawerState();
+};
+
+exports.onTapDetail = function (args)
+{
+  const button = args.object;
+  const  page = button.page;
+  var name = home.get("position");
+  console.log(name);
+
+  fetch("http://193.205.230.6/places/search/byname/" + name).then((response) => response.json()).then((data) =>
+  {
+    console.log("QUI");
+    const nav =
+        {
+          moduleName: "detail/detail-page",
+          context: {
+            id: data[0].id,
+            place: name
+          }
+        };
+
+    page.frame.navigate(nav);
+  });
+};
