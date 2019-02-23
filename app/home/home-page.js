@@ -501,27 +501,27 @@ function get_beaufort(nodi)
     return 0;
   if(nodi>= 1 && nodi<=2)
     return 1;
-  if(nodi>=3 && nodi <=6)
+  if(nodi>2 && nodi <=6)
     return 2;
-  if(nodi>=7 && nodi <=10)
+  if(nodi>6 && nodi <=10)
     return 3;
-  if(nodi>=11 && nodi <=15)
+  if(nodi>10 && nodi <=15)
     return 4;
-  if(nodi>=16 && nodi <=20)
+  if(nodi>15 && nodi <=20)
     return 5;
-  if(nodi>=21 && nodi <=26)
+  if(nodi>20 && nodi <=26)
     return 6;
-  if(nodi>=27 && nodi <=33)
+  if(nodi>26 && nodi <=33)
     return 7;
-  if(nodi>=34 && nodi <=40)
+  if(nodi>33 && nodi <=40)
     return 8;
-  if(nodi>=41 && nodi <=47)
+  if(nodi>40 && nodi <=47)
     return 9;
-  if(nodi>=48 && nodi <=55)
+  if(nodi>47 && nodi <=55)
     return 10;
-  if(nodi>=56 && nodi <=63)
+  if(nodi>55 && nodi <=63)
     return 11;
-  if(nodi>=64)
+  if(nodi>63)
     return 12;
 }
 
