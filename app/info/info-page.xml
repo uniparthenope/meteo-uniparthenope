@@ -12,7 +12,7 @@
             <Label textAlignment="center" textWrap="true" text="Previsioni Meteomarine" marginTop="5"></Label>
             <Label textAlignment="center" textWrap="true" text="https://meteo.uniparthenope.it" marginTop="5" color="blue" tap="meteo_web"></Label>
             <Label textAlignment="center" textWrap="true" text="Applicazione sviluppata da Ciro Giuseppe De Vita e Gennaro Mellone (tesi di laurea triennale in Informatica)" marginTop="10"></Label>
-            <Button textWrap="true" text="Copyrights ©" ontap="onTapCopy" class="blue_background" margin="10 5 0 5"></Button>
+            <Button textWrap="true" text="Copyright ©" ontap="onTapCopy" class="blue_background" margin="10 5 0 5"></Button>
             <Button textWrap="true" text="Disclaimer" ontap="onTapDisclaimer" class="blue_background" margin="10 5 10 5"></Button>
         </StackLayout>
     </ScrollView>
