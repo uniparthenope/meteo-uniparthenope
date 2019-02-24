@@ -9,6 +9,8 @@ const appSetting = require("application-settings");
 const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
 var autocompleteModule = require("nativescript-ui-autocomplete");
 var view = require("ui/core/view");
+
+
 var drawer;
 var oLangWebViewInterface;
 var anno;
@@ -536,7 +538,8 @@ function listenLangWebViewEvents()
           moduleName: "detail/detail-page",
           context: {
             id: eventData.info_id,
-            place: eventData.citta
+            place: eventData.citta,
+            data: currData
           }
         };
 
@@ -649,7 +652,8 @@ exports.onTapDetail = function (args)
           moduleName: "detail/detail-page",
           context: {
             id: data[0].id,
-            place: name
+            place: name,
+            data: currData
           }
         };
 

@@ -412,7 +412,7 @@ function addInfoLayer() {
                             popupString +=
                                 "<tr>" +
                                 "<td class='tg-7un6'>TEMPERATURA</td>" +
-                                "<td class='tg-7un6'>" + temp + "%</td>" +
+                                "<td class='tg-7un6'>" + temp + " " + gradi_sim + "</td>" +
                                 "</tr>" +
                                 "<tr>" +
                                 "<td class='tg-7un6'>UMIDIT&Agrave</td>" +

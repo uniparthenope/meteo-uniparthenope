@@ -1,48 +1,139 @@
 <Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart">
     <ActionBar class="blue_background_action_bar">
-        <Label class="" text="Dettagli" fontSize="20"></Label>
+        <Label class="" text="{{ titolo }}" fontSize="20"></Label>
     </ActionBar>
 
-    <ScrollView>
-        <StackLayout class="p-20">
-            <Label text="{{ place }}" fontSize="20" marginBottom="10"></Label>
-            <chart:RadCartesianChart height="300">
+    <ScrollView height="100%">
+        <StackLayout orientation="vertical" verticalAlignment="top" margin="10 10 10 10">
+            <StackLayout class="blue_background" >
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="5 5 5 5">
+                    <Label text="TEMPERATURA:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ temperatura }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 5 5 5">
+                    <Label text="METEO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ meteo }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 5 5 5">
+                    <Label text="NUVOLOSITÀ:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ cloud }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 5 5 5">
+                    <Label text="UMIDITÀ:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ humidity }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 5 5 5">
+                    <Label text="PRESSIONE:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ pressione }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 5 5 5">
+                    <Label text="DIREZIONE VENTO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ wind_direction }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 5 5 5">
+                    <Label text="VELOCITÀ VENTO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ wind_speed }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 5 5 5">
+                    <Label text="TEMPERATURA PERCEPITA:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ wind_chill }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 5 5 5">
+                    <Label text="VENTO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ wind }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+            </StackLayout>
+
+            <StackLayout class="blue_background" marginTop="20">
+                <FlexboxLayout flexDirection="row">
+                    <!-- Use even flexGrow to achieve uniform grid -->
+                    <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
+                    <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                        <Label text="T Min"/>
+                        <Label text="(°C)"></Label>
+                    </StackLayout>
+                    <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                        <Label text="T Max"/>
+                        <Label text="(°C)"></Label>
+                    </StackLayout>
+                    <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                        <Label text="Vento"/>
+                        <Label text="(Kn)"></Label>
+                    </StackLayout>
+                    <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                        <Label text="Pioggia"/>
+                        <Label text="(mm)"></Label>
+                    </StackLayout>
+                </FlexboxLayout>
+
+                <ListView items="{{ statistic }}" orientation="vertical" marginTop="10" height="270" margin="10 5 5 5">
+                    <ListView.itemTemplate>
+                        <FlexboxLayout flexDirection="row">
+                            <StackLayout flexGrow="1" class="font-weight-bold text-center" width="40%">
+                                <Label text="{{ forecast }}"/>
+                                <Image src="{{ image }}" height="25" width="15"></Image>
+                            </StackLayout>
+                            <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                            <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                            <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                            <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                        </FlexboxLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <Image src="{{ map }}" marginTop="20" />
+
+            <chart:RadCartesianChart height="350" marginTop="20" seriesSelectionMode="Multiple">
                 <chart:RadCartesianChart.series>
                     <chart:BarSeries
                             seriesName="Temp"
-                            legendTitle="Temperatura"
+                            legendTitle="Temperatura (°C)"
                             items="{{ temp }}"
                             categoryProperty="key"
                             valueProperty="val"
                             showLabels="false">
                         <chart:BarSeries.labelStyle>
-                            <chart:BarSeriesStyle margin="10" fontStyle="Bold" textColor="White" />
+                            <chart:BarSeriesStyle margin="10" fontStyle="Bold"/>
                         </chart:BarSeries.labelStyle>
                         <chart:BarSeries.horizontalAxis>
-                            <chart:CategoricalAxis labelFitMode="Rotate" />
+                            <chart:CategoricalAxis labelFitMode="Multiline" labelTextColor="rgba(30,76,117,1)"/>
                         </chart:BarSeries.horizontalAxis>
                         <chart:BarSeries.verticalAxis>
-                            <chart:LinearAxis />
+                            <chart:LinearAxis labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
                         </chart:BarSeries.verticalAxis>
                     </chart:BarSeries>
                     <chart:LineSeries
                             seriesName="Press"
-                            legendTitle="Pressione"
+                            legendTitle="Pressione (hPa)"
                             items="{{ press }}"
                             categoryProperty="key"
                             valueProperty="val"
                             showLabels="false">
                         <chart:LineSeries.labelStyle>
-                            <chart:LineSeriesStyle margin="10" fontStyle="Bold" textColor="White" />
+                            <chart:LineSeriesStyle margin="10" fontStyle="Bold"/>
                         </chart:LineSeries.labelStyle>
                         <chart:LineSeries.horizontalAxis>
                             <chart:CategoricalAxis labelFitMode="Rotate" hidden="true" verticalLocation="Down" zPosition="0"/>
                         </chart:LineSeries.horizontalAxis>
                         <chart:LineSeries.verticalAxis>
-                            <chart:LinearAxis horizontalLocation="Right"/>
+                            <chart:LinearAxis horizontalLocation="Right" labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
                         </chart:LineSeries.verticalAxis>
                     </chart:LineSeries>
                 </chart:RadCartesianChart.series>
+
+                <chart:RadCartesianChart.legend>
+                    <chart:RadLegendView position="Top" enableSelection="true"/>
+                </chart:RadCartesianChart.legend>
+
 
                 <chart:RadCartesianChart.palettes>
                     <chart:Palette seriesName="Temp">
