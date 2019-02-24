@@ -47,7 +47,7 @@
                 <chart:RadCartesianChart.palettes>
                     <chart:Palette seriesName="Temp">
                         <chart:Palette.entries>
-                            <chart:PaletteEntry fillColor="red" strokeColor="red"/>
+                            <chart:PaletteEntry fillColor="rgba(117,145,167,1)" strokeColor="rgba(117,145,167,1)"/>
                         </chart:Palette.entries>
                     </chart:Palette>
 
@@ -55,9 +55,9 @@
                     <chart:Palette seriesName="Press">
                         <chart:Palette.entries>
                             <chart:PaletteEntry
-                                    android:fillColor="blue"
-                                    ios:fillColor="blue"
-                                    strokeColor="blue" strokeWidth="3"
+                                    android:fillColor="rgba(30,76,117,1)"
+                                    ios:fillColor="rgba(30,76,117,1)"
+                                    strokeColor="rgba(30,76,117,1)" strokeWidth="3"
                                     android:strokeWidth="6" />
                         </chart:Palette.entries>
                     </chart:Palette>
