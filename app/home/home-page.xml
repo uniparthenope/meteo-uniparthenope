@@ -40,6 +40,7 @@
                                     <Label text="{{ temp }}"  style="font-size: 24" horizontalAlignment="left"/>
                                     <Image src="~/images/details_button.png" height="25" marginLeft="40" tap="onTapDetail" horizontalAlignment="right"></Image>
                                 </StackLayout>
+
                               <StackLayout orientation="horizontal" horizontalAlignment="left">
                                     <Label text="{{ wind_direction }}" style="font-weight:bold;" horizontalAlignment="center" verticalAlignment="center" marginRight="10"/>
                                     <Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" />
