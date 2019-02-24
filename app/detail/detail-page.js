@@ -19,6 +19,7 @@ var id;
 var data;
 var array;
 var map;
+var products;
 var prod = "wrf5";
 var output = "gen";
 
@@ -48,12 +49,14 @@ function pageLoaded(args) {
     temp = new ObservableArray();
     press = new ObservableArray();
     array = new ObservableArray();
+    products = new ObservableArray();
 
     pageData = new Observable.fromObject({
         temp: temp,
         press: press,
         statistic: array,
-        map:map
+        map:map,
+        products: products
     });
 
     place = page.navigationContext.place;
@@ -78,7 +81,7 @@ function pageLoaded(args) {
                 press.push({key: sDateTime, val: timeSeries[i].slp});
             }
         })
-        .catch(error => console.error("ERROR DATA ", error));
+        .catch(error => console.error("[GRAFICO] ERROR DATA ", error));
 
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id)
         .then((response) => response.json())
@@ -140,7 +143,7 @@ function pageLoaded(args) {
                 array.push({"forecast":weekDayLabel, "image": "~/meteo_icon/" + data.timeseries[i].icon, "TMin": data.timeseries[i]['t2c-min'], "TMax": data.timeseries[i]['t2c-max'], "Wind":data.timeseries[i].winds, "Rain": data.timeseries[i].crh});
             }
         })
-        .catch(error => console.error("ERROR DATA", error));
+        .catch(error => console.error("[LABEL] ERROR DATA", error));
 
     var url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output;
     console.log(url_map);
@@ -154,10 +157,23 @@ function pageLoaded(args) {
             console.log("Somthing went wrong!");
         });
 
+    fetch("https://api.meteo.uniparthenope.it/products")
+        .then((response) => response.json())
+        .then((data) => {
+
+        });
+
+    products.push("Prova");
+    pageData.set("products", products);
+
     page.bindingContext = pageData;
 }
 exports.pageLoaded = pageLoaded;
 
+
+exports.dropDownSelectedIndexChanged = function (args) {
+    console.log("Changed");
+};
 
 function temp2color(temp) {
     var index=0;
