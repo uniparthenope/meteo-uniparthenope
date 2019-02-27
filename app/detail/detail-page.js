@@ -124,7 +124,7 @@ function pageLoaded(args) {
             for(let i=0; i<data.timeseries.length; i++)
             {
                 let weekDayLabel=dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6,8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
-                array.push({"forecast":weekDayLabel, "image": "~/meteo_icon/" + data.timeseries[i].icon, "TMin": data.timeseries[i]['t2c-min'], "TMax": data.timeseries[i]['t2c-max'], "Wind":data.timeseries[i].winds, "Rain": data.timeseries[i].crh});
+                array.push({"forecast":weekDayLabel, "image": "~/meteo_icon/" + data.timeseries[i].icon, "TMin": data.timeseries[i]['t2c-min'], "TMax": data.timeseries[i]['t2c-max'], "Wind":data.timeseries[i].ws10n + " " + data.timeseries[i].winds, "Rain": data.timeseries[i].crh});
             }
         })
         .catch(error => console.error("[LABEL] ERROR DATA", error));
@@ -257,6 +257,15 @@ exports.dropDownSelectedIndexChanged1 = function (args) {
         });
 };
 
+function onTap(args) {
+    const index = args.index;
+    const button = args.object;
+    const page = button.page;
+
+    console.log(array.getItem(index).forecast);
+}
+exports.onTap = onTap;
+
 function get_beaufort(nodi)
 {
     if(nodi < 1)
@@ -293,7 +302,7 @@ function dayOfWeek(date) {
     let day = date.substring(6, 8);
 
     let dayOfWeek = new Date(year + "-" + month + "-" + day).getDay();
-    return isNaN(dayOfWeek) ? null : ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'][dayOfWeek];
+    return isNaN(dayOfWeek) ? null : ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'][dayOfWeek];
 };
 
 function monthOfYear(date) {
