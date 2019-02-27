@@ -765,7 +765,6 @@ oWebViewInterface1.on('place_searched', function (cor)
     {
         console.log("SEARCH: " + cor.name);
         center = new L.LatLng(data[0].pos.coordinates[1], data[0].pos.coordinates[0]);
-        console.log(center);
 
         map.setView(center, zoom);
         map.fitBounds([

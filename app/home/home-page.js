@@ -584,19 +584,22 @@ exports.onTextChanged = onTextChanged;
 function didAutoComplete  (args) {
   let name = (args.text);
   var name_new;
+  var _name;
   if (name.includes("Municipalità")) {
     var tmp = name.split("-");
     name_new = tmp.pop();
     home.set("position", name_new);
+    _name = name_new;
     oLangWebViewInterface.emit('place_searched', {name:name_new});
   } else {
     home.set("position", name);
+    _name = name;
     oLangWebViewInterface.emit('place_searched', {name:name});
   }
 
   if(gps_on) {
-    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + name_new).then((response) => response.json()).then((data) => {
-      id = data[0].id;
+    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + _name).then((response) => response.json()).then((data) => {
+      var id = data[0].id;
       fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         //console.log(data1);
         if (data1.result == "ok") {
