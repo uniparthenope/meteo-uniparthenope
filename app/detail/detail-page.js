@@ -4,12 +4,12 @@ var DetailViewModel = require("./detail-view-model");
 var Observable = require("data/observable");
 var ObservableArray = require("data/observable-array").ObservableArray;
 var detailViewModel = new DetailViewModel();
-var Color = require("tns-core-modules/color");
 const view = require("tns-core-modules/ui/core/view");
 var getViewById = require("tns-core-modules/ui/core/view").getViewById;
 const appSetting = require("application-settings");
 var dialog = require("tns-core-modules/ui/dialogs");
 var imageSource = require("image-source");
+
 
 var press;
 var temp;
@@ -20,29 +20,11 @@ var data;
 var array;
 var map;
 var products;
+var outputs;
 var prod = "wrf5";
 var output = "gen";
-
-var tempColors = [
-    "#2400d8",
-    "#181cf7",
-    "#2857ff",
-    "#3d87ff",
-    "#56b0ff",
-    "#75d3ff",
-    "#99eaff",
-    "#bcf8ff",
-    "#eaffff",
-    "#ffffea",
-    "#fff1bc",
-    "#ffd699",
-    "#ffff75",
-    "#ff7856",
-    "#ff3d3d",
-    "#f72735",
-    "#d8152f",
-    "#a50021"
-];
+var products_map = new Map();
+let outputs_map = new Map();
 
 function pageLoaded(args) {
     var page = args.object;
@@ -50,13 +32,15 @@ function pageLoaded(args) {
     press = new ObservableArray();
     array = new ObservableArray();
     products = new ObservableArray();
+    outputs = new ObservableArray();
 
     pageData = new Observable.fromObject({
         temp: temp,
         press: press,
         statistic: array,
         map:map,
-        products: products
+        products: products,
+        outputs: outputs
     });
 
     place = page.navigationContext.place;
@@ -146,7 +130,9 @@ function pageLoaded(args) {
         .catch(error => console.error("[LABEL] ERROR DATA", error));
 
     var url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output;
+
     console.log(url_map);
+
     imageSource.fromUrl(url_map)
         .then(function () {
             pageData.map = url_map;
@@ -157,67 +143,119 @@ function pageLoaded(args) {
             console.log("Somthing went wrong!");
         });
 
-    fetch("https://api.meteo.uniparthenope.it/products")
-        .then((response) => response.json())
-        .then((data) => {
 
-        });
+    fetch("https://api.meteo.uniparthenope.it/products").then((response) => response.json()).then((data) =>
+    {
+        let product = data['products'];
 
-    products.push("Prova");
+        var keys = Object.keys(product);
+        var key;
+        for(var i=0; i<keys.length; i++){
+            var val = keys[i];
+            key = product[val]['desc']['it'];
+            products_map.set(key, val);
+            products.push(key);
+        }
+
+        let _prod = [...products_map.entries()]
+            .filter(({ 1: v }) => v === prod)
+            .map(([k]) => k);
+
+        console.log(_prod);
+        pageData.set("hint_prod", _prod);
+    });
+
+    fetch("https://api.meteo.uniparthenope.it/products/" + prod).then((response) => response.json()).then((data) =>
+    {
+        let product = data['outputs']['outputs'];
+
+        var keys = Object.keys(product);
+        var key;
+        for(var i=0; i<keys.length; i++){
+            var val = keys[i];
+            key = product[val]['it'];
+            outputs_map.set(key, val);
+            outputs.push(key);
+        }
+
+        let _out = [...outputs_map.entries()]
+            .filter(({ 1: v }) => v === output)
+            .map(([k]) => k);
+
+        console.log(_out);
+        pageData.set("hint_output", _out);
+    });
+
     pageData.set("products", products);
+    pageData.set("outputs", outputs);
 
     page.bindingContext = pageData;
 }
 exports.pageLoaded = pageLoaded;
 
-
 exports.dropDownSelectedIndexChanged = function (args) {
-    console.log("Changed");
+    var out = products.getItem(args.object.selectedIndex);
+    prod = products_map.get(out);
+    output = "gen";
+    outputs_map.clear();
+    outputs.splice(0);
+
+    pageData.set("outputs", null);
+
+    fetch("https://api.meteo.uniparthenope.it/products/" + prod).then((response) => response.json()).then((data) =>
+    {
+        let product = data['outputs']['outputs'];
+
+        var keys = Object.keys(product);
+        var key;
+        for(var i=0; i<keys.length; i++){
+            var val = keys[i];
+            key = product[val]['it'];
+            outputs_map.set(key, val);
+            outputs.push(key);
+        }
+
+        let _out = [...outputs_map.entries()]
+            .filter(({ 1: v }) => v === output)
+            .map(([k]) => k);
+
+        console.log(_out);
+        pageData.set("hint_output", _out);
+    });
+    pageData.set("outputs", outputs);
+
+    var url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output;
+    console.log(url_map);
+
+    imageSource.fromUrl(url_map)
+        .then(function () {
+            pageData.map = url_map;
+        })
+        .then(function () {
+        })
+        .catch(err => {
+            console.log("Somthing went wrong!");
+        });
 };
 
-function temp2color(temp) {
-    var index=0;
+exports.dropDownSelectedIndexChanged1 = function (args) {
+    var out = outputs.getItem(args.object.selectedIndex);
+    output = outputs_map.get(out);
+    console.log(output);
 
-    if (temp>=-40 && temp<-30) {
-        index=0;
-    } else if (temp>=-30 && temp<-20) {
-        index=1;
-    } else if (temp>=-20 && temp<-15) {
-        index=2;
-    } else if (temp>=-15 && temp<-10) {
-        index=3;
-    } else if (temp>=-10 && temp<-5) {
-        index=4;
-    } else if (temp>=-5 && temp<0) {
-        index=5;
-    } else if (temp>=0 && temp<3) {
-        index=6;
-    } else if (temp>=3 && temp<6) {
-        index=7;
-    } else if (temp>=6 && temp<9) {
-        index=8;
-    } else if (temp>=9 && temp<12) {
-        index=9;
-    } else if (temp>=12 && temp<15) {
-        index=10;
-    } else if (temp>=15 && temp<18) {
-        index=11;
-    } else if (temp>=18 && temp<21) {
-        index=12;
-    } else if (temp>=21 && temp<25) {
-        index=13;
-    } else if (temp>=25 && temp<30) {
-        index=14;
-    } else if (temp>=30 && temp<40) {
-        index=15;
-    } else if (temp>=40 && temp<50) {
-        index=16;
-    } else if (temp>=50 ) {
-        index=17;
-    }
+    var url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output;
+    console.log(url_map);
 
-    return tempColors[index];
-}
+    imageSource.fromUrl(url_map)
+        .then(function () {
+            pageData.map = url_map;
+        })
+        .then(function () {
+        })
+        .catch(err => {
+            console.log("Somthing went wrong!");
+        });
+};
 
 function get_beaufort(nodi)
 {

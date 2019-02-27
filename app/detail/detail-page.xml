@@ -90,19 +90,24 @@
                 </ListView>
             </StackLayout>
 
-            <StackLayout marginTop="20">
-                <dd:DropDown items="{{ products }}" selectedIndex="{{ selectedIndex }}"
-                             opened="dropDownOpened" closed="dropDownClosed"
-                             selectedIndexChanged="dropDownSelectedIndexChanged"
-                             row="0" colSpan="2" />
-            </StackLayout>
+            <StackLayout orientation="vertical" marginTop="20">
+                <StackLayout margin="5 5 5 5">
+                    <dd:DropDown
+                            items="{{ products }}" selectedIndex="{{ selectedIndex }}"
+                            hint = "{{ hint_prod }}"
+                            selectedValue = "{{ selectedValue }}"
+                                 opened="dropDownOpened" closed="dropDownClosed"
+                                 selectedIndexChanged="dropDownSelectedIndexChanged"
+                                 row="0" colSpan="2" />
+                </StackLayout>
 
-
-            <StackLayout marginTop="20">
-                <dd:DropDown items="{{ products1 }}" selectedIndex="{{ selectedIndex }}"
-                             opened="dropDownOpened1" closed="dropDownClosed1"
-                             selectedIndexChanged="dropDownSelectedIndexChanged1"
-                             row="0" colSpan="2" />
+                <StackLayout margin="5 5 5 5">
+                    <dd:DropDown items="{{ outputs }}" selectedIndex="{{ selectedIndex1 }}"
+                                 hint="{{ hint_output }}"
+                                 opened="dropDownOpened1" closed="dropDownClosed1"
+                                 selectedIndexChanged="dropDownSelectedIndexChanged1"
+                                 row="0" colSpan="2" />
+                </StackLayout>
             </StackLayout>
 
             <Image src="{{ map }}" marginTop="20" />
