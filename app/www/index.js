@@ -463,7 +463,8 @@ function onClick()
 
 function addWindLayer()
 {
-    $.getJSON(url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData, function (data) {
+    fetch(url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData).then((response) => response.json()).then((data) =>
+    {
         if (windLayer != null)
         {
             controlLayers.removeLayer(windLayer);
@@ -764,6 +765,7 @@ oWebViewInterface1.on('place_searched', function (cor)
     {
         console.log("SEARCH: " + cor.name);
         center = new L.LatLng(data[0].pos.coordinates[1], data[0].pos.coordinates[0]);
+        console.log(center);
 
         map.setView(center, zoom);
         map.fitBounds([
