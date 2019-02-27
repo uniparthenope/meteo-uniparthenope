@@ -9,6 +9,7 @@ const appSetting = require("application-settings");
 const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
 var autocompleteModule = require("nativescript-ui-autocomplete");
 var view = require("ui/core/view");
+var utils = require("tns-core-modules/utils/utils");
 
 
 var drawer;
@@ -630,10 +631,13 @@ function didAutoComplete  (args) {
     });
   }
 
-  console.log("Testo: " + args.text);
-  home.set("text", " ");
+
+  var autocompletetxt= page.getViewById("autocomplete");
+  autocompletetxt.focus();
+  utils.ad.showSoftInput(autocompletetxt.nativeView);
+  utils.ad.dismissSoftInput();
 }
-exports.didAutoComplete   = didAutoComplete;
+exports.didAutoComplete = didAutoComplete;
 
 exports.toggleDrawer = function() {
   console.log("Tap");
