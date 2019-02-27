@@ -208,7 +208,7 @@ function onDatePickerLoaded(args)
     var position = home.get("position");
     console.log(position);
     if(gps_on) {
-      fetch("http://193.205.230.6/places/search/byname/" + position).then((response) => response.json()).then((data) =>
+      fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
       {
         id = data[0].id;
         fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
@@ -259,7 +259,7 @@ function onDatePickerLoaded(args)
     var position = home.get("position");
     console.log(position);
     if(gps_on) {
-      fetch("http://193.205.230.6/places/search/byname/" + position).then((response) => response.json()).then((data) =>
+      fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
       {
         id = data[0].id;
         fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
@@ -308,7 +308,7 @@ function onDatePickerLoaded(args)
     var position = home.get("position");
     console.log(position);
     if(gps_on) {
-      fetch("http://193.205.230.6/places/search/byname/" + position).then((response) => response.json()).then((data) =>
+      fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
       {
         id = data[0].id;
         fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
@@ -374,7 +374,7 @@ function onTapNext()
   var position = home.get("position");
   console.log(position);
   if(gps_on) {
-    fetch("http://193.205.230.6/places/search/byname/" + position).then((response) => response.json()).then((data) =>
+    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
     {
       id = data[0].id;
       fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
@@ -436,7 +436,7 @@ function onTapBack()
   var position = home.get("position");
   console.log(position);
   if(gps_on) {
-    fetch("http://193.205.230.6/places/search/byname/" + position).then((response) => response.json()).then((data) =>
+    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
     {
       id = data[0].id;
       fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
@@ -567,7 +567,7 @@ exports.onTextChanged = onTextChanged;*/
 var items;
 function onTextChanged(args)
 {
-  fetch("http://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+  fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
   {
     items = new ObservableArray([]);
     for(let i=0; i<data.length; i++) {
@@ -637,16 +637,16 @@ exports.toggleDrawer = function() {
   drawer.toggleDrawerState();
 };
 
+
 exports.onTapDetail = function (args)
 {
   const button = args.object;
   const  page = button.page;
   var name = home.get("position");
-  console.log(name);
+  console.log("Detail:" + name);
 
-  fetch("http://193.205.230.6/places/search/byname/" + name).then((response) => response.json()).then((data) =>
+  fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + name).then((response) => response.json()).then((data) =>
   {
-    console.log("QUI");
     const nav =
         {
           moduleName: "detail/detail-page",

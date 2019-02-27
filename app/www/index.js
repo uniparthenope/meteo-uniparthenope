@@ -733,7 +733,7 @@ oWebViewInterface1.on('settings', function (cor)
 
 oWebViewInterface1.on('centro', function(cor)
 {
-    fetch("http://193.205.230.6/places/search/byname/" + cor.position).then((response) => response.json()).then((data) =>
+    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + cor.position).then((response) => response.json()).then((data) =>
     {
         center = new L.LatLng(data[0].pos.coordinates[1], data[0].pos.coordinates[0]);
 
@@ -760,7 +760,7 @@ oWebViewInterface1.on('centro', function(cor)
 
 oWebViewInterface1.on('place_searched', function (cor)
 {
-    fetch("http://193.205.230.6/places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
+    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
     {
         console.log("SEARCH: " + cor.name);
         center = new L.LatLng(data[0].pos.coordinates[1], data[0].pos.coordinates[0]);
