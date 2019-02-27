@@ -79,8 +79,8 @@ function pageLoaded(args) {
                 }
 
                 pageData.set("meteo", data.forecast.text);
-                pageData.set("cloud", (data.forecast.clf * 100) + " %");
-                pageData.set("humidity", data.forecast.rh2 + " %");
+                pageData.set("cloud", (data.forecast.clf * 100).toFixed(2) + " %");
+                pageData.set("humidity", (data.forecast.rh2).toFixed(2) + " %");
 
                 if(appSetting.getNumber("Pressione", 0) == 0)
                     pageData.set("pressione", data.forecast.slp + " hPa");
