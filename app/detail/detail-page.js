@@ -94,7 +94,7 @@ function pageLoaded(args) {
                     pageData.set("temperatura", ((data.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
                 }
 
-                pageData.set("meteo", data.forecast.text);
+                pageData.set("_meteo", data.forecast.text);
                 pageData.set("cloud", (data.forecast.clf * 100).toFixed(2) + " %");
                 pageData.set("humidity", (data.forecast.rh2).toFixed(2) + " %");
 

@@ -14,7 +14,7 @@
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
                     <Label text="METEO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                    <Label text="{{ meteo }}" verticalAlignment="center" style="font-weight:bold;"/>
+                    <Label text="{{ _meteo }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
