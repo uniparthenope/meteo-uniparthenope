@@ -430,6 +430,9 @@ function addInfoLayer() {
                                 "<td class='tg-j0tj'>" + winds + "</td>" +
                                 "</tr>" +
                                 "</table>" +
+                                "<tr>" +
+                                "<img src='~/images/details_button.png' align='right' > </img>" +
+                                "</tr>"
                                 "</div>";
 
                             popupString += "</table>" + "</div>";

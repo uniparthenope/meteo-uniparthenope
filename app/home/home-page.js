@@ -75,19 +75,23 @@ exports.pageLoaded = function(args)
   const myConnectionType = connectivityModule.getConnectionType();
   console.log("Connection: " + myConnectionType);
 
-  geolocation.enableLocationRequest().then(function()
+  geolocation.enableLocationRequest().then(function(e)
   {
     geolocation.isEnabled().then(function(isEnabled)
     {
       gps_on = isEnabled;
       console.log("GPS: " + gps_on);
-
-      var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).then(function(loc)
+      geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).then(function(loc)
       {
+        console.log("qui");
+
         if (loc)
         {
+          console.log("ok");
           latitudine = loc.latitude;
           longitudine = loc.longitude;
+          console.log(latitudine);
+          console.log(longitudine);
           var place, id;
 
           if(myConnectionType==1 || myConnectionType==2)
@@ -216,8 +220,9 @@ function onDatePickerLoaded(args)
 {
   const datePicker = args.object;
   datePicker.on("dayChange", (args) => {
-    currData = "";
-    if (giorno < 10)
+      console.log("Giorno cambiato: " + args.value);
+    currData = " ";
+    if (args.value < 10)
       giorno = "0"+args.value;
     else
       giorno = args.value;
@@ -269,8 +274,9 @@ function onDatePickerLoaded(args)
   });
 
   datePicker.on("monthChange", (args) => {
-    currData = "";
-    if (mese < 10)
+      console.log("Mese cambiato");
+    currData = " ";
+    if (args.value < 10)
       mese = "0"+args.value;
     else
       mese = args.value;
@@ -375,15 +381,12 @@ function onTapNext()
   if((parseInt(ora)+1) >23)
   {
     ora =0;
-    giorno++;
   }
   else
     ora++;
 
   if(ora < 10)
     ora = "0" + ora;
-  if(giorno < 10)
-    giorno = "0" + giorno;
 
   currData = anno+""+mese+""+giorno+"Z"+ora+"00";
   temp_data = new Date(anno, mese, giorno);
@@ -440,7 +443,6 @@ function onTapBack()
   if((parseInt(ora)-1) < 0)
   {
     ora = 23;
-    giorno--;
   }
   else
     ora--;
