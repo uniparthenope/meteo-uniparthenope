@@ -10,7 +10,7 @@ const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
 var autocompleteModule = require("nativescript-ui-autocomplete");
 var view = require("ui/core/view");
 var utils = require("tns-core-modules/utils/utils");
-
+var dialog = require("tns-core-modules/ui/dialogs");
 
 var drawer;
 var oLangWebViewInterface;
@@ -81,7 +81,7 @@ exports.pageLoaded = function(args)
     {
       gps_on = isEnabled;
       console.log("GPS: " + gps_on);
-      geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).then(function(loc)
+      geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 10000, timeout: 20000}).then(function(loc)
       {
         console.log("qui");
 
@@ -97,8 +97,10 @@ exports.pageLoaded = function(args)
           if(myConnectionType==1 || myConnectionType==2)
           {
             if(contatore == 1) {
-              fetch("https://api.meteo.uniparthenope.it/places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
+              fetch("https://api.meteo.uniparthenope.it/places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) =>
+              {
                 place = data[0].long_name.it;
+                console.log("PROVA");
 
                 if (place.includes("Municipalit")) {
                   var tmp = place.split("-");
@@ -193,9 +195,12 @@ exports.pageLoaded = function(args)
         }
       }, function(e){
         console.log("Error: " + e.message);
+          dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
+
       });
     });
-  }, function(e)
+  },
+      function(e)
   {
     gps_on = false;
     home.set("current_position", "collapsed");
