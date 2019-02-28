@@ -732,9 +732,13 @@ oWebViewInterface1.on('settings', function (cor)
     pressione = cor.pressione;
 });
 
+
 oWebViewInterface1.on('centro', function(cor)
 {
-    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + cor.position).then((response) => response.json()).then((data) =>
+    var url = "https://api.meteo.uniparthenope.it/places/search/byname/" + cor.position;
+    console.log(url);
+
+    fetch(url).then((response) => response.json()).then((data) =>
     {
         var id;
         console.log(data.length);
@@ -744,12 +748,13 @@ oWebViewInterface1.on('centro', function(cor)
             console.log(name);
             let name_new;
             let _name;
-            if(name.includes("Municipalità"))
+            if(name.includes("Municipalit"))
             {
                 console.log("MUN");
                 var tmp = name.split("-");
                 name_new = tmp.pop();
                 _name = name_new;
+                console.log(_name);
 
                 if(_name === cor.position)
                     id = i;
@@ -757,8 +762,7 @@ oWebViewInterface1.on('centro', function(cor)
             else
             {
                 console.log("NO MUN");
-                _name = cor.position;
-                if(_name === cor.position)
+                if(name === cor.position)
                     id = i;
             }
         }
@@ -785,19 +789,37 @@ oWebViewInterface1.on('centro', function(cor)
     });
 });
 
-
 oWebViewInterface1.on('place_searched', function (cor)
 {
     fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
     {
-        console.log("SEARCH: " + cor.name);
+        console.log(cor.name);
         var id;
         console.log(data.length);
         for(let i=0; i<data.length; i++)
         {
-            if(data[i].long_name.it === cor.name)
-                id = i;
+            let name = data[i].long_name.it;
+            console.log(name);
+            let name_new;
+            let _name;
+            if (name.includes("Municipalit"))
+            {
+                console.log("MUN");
+                var tmp = name.split("-");
+                name_new = tmp.pop();
+                _name = name_new;
+
+                if(_name === cor.name)
+                    id = i;
+            }
+            else
+            {
+                console.log("NO MUN");
+                if(name === cor.name)
+                    id = i;
+            }
         }
+        console.log(id);
 
         center = new L.LatLng(data[id].pos.coordinates[1], data[id].pos.coordinates[0]);
 

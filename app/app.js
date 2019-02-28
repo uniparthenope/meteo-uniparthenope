@@ -3,6 +3,7 @@ var frame = require("ui/frame");
 
 global.contatore = 0;
 global.place_selected = "";
+global.global_id;
 
 application.run({ moduleName: "app-root" });
 
