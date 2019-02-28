@@ -619,7 +619,7 @@ function didAutoComplete  (args) {
   } else {
     home.set("position", name);
     _name = name;
-    oLangWebViewInterface.emit('place_searched', {name:name});
+    oLangWebViewInterface.emit('place_searched', {name:_name});
   }
   place_selected = _name;
   console.log("POSTO : " + place_selected);
@@ -630,8 +630,26 @@ function didAutoComplete  (args) {
       console.log(data.length);
       for(let i=0; i<data.length; i++)
       {
-        if(data[i].long_name.it === _name)
-          id = data[i].id;
+        let name1 = data[i].long_name.it;
+        console.log(name1);
+        let name_new;
+        let _name;
+        if (name1.includes("Municipalit"))
+        {
+          console.log("MUN");
+          var tmp = name1.split("-");
+          name_new = tmp.pop();
+          _name = name_new;
+
+          if(_name === _name)
+            id = data[i].id;
+        }
+        else
+        {
+          console.log("NO MUN");
+          if(name1 === _name)
+            id = data[i].id;
+        }
       }
       console.log(id);
       global_id = id;
@@ -662,7 +680,7 @@ function didAutoComplete  (args) {
           dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
         }
       })
-          .catch(error => console.error("[SEARCH] ERROR DATA ", error));
+          .catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
     });
   }
 

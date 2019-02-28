@@ -84,7 +84,7 @@
                             </StackLayout>
                             <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
                             <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                            <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                            <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
                             <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
                         </FlexboxLayout>
                     </ListView.itemTemplate>
