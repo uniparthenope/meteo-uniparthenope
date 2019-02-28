@@ -633,15 +633,15 @@ function didAutoComplete  (args) {
         let name1 = data[i].long_name.it;
         console.log(name1);
         let name_new;
-        let _name;
+        let __name;
         if (name1.includes("Municipalit"))
         {
           console.log("MUN");
           var tmp = name1.split("-");
           name_new = tmp.pop();
-          _name = name_new;
+          __name = name_new;
 
-          if(_name === _name)
+          if(__name === _name)
             id = data[i].id;
         }
         else
