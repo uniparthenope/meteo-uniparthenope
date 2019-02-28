@@ -42,6 +42,18 @@ function pageLoaded(args) {
         products: products,
         outputs: outputs
     });
+    pageData.set("isBusy", true);//Load animation
+    pageData.set("isHeigh", "25");
+    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isHeigh_graphic", "25");
+    pageData.set("isBusy_meteo", true);//Load animation
+    pageData.set("isHeigh_meteo", "25");
+    pageData.set("isBusy_map", true);//Load animation
+    pageData.set("isHeigh_map", "25");
+    pageData.set("table", "collapsed");
+    pageData.set("graphic", "collapsed");
+    pageData.set("meteo", "collapsed");
+    pageData.set("_map", "collapsed");
 
     place = page.navigationContext.place;
     id = page.navigationContext.id;
@@ -65,7 +77,11 @@ function pageLoaded(args) {
                 press.push({key: sDateTime, val: timeSeries[i].slp});
             }
         })
-        .catch(error => console.error("[GRAFICO] ERROR DATA ", error));
+        .then(function () {
+            pageData.set("isBusy_graphic", false);
+            pageData.set("isHeigh_graphic", "0");
+            pageData.set("graphic", "visible");
+        }).catch(error => console.error("[GRAFICO] ERROR DATA ", error));
 
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id)
         .then((response) => response.json())
@@ -114,6 +130,11 @@ function pageLoaded(args) {
                 dialog.alert({title: "Errore", message: data.details, okButtonText: "OK"});
             }
         })
+        .then(function () {
+        pageData.set("isBusy_meteo", false);
+        pageData.set("isHeigh_meteo", "0");
+        pageData.set("meteo", "visible");
+    })
         .catch(error => console.error("ERROR DATA ", error));
 
 
@@ -127,7 +148,11 @@ function pageLoaded(args) {
                 array.push({"forecast":weekDayLabel, "image": "~/meteo_icon/" + data.timeseries[i].icon, "TMin": data.timeseries[i]['t2c-min'], "TMax": data.timeseries[i]['t2c-max'], "Wind":data.timeseries[i].ws10n + " " + data.timeseries[i].winds, "Rain": data.timeseries[i].crh});
             }
         })
-        .catch(error => console.error("[LABEL] ERROR DATA", error));
+        .then(function () {
+            pageData.set("isBusy", false);
+            pageData.set("isHeigh", "0");
+            pageData.set("table", "visible");
+        }).catch(error => console.error("[LABEL] ERROR DATA", error));
 
     var url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output;
 
@@ -136,8 +161,10 @@ function pageLoaded(args) {
     imageSource.fromUrl(url_map)
         .then(function () {
             pageData.map = url_map;
-        })
-        .then(function () {
+        }).then(function () {
+            pageData.set("isBusy_map", false);
+            pageData.set("isHeigh_map", "0");
+            pageData.set("_map", "visible");
         })
         .catch(err => {
             console.log("Somthing went wrong!");

@@ -5,7 +5,8 @@
 
     <ScrollView height="100%">
         <StackLayout orientation="vertical" verticalAlignment="top" margin="10 10 10 10">
-            <StackLayout class="blue_background_opac" >
+            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
+            <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="10 10 5 10">
                     <Label text="TEMPERATURA:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ temperatura }}" verticalAlignment="center" style="font-weight:bold;"/>
@@ -52,7 +53,8 @@
                 </FlexboxLayout>
             </StackLayout>
 
-            <StackLayout class="blue_background_opac" marginTop="20">
+            <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
+            <StackLayout class="blue_background_opac" marginTop="20" visibility="{{ table }}">
                 <FlexboxLayout flexDirection="row">
                     <!-- Use even flexGrow to achieve uniform grid -->
                     <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
@@ -111,9 +113,11 @@
                 </StackLayout>
             </StackLayout>
 
-            <Image src="{{ map }}" marginTop="20" />
+            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
+            <Image src="{{ map }}" marginTop="20" visibility="{{ _map }}"/>
 
-            <chart:RadCartesianChart height="350" marginTop="20" seriesSelectionMode="Multiple">
+            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
+            <chart:RadCartesianChart height="350" marginTop="20" seriesSelectionMode="Multiple" visibility="{{ graphic }}">
                 <chart:RadCartesianChart.series>
                     <chart:BarSeries
                             seriesName="Temp"
