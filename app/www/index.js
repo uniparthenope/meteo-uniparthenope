@@ -736,15 +736,42 @@ oWebViewInterface1.on('centro', function(cor)
 {
     fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + cor.position).then((response) => response.json()).then((data) =>
     {
-        center = new L.LatLng(data[0].pos.coordinates[1], data[0].pos.coordinates[0]);
+        var id;
+        console.log(data.length);
+        for(let i=0; i<data.length; i++)
+        {
+            let name = data[i].long_name.it;
+            console.log(name);
+            let name_new;
+            let _name;
+            if(name.includes("Municipalità"))
+            {
+                console.log("MUN");
+                var tmp = name.split("-");
+                name_new = tmp.pop();
+                _name = name_new;
+
+                if(_name === cor.position)
+                    id = i;
+            }
+            else
+            {
+                console.log("NO MUN");
+                _name = cor.position;
+                if(_name === cor.position)
+                    id = i;
+            }
+        }
+        console.log(id);
+        center = new L.LatLng(data[id].pos.coordinates[1], data[id].pos.coordinates[0]);
 
         map.setView(center, zoom);
         map.fitBounds([
-            [data[0].bbox.coordinates[0][1], data[0].bbox.coordinates[0][0]],
-            [data[0].bbox.coordinates[1][1], data[0].bbox.coordinates[1][0]],
-            [data[0].bbox.coordinates[2][1], data[0].bbox.coordinates[2][0]],
-            [data[0].bbox.coordinates[3][1], data[0].bbox.coordinates[3][0]],
-            [data[0].bbox.coordinates[4][1], data[0].bbox.coordinates[4][0]]
+            [data[id].bbox.coordinates[0][1], data[id].bbox.coordinates[0][0]],
+            [data[id].bbox.coordinates[1][1], data[id].bbox.coordinates[1][0]],
+            [data[id].bbox.coordinates[2][1], data[id].bbox.coordinates[2][0]],
+            [data[id].bbox.coordinates[3][1], data[id].bbox.coordinates[3][0]],
+            [data[id].bbox.coordinates[4][1], data[id].bbox.coordinates[4][0]]
         ]);
         zoom = map.getZoom();
         center = map.getBounds().getCenter();
@@ -764,15 +791,23 @@ oWebViewInterface1.on('place_searched', function (cor)
     fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
     {
         console.log("SEARCH: " + cor.name);
-        center = new L.LatLng(data[0].pos.coordinates[1], data[0].pos.coordinates[0]);
+        var id;
+        console.log(data.length);
+        for(let i=0; i<data.length; i++)
+        {
+            if(data[i].long_name.it === cor.name)
+                id = i;
+        }
+
+        center = new L.LatLng(data[id].pos.coordinates[1], data[id].pos.coordinates[0]);
 
         map.setView(center, zoom);
         map.fitBounds([
-            [data[0].bbox.coordinates[0][1], data[0].bbox.coordinates[0][0]],
-            [data[0].bbox.coordinates[1][1], data[0].bbox.coordinates[1][0]],
-            [data[0].bbox.coordinates[2][1], data[0].bbox.coordinates[2][0]],
-            [data[0].bbox.coordinates[3][1], data[0].bbox.coordinates[3][0]],
-            [data[0].bbox.coordinates[4][1], data[0].bbox.coordinates[4][0]]
+            [data[id].bbox.coordinates[0][1], data[id].bbox.coordinates[0][0]],
+            [data[id].bbox.coordinates[1][1], data[id].bbox.coordinates[1][0]],
+            [data[id].bbox.coordinates[2][1], data[id].bbox.coordinates[2][0]],
+            [data[id].bbox.coordinates[3][1], data[id].bbox.coordinates[3][0]],
+            [data[id].bbox.coordinates[4][1], data[id].bbox.coordinates[4][0]]
         ]);
         zoom = map.getZoom();
         center = map.getBounds().getCenter();

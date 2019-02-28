@@ -74,6 +74,7 @@
                     </StackLayout>
                 </FlexboxLayout>
 
+
                 <ListView items="{{ statistic }}" itemTap="onTap" orientation="vertical" marginTop="10" height="270" margin="10 5 5 5">
                     <ListView.itemTemplate>
                         <FlexboxLayout flexDirection="row">

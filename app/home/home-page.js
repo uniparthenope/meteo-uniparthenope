@@ -30,12 +30,6 @@ var longitudine;
 let page;
 var homeViewModel = new HomeViewModel();
 
-function navigatedFrom()
-{
-  oLangWebViewInterface.destroy();
-}
-exports.navigatedFrom = navigatedFrom;
-
 function setupWebViewInterface(page)
 {
   var webView = page.getViewById('webView');
@@ -47,11 +41,12 @@ exports.pageLoaded = function(args)
 {
   page = args.object;
   setupWebViewInterface(page);
+  contatore++;
+  console.log("Contatore: " + contatore);
 
   home = new Observable.fromObject({});
   home.set("current_position", "collapsed");
   home.set("search", "collapsed");
-
 
   drawer = view.getViewById(page,"sideDrawer");
 
@@ -87,64 +82,109 @@ exports.pageLoaded = function(args)
       gps_on = isEnabled;
       console.log("GPS: " + gps_on);
 
-      var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).then(function(loc) {
-        if (loc) {
+      var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 20000, timeout: 20000}).then(function(loc)
+      {
+        if (loc)
+        {
           latitudine = loc.latitude;
           longitudine = loc.longitude;
           var place, id;
 
-          //console.log("Latitude: " + latitudine);
-          //console.log("Longitude: " + longitudine);
-
           if(myConnectionType==1 || myConnectionType==2)
           {
-            fetch("https://api.meteo.uniparthenope.it/places/search/bycoords/" + latitudine +"/" + longitudine + "?filter=com").then((response) => response.json()).then((data) =>
+            if(contatore == 1) {
+              fetch("https://api.meteo.uniparthenope.it/places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
+                place = data[0].long_name.it;
+
+                if (place.includes("Municipalità")) {
+                  var tmp = place.split("-");
+                  var tmp1 = tmp.pop();
+                  home.set("position", tmp1);
+                  place_selected = tmp1;
+                  console.log("POSTO : " + place_selected);
+                } else {
+                  home.set("position", place);
+                  place_selected = place;
+                  console.log("POSTO : " + place_selected);
+                }
+
+                id = data[0].id;
+                fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+                  //console.log(data1);
+                  if (data1.result == "ok") {
+                    home.set("current_position", "visible");
+                    if (appSetting.getNumber("Temperatura", 0) == 0)
+                      home.set("temp", data1.forecast.t2c + " °C");
+                    else if (appSetting.getNumber("Temperatura", 0) == 1) {
+                      home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+                    }
+                    if (appSetting.getNumber("Vento", 0) == 0)
+                      home.set("wind", data1.forecast.ws10n + " kn");
+                    else if (appSetting.getNumber("Vento", 0) == 1) {
+                      home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+                    } else if (appSetting.getNumber("Vento", 0) == 2) {
+                      home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+                    } else if (appSetting.getNumber("Vento", 0) == 3) {
+                      home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+                    }
+
+                    home.set("wind_direction", data1.forecast.winds);
+                    home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+                  } else if (data1.result == "error") {
+                    home.set("current_position", "collapsed");
+                    dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+                  }
+                })
+                    .catch(error => console.error("[SEARCH] ERROR DATA ", error));
+              });
+            }
+            else
             {
-              place = data[0].long_name.it;
-              if(place.includes("Municipalità")) {
-                var tmp = place.split("-");
-                home.set("position", tmp.pop());
-              }
-              else
-                home.set("position", place);
-
-              id = data[0].id;
-              fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) =>
+              fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + place_selected).then((response) => response.json()).then((data) =>
               {
-                //console.log(data1);
-                if (data1.result == "ok")
-                {
-                  home.set("current_position", "visible");
-                  if(appSetting.getNumber("Temperatura", 0) == 0)
-                    home.set("temp", data1.forecast.t2c + " °C");
-                  else if(appSetting.getNumber("Temperatura",0) == 1) {
-                    home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
-                  }
-                  if(appSetting.getNumber("Vento", 0) == 0)
-                    home.set("wind", data1.forecast.ws10n + " kn");
-                  else if(appSetting.getNumber("Vento", 0) == 1)
-                  {
-                    home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
-                  }
-                  else if(appSetting.getNumber("Vento", 0) == 2) {
-                    home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
-                  }
-                  else if(appSetting.getNumber("Vento",0) == 3)
-                  {
-                    home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
-                  }
+                //console.log(data);
+                var place = data[0].long_name.it;
+                if (place.includes("Municipalità")) {
+                  var tmp = place.split("-");
+                  var tmp1 = tmp.pop();
+                  home.set("position", tmp1);
+                  place_selected = tmp1;
+                  console.log("POSTO : " + place_selected);
+                } else {
+                  home.set("position", place);
+                  place_selected = place;
+                  console.log("POSTO : " + place_selected);
+                }
 
-                  home.set("wind_direction", data1.forecast.winds);
-                  home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
-                }
-                else if (data1.result == "error")
+                id = data[0].id;
+                fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) =>
                 {
-                  home.set("current_position", "collapsed");
-                  dialog.alert({ title: "Errore", message: data1.details, okButtonText: "OK" });
-                }
-              })
-                  .catch(error => console.error("[SEARCH] ERROR DATA ", error));
-            });
+                  if (data1.result == "ok") {
+                    home.set("current_position", "visible");
+                    if (appSetting.getNumber("Temperatura", 0) == 0)
+                      home.set("temp", data1.forecast.t2c + " °C");
+                    else if (appSetting.getNumber("Temperatura", 0) == 1) {
+                      home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+                    }
+                    if (appSetting.getNumber("Vento", 0) == 0)
+                      home.set("wind", data1.forecast.ws10n + " kn");
+                    else if (appSetting.getNumber("Vento", 0) == 1) {
+                      home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+                    } else if (appSetting.getNumber("Vento", 0) == 2) {
+                      home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+                    } else if (appSetting.getNumber("Vento", 0) == 3) {
+                      home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+                    }
+
+                    home.set("wind_direction", data1.forecast.winds);
+                    home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+                  } else if (data1.result == "error") {
+                    home.set("current_position", "collapsed");
+                    dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+                  }
+                }).catch(error => console.error("[SEARCH] ERROR DATA ", error));
+              });
+            }
           }
 
           setTimeout(function()
@@ -584,6 +624,7 @@ exports.onTextChanged = onTextChanged;
 
 function didAutoComplete  (args) {
   let name = (args.text);
+  console.log(name);
   var name_new;
   var _name;
   if (name.includes("Municipalità")) {
@@ -597,10 +638,20 @@ function didAutoComplete  (args) {
     _name = name;
     oLangWebViewInterface.emit('place_searched', {name:name});
   }
+  place_selected = _name;
+  console.log("POSTO : " + place_selected);
 
   if(gps_on) {
     fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + _name).then((response) => response.json()).then((data) => {
-      var id = data[0].id;
+      var id;
+      console.log(data.length);
+      for(let i=0; i<data.length; i++)
+      {
+        if(data[i].long_name.it === _name)
+          id = data[i].id;
+      }
+
+      console.log(id);
       fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         //console.log(data1);
         if (data1.result == "ok") {
@@ -630,7 +681,6 @@ function didAutoComplete  (args) {
           .catch(error => console.error("[SEARCH] ERROR DATA ", error));
     });
   }
-
 
   var autocompletetxt= page.getViewById("autocomplete");
   autocompletetxt.focus();
