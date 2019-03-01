@@ -58,7 +58,7 @@ function pageLoaded(args) {
     place = page.navigationContext.place;
     id = page.navigationContext.id;
     data = page.navigationContext.data;
-    console.log(data);
+    console.log("[DATA DETTAGLI]" + data);
     pageData.set("titolo", place);
 
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/"+ id +"?step=24")
@@ -83,7 +83,7 @@ function pageLoaded(args) {
             pageData.set("graphic", "visible");
         }).catch(error => console.error("[GRAFICO] ERROR DATA ", error));
 
-    fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id)
+    fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data)
         .then((response) => response.json())
         .then((data) => {
             if (data.result == "ok")

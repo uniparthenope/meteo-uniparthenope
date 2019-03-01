@@ -845,10 +845,3 @@ oWebViewInterface1.on('place_searched', function (cor)
         addSnowLayer();
     });
 });
-
-addInfoLayer();
-addWindLayer();
-addT2CLayer();
-addCloudLayer();
-addRainLayer();
-addSnowLayer();

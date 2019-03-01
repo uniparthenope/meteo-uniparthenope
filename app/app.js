@@ -16,13 +16,3 @@ application.on(application.suspendEvent, (args) => {
         console.log("UIApplication: " + args.ios);
     }
 });
-
-application.on(application.exitEvent, (args) => {
-    if (args.android) {
-        contatore = 0;
-        console.log("Activity exit: " + args.android);
-    } else if (args.ios) {
-        contatore = 0;
-        console.log("UIApplication exit: " + args.ios);
-    }
-});
