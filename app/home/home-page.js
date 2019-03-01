@@ -11,6 +11,7 @@ var autocompleteModule = require("nativescript-ui-autocomplete");
 var view = require("ui/core/view");
 var utils = require("tns-core-modules/utils/utils");
 var dialog = require("tns-core-modules/ui/dialogs");
+require( "nativescript-master-technology" );
 
 var drawer;
 var oLangWebViewInterface;
@@ -196,6 +197,7 @@ exports.pageLoaded = function(args)
           else
           {
             dialog.alert({title: "Errore", message: "Nessuna connessione ad Internet!!", okButtonText: "OK"});
+            //process.exit();
           }
 
           setTimeout(function()

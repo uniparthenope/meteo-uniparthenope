@@ -431,7 +431,7 @@ function addInfoLayer() {
                                 "</tr>" +
                                 "</table>" +
                                 "<tr>" +
-                                "<img src='~/images/details_button.png' align='right' > </img>" +
+                                "<img src='details_button.png' height='25' width='25' align='right' > </img>" +
                                 "</tr>"
                                 "</div>";
 
