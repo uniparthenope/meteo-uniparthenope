@@ -581,6 +581,8 @@ function addRainLayer() {
             LOGSCALE: "false"
         }
     );
+
+    map.addLayer(rainLayer);
     controlLayers.addOverlay(rainLayer, "Pioggia");
 }
 
@@ -608,6 +610,8 @@ function addSnowLayer() {
             LOGSCALE: "false"
         }
     );
+
+    map.addLayer(snowLayer);
     controlLayers.addOverlay(snowLayer, "Neve");
 }
 
@@ -626,13 +630,13 @@ oWebViewInterface1.on('data', function (cor)
         map = new L.Map('map', {zoomControl: false, attributionControl:true});
         map.setView(center, zoom);
 
-        var credit = L.controlCredits({
+        /*var credit = L.controlCredits({
             image: "icon.png",
             link: "http://meteo.uniparthenope.it",
             text: "  ",
             width: "39",
             height: "39"
-        }).addTo(map);
+        }).addTo(map);*/
 
         var layerInstance = Esri_WorldImagery;
         layerInstance.addTo(map);
@@ -667,34 +671,13 @@ oWebViewInterface1.on('new_data', function (cor)
     console.log(cor.data);
     currData = cor.data;
 
-    domain = "d01";
-    prefix = "reg";
-
-
     map.removeLayer(windLayer);
     map.removeLayer(snowLayer);
     map.removeLayer(t2cLayer);
     map.removeLayer(infoLayer);
     map.removeLayer(cloudLayer);
     map.removeLayer(rainLayer);
-    map.remove();
     controlLayers.remove();
-
-    map = new L.Map('map', {zoomControl: false, attributionControl:true});
-
-    map.setView(new L.LatLng(40.85, 14.28), 5, { animation: true });
-
-    var credit = L.controlCredits({
-        image: "icon.png",
-        link: "http://meteo.uniparthenope.it",
-        text: "  ",
-        width: "39",
-        height: "39"
-    }).addTo(map);
-
-
-    var layerInstance = Esri_WorldImagery;
-    layerInstance.addTo(map);
 
     map.on('zoomend', function () {
         zoom = map.getZoom();

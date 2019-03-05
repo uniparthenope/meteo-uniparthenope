@@ -35,21 +35,21 @@
                             <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
                                 <Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
                             </StackLayout>
-                            <StackLayout orientation="vertical" verticalAlignment="center" horizontalAlignment="right" tap="onTapCenter">
-
+                            <StackLayout orientation="vertical" verticalAlignment="center" horizontalAlignment="right">
                                 <StackLayout horizontalAlignment="center" verticalAlignment="center" orientation="horizontal">
                                     <Label text="{{ temp }}"  style="font-size: 24" horizontalAlignment="left"/>
-                                    <Image src="~/images/details_button.png" height="25" marginLeft="40" tap="onTapDetail" horizontalAlignment="right"></Image>
+                                    <Image src="~/images/details_button.png" height="25" marginLeft="40" tap="onTapDetail"></Image>
                                 </StackLayout>
 
-                              <StackLayout orientation="horizontal" horizontalAlignment="left">
+                                <StackLayout orientation="horizontal" horizontalAlignment="left" marginTop="5">
                                     <Label text="{{ wind_direction }}" style="font-weight:bold;" horizontalAlignment="center" verticalAlignment="center" marginRight="10"/>
                                     <Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" />
+                                    <Image src="~/images/location.png" height="25" tap="onTapCenter" marginLeft="10"></Image>
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>
 
-                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="top" horizontalAlignment="center" row="0" col="0" margin="0 10 0 10" width="210">
+                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="top" horizontalAlignment="center" row="0" col="0" margin="0 0 0 10" width="210">
                             <lv:RadAutoCompleteTextView hint="Ricerca Luogo ..." id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
                                 <lv:RadAutoCompleteTextView.suggestionView>
                                     <lv:SuggestionView suggestionViewHeight="150" class="blue_col">

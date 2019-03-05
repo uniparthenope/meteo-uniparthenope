@@ -16,20 +16,14 @@ android {
     //   		abiFilters "armeabi-v7a"
  		// }
   
-  }  
+  }
+
+
+  project.ext {
+    googlePlayServicesVersion = "11.2.+"
+  }
+
   aaptOptions {  
     additionalParameters "--no-version-vectors"  
   }
-}
-
-dependencies {
-  compile "com.google.android.gms:play-services-base:15.0.1"
-}
-
-project.ext {
-       googlePlayServicesVersion = "15.0.1"
-}
-dependencies {
-   def googlePlayServicesVersion = project.googlePlayServicesVersion
-   compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
 }

@@ -90,7 +90,6 @@ exports.pageLoaded = function(args)
   }
 
   const myConnectionType = connectivityModule.getConnectionType();
-  console.log("Connection: " + myConnectionType);
 
   geolocation.enableLocationRequest().then(function(e)
   {
@@ -98,10 +97,8 @@ exports.pageLoaded = function(args)
     {
       gps_on = isEnabled;
       console.log("GPS: " + gps_on);
-      geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 10000, timeout: 20000}).then(function(loc)
+      geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 10000, timeout: 5000}).then(function(loc)
       {
-        console.log(loc);
-
         if (loc)
         {
           console.log("ok");
@@ -221,8 +218,7 @@ exports.pageLoaded = function(args)
 
       });
     });
-  },
-      function(e)
+  }, function(e)
   {
     gps_on = false;
     home.set("current_position", "collapsed");

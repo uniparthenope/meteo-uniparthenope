@@ -1,4 +1,4 @@
-<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart"  xmlns:dd="nativescript-drop-down">
+<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart"  xmlns:dd="nativescript-drop-down" xmlns:elv="~/nativescript-expandable-list-view">
     <ActionBar class="blue_background_action_bar" flat="true">
         <Label text="{{ titolo }}" fontSize="20"></Label>
     </ActionBar>
@@ -76,8 +76,7 @@
                     </StackLayout>
                 </FlexboxLayout>
 
-
-                <ListView items="{{ statistic }}" itemTap="onTap" orientation="vertical" marginTop="10" height="270" margin="10 5 5 5">
+                <ListView items="{{ statistic }}" itemTap="onTap" orientation="vertical" marginTop="10" height="{{ altezza }}" margin="10 5 5 5">
                     <ListView.itemTemplate>
                         <FlexboxLayout flexDirection="row">
                             <StackLayout flexGrow="1" class="font-weight-bold text-center" width="40%">
@@ -130,10 +129,10 @@
                             <chart:BarSeriesStyle margin="10" fontStyle="Bold"/>
                         </chart:BarSeries.labelStyle>
                         <chart:BarSeries.horizontalAxis>
-                            <chart:CategoricalAxis labelFitMode="Multiline" labelTextColor="rgba(30,76,117,1)"/>
+                            <chart:CategoricalAxis labelFitMode="Rotate"  height="0" labelTextColor="rgba(30,76,117,1)"/>
                         </chart:BarSeries.horizontalAxis>
                         <chart:BarSeries.verticalAxis>
-                            <chart:LinearAxis labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
+                            <chart:LinearAxis  labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
                         </chart:BarSeries.verticalAxis>
                     </chart:BarSeries>
                     <chart:LineSeries
@@ -147,7 +146,7 @@
                             <chart:LineSeriesStyle margin="10" fontStyle="Bold"/>
                         </chart:LineSeries.labelStyle>
                         <chart:LineSeries.horizontalAxis>
-                            <chart:CategoricalAxis labelFitMode="Rotate" hidden="true" verticalLocation="Down" zPosition="0"/>
+                            <chart:CategoricalAxis labelFitMode="Rotate" height="0" hidden="true" verticalLocation="Down" zPosition="0"/>
                         </chart:LineSeries.horizontalAxis>
                         <chart:LineSeries.verticalAxis>
                             <chart:LinearAxis horizontalLocation="Right" labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
@@ -159,14 +158,12 @@
                     <chart:RadLegendView position="Top" enableSelection="true"/>
                 </chart:RadCartesianChart.legend>
 
-
                 <chart:RadCartesianChart.palettes>
                     <chart:Palette seriesName="Temp">
                         <chart:Palette.entries>
                             <chart:PaletteEntry fillColor="rgba(117,145,167,1)" strokeColor="rgba(117,145,167,1)"/>
                         </chart:Palette.entries>
                     </chart:Palette>
-
 
                     <chart:Palette seriesName="Press">
                         <chart:Palette.entries>
@@ -179,6 +176,7 @@
                     </chart:Palette>
                 </chart:RadCartesianChart.palettes>
             </chart:RadCartesianChart>
+
         </StackLayout>
     </ScrollView>
 </Page>

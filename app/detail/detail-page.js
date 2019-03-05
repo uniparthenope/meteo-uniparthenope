@@ -9,7 +9,7 @@ var getViewById = require("tns-core-modules/ui/core/view").getViewById;
 const appSetting = require("application-settings");
 var dialog = require("tns-core-modules/ui/dialogs");
 var imageSource = require("image-source");
-
+var ExpandableListItem = require("na");
 
 var press;
 var temp;
@@ -23,8 +23,10 @@ var products;
 var outputs;
 var prod = "wrf5";
 var output = "gen";
-var products_map = new Map();
+let products_map = new Map();
 let outputs_map = new Map();
+
+let mesi = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
 
 function pageLoaded(args) {
     var page = args.object;
@@ -61,7 +63,7 @@ function pageLoaded(args) {
     console.log("[DATA DETTAGLI]" + data);
     pageData.set("titolo", place);
 
-    fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/"+ id +"?step=24")
+    fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/"+ id +"?step=1")
         .then((response) => response.json())
         .then((data) => {
             var timeSeries=data['timeseries'];
@@ -71,7 +73,7 @@ function pageLoaded(args) {
                 let month = date.substring(4, 6);
                 let day = date.substring(6, 8);
                 let ora = date.substring(9,11);
-                let sDateTime=year + "-" + month + "-" + day;
+                let sDateTime=month + "-" + day + "H" + ora;
 
                 temp.push({key: sDateTime, val: timeSeries[i].t2c});
                 press.push({key: sDateTime, val: timeSeries[i].slp});
@@ -142,6 +144,7 @@ function pageLoaded(args) {
         .then((response) => response.json())
         .then((data) =>
         {
+            pageData.set("altezza", data.timeseries.length * 45);
             for(let i=0; i<data.timeseries.length; i++)
             {
                 let weekDayLabel=dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6,8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
@@ -289,7 +292,23 @@ function onTap(args) {
     const button = args.object;
     const page = button.page;
 
-    console.log(array.getItem(index).forecast);
+    var name = array.getItem(index).forecast;
+
+    var tmp = name.split("- ");
+    var name_new = tmp.pop();
+    var day = name_new.substring(0,2);
+    var month = name_new.substring(3, 7);
+
+    var data = new Date();
+
+    let _month = mesi.indexOf(month) +1;
+    if(_month < 10)
+        _month = "0" + _month;
+
+    var selected_data = data.getUTCFullYear() + "" + _month + "" + day + "Z0000";
+
+    let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + selected_data + "&hours=24";
+    console.log(url);
 }
 exports.onTap = onTap;
 
