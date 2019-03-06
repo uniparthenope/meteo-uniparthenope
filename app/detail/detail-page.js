@@ -483,7 +483,7 @@ function print_output(prod)
 
 function print_hours()
 {
-    var h = ['1', '3', '6', '9', '12', '24'];
+    var h = ['1', '3', '6', '12', '24'];
     for(let i=0; i<h.length; i++)
     {
         hours.push(h[i]);
