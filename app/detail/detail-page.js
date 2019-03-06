@@ -12,6 +12,7 @@ var imageSource = require("image-source");
 
 var press;
 var temp;
+var single_item;
 var pageData;
 var place;
 var id;
@@ -22,7 +23,7 @@ var products;
 var outputs;
 var prod = "wrf5";
 var output = "gen";
-var step = "6";
+var step = "1";
 var hour = "0";
 let products_map = new Map();
 let outputs_map = new Map();
@@ -34,6 +35,7 @@ function pageLoaded(args) {
     var page = args.object;
     temp = new ObservableArray();
     press = new ObservableArray();
+    single_item = new ObservableArray();
     array = new ObservableArray();
     products = new ObservableArray();
     outputs = new ObservableArray();
@@ -42,6 +44,7 @@ function pageLoaded(args) {
     pageData = new Observable.fromObject({
         temp: temp,
         press: press,
+        single_item: single_item,
         statistic: array,
         map:map,
         products: products,
@@ -52,12 +55,17 @@ function pageLoaded(args) {
     pageData.set("isHeigh", "25");
     pageData.set("isBusy_graphic", true);//Load animation
     pageData.set("isHeigh_graphic", "25");
+    pageData.set("isBusy1", true);//Load animation
+    pageData.set("isHeigh1", "25");
+    pageData.set("isBusy_graphic1", true);//Load animation
+    pageData.set("isHeigh_graphic1", "25");
     pageData.set("isBusy_meteo", true);//Load animation
     pageData.set("isHeigh_meteo", "25");
     pageData.set("isBusy_map", true);//Load animation
     pageData.set("isHeigh_map", "25");
     pageData.set("table", "collapsed");
     pageData.set("graphic", "collapsed");
+    pageData.set("graphic1", "collapsed");
     pageData.set("meteo", "collapsed");
     pageData.set("_map", "collapsed");
 
@@ -99,6 +107,13 @@ exports.dropDownSelectedIndexChanged = function (args) {
     print_output(prod);
     pageData.set("outputs", outputs);
     print_map(id, prod, output, data);
+
+    single_item.splice(0);
+    temp.splice(0);
+    press.splice(0);
+    print_chart(id, prod, output, hours, step);
+
+    console.log(prod + " " + output);
 };
 
 exports.dropDownSelectedIndexChanged1 = function (args) {
@@ -106,14 +121,22 @@ exports.dropDownSelectedIndexChanged1 = function (args) {
     output = outputs_map.get(out);
 
     print_map(id, prod, output, data);
+    single_item.splice(0);
+    temp.splice(0);
+    press.splice(0);
+    print_chart(id, prod, output, hours, step);
+
+    console.log(prod + " " + output);
 };
 
 exports.dropDownSelectedIndexChanged2 = function (args) {
     var h = hours.getItem(args.object.selectedIndex);
+    step = h;
 
+    single_item.splice(0);
     temp.splice(0);
     press.splice(0);
-    print_chart(id, prod, output, hours, h);
+    print_chart(id, prod, output, hours, step);
 };
 
 function onTap(args) {
@@ -201,18 +224,120 @@ function print_chart(place, product, output, hours, step)
                 let ora = date.substring(9,11);
                 let sDateTime=month + "-" + day + "H" + ora;
 
-                temp.push({key: sDateTime, val: (timeSeries[i].t2c)});
-                press.push({key: sDateTime, val: (timeSeries[i].slp)});
+                if(product == 'wrf5')
+                {
+                    if(output == 'gen' || output == 'tsp')
+                    {
+                        pageData.set("title_1", "Temperatura (°C)");
+                        pageData.set("title_2", "Pressione (hPa)");
+                        temp.push({key: sDateTime, val: (timeSeries[i].t2c)});
+                        press.push({key: sDateTime, val: (timeSeries[i].slp)});
+                        pageData.set("isBusy_graphic", false);
+                        pageData.set("isHeigh_graphic", "0");
+                        pageData.set("graphic", "visible");
+                        pageData.set("isBusy_graphic1", false);
+                        pageData.set("isHeigh_graphic1", "0");
+                        pageData.set("graphic1", "collapsed");
+                    }
+                    else if(output == 'wn1')
+                    {
+                        pageData.set("title_1", "Velocità vento 10m (knt)");
+                        pageData.set("title_2", "Velocità vento 10m (°N)");
+                        temp.push({key: sDateTime, val: (timeSeries[i].ws10n)});
+                        press.push({key: sDateTime, val: (timeSeries[i].wd10)});
+                        pageData.set("isBusy_graphic", false);
+                        pageData.set("isHeigh_graphic", "0");
+                        pageData.set("graphic", "visible");
+                        pageData.set("isBusy_graphic1", false);
+                        pageData.set("isHeigh_graphic1", "0");
+                        pageData.set("graphic1", "collapsed");
+                    }
+                    else if(output == 'crh')
+                    {
+                        pageData.set("title_1", "Pioggia (mm)");
+                        pageData.set("title_2", "Nuvolosità (%)");
+                        temp.push({key: sDateTime, val: (timeSeries[i].crh)});
+                        press.push({key: sDateTime, val: (timeSeries[i].clf * 100).toFixed(2)});
+                        pageData.set("isBusy_graphic", false);
+                        pageData.set("isHeigh_graphic", "0");
+                        pageData.set("graphic", "visible");
+                        pageData.set("isBusy_graphic1", false);
+                        pageData.set("isHeigh_graphic1", "0");
+                        pageData.set("graphic1", "collapsed");
+                    }
+                }
+                else if(product == 'rms3')
+                {
+                    if(output == 'gen' || output == 'scu')
+                    {
+                        pageData.set("title_1", "Corrente superficiale (m/s)");
+                        pageData.set("title_2", "Direzione corrente superficiale (°N)");
+                        temp.push({key: sDateTime, val: (timeSeries[i].scm)});
+                        press.push({key: sDateTime, val: (timeSeries[i].scd)});
+                        pageData.set("isBusy_graphic", false);
+                        pageData.set("isHeigh_graphic", "0");
+                        pageData.set("graphic", "visible");
+                        pageData.set("isBusy_graphic1", false);
+                        pageData.set("isHeigh_graphic1", "0");
+                        pageData.set("graphic1", "collapsed");
+                    }
+                    else if(output == 'sts')
+                    {
+                        pageData.set("title_1", "Temperatura superficiale (°C)");
+                        pageData.set("title_2", "Salinità superficiale (1/1000)");
+                        temp.push({key: sDateTime, val: (timeSeries[i].sst)});
+                        press.push({key: sDateTime, val: (timeSeries[i].sss)});
+                        pageData.set("isBusy_graphic", false);
+                        pageData.set("isHeigh_graphic", "0");
+                        pageData.set("graphic", "visible");
+                        pageData.set("isBusy_graphic1", false);
+                        pageData.set("isHeigh_graphic1", "0");
+                        pageData.set("graphic1", "collapsed");
+                    }
+                    else if(output == 'sss')
+                    {
+                        pageData.set("graphic", "collapsed");
+                        pageData.set("title_s", "Salinità superficiale");
+                        single_item.push({key: sDateTime, val: (timeSeries[i].sss)});
+                        pageData.set("isBusy_graphic1", false);
+                        pageData.set("isHeigh_graphic1", "0");
+                        pageData.set("graphic1", "visible");
+                        pageData.set("isBusy_graphic", false);
+                        pageData.set("isHeigh_graphic", "0");
+                        pageData.set("graphic", "collapsed");
+                    }
+                    else if(output == "sst")
+                    {
+                        pageData.set("title_s", "Temperatura superficiale");
+                        single_item.push({key: sDateTime, val: (timeSeries[i].sst)});
+                        pageData.set("isBusy_graphic1", false);
+                        pageData.set("isHeigh_graphic1", "0");
+                        pageData.set("graphic1", "visible");
+                        pageData.set("isBusy_graphic", false);
+                        pageData.set("isHeigh_graphic", "0");
+                        pageData.set("graphic", "collapsed");
+                    }
+                }
+                else if(product == 'wcm3')
+                {
+                    if(output == 'gen' || output == 'con')
+                    {
+                        pageData.set("title_s", "Concentrazione particelle");
+                        single_item.push({key: sDateTime, val: timeSeries[i].con});
+                        pageData.set("isBusy_graphic1", false);
+                        pageData.set("isHeigh_graphic1", "0");
+                        pageData.set("graphic1", "visible");
+                        pageData.set("isBusy_graphic", false);
+                        pageData.set("isHeigh_graphic", "0");
+                        pageData.set("graphic", "collapsed");
+                    }
+                }
             }
-        })
-        .then(function () {
-            pageData.set("isBusy_graphic", false);
-            pageData.set("isHeigh_graphic", "0");
-            pageData.set("graphic", "visible");
         }).catch(error => console.error("[GRAFICO] ERROR DATA ", error));
 
     return;
 }
+
 
 function print_meteo(id, data)
 {
@@ -363,5 +488,5 @@ function print_hours()
     {
         hours.push(h[i]);
     }
-    pageData.set("hint_hours", "6");
+    pageData.set("hint_hours", "1");
 }

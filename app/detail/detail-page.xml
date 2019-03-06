@@ -127,8 +127,8 @@
                 <chart:RadCartesianChart height="350" marginTop="20" seriesSelectionMode="Multiple" visibility="{{ graphic }}">
                     <chart:RadCartesianChart.series>
                         <chart:BarSeries
-                                seriesName="Temp"
-                                legendTitle="Temperatura (°C)"
+                                seriesName="1"
+                                legendTitle="{{ title_1 }}"
                                 items="{{ temp }}"
                                 categoryProperty="key"
                                 valueProperty="val"
@@ -144,8 +144,8 @@
                             </chart:BarSeries.verticalAxis>
                         </chart:BarSeries>
                         <chart:LineSeries
-                                seriesName="Press"
-                                legendTitle="Pressione (hPa)"
+                                seriesName="2"
+                                legendTitle="{{ title_2 }}"
                                 items="{{ press }}"
                                 categoryProperty="key"
                                 valueProperty="val"
@@ -167,13 +167,13 @@
                     </chart:RadCartesianChart.legend>
 
                     <chart:RadCartesianChart.palettes>
-                        <chart:Palette seriesName="Temp">
+                        <chart:Palette seriesName="1">
                             <chart:Palette.entries>
                                 <chart:PaletteEntry fillColor="rgba(117,145,167,1)" strokeColor="rgba(117,145,167,1)"/>
                             </chart:Palette.entries>
                         </chart:Palette>
 
-                        <chart:Palette seriesName="Press">
+                        <chart:Palette seriesName="2">
                             <chart:Palette.entries>
                                 <chart:PaletteEntry
                                         android:fillColor="rgba(30,76,117,1)"
@@ -185,6 +185,43 @@
                     </chart:RadCartesianChart.palettes>
                 </chart:RadCartesianChart>
             </StackLayout>
+
+
+            <ActivityIndicator  class="activity-indicator" busy="{{ isBusy_graphic1 }}" height="{{isHeigh_graphic1}}" />
+            <chart:RadCartesianChart height="350" marginTop="20" visibility="{{ graphic1 }}">
+                <chart:RadCartesianChart.series>
+                    <chart:BarSeries
+                            seriesName="1"
+                            legendTitle="{{ title_s }}"
+                            items="{{ single_item }}"
+                            categoryProperty="key"
+                            valueProperty="val"
+                            showLabels="true">
+                        <chart:BarSeries.labelStyle>
+                            <chart:BarSeriesStyle margin="10" fontStyle="Bold"/>
+                        </chart:BarSeries.labelStyle>
+                        <chart:BarSeries.horizontalAxis>
+                            <chart:CategoricalAxis labelFitMode="Rotate"  height="0" labelTextColor="rgba(30,76,117,1)"/>
+                        </chart:BarSeries.horizontalAxis>
+                        <chart:BarSeries.verticalAxis>
+                            <chart:LinearAxis  labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
+                        </chart:BarSeries.verticalAxis>
+                    </chart:BarSeries>
+                </chart:RadCartesianChart.series>
+
+                <chart:RadCartesianChart.legend>
+                    <chart:RadLegendView position="Top" enableSelection="true"/>
+                </chart:RadCartesianChart.legend>
+
+                <chart:RadCartesianChart.palettes>
+                    <chart:Palette seriesName="1">
+                        <chart:Palette.entries>
+                            <chart:PaletteEntry fillColor="rgba(117,145,167,1)" strokeColor="rgba(117,145,167,1)"/>
+                        </chart:Palette.entries>
+                    </chart:Palette>
+                </chart:RadCartesianChart.palettes>
+            </chart:RadCartesianChart>
+
         </StackLayout>
     </ScrollView>
 </Page>
