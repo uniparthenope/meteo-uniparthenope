@@ -115,7 +115,7 @@
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
             <Image src="{{ map }}" marginTop="20" visibility="{{ _map }}"/>
 
-
+            <Label text="Seleziona step: " marginTop="5"></Label>
             <StackLayout margin="5 5 5 5">
                 <dd:DropDown items="{{ hours }}" selectedIndex="{{ selectedIndex2 }}"
                              hint="{{ hint_hours }}"
@@ -185,7 +185,6 @@
                     </chart:RadCartesianChart.palettes>
                 </chart:RadCartesianChart>
             </StackLayout>
-
 
             <ActivityIndicator  class="activity-indicator" busy="{{ isBusy_graphic1 }}" height="{{isHeigh_graphic1}}" />
             <chart:RadCartesianChart height="350" marginTop="20" visibility="{{ graphic1 }}">
