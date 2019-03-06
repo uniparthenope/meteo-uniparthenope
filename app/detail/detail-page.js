@@ -23,7 +23,7 @@ var products;
 var outputs;
 var prod = "wrf5";
 var output = "gen";
-var step = "1";
+var step = "6";
 var hour = "0";
 let products_map = new Map();
 let outputs_map = new Map();
@@ -99,6 +99,18 @@ exports.pageLoaded = pageLoaded;
 exports.dropDownSelectedIndexChanged = function (args) {
     var out = products.getItem(args.object.selectedIndex);
     prod = products_map.get(out);
+
+    if(prod == "rms3" || prod == "wcm3")
+    {
+        step = 1;
+        pageData.set("hint_hours", "1");
+    }
+    else if(prod == "wrf5")
+    {
+        step = 6;
+        pageData.set("hint_hours", "6");
+    }
+
     output = "gen";
     outputs_map.clear();
     outputs.splice(0);
@@ -488,5 +500,5 @@ function print_hours()
     {
         hours.push(h[i]);
     }
-    pageData.set("hint_hours", "1");
+    pageData.set("hint_hours", "6");
 }

@@ -212,11 +212,10 @@ exports.pageLoaded = function(args)
             oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
           }, 800);
         }
-      }, function(e){
-        console.log("Error: " + e.message);
-          dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
-
-      });
+      }, function(e) {
+            console.log("Error: " + e.message);
+            dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
+        });
     });
   }, function(e)
   {
