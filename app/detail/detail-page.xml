@@ -1,4 +1,4 @@
-<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart"  xmlns:dd="nativescript-drop-down" xmlns:elv="~/nativescript-expandable-list-view">
+<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart"  xmlns:dd="nativescript-drop-down" xmlns:flv="nativescript-folding-list-view">
     <ActionBar class="blue_background_action_bar" flat="true">
         <Label text="{{ titolo }}" fontSize="20"></Label>
     </ActionBar>
@@ -113,15 +113,30 @@
             </StackLayout>
 
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
+            <StackLayout margin="20 10 15 10" class="blue_background" horizontalAlignment="center" row="0" col="0" verticalAlignment="bottom" orientation="horizontal" height="50">
+                <Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 40 10 10" tap="onTapBack"></Image>
+                <Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
+                <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
+            </StackLayout>
             <Image src="{{ map }}" marginTop="20" visibility="{{ _map }}"/>
 
-            <Label text="Seleziona step: " marginTop="5"></Label>
+
             <StackLayout margin="5 5 5 5">
-                <dd:DropDown items="{{ hours }}" selectedIndex="{{ selectedIndex2 }}"
-                             hint="{{ hint_hours }}"
+                <Label text="Aggregazione: "></Label>
+                <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
+                             hint="{{ hint_steps }}"
                              opened="dropDownOpened2" closed="dropDownClosed2"
                              selectedIndexChanged="dropDownSelectedIndexChanged2"
                              row="0" colSpan="2" />
+
+                <StackLayout orientation="vertical" visibility="{{ hours_visibility }}">
+                    <Label text="Ore"></Label>
+                    <dd:DropDown items="{{ hours }}" selectedIndex="{{ selectedIndex3 }}"
+                                 hint="{{ hint_hours }}"
+                                 opened="dropDownOpened3" closed="dropDownClosed3"
+                                 selectedIndexChanged="dropDownSelectedIndexChanged3"
+                                 row="0" colSpan="2" />
+                </StackLayout>
 
                 <ActivityIndicator  class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
                 <chart:RadCartesianChart height="350" marginTop="20" seriesSelectionMode="Multiple" visibility="{{ graphic }}">
@@ -220,6 +235,32 @@
                     </chart:Palette>
                 </chart:RadCartesianChart.palettes>
             </chart:RadCartesianChart>
+
+            <GridLayout>
+                <flv:FoldingListView items="{{ item }}" foldsCount="5" foldedRowHeight="95"
+                                     detailDataLoader="detailDataLoader">
+                    <flv:FoldingListView.foregroundItemTemplate>
+                        <GridLayout columns="75, *" class="folded-cell">
+                            <GridLayout row="0" col="0" rows="*, auto, auto, *" class="item-nbr">
+                                <Label row="1" text="Item"/>
+                                <Label row="2" text="{{ '#' + item }}"/>
+                            </GridLayout>
+                            <StackLayout col="1" padding="10">
+                                <Label class="h2" text="My Header"/>
+                                <Label class="label" textWrap="true" text="Short description. Tap to see more!"/>
+                            </StackLayout>
+                        </GridLayout>
+                    </flv:FoldingListView.foregroundItemTemplate>
+
+                    <flv:FoldingListView.containerItemTemplate>
+                        <StackLayout rows="auto, *, auto" class="expanded-cell">
+                            <Label class="item-nbr" text="{{ 'Item #' + item }}" />
+                            <Label class="label" textWrap="true" text="{{ details }}" />
+                            <Button id="btn" class="btn btn-primary" text="Click Me!" />
+                        </StackLayout>
+                    </flv:FoldingListView.containerItemTemplate>
+                </flv:FoldingListView>
+            </GridLayout>
 
         </StackLayout>
     </ScrollView>

@@ -9,7 +9,10 @@ var getViewById = require("tns-core-modules/ui/core/view").getViewById;
 const appSetting = require("application-settings");
 var dialog = require("tns-core-modules/ui/dialogs");
 var imageSource = require("image-source");
+var FoldingCell = require("nativescript-folding-list-view");
 
+
+var item;
 var press;
 var temp;
 var single_item;
@@ -23,12 +26,17 @@ var products;
 var outputs;
 var prod = "wrf5";
 var output = "gen";
-var step = "6";
-var hour = "0";
+var step = "1";
+var hour = "24";
 let products_map = new Map();
 let outputs_map = new Map();
+var steps;
 var hours;
-
+let anno;
+let mese;
+let giorno;
+let ora;
+let print_data;
 let mesi = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
 
 function pageLoaded(args) {
@@ -39,6 +47,8 @@ function pageLoaded(args) {
     array = new ObservableArray();
     products = new ObservableArray();
     outputs = new ObservableArray();
+    steps = new ObservableArray();
+    item = new ObservableArray();
     hours = new ObservableArray();
 
     pageData = new Observable.fromObject({
@@ -49,6 +59,8 @@ function pageLoaded(args) {
         map:map,
         products: products,
         outputs: outputs,
+        steps: steps,
+        item: item,
         hours: hours
     });
     pageData.set("isBusy", true);//Load animation
@@ -68,12 +80,17 @@ function pageLoaded(args) {
     pageData.set("graphic1", "collapsed");
     pageData.set("meteo", "collapsed");
     pageData.set("_map", "collapsed");
+    pageData.set("hours_visibility", "visible");
 
     place = page.navigationContext.place;
     id = page.navigationContext.id;
     data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
     pageData.set("titolo", place);
+
+    print_data = get_print_data(data);
+
+    pageData.set("data", print_data);
 
     print_chart(id, prod, output, hour, step);
 
@@ -87,6 +104,8 @@ function pageLoaded(args) {
 
     print_output(prod);
 
+    print_steps();
+
     print_hours();
 
     pageData.set("products", products);
@@ -96,6 +115,23 @@ function pageLoaded(args) {
 }
 exports.pageLoaded = pageLoaded;
 
+function get_print_data(data)
+{
+    let data_final;
+    anno = data.substring(0,4);
+    mese = data.substring(4, 6);
+    giorno = data.substring(6,8);
+    ora = data.substring(9,11);
+
+    data_final = anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+    return data_final;
+}
+
+exports.detailDataLoader = function(args)
+{
+    pageData.set("details", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
+};
+
 exports.dropDownSelectedIndexChanged = function (args) {
     var out = products.getItem(args.object.selectedIndex);
     prod = products_map.get(out);
@@ -103,12 +139,12 @@ exports.dropDownSelectedIndexChanged = function (args) {
     if(prod == "rms3" || prod == "wcm3")
     {
         step = 1;
-        pageData.set("hint_hours", "1");
+        pageData.set("hint_steps", "1");
     }
     else if(prod == "wrf5")
     {
         step = 6;
-        pageData.set("hint_hours", "6");
+        pageData.set("hint_steps", "6");
     }
 
     output = "gen";
@@ -123,7 +159,7 @@ exports.dropDownSelectedIndexChanged = function (args) {
     single_item.splice(0);
     temp.splice(0);
     press.splice(0);
-    print_chart(id, prod, output, hours, step);
+    print_chart(id, prod, output, hour, step);
 
     console.log(prod + " " + output);
 };
@@ -136,19 +172,39 @@ exports.dropDownSelectedIndexChanged1 = function (args) {
     single_item.splice(0);
     temp.splice(0);
     press.splice(0);
-    print_chart(id, prod, output, hours, step);
+    print_chart(id, prod, output, hour, step);
 
     console.log(prod + " " + output);
 };
 
 exports.dropDownSelectedIndexChanged2 = function (args) {
-    var h = hours.getItem(args.object.selectedIndex);
-    step = h;
+    var s = steps.getItem(args.object.selectedIndex);
+    step = s;
+
+    if(step == '1') {
+        pageData.set("hours_visibility", "visible");
+        hour = "24";
+        pageData.set("hint_hours", "24");
+    }
+    else {
+        pageData.set("hours_visibility", "collapsed");
+        hour = "0";
+    }
 
     single_item.splice(0);
     temp.splice(0);
     press.splice(0);
-    print_chart(id, prod, output, hours, step);
+    print_chart(id, prod, output, hour, step);
+};
+
+exports.dropDownSelectedIndexChanged3 = function (args) {
+    var h = hours.getItem(args.object.selectedIndex);
+    hour = h;
+
+    single_item.splice(0);
+    temp.splice(0);
+    press.splice(0);
+    print_chart(id, prod, output, hour, step);
 };
 
 function onTap(args) {
@@ -220,9 +276,9 @@ function monthOfYear(date) {
     return isNaN(month) ? null : ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"][month];
 };
 
-function print_chart(place, product, output, hours, step)
+function print_chart(place, product, output, hour, step)
 {
-    let url = "https://api.meteo.uniparthenope.it/products/" + product + "/timeseries/" + place + "?step=" + step;
+    let url = "https://api.meteo.uniparthenope.it/products/" + product + "/timeseries/" + place + "?hours=" + hour +"&step=" + step;
     console.log(url);
 
     fetch(url)
@@ -493,12 +549,63 @@ function print_output(prod)
     });
 }
 
+function print_steps()
+{
+    var s = ['1', '3', '6', '12', '24'];
+    for(let i=0; i<s.length; i++)
+    {
+        steps.push(s[i]);
+    }
+    pageData.set("hint_steps", "1");
+}
+
+
 function print_hours()
 {
-    var h = ['1', '3', '6', '12', '24'];
+    var h = ['24', '48', '72', '96'];
     for(let i=0; i<h.length; i++)
     {
         hours.push(h[i]);
     }
-    pageData.set("hint_hours", "6");
+    pageData.set("hint_hours", "24");
+};
+
+function onTapNext()
+{
+    if((parseInt(ora)+1) >23)
+    {
+        ora =0;
+    }
+    else
+        ora++;
+
+    if(ora < 10)
+        ora = "0" + ora;
+
+    data = anno+""+mese+""+giorno+"Z"+ora+"00";
+
+    pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
+
+    print_map(id, prod, output, data);
 }
+exports.onTapNext = onTapNext;
+
+function onTapBack()
+{
+    if((parseInt(ora)-1) < 0)
+    {
+        ora = 23;
+    }
+    else
+        ora--;
+
+    if(ora < 10)
+        ora = "0" + ora;
+
+    data = anno+""+mese+""+giorno+"Z"+ora+"00";
+
+    pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
+
+    print_map(id, prod, output, data);
+}
+exports.onTapBack = onTapBack;

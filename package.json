@@ -21,6 +21,7 @@
     "nativescript-accelerometer": "2.0.1",
     "nativescript-background-http": "3.3.1",
     "nativescript-drop-down": "^4.0.1",
+    "nativescript-folding-list-view": "^1.2.0",
     "nativescript-fresco": "5.2.0",
     "nativescript-geolocation": "^4.5.0",
     "nativescript-imagepicker": "6.0.6",
