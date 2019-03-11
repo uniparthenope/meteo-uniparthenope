@@ -398,6 +398,8 @@ function print_chart(place, product, output, hour, step)
     return;
 }
 
+
+
 function print_meteo(id, data)
 {
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data +"&opt=place")

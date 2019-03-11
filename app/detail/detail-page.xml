@@ -147,7 +147,7 @@
                                 items="{{ temp }}"
                                 categoryProperty="key"
                                 valueProperty="val"
-                                showLabels="true">
+                                showLabels="false">
                             <chart:BarSeries.labelStyle>
                                 <chart:BarSeriesStyle margin="10" fontStyle="Bold"/>
                             </chart:BarSeries.labelStyle>
@@ -164,7 +164,7 @@
                                 items="{{ press }}"
                                 categoryProperty="key"
                                 valueProperty="val"
-                                showLabels="true">
+                                showLabels="false">
                             <chart:LineSeries.labelStyle>
                                 <chart:LineSeriesStyle margin="10" fontStyle="Bold"/>
                             </chart:LineSeries.labelStyle>

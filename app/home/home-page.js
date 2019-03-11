@@ -30,6 +30,7 @@ var latitudine;
 var longitudine;
 let page;
 var homeViewModel = new HomeViewModel();
+var url_api = "https://api.meteo.uniparthenope.it/";
 
 function setupWebViewInterface(page)
 {
@@ -110,7 +111,7 @@ exports.pageLoaded = function(args)
             console.log(longitudine);
             var place, id;
 
-            fetch("https://api.meteo.uniparthenope.it/places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
+            fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
               place = data[0].long_name.it;
 
               if (place.includes("Municipalit")) {
@@ -128,7 +129,7 @@ exports.pageLoaded = function(args)
               id = data[0].id;
               global_id = id;
 
-              fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) =>
+              fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) =>
               {
                 //console.log(data1);
                 if (data1.result == "ok") {
@@ -201,7 +202,7 @@ exports.pageLoaded = function(args)
   }
   else
   {
-    fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
+    fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
       var place = data1.place.long_name.it;
 
       if (place.includes("Municipalit")) {
@@ -278,7 +279,7 @@ function onDatePickerLoaded(args)
     console.log(position);
     if(gps_on) {
       home.set("search", "collapsed");
-        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+        fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
           if (data1.result == "ok") {
             home.set("current_position", "visible");
             if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -326,7 +327,7 @@ function onDatePickerLoaded(args)
     console.log(position);
     if(gps_on) {
       home.set("search", "collapsed");
-        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+        fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
           if (data1.result == "ok") {
             home.set("current_position", "visible");
             if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -371,7 +372,7 @@ function onDatePickerLoaded(args)
     console.log(position);
     if(gps_on) {
       home.set("search", "collapsed");
-        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+        fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
           if (data1.result == "ok") {
             home.set("current_position", "visible");
             if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -431,7 +432,7 @@ function onTapNext()
   console.log(position);
   if(gps_on) {
     home.set("search", "collapsed");
-      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+      fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         if (data1.result == "ok") {
           home.set("current_position", "visible");
           if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -488,7 +489,7 @@ function onTapBack()
   console.log(position);
   if(gps_on) {
     home.set("search", "collapsed");
-      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+      fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         if (data1.result == "ok") {
           home.set("current_position", "visible");
           if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -610,7 +611,7 @@ exports.onTextChanged = onTextChanged;*/
 var items;
 function onTextChanged(args)
 {
-  fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+  fetch(url_api + "places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
   {
     items = new ObservableArray([]);
     for(let i=0; i<data.length; i++) {
@@ -644,7 +645,7 @@ function didAutoComplete  (args) {
 
   if(gps_on) {
     home.set("search", "collapsed");
-    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + _name).then((response) => response.json()).then((data) => {
+    fetch(url_api + "places/search/byname/" + _name).then((response) => response.json()).then((data) => {
       var id;
       console.log(data.length);
       for(let i=0; i<data.length; i++)
@@ -673,7 +674,7 @@ function didAutoComplete  (args) {
       console.log(id);
       global_id = id;
 
-      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+      fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         //console.log(data1);
         if (data1.result == "ok") {
           home.set("current_position", "visible");
