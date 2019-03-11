@@ -17,7 +17,6 @@ var press;
 var temp;
 var single_item;
 var pageData;
-var place;
 var id;
 var data;
 var array;
@@ -82,11 +81,9 @@ function pageLoaded(args) {
     pageData.set("_map", "collapsed");
     pageData.set("hours_visibility", "visible");
 
-    place = page.navigationContext.place;
     id = page.navigationContext.id;
     data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
-    pageData.set("titolo", place);
 
     print_data = get_print_data(data);
 
@@ -126,11 +123,6 @@ function get_print_data(data)
     data_final = anno + "/" + mese + "/" + giorno + " " + ora + ":00";
     return data_final;
 }
-
-exports.detailDataLoader = function(args)
-{
-    pageData.set("details", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
-};
 
 exports.dropDownSelectedIndexChanged = function (args) {
     var out = products.getItem(args.object.selectedIndex);
@@ -406,14 +398,15 @@ function print_chart(place, product, output, hour, step)
     return;
 }
 
-
 function print_meteo(id, data)
 {
-    fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data)
+    fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data +"&opt=place")
         .then((response) => response.json())
         .then((data) => {
             if (data.result == "ok")
             {
+                pageData.set("titolo", data.place.long_name.it);
+
                 if (appSetting.getNumber("Temperatura", 0) == 0)
                     pageData.set("temperatura", data.forecast.t2c + " °C");
                 else if (appSetting.getNumber("Temperatura", 0) == 1) {
@@ -475,7 +468,7 @@ function print_series(id)
             for(let i=0; i<data.timeseries.length; i++)
             {
                 let weekDayLabel=dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6,8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
-                array.push({"forecast":weekDayLabel, "image": "~/meteo_icon/" + data.timeseries[i].icon, "TMin": data.timeseries[i]['t2c-min'], "TMax": data.timeseries[i]['t2c-max'], "Wind":data.timeseries[i].ws10n + " " + data.timeseries[i].winds, "Rain": data.timeseries[i].crh});
+                array.push({"forecast":weekDayLabel, "image": "~/meteo_icon/" + data.timeseries[i].icon, "TMin": data.timeseries[i]['t2c-min'], "TMax": data.timeseries[i]['t2c-max'], "Wind":data.timeseries[i].winds + " " + data.timeseries[i].ws10n, "Rain": data.timeseries[i].crh});
             }
         })
         .then(function () {

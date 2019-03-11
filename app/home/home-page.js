@@ -51,6 +51,8 @@ exports.pageLoaded = function(args)
 
   drawer = view.getViewById(page,"sideDrawer");
 
+  console.log("GLOBAL ID: " + global_id);
+
   if(contatore == 1) {
     data = new Date();
     ora = data.getUTCHours();
@@ -89,82 +91,46 @@ exports.pageLoaded = function(args)
     home.set("data", print_data);
   }
 
-  const myConnectionType = connectivityModule.getConnectionType();
+  if(global_id == " ") {
+    geolocation.enableLocationRequest().then(function (e) {
+      geolocation.isEnabled().then(function (isEnabled) {
+        gps_on = isEnabled;
+        console.log("GPS: " + gps_on);
+        geolocation.getCurrentLocation({
+          desiredAccuracy: 3,
+          updateDistance: 10,
+          maximumAge: 10000,
+          timeout: 5000
+        }).then(function (loc) {
+          if (loc) {
+            home.set("search", "collapsed");
+            latitudine = loc.latitude;
+            longitudine = loc.longitude;
+            console.log(latitudine);
+            console.log(longitudine);
+            var place, id;
 
-  geolocation.enableLocationRequest().then(function(e)
-  {
-    geolocation.isEnabled().then(function(isEnabled)
-    {
-      gps_on = isEnabled;
-      console.log("GPS: " + gps_on);
-      geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10, maximumAge: 10000, timeout: 5000}).then(function(loc)
-      {
-        if (loc)
-        {
-          console.log("ok");
-          latitudine = loc.latitude;
-          longitudine = loc.longitude;
-          console.log(latitudine);
-          console.log(longitudine);
-          var place, id;
+            fetch("https://api.meteo.uniparthenope.it/places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
+              place = data[0].long_name.it;
 
-          if(myConnectionType==1 || myConnectionType==2)
-          {
-            if(contatore == 1) {
-              fetch("https://api.meteo.uniparthenope.it/places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) =>
-              {
-                place = data[0].long_name.it;
-                console.log("PROVA");
+              if (place.includes("Municipalit")) {
+                var tmp = place.split("-");
+                var tmp1 = tmp.pop();
+                home.set("position", tmp1);
+                place_selected = tmp1;
+                console.log("POSTO : " + place_selected);
+              } else {
+                home.set("position", place);
+                place_selected = place;
+                console.log("POSTO : " + place_selected);
+              }
 
-                if (place.includes("Municipalit")) {
-                  var tmp = place.split("-");
-                  var tmp1 = tmp.pop();
-                  home.set("position", tmp1);
-                  place_selected = tmp1;
-                  console.log("POSTO : " + place_selected);
-                } else {
-                  home.set("position", place);
-                  place_selected = place;
-                  console.log("POSTO : " + place_selected);
-                }
+              id = data[0].id;
+              global_id = id;
 
-                id = data[0].id;
-                global_id = id;
-
-                fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-                  //console.log(data1);
-                  if (data1.result == "ok") {
-                    home.set("current_position", "visible");
-                    if (appSetting.getNumber("Temperatura", 0) == 0)
-                      home.set("temp", data1.forecast.t2c + " °C");
-                    else if (appSetting.getNumber("Temperatura", 0) == 1) {
-                      home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
-                    }
-                    if (appSetting.getNumber("Vento", 0) == 0)
-                      home.set("wind", data1.forecast.ws10n + " kn");
-                    else if (appSetting.getNumber("Vento", 0) == 1) {
-                      home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
-                    } else if (appSetting.getNumber("Vento", 0) == 2) {
-                      home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
-                    } else if (appSetting.getNumber("Vento", 0) == 3) {
-                      home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
-                    }
-
-                    home.set("wind_direction", data1.forecast.winds);
-                    home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
-                  } else if (data1.result == "error") {
-                    home.set("current_position", "collapsed");
-                    dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
-                  }
-                })
-                    .catch(error => console.error("[SEARCH] ERROR DATA ", error));
-              });
-            }
-            else
-            {
-              home.set("position", place_selected);
               fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) =>
               {
+                //console.log(data1);
                 if (data1.result == "ok") {
                   home.set("current_position", "visible");
                   if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -188,44 +154,94 @@ exports.pageLoaded = function(args)
                   home.set("current_position", "collapsed");
                   dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
                 }
-              }).catch(error => console.error("[SEARCH] ERROR DATA ", error));
-            }
+
+                setTimeout(function () {
+                  oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
+                }, 80);
+
+                setTimeout(function () {
+                  oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
+                }, 80);
+
+                setTimeout(function () {
+                  oLangWebViewInterface.emit('settings', {
+                    gradi: appSetting.getNumber("Temperatura", 0),
+                    vento: appSetting.getNumber("Vento", 0),
+                    pressione: appSetting.getNumber("Pressione", 0)
+                  });
+                }, 80);
+              })
+                  .catch(error => console.error("[SEARCH] ERROR DATA ", error));
+            });
           }
-          else
-          {
-            dialog.alert({title: "Errore", message: "Nessuna connessione ad Internet!!", okButtonText: "OK"});
-            //process.exit();
-          }
-
-          setTimeout(function()
-          {
-            oLangWebViewInterface.emit('data', {anno:anno,mese:mese, giorno:giorno, ora:ora});
-          }, 800);
-
-          setTimeout(function()
-          {
-            oLangWebViewInterface.emit('location', {lat:latitudine,lang:longitudine});
-          }, 800);
-
-          setTimeout(function()
-          {
-            oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
-          }, 800);
-        }
-      }, function(e) {
-            console.log("Error: " + e.message);
-            dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
+        }, function (e) {
+          dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
+          home.set("current_position", "collapsed");
+          home.set("search", "visible");
+          oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
+          oLangWebViewInterface.emit('settings', {
+            gradi: appSetting.getNumber("Temperatura", 0),
+            vento: appSetting.getNumber("Vento", 0),
+            pressione: appSetting.getNumber("Pressione", 0)
+          });
         });
+      });
+    }, function (e) {
+      gps_on = false;
+      home.set("current_position", "collapsed");
+      home.set("search", "visible");
+      oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
+      oLangWebViewInterface.emit('settings', {
+        gradi: appSetting.getNumber("Temperatura", 0),
+        vento: appSetting.getNumber("Vento", 0),
+        pressione: appSetting.getNumber("Pressione", 0)
+      });
+      console.log("Error: " + (e.message || e));
     });
-  }, function(e)
+  }
+  else
   {
-    gps_on = false;
-    home.set("current_position", "collapsed");
-    home.set("search", "visible");
-    oLangWebViewInterface.emit('data', {anno:anno,mese:mese, giorno:giorno, ora:ora});
-    oLangWebViewInterface.emit('settings', {gradi:appSetting.getNumber("Temperatura",0), vento:appSetting.getNumber("Vento",0), pressione:appSetting.getNumber("Pressione",0)});
-    console.log("Error: " + (e.message || e));
-  });
+    fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
+      var place = data1.place.long_name.it;
+
+      if (place.includes("Municipalit")) {
+        var tmp = place.split("-");
+        var tmp1 = tmp.pop();
+        home.set("position", tmp1);
+        place_selected = tmp1;
+        console.log("POSTO : " + place_selected);
+      } else {
+        home.set("position", place);
+        place_selected = place;
+        console.log("POSTO : " + place_selected);
+      }
+
+      if (data1.result == "ok") {
+        home.set("current_position", "visible");
+        if (appSetting.getNumber("Temperatura", 0) == 0)
+          home.set("temp", data1.forecast.t2c + " °C");
+        else if (appSetting.getNumber("Temperatura", 0) == 1) {
+          home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+        }
+        if (appSetting.getNumber("Vento", 0) == 0)
+          home.set("wind", data1.forecast.ws10n + " kn");
+        else if (appSetting.getNumber("Vento", 0) == 1) {
+          home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+        } else if (appSetting.getNumber("Vento", 0) == 2) {
+          home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+        } else if (appSetting.getNumber("Vento", 0) == 3) {
+          home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+        }
+
+        home.set("wind_direction", data1.forecast.winds);
+        home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+      } else if (data1.result == "error") {
+        home.set("current_position", "collapsed");
+        dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+      }
+    })
+        .catch(error => console.error("[SEARCH] ERROR DATA ", error));
+  }
 
   if (args.isBackNavigation) {
     return;
@@ -242,7 +258,7 @@ function onDatePickerLoaded(args)
 {
   const datePicker = args.object;
   datePicker.on("dayChange", (args) => {
-      console.log("Giorno cambiato: " + args.value);
+    console.log("Giorno cambiato: " + args.value);
     currData = " ";
     if (args.value < 10)
       giorno = "0"+args.value;
@@ -261,11 +277,8 @@ function onDatePickerLoaded(args)
     var position = home.get("position");
     console.log(position);
     if(gps_on) {
-      fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
-      {
-        id = data[0].id;
-        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-          //console.log(data1);
+      home.set("search", "collapsed");
+        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
           if (data1.result == "ok") {
             home.set("current_position", "visible");
             if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -291,7 +304,6 @@ function onDatePickerLoaded(args)
           }
         })
             .catch(error => console.error("[SEARCH] ERROR DATA ", error));
-      });
     }
   });
 
@@ -313,11 +325,8 @@ function onDatePickerLoaded(args)
     var position = home.get("position");
     console.log(position);
     if(gps_on) {
-      fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
-      {
-        id = data[0].id;
-        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-          //console.log(data1);
+      home.set("search", "collapsed");
+        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
           if (data1.result == "ok") {
             home.set("current_position", "visible");
             if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -343,7 +352,6 @@ function onDatePickerLoaded(args)
           }
         })
             .catch(error => console.error("[SEARCH] ERROR DATA ", error));
-      });
     }
   });
 
@@ -362,11 +370,8 @@ function onDatePickerLoaded(args)
     var position = home.get("position");
     console.log(position);
     if(gps_on) {
-      fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
-      {
-        id = data[0].id;
-        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-          //console.log(data1);
+      home.set("search", "collapsed");
+        fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
           if (data1.result == "ok") {
             home.set("current_position", "visible");
             if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -392,7 +397,6 @@ function onDatePickerLoaded(args)
           }
         })
             .catch(error => console.error("[SEARCH] ERROR DATA ", error));
-      });
     }
   });
 }
@@ -426,11 +430,8 @@ function onTapNext()
   var position = home.get("position");
   console.log(position);
   if(gps_on) {
-    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
-    {
-      id = data[0].id;
-      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-        //console.log(data1);
+    home.set("search", "collapsed");
+      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         if (data1.result == "ok") {
           home.set("current_position", "visible");
           if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -456,7 +457,6 @@ function onTapNext()
         }
       })
           .catch(error => console.error("[SEARCH] ERROR DATA ", error));
-    });
   }
 }
 exports.onTapNext = onTapNext;
@@ -487,11 +487,8 @@ function onTapBack()
   var position = home.get("position");
   console.log(position);
   if(gps_on) {
-    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + position).then((response) => response.json()).then((data) =>
-    {
-      id = data[0].id;
-      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-        //console.log(data1);
+    home.set("search", "collapsed");
+      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         if (data1.result == "ok") {
           home.set("current_position", "visible");
           if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -517,7 +514,6 @@ function onTapBack()
         }
       })
           .catch(error => console.error("[SEARCH] ERROR DATA ", error));
-    });
   }
 }
 exports.onTapBack = onTapBack;
@@ -542,9 +538,7 @@ exports.onTapInfo = onTapInfo;
 
 function onTapCenter()
 {
-  var position = home.get("position");
-  console.log(position);
-  oLangWebViewInterface.emit('centro', {position:position });
+  oLangWebViewInterface.emit('centro', {id:global_id});
 }
 exports.onTapCenter = onTapCenter;
 
@@ -588,7 +582,6 @@ function listenLangWebViewEvents()
           moduleName: "detail/detail-page",
           context: {
             id: eventData.info_id,
-            place: eventData.citta,
             data: currData
           }
         };
@@ -650,6 +643,7 @@ function didAutoComplete  (args) {
   console.log("POSTO : " + place_selected);
 
   if(gps_on) {
+    home.set("search", "collapsed");
     fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + _name).then((response) => response.json()).then((data) => {
       var id;
       console.log(data.length);
@@ -679,7 +673,7 @@ function didAutoComplete  (args) {
       console.log(id);
       global_id = id;
 
-      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+      fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         //console.log(data1);
         if (data1.result == "ok") {
           home.set("current_position", "visible");
@@ -721,53 +715,19 @@ exports.toggleDrawer = function() {
   drawer.toggleDrawerState();
 };
 
-
 exports.onTapDetail = function (args)
 {
   const button = args.object;
   const  page = button.page;
-  var name = home.get("position");
-  console.log("Detail:" + name);
-
-  fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + name).then((response) => response.json()).then((data) =>
-  {
-    var id;
-    console.log(data.length);
-    for(let i=0; i<data.length; i++)
-    {
-      let name1 = data[i].long_name.it;
-      console.log(name1);
-      let name_new;
-      let _name;
-      if (name1.includes("Municipalit"))
-      {
-        console.log("MUN");
-        var tmp = name1.split("-");
-        name_new = tmp.pop();
-        _name = name_new;
-
-        if(_name === name)
-          id = data[i].id;
-      }
-      else
-      {
-        console.log("NO MUN");
-        if(name1 === name)
-          id = data[i].id;
-      }
-    }
-    console.log(id);
 
     const nav =
         {
           moduleName: "detail/detail-page",
           context: {
-            id: id,
-            place: name,
+            id: global_id,
             data: currData
           }
         };
 
     page.frame.navigate(nav);
-  });
 };

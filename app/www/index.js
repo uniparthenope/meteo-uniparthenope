@@ -460,7 +460,7 @@ function addInfoLayer() {
 
 function onClick()
 {
-    oWebViewInterface1.emit('detail', {info_id:info_id, citta:citta});
+    oWebViewInterface1.emit('detail', {info_id:info_id});
 }
 
 
@@ -630,14 +630,6 @@ oWebViewInterface1.on('data', function (cor)
         map = new L.Map('map', {zoomControl: false, attributionControl:true});
         map.setView(center, zoom);
 
-        /*var credit = L.controlCredits({
-            image: "icon.png",
-            link: "http://meteo.uniparthenope.it",
-            text: "  ",
-            width: "39",
-            height: "39"
-        }).addTo(map);*/
-
         var layerInstance = Esri_WorldImagery;
         layerInstance.addTo(map);
 
@@ -665,7 +657,6 @@ oWebViewInterface1.on('data', function (cor)
     addSnowLayer();
 });
 
-
 oWebViewInterface1.on('new_data', function (cor)
 {
     console.log(cor.data);
@@ -682,13 +673,11 @@ oWebViewInterface1.on('new_data', function (cor)
     map.on('zoomend', function () {
         zoom = map.getZoom();
         change_domain(map.getBounds());
-        //console.log(zoom);
     });
 
     map.on('moveend', function (e) {
         center = map.getBounds().getCenter();
         change_domain(map.getBounds());
-        //console.log(center);
     });
 
     controlLayers = L.control.layers(baseLayers, overlayMaps, {
@@ -718,50 +707,19 @@ oWebViewInterface1.on('settings', function (cor)
     pressione = cor.pressione;
 });
 
-
 oWebViewInterface1.on('centro', function(cor)
 {
-    var url = "https://api.meteo.uniparthenope.it/places/search/byname/" + cor.position;
+    var url = url_api + "products/wrf5/forecast/" + cor.id +"?opt=place";
     console.log(url);
 
     fetch(url).then((response) => response.json()).then((data) =>
     {
-        var id;
-        console.log(data.length);
-        for(let i=0; i<data.length; i++)
-        {
-            let name = data[i].long_name.it;
-            console.log(name);
-            let name_new;
-            let _name;
-            if(name.includes("Municipalit"))
-            {
-                console.log("MUN");
-                var tmp = name.split("-");
-                name_new = tmp.pop();
-                _name = name_new;
-                console.log(_name);
-
-                if(_name === cor.position)
-                    id = i;
-            }
-            else
-            {
-                console.log("NO MUN");
-                if(name === cor.position)
-                    id = i;
-            }
-        }
-        console.log(id);
-        center = new L.LatLng(data[id].pos.coordinates[1], data[id].pos.coordinates[0]);
-
-        map.setView(center, zoom);
         map.fitBounds([
-            [data[id].bbox.coordinates[0][1], data[id].bbox.coordinates[0][0]],
-            [data[id].bbox.coordinates[1][1], data[id].bbox.coordinates[1][0]],
-            [data[id].bbox.coordinates[2][1], data[id].bbox.coordinates[2][0]],
-            [data[id].bbox.coordinates[3][1], data[id].bbox.coordinates[3][0]],
-            [data[id].bbox.coordinates[4][1], data[id].bbox.coordinates[4][0]]
+            [data.place.bbox.coordinates[0][1], data.place.bbox.coordinates[0][0]],
+            [data.place.bbox.coordinates[1][1], data.place.bbox.coordinates[1][0]],
+            [data.place.bbox.coordinates[2][1], data.place.bbox.coordinates[2][0]],
+            [data.place.bbox.coordinates[3][1], data.place.bbox.coordinates[3][0]],
+            [data.place.bbox.coordinates[4][1], data.place.bbox.coordinates[4][0]]
         ]);
         zoom = map.getZoom();
         center = map.getBounds().getCenter();
@@ -777,7 +735,7 @@ oWebViewInterface1.on('centro', function(cor)
 
 oWebViewInterface1.on('place_searched', function (cor)
 {
-    fetch("https://api.meteo.uniparthenope.it/places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
+    fetch( url_api+ "places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
     {
         console.log(cor.name);
         var id;
@@ -807,9 +765,6 @@ oWebViewInterface1.on('place_searched', function (cor)
         }
         console.log(id);
 
-        center = new L.LatLng(data[id].pos.coordinates[1], data[id].pos.coordinates[0]);
-
-        map.setView(center, zoom);
         map.fitBounds([
             [data[id].bbox.coordinates[0][1], data[id].bbox.coordinates[0][0]],
             [data[id].bbox.coordinates[1][1], data[id].bbox.coordinates[1][0]],

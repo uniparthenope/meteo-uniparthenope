@@ -118,7 +118,7 @@
                 <Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
                 <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
             </StackLayout>
-            <Image src="{{ map }}" marginTop="20" visibility="{{ _map }}"/>
+            <Image src="{{ map }}" marginTop="10" visibility="{{ _map }}"/>
 
 
             <StackLayout margin="5 5 5 5">
