@@ -379,7 +379,15 @@ function print_meteo(id, data)
         .then((data) => {
             if (data.result == "ok")
             {
-                pageData.set("titolo", data.place.long_name.it);
+                let place = data.place.long_name.it;
+
+                if (place.includes("Municipalit")) {
+                    var tmp = place.split("-");
+                    var tmp1 = tmp.pop();
+                    pageData.set("titolo", tmp1);
+                } else {
+                    pageData.set("titolo", place);
+                }
 
                 if (appSetting.getNumber("Temperatura", 0) == 0)
                     pageData.set("temperatura", data.forecast.t2c + " °C");
