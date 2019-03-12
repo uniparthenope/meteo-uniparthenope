@@ -142,7 +142,7 @@
             <Image src="{{ map }}" marginTop="10" visibility="{{ _map }}"/>
 
             <StackLayout margin="5 5 5 5">
-                <Label text="Aggregazione: "></Label>
+                <Label text="Aggregazione per ore: "></Label>
                 <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
                              hint="{{ hint_steps }}"
                              opened="dropDownOpened2" closed="dropDownClosed2"
