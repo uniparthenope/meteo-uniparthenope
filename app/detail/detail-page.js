@@ -9,17 +9,14 @@ var getViewById = require("tns-core-modules/ui/core/view").getViewById;
 const appSetting = require("application-settings");
 var dialog = require("tns-core-modules/ui/dialogs");
 var imageSource = require("image-source");
-var FoldingCell = require("nativescript-folding-list-view");
+require("nativescript-accordion");
 
-
-var item;
 var press;
 var temp;
 var single_item;
 var pageData;
 var id;
 var data;
-var array;
 var map;
 var products;
 var outputs;
@@ -37,30 +34,30 @@ let giorno;
 let ora;
 let print_data;
 let mesi = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
+var items;
+let altezza;
 
 function pageLoaded(args) {
     var page = args.object;
     temp = new ObservableArray();
     press = new ObservableArray();
     single_item = new ObservableArray();
-    array = new ObservableArray();
     products = new ObservableArray();
     outputs = new ObservableArray();
     steps = new ObservableArray();
-    item = new ObservableArray();
     hours = new ObservableArray();
+    items = new ObservableArray();
 
     pageData = new Observable.fromObject({
         temp: temp,
         press: press,
         single_item: single_item,
-        statistic: array,
         map:map,
         products: products,
         outputs: outputs,
         steps: steps,
-        item: item,
-        hours: hours
+        hours: hours,
+        items: items
     });
     pageData.set("isBusy", true);//Load animation
     pageData.set("isHeigh", "25");
@@ -105,9 +102,6 @@ function pageLoaded(args) {
 
     print_hours();
 
-    pageData.set("products", products);
-    pageData.set("outputs", outputs);
-
     page.bindingContext = pageData;
 }
 exports.pageLoaded = pageLoaded;
@@ -123,6 +117,11 @@ function get_print_data(data)
     data_final = anno + "/" + mese + "/" + giorno + " " + ora + ":00";
     return data_final;
 }
+
+exports.childTapped = function(args)
+{
+    console.log("Prova");
+};
 
 exports.dropDownSelectedIndexChanged = function (args) {
     var out = products.getItem(args.object.selectedIndex);
@@ -198,31 +197,6 @@ exports.dropDownSelectedIndexChanged3 = function (args) {
     press.splice(0);
     print_chart(id, prod, output, hour, step);
 };
-
-function onTap(args) {
-    const index = args.index;
-    const button = args.object;
-    const page = button.page;
-
-    var name = array.getItem(index).forecast;
-
-    var tmp = name.split("- ");
-    var name_new = tmp.pop();
-    var day = name_new.substring(0,2);
-    var month = name_new.substring(3, 7);
-
-    var data = new Date();
-
-    let _month = mesi.indexOf(month) +1;
-    if(_month < 10)
-        _month = "0" + _month;
-
-    var selected_data = data.getUTCFullYear() + "" + _month + "" + day + "Z0000";
-
-    let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + selected_data + "&hours=24";
-    console.log(url);
-}
-exports.onTap = onTap;
 
 function get_beaufort(nodi)
 {
@@ -398,8 +372,6 @@ function print_chart(place, product, output, hour, step)
     return;
 }
 
-
-
 function print_meteo(id, data)
 {
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data +"&opt=place")
@@ -464,14 +436,198 @@ function print_series(id)
 {
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id +"?hours=0&step=24")
         .then((response) => response.json())
-        .then((data) =>
-        {
+        .then(async (data) => {
             pageData.set("altezza", data.timeseries.length * 45);
-            for(let i=0; i<data.timeseries.length; i++)
-            {
-                let weekDayLabel=dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6,8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
-                array.push({"forecast":weekDayLabel, "image": "~/meteo_icon/" + data.timeseries[i].icon, "TMin": data.timeseries[i]['t2c-min'], "TMax": data.timeseries[i]['t2c-max'], "Wind":data.timeseries[i].winds + " " + data.timeseries[i].ws10n, "Rain": data.timeseries[i].crh});
+            altezza = data.timeseries.length * 45;
+            for (let i = 0; i < data.timeseries.length; i++) {
+                let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + data.timeseries[i]['dateTime'] + "&hours=24";
+                console.log(url);
+
+                const response = await fetch(url);
+                const data1 = await response.json();
+                console.log(data1.timeseries[i]['dateTime']);
+
+                let weekDayLabel = dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6, 8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
+                items.push({
+                    forecast: weekDayLabel,
+                    image: "~/meteo_icon/" + data.timeseries[i].icon,
+                    TMin: data.timeseries[i]['t2c-min'],
+                    TMax: data.timeseries[i]['t2c-max'],
+                    Wind: data.timeseries[i].winds + " " + data.timeseries[i].ws10n,
+                    Rain: data.timeseries[i].crh,
+                    items: [
+                        {
+                            forecast: "00:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[0].icon,
+                            Temperatura: data1.timeseries[0]['t2c'],
+                            Wind: data1.timeseries[0].winds + " " + data1.timeseries[0].ws10n,
+                            Rain: data1.timeseries[0].crh
+                        },
+                        {
+                            forecast: "01:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[1].icon,
+                            Temperatura: data1.timeseries[1]['t2c'],
+                            Wind: data1.timeseries[1].winds + " " + data1.timeseries[1].ws10n,
+                            Rain: data1.timeseries[1].crh
+                        },
+                        {
+                            forecast: "02:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[2].icon,
+                            Temperatura: data1.timeseries[2]['t2c'],
+                            Wind: data1.timeseries[2].winds + " " + data1.timeseries[2].ws10n,
+                            Rain: data1.timeseries[2].crh
+                        },
+                        {
+                            forecast: "03:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[3].icon,
+                            Temperatura: data1.timeseries[3]['t2c'],
+                            Wind: data1.timeseries[3].winds + " " + data1.timeseries[3].ws10n,
+                            Rain: data1.timeseries[3].crh
+                        },
+                        {
+                            forecast: "04:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[4].icon,
+                            Temperatura: data1.timeseries[4]['t2c'],
+                            Wind: data1.timeseries[4].winds + " " + data1.timeseries[4].ws10n,
+                            Rain: data1.timeseries[4].crh
+                        },
+                        {
+                            forecast: "05:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[5].icon,
+                            Temperatura: data1.timeseries[5]['t2c'],
+                            Wind: data1.timeseries[5].winds + " " + data1.timeseries[5].ws10n,
+                            Rain: data1.timeseries[5].crh
+                        },
+                        {
+                            forecast: "06:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[6].icon,
+                            Temperatura: data1.timeseries[6]['t2c'],
+                            Wind: data1.timeseries[6].winds + " " + data1.timeseries[6].ws10n,
+                            Rain: data1.timeseries[6].crh
+                        },
+                        {
+                            forecast: "07:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[7].icon,
+                            Temperatura: data1.timeseries[7]['t2c'],
+                            Wind: data1.timeseries[7].winds + " " + data1.timeseries[7].ws10n,
+                            Rain: data1.timeseries[7].crh
+                        },
+                        {
+                            forecast: "08:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[8].icon,
+                            Temperatura: data1.timeseries[8]['t2c'],
+                            Wind: data1.timeseries[8].winds + " " + data1.timeseries[8].ws10n,
+                            Rain: data1.timeseries[8].crh
+                        },
+                        {
+                            forecast: "09:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[9].icon,
+                            Temperatura: data1.timeseries[9]['t2c'],
+                            Wind: data1.timeseries[9].winds + " " + data1.timeseries[9].ws10n,
+                            Rain: data1.timeseries[9].crh
+                        },
+                        {
+                            forecast: "10:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[10].icon,
+                            Temperatura: data1.timeseries[10]['t2c'],
+                            Wind: data1.timeseries[10].winds + " " + data1.timeseries[10].ws10n,
+                            Rain: data1.timeseries[10].crh
+                        },
+                        {
+                            forecast: "11:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[11].icon,
+                            Temperatura: data1.timeseries[11]['t2c'],
+                            Wind: data1.timeseries[11].winds + " " + data1.timeseries[11].ws10n,
+                            Rain: data1.timeseries[11].crh
+                        },
+                        {
+                            forecast: "12:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[12].icon,
+                            Temperatura: data1.timeseries[12]['t2c'],
+                            Wind: data1.timeseries[12].winds + " " + data1.timeseries[12].ws10n,
+                            Rain: data1.timeseries[12].crh
+                        },
+                        {
+                            forecast: "13:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[13].icon,
+                            Temperatura: data1.timeseries[13]['t2c'],
+                            Wind: data1.timeseries[13].winds + " " + data1.timeseries[13].ws10n,
+                            Rain: data1.timeseries[13].crh
+                        },
+                        {
+                            forecast: "14:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[14].icon,
+                            Temperatura: data1.timeseries[14]['t2c'],
+                            Wind: data1.timeseries[14].winds + " " + data1.timeseries[14].ws10n,
+                            Rain: data1.timeseries[14].crh
+                        },
+                        {
+                            forecast: "15:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[15].icon,
+                            Temperatura: data1.timeseries[15]['t2c'],
+                            Wind: data1.timeseries[15].winds + " " + data1.timeseries[15].ws10n,
+                            Rain: data1.timeseries[15].crh
+                        },
+                        {
+                            forecast: "16:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[16].icon,
+                            Temperatura: data1.timeseries[16]['t2c'],
+                            Wind: data1.timeseries[16].winds + " " + data1.timeseries[16].ws10n,
+                            Rain: data1.timeseries[16].crh
+                        },
+                        {
+                            forecast: "17:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[17].icon,
+                            Temperatura: data1.timeseries[17]['t2c'],
+                            Wind: data1.timeseries[17].winds + " " + data1.timeseries[17].ws10n,
+                            Rain: data1.timeseries[17].crh
+                        },
+                        {
+                            forecast: "18:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[18].icon,
+                            Temperatura: data1.timeseries[18]['t2c'],
+                            Wind: data1.timeseries[18].winds + " " + data1.timeseries[18].ws10n,
+                            Rain: data1.timeseries[18].crh
+                        },
+                        {
+                            forecast: "19:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[19].icon,
+                            Temperatura: data1.timeseries[19]['t2c'],
+                            Wind: data1.timeseries[19].winds + " " + data1.timeseries[19].ws10n,
+                            Rain: data1.timeseries[19].crh
+                        },
+                        {
+                            forecast: "20:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[20].icon,
+                            Temperatura: data1.timeseries[20]['t2c'],
+                            Wind: data1.timeseries[20].winds + " " + data1.timeseries[20].ws10n,
+                            Rain: data1.timeseries[20].crh
+                        },
+                        {
+                            forecast: "21:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[21].icon,
+                            Temperatura: data1.timeseries[21]['t2c'],
+                            Wind: data1.timeseries[21].winds + " " + data1.timeseries[21].ws10n,
+                            Rain: data1.timeseries[21].crh
+                        },
+                        {
+                            forecast: "22:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[22].icon,
+                            Temperatura: data1.timeseries[22]['t2c'],
+                            Wind: data1.timeseries[22].winds + " " + data1.timeseries[22].ws10n,
+                            Rain: data1.timeseries[22].crh
+                        },
+                        {
+                            forecast: "23:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[23].icon,
+                            Temperatura: data1.timeseries[23]['t2c'],
+                            Wind: data1.timeseries[23].winds + " " + data1.timeseries[23].ws10n,
+                            Rain: data1.timeseries[23].crh
+                        },
+                    ]
+                });
             }
+            pageData.set("items", items);
         })
         .then(function () {
             pageData.set("isBusy", false);
@@ -479,8 +635,26 @@ function print_series(id)
             pageData.set("table", "visible");
         }).catch(error => console.error("[LABEL] ERROR DATA", error));
 
+
     return;
 }
+
+exports.tap = function (args)
+{
+    console.log(args.object.selectedIndexes[0]);
+    console.log(pageData.get("altezza"));
+
+    if(pageData.get("altezza") >= 0 && pageData.get("altezza") <= 270 && args.object.selectedIndexes[0] == undefined)
+        pageData.set("altezza", 1350);
+    else if(pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] == undefined)
+    {
+        pageData.set("altezza", 1350);
+    }
+    else if(pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] != undefined)
+    {
+        pageData.set("altezza", altezza);
+    }
+};
 
 function print_map(id, prod, output, data)
 {
@@ -517,6 +691,8 @@ function print_prod()
 
         console.log(_prod);
         pageData.set("hint_prod", _prod);
+
+        pageData.set("products", products);
     });
 }
 
@@ -541,6 +717,8 @@ function print_output(prod)
 
         console.log(_out);
         pageData.set("hint_output", _out);
+
+        pageData.set("outputs", outputs);
     });
 }
 

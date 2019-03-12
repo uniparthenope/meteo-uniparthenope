@@ -1,9 +1,10 @@
-<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart"  xmlns:dd="nativescript-drop-down" xmlns:flv="nativescript-folding-list-view">
+<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart" xmlns:dd="nativescript-drop-down" xmlns:accordion="nativescript-accordion" xmlns:ui="nativescript-nested-scrollview">
     <ActionBar class="blue_background_action_bar" flat="true">
         <Label text="{{ titolo }}" fontSize="20"></Label>
     </ActionBar>
 
-    <ScrollView height="100%">
+    <StackLayout>
+    <ui:NestedScrollView>
         <StackLayout orientation="vertical" verticalAlignment="top" margin="10 10 10 10">
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
             <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
@@ -54,6 +55,7 @@
             </StackLayout>
 
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
+            <ScrollView>
             <StackLayout class="blue_background_opac" marginTop="20" visibility="{{ table }}">
                 <FlexboxLayout flexDirection="row">
                     <!-- Use even flexGrow to achieve uniform grid -->
@@ -76,21 +78,40 @@
                     </StackLayout>
                 </FlexboxLayout>
 
-                <ListView items="{{ statistic }}" itemTap="onTap" orientation="vertical" marginTop="10" height="{{ altezza }}" margin="10 5 5 5">
-                    <ListView.itemTemplate>
-                        <FlexboxLayout flexDirection="row">
-                            <StackLayout flexGrow="1" class="font-weight-bold text-center" width="40%">
-                                <Label text="{{ forecast }}"/>
-                                <Image src="{{ image }}" height="25" width="15"></Image>
-                            </StackLayout>
-                            <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                            <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                            <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
-                            <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                        </FlexboxLayout>
-                    </ListView.itemTemplate>
-                </ListView>
+                <accordion:Accordion ontap="tap" marginTop="5" height="{{ altezza }}" items="{{items}}" allowMultiple="false" selectedIndexes="{{selectedIndexes}}">
+                    <accordion:Accordion.itemHeaderTemplate>
+                        <GridLayout>
+                            <FlexboxLayout flexDirection="row">
+                                <StackLayout flexGrow="1" class="font-weight-bold text-center" width="40%">
+                                    <Label text="{{ forecast }}"/>
+                                    <Image src="{{ image }}" height="25" width="15"></Image>
+                                </StackLayout>
+                                <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
+                                <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                            </FlexboxLayout>
+                        </GridLayout>
+                    </accordion:Accordion.itemHeaderTemplate>
+
+                    <accordion:Accordion.itemContentTemplate>
+                        <StackLayout backgroundColor="#00008b">
+                            <GridLayout>
+                                <FlexboxLayout flexDirection="row">
+                                    <StackLayout flexGrow="1" class="font-weight-bold text-center" width="55%">
+                                        <Label text="{{ forecast }}"/>
+                                        <Image src="{{ image }}" height="25" width="15"></Image>
+                                    </StackLayout>
+                                    <Label text="{{ Temperatura }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                    <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
+                                    <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </StackLayout>
+                    </accordion:Accordion.itemContentTemplate>
+                </accordion:Accordion>
             </StackLayout>
+            </ScrollView>
 
             <StackLayout orientation="vertical" marginTop="20">
                 <StackLayout margin="5 5 5 5">
@@ -119,7 +140,6 @@
                 <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
             </StackLayout>
             <Image src="{{ map }}" marginTop="10" visibility="{{ _map }}"/>
-
 
             <StackLayout margin="5 5 5 5">
                 <Label text="Aggregazione: "></Label>
@@ -235,33 +255,7 @@
                     </chart:Palette>
                 </chart:RadCartesianChart.palettes>
             </chart:RadCartesianChart>
-
-            <GridLayout>
-                <flv:FoldingListView items="{{ item }}" foldsCount="5" foldedRowHeight="95"
-                                     detailDataLoader="detailDataLoader">
-                    <flv:FoldingListView.foregroundItemTemplate>
-                        <GridLayout columns="75, *" class="folded-cell">
-                            <GridLayout row="0" col="0" rows="*, auto, auto, *" class="item-nbr">
-                                <Label row="1" text="Item"/>
-                                <Label row="2" text="{{ '#' + item }}"/>
-                            </GridLayout>
-                            <StackLayout col="1" padding="10">
-                                <Label class="h2" text="My Header"/>
-                                <Label class="label" textWrap="true" text="Short description. Tap to see more!"/>
-                            </StackLayout>
-                        </GridLayout>
-                    </flv:FoldingListView.foregroundItemTemplate>
-
-                    <flv:FoldingListView.containerItemTemplate>
-                        <StackLayout rows="auto, *, auto" class="expanded-cell">
-                            <Label class="item-nbr" text="{{ 'Item #' + item }}" />
-                            <Label class="label" textWrap="true" text="{{ details }}" />
-                            <Button id="btn" class="btn btn-primary" text="Click Me!" />
-                        </StackLayout>
-                    </flv:FoldingListView.containerItemTemplate>
-                </flv:FoldingListView>
-            </GridLayout>
-
         </StackLayout>
-    </ScrollView>
+    </ui:NestedScrollView>
+    </StackLayout>
 </Page>
