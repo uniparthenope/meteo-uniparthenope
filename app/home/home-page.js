@@ -84,7 +84,7 @@ exports.pageLoaded = function(args)
     home.set("minDate", new Date(2018, 0, 29));
     home.set("maxDate", new Date(2030, 4, 12));
 
-    print_data = nome_giorno[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+    print_data = nome_giorno[data.getUTCDay()+1] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log(print_data);
