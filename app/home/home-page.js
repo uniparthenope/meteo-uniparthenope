@@ -158,11 +158,11 @@ exports.pageLoaded = function(args)
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
-                }, 80);
+                }, 800);
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
-                }, 80);
+                }, 800);
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('settings', {
@@ -170,7 +170,7 @@ exports.pageLoaded = function(args)
                     vento: appSetting.getNumber("Vento", 0),
                     pressione: appSetting.getNumber("Pressione", 0)
                   });
-                }, 80);
+                }, 800);
               })
                   .catch(error => console.error("[SEARCH] ERROR DATA ", error));
             });
