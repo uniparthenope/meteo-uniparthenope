@@ -230,7 +230,7 @@
                             items="{{ single_item }}"
                             categoryProperty="key"
                             valueProperty="val"
-                            showLabels="true">
+                            showLabels="false">
                         <chart:BarSeries.labelStyle>
                             <chart:BarSeriesStyle margin="10" fontStyle="Bold"/>
                         </chart:BarSeries.labelStyle>
@@ -238,7 +238,7 @@
                             <chart:CategoricalAxis labelFitMode="Rotate"  height="0" labelTextColor="rgba(30,76,117,1)"/>
                         </chart:BarSeries.horizontalAxis>
                         <chart:BarSeries.verticalAxis>
-                            <chart:LinearAxis  labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
+                            <chart:LinearAxis  labelFormat="%.00f" labelTextColor="rgba(30,76,117,1)"/>
                         </chart:BarSeries.verticalAxis>
                     </chart:BarSeries>
                 </chart:RadCartesianChart.series>

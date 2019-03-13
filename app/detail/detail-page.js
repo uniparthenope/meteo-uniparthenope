@@ -20,10 +20,10 @@ var data;
 var map;
 var products;
 var outputs;
-var prod = "wrf5";
-var output = "gen";
-var step = "1";
-var hour = "24";
+var prod;
+var output;
+var step;
+var hour;
 let products_map = new Map();
 let outputs_map = new Map();
 var steps;
@@ -81,6 +81,11 @@ function pageLoaded(args) {
     id = page.navigationContext.id;
     data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
+
+    prod = "wrf5";
+    output = "gen";
+    step = "1";
+    hour = "24";
 
     print_data = get_print_data(data);
 
