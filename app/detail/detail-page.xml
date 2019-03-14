@@ -78,7 +78,7 @@
                     </StackLayout>
                 </FlexboxLayout>
 
-                <accordion:Accordion ontap="tap" marginTop="5" height="{{ altezza }}" items="{{items}}" allowMultiple="false" selectedIndexes="{{selectedIndexes}}">
+                <accordion:Accordion class="blue_background_opac"  marginTop="5" height="{{ altezza }}" items="{{items}}" allowMultiple="false" selectedIndexes="{{selectedIndexes}}">
                     <accordion:Accordion.itemHeaderTemplate>
                         <GridLayout>
                             <FlexboxLayout flexDirection="row">

@@ -449,15 +449,19 @@ function print_series(id)
 {
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id +"?hours=0&step=24")
         .then((response) => response.json())
-        .then(async (data) => {
+        .then(/*async*/ (data) => {
             pageData.set("altezza", data.timeseries.length * 45);
             altezza = data.timeseries.length * 45;
             for (let i = 0; i < data.timeseries.length; i++) {
                 let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + data.timeseries[i]['dateTime'] + "&hours=24";
                 console.log(url);
 
-                const response = await fetch(url);
-                const data1 = await response.json();
+                //const response = await fetch(url);
+                //const data1 = await response.json();
+
+                fetch(url)
+                    .then((response) => response.json())
+                    .then(/*async*/ (data1) => {
 
                 let weekDayLabel = dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6, 8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
                 items.push({
@@ -638,6 +642,7 @@ function print_series(id)
                         },
                     ]
                 });
+                    });
             }
             pageData.set("items", items);
         })
@@ -702,7 +707,7 @@ function print_prod()
             .map(([k]) => k);
 
         console.log(_prod);
-        pageData.set("hint_prod", _prod);
+        pageData.set("hint_prod", "Meteo ad alta risoluzione 7 giorni");
 
         pageData.set("products", products);
     });
@@ -728,7 +733,7 @@ function print_output(prod)
             .map(([k]) => k);
 
         console.log(_out);
-        pageData.set("hint_output", _out);
+        pageData.set("hint_output", "Visualizzazione generale");
 
         pageData.set("outputs", outputs);
     });
