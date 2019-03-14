@@ -12,6 +12,7 @@ var view = require("ui/core/view");
 var utils = require("tns-core-modules/utils/utils");
 var dialog = require("tns-core-modules/ui/dialogs");
 require( "nativescript-master-technology" );
+const platformModule = require("tns-core-modules/platform");
 
 var drawer;
 var oLangWebViewInterface;
@@ -590,8 +591,6 @@ function listenLangWebViewEvents()
     page.frame.navigate(nav);
   });
 }
-
-const platformModule = require("tns-core-modules/platform");
 
 if(platformModule.isIOS)
 {

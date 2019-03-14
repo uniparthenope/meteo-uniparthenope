@@ -10,6 +10,7 @@ const appSetting = require("application-settings");
 var dialog = require("tns-core-modules/ui/dialogs");
 var imageSource = require("image-source");
 require("nativescript-accordion");
+const platformModule = require("tns-core-modules/platform");
 
 var press;
 var temp;
@@ -658,19 +659,20 @@ function print_series(id)
 
 exports.tap = function (args)
 {
+    if(platformModule.isAndroid) {
+        console.log(args.object.selectedIndexes[0]);
+        console.log(pageData.get("altezza"));
 
-    console.log(args.object.selectedIndexes[0]);
-    console.log(pageData.get("altezza"));
-
-    if(pageData.get("altezza") >= 0 && pageData.get("altezza") <= 270 && args.object.selectedIndexes[0] == undefined)
-        pageData.set("altezza", 1350);
-    else if(pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] == undefined)
-    {
-        pageData.set("altezza", 1350);
+        if (pageData.get("altezza") >= 0 && pageData.get("altezza") <= 270 && args.object.selectedIndexes[0] == undefined)
+            pageData.set("altezza", 1350);
+        else if (pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] == undefined) {
+            pageData.set("altezza", 1350);
+        } else if (pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] != undefined) {
+            pageData.set("altezza", altezza);
+        }
     }
-    else if(pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] != undefined)
-    {
-        pageData.set("altezza", altezza);
+    if(platformModule.isIOS) {
+        console.log("TAP");
     }
 };
 
