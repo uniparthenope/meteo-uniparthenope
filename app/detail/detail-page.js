@@ -658,6 +658,7 @@ function print_series(id)
 
 exports.tap = function (args)
 {
+
     console.log(args.object.selectedIndexes[0]);
     console.log(pageData.get("altezza"));
 

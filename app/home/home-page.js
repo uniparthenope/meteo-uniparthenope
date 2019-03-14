@@ -591,37 +591,43 @@ function listenLangWebViewEvents()
   });
 }
 
-/*var items = new ObservableArray([]);
-function onTextChanged(args)
+const platformModule = require("tns-core-modules/platform");
+
+if(platformModule.isIOS)
 {
-  fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+  var items = new ObservableArray([]);
+  function onTextChanged(args)
   {
-    items.splice(0);
-    for(let i=0; i<data.length; i++) {
-      //console.log(data[i].label);
-      items.push(new autocompleteModule.TokenModel(data[i].label));
-    }
-  });
+    fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+    {
+      items.splice(0);
+      for(let i=0; i<data.length; i++) {
+        items.push(new autocompleteModule.TokenModel(data[i].label));
+      }
+    });
 
-  home.set("posti", items);
-  //items.splice(0);
+    home.set("posti", items);
+  }
+  exports.onTextChanged = onTextChanged;
 }
-exports.onTextChanged = onTextChanged;*/
 
-var items;
-function onTextChanged(args)
+if(platformModule.isAndroid)
 {
-  fetch(url_api + "places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+  var items;
+  function onTextChanged(args)
   {
-    items = new ObservableArray([]);
-    for(let i=0; i<data.length; i++) {
-      items.push(new autocompleteModule.TokenModel(data[i].label));
-    }
-  });
+    fetch(url_api + "places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+    {
+      items = new ObservableArray([]);
+      for(let i=0; i<data.length; i++) {
+        items.push(new autocompleteModule.TokenModel(data[i].label));
+      }
+    });
 
-  home.set("posti", items);
+    home.set("posti", items);
+  }
+  exports.onTextChanged = onTextChanged;
 }
-exports.onTextChanged = onTextChanged;
 
 function didAutoComplete  (args) {
   let name = (args.text);
@@ -708,10 +714,12 @@ function didAutoComplete  (args) {
     });
   }
 
-  var autocompletetxt= page.getViewById("autocomplete");
-  autocompletetxt.focus();
-  utils.ad.showSoftInput(autocompletetxt.nativeView);
-  utils.ad.dismissSoftInput();
+  if(platformModule.isAndroid) {
+    var autocompletetxt = page.getViewById("autocomplete");
+    autocompletetxt.focus();
+    utils.ad.showSoftInput(autocompletetxt.nativeView);
+    utils.ad.dismissSoftInput();
+  }
 }
 exports.didAutoComplete = didAutoComplete;
 
