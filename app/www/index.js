@@ -466,7 +466,9 @@ function onClick()
 
 function addWindLayer()
 {
-    fetch(url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData).then((response) => response.json()).then((data) =>
+    let url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData;
+
+    fetch(url_wind).then((response) => response.json()).then((data) =>
     {
         if (windLayer != null)
         {
@@ -510,7 +512,9 @@ function addCloudLayer() {
         map.removeLayer(cloudLayer);
     }
 
-    cloudLayer = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc', {
+    let url_cloud = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+
+    cloudLayer = L.tileLayer.wms(url_cloud, {
             layers: 'CLDFRA_TOTAL',
             styles: 'raster/tcldBars',
             format: 'image/png',
@@ -539,7 +543,9 @@ function addT2CLayer() {
         map.removeLayer(t2cLayer);
     }
 
-    t2cLayer = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc', {
+    let url_temp = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+
+    t2cLayer = L.tileLayer.wms(url_temp, {
             layers: 'T2C',
             styles: 'default-scalar/tspBars',
             format: 'image/png',
@@ -567,7 +573,9 @@ function addRainLayer() {
         map.removeLayer(rainLayer);
     }
 
-    rainLayer = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc', {
+    let url_rain = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+
+    rainLayer = L.tileLayer.wms(url_rain, {
             layers: 'DELTA_RAIN',
             styles: 'raster/crhBars',
             format: 'image/png',
@@ -596,7 +604,9 @@ function addSnowLayer() {
         map.removeLayer(snowLayer);
     }
 
-    snowLayer = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc', {
+    let url_snow = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+
+    snowLayer = L.tileLayer.wms(url_snow, {
             layers: 'HOURLY_SWE',
             styles: 'raster/sweBars',
             format: 'image/png',

@@ -84,7 +84,7 @@ exports.pageLoaded = function(args)
     home.set("minDate", new Date(2018, 0, 29));
     home.set("maxDate", new Date(2030, 4, 12));
 
-    print_data = nome_giorno[data.getUTCDay()+1] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+    print_data = nome_giorno[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log(print_data);
@@ -615,7 +615,6 @@ function onTextChanged(args)
   {
     items = new ObservableArray([]);
     for(let i=0; i<data.length; i++) {
-      //console.log(data[i].label);
       items.push(new autocompleteModule.TokenModel(data[i].label));
     }
   });
@@ -645,7 +644,12 @@ function didAutoComplete  (args) {
 
   if(gps_on) {
     home.set("search", "collapsed");
-    fetch(url_api + "places/search/byname/" + _name).then((response) => response.json()).then((data) => {
+
+    let url = url_api + "places/search/byname/" + _name;
+    url = url.replace(/ /g, "%20");
+    console.log(url);
+
+    fetch(url).then((response) => response.json()).then((data) => {
       var id;
       console.log(data.length);
       for(let i=0; i<data.length; i++)

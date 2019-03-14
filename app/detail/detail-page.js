@@ -458,7 +458,6 @@ function print_series(id)
 
                 const response = await fetch(url);
                 const data1 = await response.json();
-                console.log(data1.timeseries[i]['dateTime']);
 
                 let weekDayLabel = dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6, 8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
                 items.push({
