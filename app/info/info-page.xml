@@ -8,7 +8,7 @@
         <StackLayout orientation="vertical">
             <Image src="~/images/logo.png" horizontalAlignment="center" margin="20 20 20 20"></Image>
             <Label textAlignment="center" textWrap="true" text="Centro per il Monitoraggio e la Modellistica Marina e Atmosferica dell'Università Parthenope."></Label>
-            <Label textAlignment="center" textWrap="true" text="Versione 0.6" marginTop="5"></Label>
+            <Label textAlignment="center" textWrap="true" text="Versione 1.0" marginTop="5"></Label>
             <Label textAlignment="center" textWrap="true" text="https://meteo.uniparthenope.it" marginTop="5" color="blue" tap="meteo_web"></Label>
             <!--
             <Label textAlignment="center" textWrap="true" text="Applicazione sviluppata da Ciro Giuseppe De Vita e Gennaro Mellone (tesi di laurea triennale in Informatica)" marginTop="10"></Label>
