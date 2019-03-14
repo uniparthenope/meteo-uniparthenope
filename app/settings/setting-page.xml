@@ -6,8 +6,8 @@
     <ScrollView>
         <StackLayout orientation="vertical">
             <StackLayout orientation="horizontal" verticalAlignment="center" >
-                <Label class="blue_col" width="90" text="Temperatura: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
-                <SegmentedBar selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ tempSelection }}" horizontalAlignment="right">
+                <Label class="blue_col" width="30%" text="Temperatura: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
+                <SegmentedBar width="70%" selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ tempSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
                         <SegmentedBarItem title="°C"/>
                         <SegmentedBarItem title="°F" />
@@ -16,8 +16,8 @@
             </StackLayout>
 
             <StackLayout orientation="horizontal" verticalAlignment="center">
-                <Label class="blue_col" width="90" text="Vento: " verticalAlignment="center" horizontalAlignment="left" marginRight="5" marginLeft="15" style="font-weight: bold"></Label>
-                <SegmentedBar row="0"  selectedBackgroundColor="rgba(30,76,117,1)" selectedIndex="{{ windSelection }}" horizontalAlignment="right">
+                <Label class="blue_col" width="30%" text="Vento: " verticalAlignment="center" horizontalAlignment="left" marginRight="5" marginLeft="15" style="font-weight: bold"></Label>
+                <SegmentedBar row="0" width="70%" selectedBackgroundColor="rgba(30,76,117,1)" selectedIndex="{{ windSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
                         <SegmentedBarItem title="kn"/>
                         <SegmentedBarItem title="km/h" />
@@ -28,8 +28,8 @@
             </StackLayout>
 
             <StackLayout orientation="horizontal" verticalAlignment="center">
-                <Label class="blue_col" width="85" text="Pressione: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
-                <SegmentedBar selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ pressureSelection }}" horizontalAlignment="right">
+                <Label class="blue_col" width="30%" text="Pressione: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
+                <SegmentedBar width="70%" selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ pressureSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
                         <SegmentedBarItem title="HPa"/>
                         <SegmentedBarItem title="mb"/>
@@ -38,8 +38,8 @@
                 </SegmentedBar>
             </StackLayout>
             <StackLayout orientation="horizontal" verticalAlignment="center" >
-                <Label class="blue_col" width="85" text="Posizione: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
-                <SegmentedBar selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ gpsSelection }}" horizontalAlignment="right">
+                <Label class="blue_col" width="30%" text="Posizione: " horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
+                <SegmentedBar width="70%" selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ gpsSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
                         <SegmentedBarItem title="GPS Interno"/>
                         <SegmentedBarItem title="SignalK"/>
