@@ -448,220 +448,205 @@ function print_meteo(id, data)
 
 function print_series(id)
 {
-    if(platformModule.isIOS) {
-        fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?hours=0&step=24")
-            .then((response) => response.json())
-            .then(/*async*/ (data) => {
-                pageData.set("altezza", data.timeseries.length * 45);
-                altezza = data.timeseries.length * 45;
-                for (let i = 0; i < data.timeseries.length; i++) {
-                    let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + data.timeseries[i]['dateTime'] + "&hours=24";
-                    console.log(url);
+    fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?hours=0&step=24")
+        .then((response) => response.json())
+        .then(async (data) => {
+            pageData.set("altezza", data.timeseries.length * 45);
+            altezza = data.timeseries.length * 45;
+            for (let i = 0; i < data.timeseries.length; i++) {
+                let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + data.timeseries[i]['dateTime'] + "&hours=24";
+                console.log(url);
 
-                    //const response = await fetch(url);
-                    //const data1 = await response.json();
+                const response = await fetch(url);
+                const data1 = await response.json();
 
-                    fetch(url)
-                        .then((response) => response.json())
-                        .then(/*async*/ (data1) => {
-
-                            let weekDayLabel = dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6, 8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
-                            items.push({
-                                forecast: weekDayLabel,
-                                image: "~/meteo_icon/" + data.timeseries[i].icon,
-                                TMin: data.timeseries[i]['t2c-min'],
-                                TMax: data.timeseries[i]['t2c-max'],
-                                Wind: data.timeseries[i].winds + " " + data.timeseries[i].ws10n,
-                                Rain: data.timeseries[i].crh,
-                                items: [
-                                    {
-                                        forecast: "00:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[0].icon,
-                                        Temperatura: data1.timeseries[0]['t2c'],
-                                        Wind: data1.timeseries[0].winds + " " + data1.timeseries[0].ws10n,
-                                        Rain: data1.timeseries[0].crh
-                                    },
-                                    {
-                                        forecast: "01:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[1].icon,
-                                        Temperatura: data1.timeseries[1]['t2c'],
-                                        Wind: data1.timeseries[1].winds + " " + data1.timeseries[1].ws10n,
-                                        Rain: data1.timeseries[1].crh
-                                    },
-                                    {
-                                        forecast: "02:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[2].icon,
-                                        Temperatura: data1.timeseries[2]['t2c'],
-                                        Wind: data1.timeseries[2].winds + " " + data1.timeseries[2].ws10n,
-                                        Rain: data1.timeseries[2].crh
-                                    },
-                                    {
-                                        forecast: "03:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[3].icon,
-                                        Temperatura: data1.timeseries[3]['t2c'],
-                                        Wind: data1.timeseries[3].winds + " " + data1.timeseries[3].ws10n,
-                                        Rain: data1.timeseries[3].crh
-                                    },
-                                    {
-                                        forecast: "04:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[4].icon,
-                                        Temperatura: data1.timeseries[4]['t2c'],
-                                        Wind: data1.timeseries[4].winds + " " + data1.timeseries[4].ws10n,
-                                        Rain: data1.timeseries[4].crh
-                                    },
-                                    {
-                                        forecast: "05:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[5].icon,
-                                        Temperatura: data1.timeseries[5]['t2c'],
-                                        Wind: data1.timeseries[5].winds + " " + data1.timeseries[5].ws10n,
-                                        Rain: data1.timeseries[5].crh
-                                    },
-                                    {
-                                        forecast: "06:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[6].icon,
-                                        Temperatura: data1.timeseries[6]['t2c'],
-                                        Wind: data1.timeseries[6].winds + " " + data1.timeseries[6].ws10n,
-                                        Rain: data1.timeseries[6].crh
-                                    },
-                                    {
-                                        forecast: "07:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[7].icon,
-                                        Temperatura: data1.timeseries[7]['t2c'],
-                                        Wind: data1.timeseries[7].winds + " " + data1.timeseries[7].ws10n,
-                                        Rain: data1.timeseries[7].crh
-                                    },
-                                    {
-                                        forecast: "08:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[8].icon,
-                                        Temperatura: data1.timeseries[8]['t2c'],
-                                        Wind: data1.timeseries[8].winds + " " + data1.timeseries[8].ws10n,
-                                        Rain: data1.timeseries[8].crh
-                                    },
-                                    {
-                                        forecast: "09:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[9].icon,
-                                        Temperatura: data1.timeseries[9]['t2c'],
-                                        Wind: data1.timeseries[9].winds + " " + data1.timeseries[9].ws10n,
-                                        Rain: data1.timeseries[9].crh
-                                    },
-                                    {
-                                        forecast: "10:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[10].icon,
-                                        Temperatura: data1.timeseries[10]['t2c'],
-                                        Wind: data1.timeseries[10].winds + " " + data1.timeseries[10].ws10n,
-                                        Rain: data1.timeseries[10].crh
-                                    },
-                                    {
-                                        forecast: "11:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[11].icon,
-                                        Temperatura: data1.timeseries[11]['t2c'],
-                                        Wind: data1.timeseries[11].winds + " " + data1.timeseries[11].ws10n,
-                                        Rain: data1.timeseries[11].crh
-                                    },
-                                    {
-                                        forecast: "12:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[12].icon,
-                                        Temperatura: data1.timeseries[12]['t2c'],
-                                        Wind: data1.timeseries[12].winds + " " + data1.timeseries[12].ws10n,
-                                        Rain: data1.timeseries[12].crh
-                                    },
-                                    {
-                                        forecast: "13:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[13].icon,
-                                        Temperatura: data1.timeseries[13]['t2c'],
-                                        Wind: data1.timeseries[13].winds + " " + data1.timeseries[13].ws10n,
-                                        Rain: data1.timeseries[13].crh
-                                    },
-                                    {
-                                        forecast: "14:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[14].icon,
-                                        Temperatura: data1.timeseries[14]['t2c'],
-                                        Wind: data1.timeseries[14].winds + " " + data1.timeseries[14].ws10n,
-                                        Rain: data1.timeseries[14].crh
-                                    },
-                                    {
-                                        forecast: "15:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[15].icon,
-                                        Temperatura: data1.timeseries[15]['t2c'],
-                                        Wind: data1.timeseries[15].winds + " " + data1.timeseries[15].ws10n,
-                                        Rain: data1.timeseries[15].crh
-                                    },
-                                    {
-                                        forecast: "16:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[16].icon,
-                                        Temperatura: data1.timeseries[16]['t2c'],
-                                        Wind: data1.timeseries[16].winds + " " + data1.timeseries[16].ws10n,
-                                        Rain: data1.timeseries[16].crh
-                                    },
-                                    {
-                                        forecast: "17:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[17].icon,
-                                        Temperatura: data1.timeseries[17]['t2c'],
-                                        Wind: data1.timeseries[17].winds + " " + data1.timeseries[17].ws10n,
-                                        Rain: data1.timeseries[17].crh
-                                    },
-                                    {
-                                        forecast: "18:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[18].icon,
-                                        Temperatura: data1.timeseries[18]['t2c'],
-                                        Wind: data1.timeseries[18].winds + " " + data1.timeseries[18].ws10n,
-                                        Rain: data1.timeseries[18].crh
-                                    },
-                                    {
-                                        forecast: "19:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[19].icon,
-                                        Temperatura: data1.timeseries[19]['t2c'],
-                                        Wind: data1.timeseries[19].winds + " " + data1.timeseries[19].ws10n,
-                                        Rain: data1.timeseries[19].crh
-                                    },
-                                    {
-                                        forecast: "20:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[20].icon,
-                                        Temperatura: data1.timeseries[20]['t2c'],
-                                        Wind: data1.timeseries[20].winds + " " + data1.timeseries[20].ws10n,
-                                        Rain: data1.timeseries[20].crh
-                                    },
-                                    {
-                                        forecast: "21:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[21].icon,
-                                        Temperatura: data1.timeseries[21]['t2c'],
-                                        Wind: data1.timeseries[21].winds + " " + data1.timeseries[21].ws10n,
-                                        Rain: data1.timeseries[21].crh
-                                    },
-                                    {
-                                        forecast: "22:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[22].icon,
-                                        Temperatura: data1.timeseries[22]['t2c'],
-                                        Wind: data1.timeseries[22].winds + " " + data1.timeseries[22].ws10n,
-                                        Rain: data1.timeseries[22].crh
-                                    },
-                                    {
-                                        forecast: "23:00 UTC",
-                                        image: "~/meteo_icon/" + data1.timeseries[23].icon,
-                                        Temperatura: data1.timeseries[23]['t2c'],
-                                        Wind: data1.timeseries[23].winds + " " + data1.timeseries[23].ws10n,
-                                        Rain: data1.timeseries[23].crh
-                                    },
-                                ]
-                            });
-                        });
-                }
-                pageData.set("items", items);
-            })
-            .then(function () {
-                pageData.set("isBusy", false);
-                pageData.set("isHeigh", "0");
-                pageData.set("table", "visible");
-            }).catch(error => console.error("[LABEL] ERROR DATA", error));
-    }
-
-    if(platformModule.isAndroid)
-    {
-        pageData.set("isBusy", false);
-        pageData.set("isHeigh", "0");
-        pageData.set("table", "visible");
-    }
-
+                let weekDayLabel = dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6, 8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
+                items.push({
+                    forecast: weekDayLabel,
+                    image: "~/meteo_icon/" + data.timeseries[i].icon,
+                    TMin: data.timeseries[i]['t2c-min'],
+                    TMax: data.timeseries[i]['t2c-max'],
+                    Wind: data.timeseries[i].winds + " " + data.timeseries[i].ws10n,
+                    Rain: data.timeseries[i].crh,
+                    items: [
+                        {
+                            forecast: "00:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[0].icon,
+                            Temperatura: data1.timeseries[0]['t2c'],
+                            Wind: data1.timeseries[0].winds + " " + data1.timeseries[0].ws10n,
+                            Rain: data1.timeseries[0].crh
+                        },
+                        {
+                            forecast: "01:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[1].icon,
+                            Temperatura: data1.timeseries[1]['t2c'],
+                            Wind: data1.timeseries[1].winds + " " + data1.timeseries[1].ws10n,
+                            Rain: data1.timeseries[1].crh
+                        },
+                        {
+                            forecast: "02:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[2].icon,
+                            Temperatura: data1.timeseries[2]['t2c'],
+                            Wind: data1.timeseries[2].winds + " " + data1.timeseries[2].ws10n,
+                            Rain: data1.timeseries[2].crh
+                        },
+                        {
+                            forecast: "03:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[3].icon,
+                            Temperatura: data1.timeseries[3]['t2c'],
+                            Wind: data1.timeseries[3].winds + " " + data1.timeseries[3].ws10n,
+                            Rain: data1.timeseries[3].crh
+                        },
+                        {
+                            forecast: "04:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[4].icon,
+                            Temperatura: data1.timeseries[4]['t2c'],
+                            Wind: data1.timeseries[4].winds + " " + data1.timeseries[4].ws10n,
+                            Rain: data1.timeseries[4].crh
+                        },
+                        {
+                            forecast: "05:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[5].icon,
+                            Temperatura: data1.timeseries[5]['t2c'],
+                            Wind: data1.timeseries[5].winds + " " + data1.timeseries[5].ws10n,
+                            Rain: data1.timeseries[5].crh
+                        },
+                        {
+                            forecast: "06:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[6].icon,
+                            Temperatura: data1.timeseries[6]['t2c'],
+                            Wind: data1.timeseries[6].winds + " " + data1.timeseries[6].ws10n,
+                            Rain: data1.timeseries[6].crh
+                        },
+                        {
+                            forecast: "07:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[7].icon,
+                            Temperatura: data1.timeseries[7]['t2c'],
+                            Wind: data1.timeseries[7].winds + " " + data1.timeseries[7].ws10n,
+                            Rain: data1.timeseries[7].crh
+                        },
+                        {
+                            forecast: "08:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[8].icon,
+                            Temperatura: data1.timeseries[8]['t2c'],
+                            Wind: data1.timeseries[8].winds + " " + data1.timeseries[8].ws10n,
+                            Rain: data1.timeseries[8].crh
+                        },
+                        {
+                            forecast: "09:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[9].icon,
+                            Temperatura: data1.timeseries[9]['t2c'],
+                            Wind: data1.timeseries[9].winds + " " + data1.timeseries[9].ws10n,
+                            Rain: data1.timeseries[9].crh
+                        },
+                        {
+                            forecast: "10:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[10].icon,
+                            Temperatura: data1.timeseries[10]['t2c'],
+                            Wind: data1.timeseries[10].winds + " " + data1.timeseries[10].ws10n,
+                            Rain: data1.timeseries[10].crh
+                        },
+                        {
+                            forecast: "11:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[11].icon,
+                            Temperatura: data1.timeseries[11]['t2c'],
+                            Wind: data1.timeseries[11].winds + " " + data1.timeseries[11].ws10n,
+                            Rain: data1.timeseries[11].crh
+                        },
+                        {
+                            forecast: "12:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[12].icon,
+                            Temperatura: data1.timeseries[12]['t2c'],
+                            Wind: data1.timeseries[12].winds + " " + data1.timeseries[12].ws10n,
+                            Rain: data1.timeseries[12].crh
+                        },
+                        {
+                            forecast: "13:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[13].icon,
+                            Temperatura: data1.timeseries[13]['t2c'],
+                            Wind: data1.timeseries[13].winds + " " + data1.timeseries[13].ws10n,
+                            Rain: data1.timeseries[13].crh
+                        },
+                        {
+                            forecast: "14:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[14].icon,
+                            Temperatura: data1.timeseries[14]['t2c'],
+                            Wind: data1.timeseries[14].winds + " " + data1.timeseries[14].ws10n,
+                            Rain: data1.timeseries[14].crh
+                        },
+                        {
+                            forecast: "15:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[15].icon,
+                            Temperatura: data1.timeseries[15]['t2c'],
+                            Wind: data1.timeseries[15].winds + " " + data1.timeseries[15].ws10n,
+                            Rain: data1.timeseries[15].crh
+                        },
+                        {
+                            forecast: "16:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[16].icon,
+                            Temperatura: data1.timeseries[16]['t2c'],
+                            Wind: data1.timeseries[16].winds + " " + data1.timeseries[16].ws10n,
+                            Rain: data1.timeseries[16].crh
+                        },
+                        {
+                            forecast: "17:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[17].icon,
+                            Temperatura: data1.timeseries[17]['t2c'],
+                            Wind: data1.timeseries[17].winds + " " + data1.timeseries[17].ws10n,
+                            Rain: data1.timeseries[17].crh
+                        },
+                        {
+                            forecast: "18:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[18].icon,
+                            Temperatura: data1.timeseries[18]['t2c'],
+                            Wind: data1.timeseries[18].winds + " " + data1.timeseries[18].ws10n,
+                            Rain: data1.timeseries[18].crh
+                        },
+                        {
+                            forecast: "19:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[19].icon,
+                            Temperatura: data1.timeseries[19]['t2c'],
+                            Wind: data1.timeseries[19].winds + " " + data1.timeseries[19].ws10n,
+                            Rain: data1.timeseries[19].crh
+                        },
+                        {
+                            forecast: "20:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[20].icon,
+                            Temperatura: data1.timeseries[20]['t2c'],
+                            Wind: data1.timeseries[20].winds + " " + data1.timeseries[20].ws10n,
+                            Rain: data1.timeseries[20].crh
+                        },
+                        {
+                            forecast: "21:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[21].icon,
+                            Temperatura: data1.timeseries[21]['t2c'],
+                            Wind: data1.timeseries[21].winds + " " + data1.timeseries[21].ws10n,
+                            Rain: data1.timeseries[21].crh
+                        },
+                        {
+                            forecast: "22:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[22].icon,
+                            Temperatura: data1.timeseries[22]['t2c'],
+                            Wind: data1.timeseries[22].winds + " " + data1.timeseries[22].ws10n,
+                            Rain: data1.timeseries[22].crh
+                        },
+                        {
+                            forecast: "23:00 UTC",
+                            image: "~/meteo_icon/" + data1.timeseries[23].icon,
+                            Temperatura: data1.timeseries[23]['t2c'],
+                            Wind: data1.timeseries[23].winds + " " + data1.timeseries[23].ws10n,
+                            Rain: data1.timeseries[23].crh
+                        },
+                    ]
+                });
+            }
+            pageData.set("items", items);
+        })
+        .then(function () {
+            pageData.set("isBusy", false);
+            pageData.set("isHeigh", "0");
+            pageData.set("table", "visible");
+        }).catch(error => console.error("[LABEL] ERROR DATA", error));
 
     return;
 }
