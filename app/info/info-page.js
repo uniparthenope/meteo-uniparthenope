@@ -4,11 +4,15 @@ const PageInfoViewModel = require("./info-view-model");
 const infoViewModel = new PageInfoViewModel;
 var utilityModule = require("utils/utils");
 var frameModule = require("tns-core-modules/ui/frame");
+var appversion = require("nativescript-appversion");
 
 function pageLoaded(args)
 {
     const page = args.object;
     const info = new Observable.fromObject({});
+    appversion.getVersionName().then(function(v) {
+        info.set("version", v);
+    });
 
     page.bindingContext = info;
 }

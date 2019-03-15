@@ -3,7 +3,6 @@
         <Label text="{{ titolo }}" fontSize="20"></Label>
     </ActionBar>
 
-    <StackLayout>
     <ui:NestedScrollView>
         <StackLayout orientation="vertical" verticalAlignment="top" margin="10 10 10 10">
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
@@ -55,8 +54,8 @@
             </StackLayout>
 
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
-            <ScrollView>
-            <StackLayout class="blue_background_opac" marginTop="20" visibility="{{ table }}">
+            <ScrollView orientation="vertical">
+            <StackLayout class="blue_background_opac" marginTop="20" visibility="{{ table_android }}">
                 <FlexboxLayout flexDirection="row">
                     <!-- Use even flexGrow to achieve uniform grid -->
                     <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
@@ -111,6 +110,64 @@
                     </accordion:Accordion.itemContentTemplate>
                 </accordion:Accordion>
             </StackLayout>
+            </ScrollView>
+
+            <ScrollView orientation="vertical">
+                <StackLayout class="blue_background_opac" marginTop="20" visibility="{{ table_ios }}">
+                    <FlexboxLayout flexDirection="row">
+                        <!-- Use even flexGrow to achieve uniform grid -->
+                        <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="T Min"/>
+                            <Label text="(°C)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="T Max"/>
+                            <Label text="(°C)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="Vento"/>
+                            <Label text="(Kn)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="Pioggia"/>
+                            <Label text="(mm)"></Label>
+                        </StackLayout>
+                    </FlexboxLayout>
+
+                    <accordion:Accordion class="blue_background_opac" marginTop="5" height="{{ altezza }}" items="{{items}}" allowMultiple="false" selectedIndexes="{{selectedIndexes}}">
+                        <accordion:Accordion.itemHeaderTemplate>
+                            <GridLayout>
+                                <FlexboxLayout flexDirection="row">
+                                    <StackLayout flexGrow="1" class="font-weight-bold text-center" width="40%">
+                                        <Label text="{{ forecast }}"/>
+                                        <Image src="{{ image }}" height="25" width="15"></Image>
+                                    </StackLayout>
+                                    <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                    <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                    <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
+                                    <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </accordion:Accordion.itemHeaderTemplate>
+
+                        <accordion:Accordion.itemContentTemplate>
+                            <StackLayout backgroundColor="#00008b">
+                                <GridLayout>
+                                    <FlexboxLayout flexDirection="row">
+                                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="55%">
+                                            <Label text="{{ forecast }}"/>
+                                            <Image src="{{ image }}" height="25" width="15"></Image>
+                                        </StackLayout>
+                                        <Label text="{{ Temperatura }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                        <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
+                                        <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                    </FlexboxLayout>
+                                </GridLayout>
+                            </StackLayout>
+                        </accordion:Accordion.itemContentTemplate>
+                    </accordion:Accordion>
+                </StackLayout>
             </ScrollView>
 
             <StackLayout orientation="vertical" marginTop="20">
@@ -257,5 +314,4 @@
             </chart:RadCartesianChart>
         </StackLayout>
     </ui:NestedScrollView>
-    </StackLayout>
 </Page>
