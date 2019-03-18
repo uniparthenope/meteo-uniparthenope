@@ -8,47 +8,47 @@
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
             <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="10 10 5 10">
-                    <Label text="TEMPERATURA:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_temp') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ temperatura }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                    <Label text="METEO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_meteo') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ _meteo }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                    <Label text="NUVOLOSITÀ:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_nuvole') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ cloud }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                    <Label text="UMIDITÀ:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_umidita') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ humidity }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                    <Label text="PRESSIONE:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_press') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ pressione }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                    <Label text="DIREZIONE VENTO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_dir_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ wind_direction }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                    <Label text="VELOCITÀ VENTO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_vel_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ wind_speed }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                    <Label text="TEMPERATURA PERCEPITA:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_temp_perc') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ wind_chill }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
 
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 10 10">
-                    <Label text="VENTO:" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _L('detail_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ wind }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
             </StackLayout>
@@ -68,11 +68,11 @@
                         <Label text="(°C)"></Label>
                     </StackLayout>
                     <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                        <Label text="Vento"/>
+                        <Label text="{{_L('detail_vento1')}}"/>
                         <Label text="(Kn)"></Label>
                     </StackLayout>
                     <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                        <Label text="Pioggia"/>
+                        <Label text="{{_L('detail_pioggia')}}"/>
                         <Label text="(mm)"></Label>
                     </StackLayout>
                 </FlexboxLayout>
@@ -126,11 +126,11 @@
                             <Label text="(°C)"></Label>
                         </StackLayout>
                         <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                            <Label text="Vento"/>
+                            <Label text="{{_L('detail_vento1')}}"/>
                             <Label text="(Kn)"></Label>
                         </StackLayout>
                         <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                            <Label text="Pioggia"/>
+                            <Label text="{{_L('detail_pioggia')}}"/>
                             <Label text="(mm)"></Label>
                         </StackLayout>
                     </FlexboxLayout>
@@ -202,7 +202,7 @@
             <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>
 
             <StackLayout margin="5 5 5 5">
-                <Label text="Aggregazione per ore: "></Label>
+                <Label text="{{ _L('detail_aggregazione') }}"></Label>
                 <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
                              hint="{{ hint_steps }}"
                              opened="dropDownOpened2" closed="dropDownClosed2"

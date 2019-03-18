@@ -25,6 +25,7 @@ var print_data;
 var data;
 var home;
 var nome_giorno = ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"];
+var name_day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var temp_data;
 var gps_on = false;
 var latitudine;
@@ -71,7 +72,10 @@ exports.pageLoaded = function(args)
     home.set("minDate", new Date(2018, 0, 29));
     home.set("maxDate", new Date(2030, 4, 12));
 
-    print_data = nome_giorno[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+    if(platformModule.device.language == 'it')
+      print_data = nome_giorno[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+    else
+      print_data = name_day[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log(print_data);
@@ -85,7 +89,10 @@ exports.pageLoaded = function(args)
     home.set("minDate", new Date(2018, 0, 29));
     home.set("maxDate", new Date(2030, 4, 12));
 
-    print_data = nome_giorno[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+    if(platformModule.device.language == 'it')
+     print_data = nome_giorno[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+    else
+      print_data = name_day[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log(print_data);
@@ -269,7 +276,11 @@ function onDatePickerLoaded(args)
 
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
     temp_data = new Date(anno, mese-1, giorno);
-    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    if(platformModule.device.language == 'it')
+      home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    else
+      home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
@@ -318,7 +329,11 @@ function onDatePickerLoaded(args)
       mese = args.value;
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
     temp_data = new Date(anno, mese-1, giorno);
-    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    if(platformModule.device.language == 'it')
+      home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    else
+      home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
@@ -362,7 +377,11 @@ function onDatePickerLoaded(args)
     anno = args.value;
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
     temp_data = new Date(anno, mese-1, giorno);
-    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    if(platformModule.device.language == 'it')
+      home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    else
+      home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
@@ -421,7 +440,10 @@ function onTapNext()
   console.log("Temp Data: " + temp_data);
   console.log("Data: " + currData);
 
-  home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+  if(platformModule.device.language == 'it')
+    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+  else
+    home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
   oLangWebViewInterface.emit('new_data', {data:currData});
 
   if(gps_on)
@@ -478,7 +500,10 @@ function onTapBack()
   currData = anno+""+mese+""+giorno+"Z"+ora+"00";
   temp_data = new Date(anno, mese-1, giorno);
 
-  home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+  if(platformModule.device.language == 'it')
+    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+  else
+    home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
   oLangWebViewInterface.emit('new_data', {data:currData});
 
   if(gps_on)

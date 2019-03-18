@@ -14,6 +14,8 @@ function pageLoaded(args)
         info.set("version", v);
     });
 
+    console.log(_L("greetings"));
+
     page.bindingContext = info;
 }
 

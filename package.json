@@ -41,7 +41,8 @@
     "nativescript-ui-listview": "5.1.1",
     "nativescript-ui-sidedrawer": "5.1.0",
     "nativescript-webview-interface": "^1.4.2",
-    "tns-core-modules": "5.2.0"
+    "tns-core-modules": "5.2.0",
+    "tns-i18n": "0.0.10"
   },
   "devDependencies": {
     "babel-traverse": "6.26.0",

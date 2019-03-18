@@ -6,10 +6,10 @@
             <ScrollView>
                 <StackLayout class="white_background">
                     <Image src="~/images/logo.png" margin="5 5 5 5" horizontalAlignment="center"></Image>
-                    <Label text="Selezionare data: " verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
+                    <Label text="{{ _L('home_selezione_data') }}" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
                     <DatePicker class="blue_col" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
                     <StackLayout margin="0 20 0 20" height="4px" backgroundColor="rgba(30,76,117,1)" marginBottom="20" />
-                    <Label text="Impostazioni" tap="onTapSettings" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginBottom="15" />
+                    <Label text="{{ _L('home_impostazioni') }}" tap="onTapSettings" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginBottom="15" />
                     <Label text="Info" tap="onTapInfo" verticalAlignment="center" horizontalAlignment="left" style="flex-grow:1; font-size: 18" marginLeft="15"/>
                 </StackLayout>
             </ScrollView>
@@ -50,7 +50,7 @@
                         </StackLayout>
 
                         <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="top" horizontalAlignment="center" row="0" col="0" margin="0 0 0 10" width="210">
-                            <lv:RadAutoCompleteTextView hint="Ricerca Luogo ..." id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
+                            <lv:RadAutoCompleteTextView hint="{{ _L('home_ricerca') }}" id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
                                 <lv:RadAutoCompleteTextView.suggestionView>
                                     <lv:SuggestionView suggestionViewHeight="150" class="blue_col">
                                         <lv:SuggestionView.suggestionItemTemplate>
@@ -66,7 +66,7 @@
 
                     <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{search}}" row="0" col="0"  height="50" width="220" tap="onTapCenter">
                         <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="center" horizontalAlignment="center" row="0" col="0" margin="0 10 0 10" width="210">
-                            <lv:RadAutoCompleteTextView hint="Ricerca Luogo ..." id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
+                            <lv:RadAutoCompleteTextView hint="{{ _L('home_ricerca') }}" id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
                                 <lv:RadAutoCompleteTextView.suggestionView>
                                     <lv:SuggestionView suggestionViewHeight="150" class="blue_col">
                                         <lv:SuggestionView.suggestionItemTemplate>

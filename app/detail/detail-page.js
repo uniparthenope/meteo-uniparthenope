@@ -245,12 +245,18 @@ function dayOfWeek(date) {
     let day = date.substring(6, 8);
 
     let dayOfWeek = new Date(year + "-" + month + "-" + day).getDay();
-    return isNaN(dayOfWeek) ? null : ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'][dayOfWeek];
+    if(platformModule.device.language == 'it')
+        return isNaN(dayOfWeek) ? null : ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'][dayOfWeek];
+    else
+        return isNaN(dayOfWeek) ? null : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
 };
 
 function monthOfYear(date) {
     let month = parseInt(date.substring(4, 6)) - 1;
-    return isNaN(month) ? null : ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"][month];
+    if(platformModule.device.language == 'it')
+        return isNaN(month) ? null : ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"][month];
+    else
+        return isNaN(month) ? null : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month];
 };
 
 function print_chart(place, product, output, hour, step)
@@ -273,8 +279,17 @@ function print_chart(place, product, output, hour, step)
                 {
                     if(output == 'gen' || output == 'tsp')
                     {
-                        pageData.set("title_1", "Temperatura (°C)");
-                        pageData.set("title_2", "Pressione (hPa)");
+                        if(platformModule.device.language == 'it')
+                        {
+                            pageData.set("title_1", "Temperatura (°C)");
+                            pageData.set("title_2", "Pressione (hPa)");
+                        }
+                        else
+                        {
+                            pageData.set("title_1", "Temperature (°C)");
+                            pageData.set("title_2", "Pressure (hPa)");
+                        }
+
                         temp.push({key: sDateTime, val: (timeSeries[i].t2c)});
                         press.push({key: sDateTime, val: (timeSeries[i].slp)});
                         pageData.set("isBusy_graphic", false);
@@ -286,8 +301,17 @@ function print_chart(place, product, output, hour, step)
                     }
                     else if(output == 'wn1')
                     {
-                        pageData.set("title_1", "Velocità vento 10m (knt)");
-                        pageData.set("title_2", "Velocità vento 10m (°N)");
+                        if(platformModule.device.language == 'it')
+                        {
+                            pageData.set("title_1", "Velocità vento 10m (knt)");
+                            pageData.set("title_2", "Velocità vento 10m (°N)");
+                        }
+                        else
+                        {
+                            pageData.set("title_1", "Wind Speed 10m (knt)");
+                            pageData.set("title_2", "Wind Speed 10m (°N)");
+                        }
+
                         temp.push({key: sDateTime, val: (timeSeries[i].ws10n)});
                         press.push({key: sDateTime, val: (timeSeries[i].wd10)});
                         pageData.set("isBusy_graphic", false);
@@ -299,8 +323,17 @@ function print_chart(place, product, output, hour, step)
                     }
                     else if(output == 'crh')
                     {
-                        pageData.set("title_1", "Pioggia (mm)");
-                        pageData.set("title_2", "Nuvolosità (%)");
+                        if(platformModule.device.language == 'it')
+                        {
+                            pageData.set("title_1", "Pioggia (mm)");
+                            pageData.set("title_2", "Nuvolosità (%)");
+                        }
+                        else
+                        {
+                            pageData.set("title_1", "Rain (mm)");
+                            pageData.set("title_2", "Cloudiness (%)");
+                        }
+
                         temp.push({key: sDateTime, val: (timeSeries[i].crh)});
                         press.push({key: sDateTime, val: (timeSeries[i].clf * 100).toFixed(2)});
                         pageData.set("isBusy_graphic", false);
@@ -315,8 +348,17 @@ function print_chart(place, product, output, hour, step)
                 {
                     if(output == 'gen' || output == 'scu')
                     {
-                        pageData.set("title_1", "Corrente superficiale (m/s)");
-                        pageData.set("title_2", "Direzione corrente superficiale (°N)");
+                        if(platformModule.device.language == 'it')
+                        {
+                            pageData.set("title_1", "Corrente superficiale (m/s)");
+                            pageData.set("title_2", "Direzione corrente superficiale (°N)");
+                        }
+                        else
+                        {
+                            pageData.set("title_1", "Sea surface current (mm)");
+                            pageData.set("title_2", "Sea surface current direction (%)");
+                        }
+
                         temp.push({key: sDateTime, val: (timeSeries[i].scm)});
                         press.push({key: sDateTime, val: (timeSeries[i].scd)});
                         pageData.set("isBusy_graphic", false);
@@ -328,8 +370,17 @@ function print_chart(place, product, output, hour, step)
                     }
                     else if(output == 'sts')
                     {
-                        pageData.set("title_1", "Temperatura superficiale (°C)");
-                        pageData.set("title_2", "Salinità superficiale (1/1000)");
+                        if(platformModule.device.language == 'it')
+                        {
+                            pageData.set("title_1", "Temperatura superficiale (°C)");
+                            pageData.set("title_2", "Salinità superficiale (1/1000)");
+                        }
+                        else
+                        {
+                            pageData.set("title_1", "Sea surface temperature (°C)");
+                            pageData.set("title_2", "Sea surface salinity (1/1000)");
+                        }
+
                         temp.push({key: sDateTime, val: (timeSeries[i].sst)});
                         press.push({key: sDateTime, val: (timeSeries[i].sss)});
                         pageData.set("isBusy_graphic", false);
@@ -341,8 +392,16 @@ function print_chart(place, product, output, hour, step)
                     }
                     else if(output == 'sss')
                     {
+                        if(platformModule.device.language == 'it')
+                        {
+                            pageData.set("title_s", "Salinità superficiale");
+                        }
+                        else
+                        {
+                            pageData.set("title_s", "Sea surface salinity");
+                        }
+
                         pageData.set("graphic", "collapsed");
-                        pageData.set("title_s", "Salinità superficiale");
                         single_item.push({key: sDateTime, val: (timeSeries[i].sss)});
                         pageData.set("isBusy_graphic1", false);
                         pageData.set("isHeigh_graphic1", "0");
@@ -353,7 +412,15 @@ function print_chart(place, product, output, hour, step)
                     }
                     else if(output == "sst")
                     {
-                        pageData.set("title_s", "Temperatura superficiale");
+                        if(platformModule.device.language == 'it')
+                        {
+                            pageData.set("title_s", "Temperatura superficiale");
+                        }
+                        else
+                        {
+                            pageData.set("title_s", "Sea surface temperature");
+                        }
+
                         single_item.push({key: sDateTime, val: (timeSeries[i].sst)});
                         pageData.set("isBusy_graphic1", false);
                         pageData.set("isHeigh_graphic1", "0");
@@ -367,7 +434,15 @@ function print_chart(place, product, output, hour, step)
                 {
                     if(output == 'gen' || output == 'con')
                     {
-                        pageData.set("title_s", "Concentrazione particelle");
+                        if(platformModule.device.language == 'it')
+                        {
+                            pageData.set("title_s", "Concentrazione particelle");
+                        }
+                        else
+                        {
+                            pageData.set("title_s", "Concentration of particles");
+                        }
+
                         single_item.push({key: sDateTime, val: timeSeries[i].con});
                         pageData.set("isBusy_graphic1", false);
                         pageData.set("isHeigh_graphic1", "0");
@@ -802,6 +877,12 @@ function print_map(id, prod, output, data)
 
 function print_prod()
 {
+    let language;
+    if(platformModule.device.language == 'it')
+        language = 'it';
+    else
+        language = 'en';
+
     fetch("https://api.meteo.uniparthenope.it/products").then((response) => response.json()).then((data) =>
     {
         let product = data['products'];
@@ -810,7 +891,7 @@ function print_prod()
         var key;
         for(var i=0; i<keys.length; i++){
             var val = keys[i];
-            key = product[val]['desc']['it'];
+            key = product[val]['desc'][language];
             products_map.set(key, val);
             products.push(key);
         }
@@ -820,7 +901,7 @@ function print_prod()
             .map(([k]) => k);
 
         console.log(_prod);
-        pageData.set("hint_prod", "Meteo ad alta risoluzione 7 giorni");
+        pageData.set("hint_prod", _prod);
 
         pageData.set("products", products);
     });
@@ -828,6 +909,12 @@ function print_prod()
 
 function print_output(prod)
 {
+    let language;
+    if(platformModule.device.language == 'it')
+        language = 'it';
+    else
+        language = 'en';
+
     fetch("https://api.meteo.uniparthenope.it/products/" + prod).then((response) => response.json()).then((data) =>
     {
         let product = data['outputs']['outputs'];
@@ -836,7 +923,7 @@ function print_output(prod)
         var key;
         for(var i=0; i<keys.length; i++){
             var val = keys[i];
-            key = product[val]['it'];
+            key = product[val][language];
             outputs_map.set(key, val);
             outputs.push(key);
         }
@@ -846,7 +933,7 @@ function print_output(prod)
             .map(([k]) => k);
 
         console.log(_out);
-        pageData.set("hint_output", "Visualizzazione generale");
+        pageData.set("hint_output", _out);
 
         pageData.set("outputs", outputs);
     });
