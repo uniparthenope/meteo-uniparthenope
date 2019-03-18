@@ -170,7 +170,7 @@
                 </StackLayout>
             </ScrollView>
 
-            <StackLayout orientation="vertical" marginTop="20">
+            <StackLayout orientation="vertical" marginTop="10">
                 <StackLayout margin="5 5 5 5">
                     <dd:DropDown
                             items="{{ products }}" selectedIndex="{{ selectedIndex }}"
@@ -197,6 +197,9 @@
                 <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
             </StackLayout>
             <Image src="{{ map }}" marginTop="10" visibility="{{ _map }}"/>
+            <Image src="{{ colorbar1 }}" marginTop="5" visibility="{{ colorbar1_visible }}"/>
+            <Image src="{{ colorbar2 }}" marginTop="5" visibility="{{ colorbar2_visible }}"/>
+            <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>
 
             <StackLayout margin="5 5 5 5">
                 <Label text="Aggregazione per ore: "></Label>

@@ -80,6 +80,9 @@ function pageLoaded(args) {
     pageData.set("meteo", "collapsed");
     pageData.set("_map", "collapsed");
     pageData.set("hours_visibility", "visible");
+    pageData.set("colorbar1_visible", "collapsed");
+    pageData.set("colorbar2_visible", "collapsed");
+    pageData.set("colorbar3_visible", "collapsed");
 
     id = page.navigationContext.id;
     data = page.navigationContext.data;
@@ -452,15 +455,12 @@ function print_series(id)
 {
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?hours=0&step=24")
         .then((response) => response.json())
-        //.then(async (data) => {
         .then((data) => {
             pageData.set("altezza", data.timeseries.length * 45);
             altezza = data.timeseries.length * 45;
             for (let i = 0; i < data.timeseries.length; i++) {
                 let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + data.timeseries[i]['dateTime'] + "&hours=24";
 
-                //const response = await fetch(url);
-                //const data1 = await response.json();
                 fetch(url).then((response) => response.json()).then(data1 => {
 
                     let weekDayLabel = dayOfWeek(data.timeseries[i]['dateTime']) + " - " + data.timeseries[i]['dateTime'].substring(6, 8) + " " + monthOfYear(data.timeseries[i]['dateTime']);
@@ -676,20 +676,15 @@ function print_series(id)
 
 exports.tap = function (args)
 {
-    if(platformModule.isAndroid) {
-        console.log(args.object.selectedIndexes[0]);
-        console.log(pageData.get("altezza"));
+    console.log(args.object.selectedIndexes[0]);
+    console.log(pageData.get("altezza"));
 
-        if (pageData.get("altezza") >= 0 && pageData.get("altezza") <= 270 && args.object.selectedIndexes[0] == undefined)
-            pageData.set("altezza", 1350);
-        else if (pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] == undefined) {
-            pageData.set("altezza", 1350);
-        } else if (pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] != undefined) {
-            pageData.set("altezza", altezza);
-        }
-    }
-    if(platformModule.isIOS) {
-        console.log("TAP");
+    if (pageData.get("altezza") >= 0 && pageData.get("altezza") <= 270 && args.object.selectedIndexes[0] == undefined)
+        pageData.set("altezza", 1350);
+    else if (pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] == undefined) {
+        pageData.set("altezza", 1350);
+    } else if (pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] != undefined) {
+        pageData.set("altezza", altezza);
     }
 };
 
@@ -700,6 +695,104 @@ function print_map(id, prod, output, data)
     imageSource.fromUrl(url_map)
         .then(function () {
             pageData.map = url_map;
+            if(prod == "wrf5")
+            {
+                if(output == "gen" || output == "crh")
+                {
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "visible");
+                    pageData.set("colorbar3_visible", "visible");
+                    pageData.set("colorbar1", "~/images/colorbar/bar_nuvole.png");
+                    pageData.set("colorbar2", "~/images/colorbar/bar_pioggia.png");
+                    pageData.set("colorbar3", "~/images/colorbar/bar_neve.png");
+                }
+                else if(output == "crd")
+                {
+
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                    pageData.set("colorbar1", "~/images/colorbar/bar_pioggia_h24.png");
+                }
+                else if(output == "gp5" || output == "gp8")
+                {
+                    pageData.set("colorbar1_visible", "collapsed");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                }
+                else if(output == "tsp")
+                {
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                    pageData.set("colorbar1", "~/images/colorbar/temperatura_al_suolo.png");
+                }
+                else if(output == "wn1")
+                {
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                    pageData.set("colorbar1", "~/images/colorbar/bar_vento.png");
+                }
+                else
+                {
+                    pageData.set("colorbar1_visible", "collapsed");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                }
+            }
+            else if(prod == "rms3")
+            {
+                if(output == "gen" || output == "scu")
+                {
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                    pageData.set("colorbar1", "~/images/colorbar/bar_corr.png");
+                }
+                else  if(output == "sst")
+                {
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                    pageData.set("colorbar1", "~/images/colorbar/bar_sst.png");
+                }
+                else  if(output == "sss")
+                {
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                    pageData.set("colorbar1", "~/images/colorbar/bar_sss.png");
+                }
+                else
+                {
+                    pageData.set("colorbar1_visible", "collapsed");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                }
+            }
+            else if(prod == "wcm3")
+            {
+                if(output == "gen" || output == "con")
+                {
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                    pageData.set("colorbar1", "~/images/colorbar/bar_concentrazion.png");
+                }
+                else
+                {
+                    pageData.set("colorbar1_visible", "collapsed");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                }
+            }
+            else
+            {
+                pageData.set("colorbar1_visible", "collapsed");
+                pageData.set("colorbar2_visible", "collapsed");
+                pageData.set("colorbar3_visible", "collapsed");
+            }
         }).then(function () {
         pageData.set("isBusy_map", false);
         pageData.set("isHeigh_map", "0");
