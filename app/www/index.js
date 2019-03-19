@@ -731,7 +731,7 @@ oWebViewInterface1.on('location', function (cor) {
     latitudine = cor.lat;
     longitudine = cor.lang;
     var DynaMarker = L.marker([cor.lat,cor.lang], {icon: position});
-    DynaMarker.setLatLng([cor.lat, cor.lang]) .addTo(map);
+    DynaMarker.setLatLng([cor.lat, cor.lang]).addTo(map);
 });
 
 oWebViewInterface1.on('settings', function (cor)

@@ -28,6 +28,8 @@ var step;
 var hour;
 let products_map = new Map();
 let outputs_map = new Map();
+var step_map = new Map();
+var hour_step = new Map();
 var steps;
 var hours;
 let anno;
@@ -90,7 +92,7 @@ function pageLoaded(args) {
 
     prod = "wrf5";
     output = "gen";
-    step = "1";
+    step = "0";
     hour = "24";
 
     print_data = get_print_data(data);
@@ -181,7 +183,7 @@ exports.dropDownSelectedIndexChanged1 = function (args) {
 
 exports.dropDownSelectedIndexChanged2 = function (args) {
     var s = steps.getItem(args.object.selectedIndex);
-    step = s;
+    step = step_map.get(s);
 
     if(step == '1') {
         pageData.set("hours_visibility", "visible");
@@ -201,7 +203,7 @@ exports.dropDownSelectedIndexChanged2 = function (args) {
 
 exports.dropDownSelectedIndexChanged3 = function (args) {
     var h = hours.getItem(args.object.selectedIndex);
-    hour = h;
+    hour = hour_step.get(h);
 
     single_item.splice(0);
     temp.splice(0);
@@ -772,7 +774,7 @@ function print_map(id, prod, output, data)
             pageData.map = url_map;
             if(prod == "wrf5")
             {
-                if(output == "gen" || output == "crh")
+                if(output == "gen")
                 {
                     pageData.set("colorbar1_visible", "visible");
                     pageData.set("colorbar2_visible", "visible");
@@ -780,6 +782,13 @@ function print_map(id, prod, output, data)
                     pageData.set("colorbar1", "~/images/colorbar/bar_nuvole.png");
                     pageData.set("colorbar2", "~/images/colorbar/bar_pioggia.png");
                     pageData.set("colorbar3", "~/images/colorbar/bar_neve.png");
+                }
+                else if(output == "crh")
+                {
+                    pageData.set("colorbar1_visible", "visible");
+                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar3_visible", "collapsed");
+                    pageData.set("colorbar1", "~/images/colorbar/bar_nuvole.png");
                 }
                 else if(output == "crd")
                 {
@@ -941,23 +950,51 @@ function print_output(prod)
 
 function print_steps()
 {
-    var s = ['1', '3', '6', '12', '24'];
-    for(let i=0; i<s.length; i++)
-    {
-        steps.push(s[i]);
-    }
-    pageData.set("hint_steps", "1");
-}
+    var key = ['0', '1', '3', '6', '12', '24'];
+    var value = null;
 
+    if(platformModule.device.language == 'it')
+        value = ['auto', '1 H', '3 H', '6 H', '12 H', '1 Giorno'];
+    else
+        value = ['auto', '1 H', '3 H', '6 H', '12 H', '1 Day'];
+
+    for(let i=0; i<value.length; i++)
+    {
+        step_map.set(value[i], key[i]);
+        steps.push(value[i]);
+    }
+
+    let _out = [...step_map.entries()]
+        .filter(({ 1: v }) => v === step)
+        .map(([k]) => k);
+
+    console.log(_out);
+    pageData.set("hint_steps", _out);
+}
 
 function print_hours()
 {
-    var h = ['24', '48', '72', '96'];
-    for(let i=0; i<h.length; i++)
+    var key = ['0', '24', '48', '72'];
+    var value = null;
+
+    if(platformModule.device.language == 'it')
+        value = ['Tutte', '1 Giorno', '2 Giorni', '3 Giorni'];
+    else
+        value = ['All', '1 Day', '2 Days', '3 Days'];
+
+    for(let i=0; i<value.length; i++)
     {
-        hours.push(h[i]);
+        hour_step.set(value[i], key[i]);
+        hours.push(value[i]);
     }
-    pageData.set("hint_hours", "24");
+
+    let _out = [...hour_step.entries()]
+        .filter(({ 1: v }) => v === hour)
+        .map(([k]) => k);
+    console.log(_out);
+
+    pageData.set("hours_visibility", "collapsed");
+    pageData.set("hint_hours", _out);
 };
 
 function onTapNext()

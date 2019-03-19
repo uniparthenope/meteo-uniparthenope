@@ -170,7 +170,7 @@ exports.pageLoaded = function(args)
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
-                }, 1000);
+                }, 800);
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
