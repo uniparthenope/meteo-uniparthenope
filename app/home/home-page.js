@@ -165,12 +165,17 @@ exports.pageLoaded = function(args)
                 }
 
                 setTimeout(function () {
-                  oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
+                  oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
                 }, 800);
+
+                setTimeout(function () {
+                  oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
+                }, 1000);
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
                 }, 800);
+
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('settings', {
@@ -187,6 +192,7 @@ exports.pageLoaded = function(args)
           dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
           home.set("current_position", "collapsed");
           home.set("search", "visible");
+          oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
           oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
           oLangWebViewInterface.emit('settings', {
             gradi: appSetting.getNumber("Temperatura", 0),
@@ -199,6 +205,8 @@ exports.pageLoaded = function(args)
       gps_on = false;
       home.set("current_position", "collapsed");
       home.set("search", "visible");
+
+      oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
       oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
       oLangWebViewInterface.emit('settings', {
         gradi: appSetting.getNumber("Temperatura", 0),
@@ -281,6 +289,8 @@ function onDatePickerLoaded(args)
     else
       home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
 
+    oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
@@ -334,6 +344,7 @@ function onDatePickerLoaded(args)
     else
       home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
 
+    oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
       oLangWebViewInterface.emit('location', {lat:latitudine, lang:longitudine});
@@ -381,6 +392,8 @@ function onDatePickerLoaded(args)
       home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
     else
       home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+
+    oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 
     oLangWebViewInterface.emit('new_data', {data:currData});
     if(gps_on)
@@ -444,6 +457,9 @@ function onTapNext()
     home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
   else
     home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+
+  oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+
   oLangWebViewInterface.emit('new_data', {data:currData});
 
   if(gps_on)
@@ -504,6 +520,9 @@ function onTapBack()
     home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
   else
     home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+
+  oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+
   oLangWebViewInterface.emit('new_data', {data:currData});
 
   if(gps_on)

@@ -187,6 +187,12 @@ var latitudine;
 var longitudine;
 let info_id = null;
 let citta = null;
+let lingua = null;
+var temp_string;
+var umidita_string;
+var pressione_string;
+var dir_vento_string;
+var vento_string;
 
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: ''
@@ -327,6 +333,8 @@ function addInfoLayer() {
                             dateTime = feature.properties.dateTime;
                             humidity = feature.properties.rh2; //umidity
                             press_sim = null;
+
+
                             if(pressione == 0)
                             {
                                 pressure = feature.properties.slp; //pressure
@@ -411,22 +419,22 @@ function addInfoLayer() {
 
                             popupString +=
                                 "<tr>" +
-                                "<td class='tg-7un6'>TEMPERATURA</td>" +
+                                "<td class='tg-7un6'>" + temp_string + "</td>" +
                                 "<td class='tg-7un6'>" + temp + " " + gradi_sim + "</td>" +
                                 "</tr>" +
                                 "<tr>" +
-                                "<td class='tg-7un6'>UMIDIT&Agrave</td>" +
+                                "<td class='tg-7un6'>" + umidita_string + "</td>" +
                                 "<td class='tg-7un6'>" + humidity + "%</td>" +
                                 "</tr>" +
                                 "<tr>" +
-                                "<td class='tg-j0tj'>PRESSIONE</td>" +
+                                "<td class='tg-j0tj'>" + pressione_string + "</td>" +
                                 "<td class='tg-j0tj'>" + pressure + " " + press_sim + "</td>" +
                                 "</tr>" +
                                 "<tr>" +
-                                "<td class='tg-7un6'>DIREZIONE VENTO</td>" +
+                                "<td class='tg-7un6'>" + dir_vento_string + "</td>" +
                                 "<td class='tg-7un6'>" + wind_direction + " N</td>" +
                                 "</tr>" +
-                                "<td class='tg-j0tj'>VENTO</td>" +
+                                "<td class='tg-j0tj'>" + vento_string + "</td>" +
                                 "<td class='tg-j0tj'>" + winds + "</td>" +
                                 "</tr>" +
                                 "</table>" +
@@ -498,7 +506,10 @@ function addWindLayer()
         });
 
         map.addLayer(windLayer);
-        controlLayers.addOverlay(windLayer, 'Vento');
+        if(lingua == 'it')
+            controlLayers.addOverlay(windLayer, "Vento");
+        else
+            controlLayers.addOverlay(windLayer, "Wind");
     });
 }
 
@@ -530,7 +541,11 @@ function addCloudLayer() {
     );
 
     map.addLayer(cloudLayer);
-    controlLayers.addOverlay(cloudLayer, "Nuvolosit&agrave");
+
+    if(lingua == 'it')
+        controlLayers.addOverlay(cloudLayer, "Nuvolosit&agrave");
+    else
+        controlLayers.addOverlay(cloudLayer, "Cloudiness");
 }
 
 function addT2CLayer() {
@@ -560,7 +575,10 @@ function addT2CLayer() {
         }
     );
 
-    controlLayers.addOverlay(t2cLayer, "Temperatura");
+    if(lingua == 'it')
+        controlLayers.addOverlay(t2cLayer, "Temperatura");
+    else
+        controlLayers.addOverlay(t2cLayer, "Temperature");
 }
 
 function addRainLayer() {
@@ -591,7 +609,10 @@ function addRainLayer() {
     );
 
     map.addLayer(rainLayer);
-    controlLayers.addOverlay(rainLayer, "Pioggia");
+    if(lingua == 'it')
+       controlLayers.addOverlay(rainLayer, "Pioggia");
+    else
+        controlLayers.addOverlay(rainLayer, "Rain");
 }
 
 function addSnowLayer() {
@@ -622,7 +643,10 @@ function addSnowLayer() {
     );
 
     map.addLayer(snowLayer);
-    controlLayers.addOverlay(snowLayer, "Neve");
+    if(lingua == 'it')
+        controlLayers.addOverlay(snowLayer, "Neve");
+    else
+        controlLayers.addOverlay(snowLayer, "Snow");
 }
 
 oWebViewInterface1.on('data', function (cor)
@@ -715,6 +739,28 @@ oWebViewInterface1.on('settings', function (cor)
     gradi = cor.gradi;
     vento = cor.vento;
     pressione = cor.pressione;
+});
+
+oWebViewInterface1.on('language', function (cor) {
+   lingua = cor.lingua;
+   console.log("Lingua: " + lingua);
+
+   if(lingua == 'it')
+   {
+       temp_string = "TEMPERATURA";
+       umidita_string = "UMIDIT&Agrave";
+       pressione_string = "PRESSIONE";
+       dir_vento_string = "DIREZIONE VENTO";
+       vento_string = "VENTO";
+   }
+   else
+   {
+       temp_string = "TEMPERATURE";
+       umidita_string = "CLOUDINESS";
+       pressione_string = "PRESSURE";
+       dir_vento_string = "WIND DIRECTION";
+       vento_string = "WIND";
+   }
 });
 
 oWebViewInterface1.on('centro', function(cor)
