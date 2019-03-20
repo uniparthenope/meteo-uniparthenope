@@ -24,5 +24,6 @@ module.exports = {
     detail_vento: 'WIND:',
     detail_vento1: 'Wind',
     detail_pioggia: 'Rain',
-    detail_aggregazione: 'Hourly Aggregation: '
+    detail_aggregazione: 'Hourly Aggregation: ',
+    detail_ore: 'Hours: '
 };

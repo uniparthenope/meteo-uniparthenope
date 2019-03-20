@@ -462,7 +462,16 @@ function print_chart(place, product, output, hour, step)
 
 function print_meteo(id, data)
 {
-    fetch("https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data +"&opt=place")
+    let url = "https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data + "&opt=place";
+    console.log(url);
+
+    var lingua;
+    if(platformModule.device.language == 'it')
+        lingua = 'it';
+    else
+        lingua = 'en';
+
+    fetch(url)
         .then((response) => response.json())
         .then((data) => {
             if (data.result == "ok")
@@ -483,7 +492,7 @@ function print_meteo(id, data)
                     pageData.set("temperatura", ((data.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
                 }
 
-                pageData.set("_meteo", data.forecast.text);
+                pageData.set("_meteo", data['forecast']['text'][lingua]);
                 pageData.set("cloud", (data.forecast.clf * 100).toFixed(2) + " %");
                 pageData.set("humidity", (data.forecast.rh2).toFixed(2) + " %");
 

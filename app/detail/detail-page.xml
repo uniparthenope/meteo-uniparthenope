@@ -210,7 +210,7 @@
                              row="0" colSpan="2" />
 
                 <StackLayout orientation="vertical" visibility="{{ hours_visibility }}">
-                    <Label text="Ore"></Label>
+                    <Label text="{{_L('detail_ore')}}"></Label>
                     <dd:DropDown items="{{ hours }}" selectedIndex="{{ selectedIndex3 }}"
                                  hint="{{ hint_hours }}"
                                  opened="dropDownOpened3" closed="dropDownClosed3"
