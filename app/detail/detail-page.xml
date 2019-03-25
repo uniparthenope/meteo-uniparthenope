@@ -194,7 +194,7 @@
             <StackLayout margin="20 10 15 10" class="blue_background_opac" horizontalAlignment="center" row="0" col="0" verticalAlignment="bottom" orientation="horizontal" height="50">
                 <Image horizontalAlignment="left" src="~/images/back.png" height="25" margin="10 40 10 10" tap="onTapBack"></Image>
                 <Label verticalAlignment="center" text="{{ data }}"  tap="toggleDrawer"></Label>
-                <Image horizontalAlignment="right" src="~/images/next.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
+                <Image horizontalAlignment="right" src="~/images/next1.png" height="25" margin="10 10 10 40" tap="onTapNext"></Image>
             </StackLayout>
             <Image src="{{ map }}" marginTop="10" visibility="{{ _map }}"/>
             <Image src="{{ colorbar1 }}" marginTop="5" visibility="{{ colorbar1_visible }}"/>
