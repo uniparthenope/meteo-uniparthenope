@@ -168,16 +168,15 @@ exports.pageLoaded = function(args)
 
                   setTimeout(function () {
                     oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
-                  }, 800);
+                  }, 900);
 
                   setTimeout(function () {
                     oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
-                  }, 800);
+                  }, 900);
 
                   setTimeout(function () {
                     oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
-                  }, 800);
-
+                  }, 900);
 
                   setTimeout(function () {
                     oLangWebViewInterface.emit('settings', {
@@ -185,7 +184,7 @@ exports.pageLoaded = function(args)
                       vento: appSetting.getNumber("Vento", 0),
                       pressione: appSetting.getNumber("Pressione", 0)
                     });
-                  }, 800);
+                  }, 900);
                 })
                     .catch(error => console.error("[SEARCH] ERROR DATA ", error));
               });
@@ -277,7 +276,8 @@ exports.pageLoaded = function(args)
     }
 
   if (args.isBackNavigation) {
-    return;
+      oLangWebViewInterface.destroy();
+      return;
   }
 
   page.bindingContext = home;
@@ -462,7 +462,7 @@ function onTapNext()
 {
   if((parseInt(ora)+1) >23)
   {
-    ora = 0;
+    ora = "00";
     console.log("DATA: " + data);
     var endDate = data.setDate(data.getDate() + 1);
     data = new Date(endDate);
@@ -545,7 +545,7 @@ function onTapBack()
 {
   if((parseInt(ora)-1) < 0)
   {
-    ora =23;
+    ora = "23";
     var endDate = data.setDate(data.getDate() - 1);
     data = new Date(endDate);
     console.log(data);
