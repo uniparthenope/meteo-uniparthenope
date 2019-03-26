@@ -16,7 +16,7 @@ module.exports = {
     detail_temp: 'TEMPERATURA:',
     detail_meteo: 'METEO',
     detail_nuvole: 'NUVOLOSITÀ:',
-    detail_umidita: 'UNIDITÀ:',
+    detail_umidita: 'UMIDITÀ:',
     detail_press: 'PRESSIONE:',
     detail_dir_vento: 'DIREZIONE VENTO:',
     detail_vel_vento: 'VELOCITÀ VENTO:',

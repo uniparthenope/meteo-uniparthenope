@@ -191,7 +191,7 @@
             </StackLayout>
 
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
-            <StackLayout margin="0 10 15 10" class="blue_background" row="0" col="0" horizontalAlignment="center" verticalAlignment="bottom" orientation="horizontal" height="50">
+            <StackLayout margin="0 10 15 10" class="blue_background_opac" row="0" col="0" horizontalAlignment="center" verticalAlignment="bottom" orientation="horizontal" height="50">
                 <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
                     <Image src="~/images/back.png" height="25"></Image>
                 </StackLayout>
