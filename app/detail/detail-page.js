@@ -730,6 +730,7 @@ function print_series(id)
                         ]
                     });
 
+
                     items.sort(function (orderA, orderB) {
                         var titleA = orderA.forecast;
                         let tempA = titleA.split("-");
