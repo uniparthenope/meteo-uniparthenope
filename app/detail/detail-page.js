@@ -734,13 +734,15 @@ function print_series(id)
                         var titleA = orderA.forecast;
                         let tempA = titleA.split("-");
                         let temp1A = tempA.pop();
-                        let dataA = temp1A.substring(1,3)+ mesi.indexOf(temp1A.substring(4,7));
+                        let dataA = mesi.indexOf(temp1A.substring(4,7)) + temp1A.substring(1,3);
 
                         var titleB = orderB.forecast;
                         let tempB = titleB.split("-");
                         let temp1B = tempB.pop();
-                        let dataB = temp1B.substring(1,3)+ mesi.indexOf(temp1B.substring(4,7));
+                        let dataB = mesi.indexOf(temp1B.substring(4,7)) + temp1B.substring(1,3);
 
+                        console.log(dataA);
+                        console.log(dataB);
 
                         return (dataA < dataB) ? -1 : (dataA > dataB) ? 1 : 0;
                     });
