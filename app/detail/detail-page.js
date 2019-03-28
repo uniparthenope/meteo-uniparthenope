@@ -742,9 +742,6 @@ function print_series(id)
                         let temp1B = tempB.pop();
                         let dataB = mesi.indexOf(temp1B.substring(4,7)) + temp1B.substring(1,3);
 
-                        console.log(dataA);
-                        console.log(dataB);
-
                         return (dataA < dataB) ? -1 : (dataA > dataB) ? 1 : 0;
                     });
                 });

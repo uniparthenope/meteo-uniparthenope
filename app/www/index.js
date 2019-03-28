@@ -751,12 +751,14 @@ oWebViewInterface1.on('data', function (cor)
                 {
                     if (e.name == 'Nuvolosit&agrave') {
                         Nuv_State = true;
+                        oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                     }
                 }
                 else
                 {
                     if (e.name == 'Cloudiness') {
                         Nuv_State = true;
+                        oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                     }
                 }
             },
@@ -765,12 +767,14 @@ oWebViewInterface1.on('data', function (cor)
                 {
                     if (e.name == 'Nuvolosit&agrave') {
                         Nuv_State = false;
+                        oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                     }
                 }
                 else
                 {
                     if (e.name == 'Cloudiness') {
                         Nuv_State = false;
+                        oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                     }
                 }
             }
@@ -782,12 +786,14 @@ oWebViewInterface1.on('data', function (cor)
                 {
                     if (e.name === 'Vento') {
                         Vento_State = true;
+                        oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                     }
                 }
                 else
                 {
                     if (e.name === 'Wind') {
                         Vento_State = true;
+                        oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                     }
                 }
             },
@@ -796,12 +802,14 @@ oWebViewInterface1.on('data', function (cor)
                 {
                     if (e.name === 'Vento') {
                         Vento_State = false;
+                        oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                     }
                 }
                 else
                 {
                     if (e.name === 'Wind') {
                         Vento_State = false;
+                        oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                     }
                 }
             }
@@ -813,12 +821,14 @@ oWebViewInterface1.on('data', function (cor)
                 {
                     if (e.name === 'Neve') {
                         Neve_State = true;
+                        oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                     }
                 }
                 else
                 {
                     if (e.name === 'Snow') {
                         Neve_State = true;
+                        oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                     }
                 }
             },
@@ -827,12 +837,14 @@ oWebViewInterface1.on('data', function (cor)
                 {
                     if (e.name === 'Neve') {
                         Neve_State = false;
+                        oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                     }
                 }
                 else
                 {
                     if (e.name === 'Snow') {
                         Neve_State = false;
+                        oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                     }
                 }
             }
@@ -844,12 +856,14 @@ oWebViewInterface1.on('data', function (cor)
                 {
                     if (e.name === 'Pioggia') {
                         Pioggia_State = true;
+                        oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                     }
                 }
                 else
                 {
                     if (e.name === 'Rain') {
                         Pioggia_State = true;
+                        oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                     }
                 }
             },
@@ -858,12 +872,14 @@ oWebViewInterface1.on('data', function (cor)
                 {
                     if (e.name === 'Pioggia') {
                         Pioggia_State = false;
+                        oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                     }
                 }
                 else
                 {
                     if (e.name === 'Rain') {
                         Pioggia_State = false;
+                        oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                     }
                 }
             }
@@ -939,12 +955,14 @@ oWebViewInterface1.on('new_data', function (cor)
             {
                 if (e.name == 'Nuvolosit&agrave') {
                     Nuv_State = true;
+                    oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                 }
             }
             else
             {
                 if (e.name == 'Cloudiness') {
                     Nuv_State = true;
+                    oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                 }
             }
         },
@@ -953,12 +971,14 @@ oWebViewInterface1.on('new_data', function (cor)
             {
                 if (e.name == 'Nuvolosit&agrave') {
                     Nuv_State = false;
+                    oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                 }
             }
             else
             {
                 if (e.name == 'Cloudiness') {
                     Nuv_State = false;
+                    oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                 }
             }
         }
@@ -970,12 +990,14 @@ oWebViewInterface1.on('new_data', function (cor)
             {
                 if (e.name === 'Vento') {
                     Vento_State = true;
+                    oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                 }
             }
             else
             {
                 if (e.name === 'Wind') {
                     Vento_State = true;
+                    oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                 }
             }
         },
@@ -984,12 +1006,14 @@ oWebViewInterface1.on('new_data', function (cor)
             {
                 if (e.name === 'Vento') {
                     Vento_State = false;
+                    oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                 }
             }
             else
             {
                 if (e.name === 'Wind') {
                     Vento_State = false;
+                    oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                 }
             }
         }
@@ -1001,12 +1025,14 @@ oWebViewInterface1.on('new_data', function (cor)
             {
                 if (e.name === 'Neve') {
                     Neve_State = true;
+                    oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                 }
             }
             else
             {
                 if (e.name === 'Snow') {
                     Neve_State = true;
+                    oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                 }
             }
         },
@@ -1015,12 +1041,14 @@ oWebViewInterface1.on('new_data', function (cor)
             {
                 if (e.name === 'Neve') {
                     Neve_State = false;
+                    oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                 }
             }
             else
             {
                 if (e.name === 'Snow') {
                     Neve_State = false;
+                    oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                 }
             }
         }
@@ -1032,12 +1060,14 @@ oWebViewInterface1.on('new_data', function (cor)
             {
                 if (e.name === 'Pioggia') {
                     Pioggia_State = true;
+                    oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                 }
             }
             else
             {
                 if (e.name === 'Rain') {
                     Pioggia_State = true;
+                    oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                 }
             }
         },
@@ -1046,12 +1076,14 @@ oWebViewInterface1.on('new_data', function (cor)
             {
                 if (e.name === 'Pioggia') {
                     Pioggia_State = false;
+                    oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                 }
             }
             else
             {
                 if (e.name === 'Rain') {
                     Pioggia_State = false;
+                    oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                 }
             }
         }

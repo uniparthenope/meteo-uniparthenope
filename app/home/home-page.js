@@ -53,6 +53,11 @@ exports.pageLoaded = function(args)
   home.set("current_position", "collapsed");
   home.set("search", "collapsed");
 
+  home.set("layer_vento", "visible");
+  home.set("layer_nuvole", "visible");
+  home.set("layer_neve", "visible");
+  home.set("layer_pioggia", "visible");
+
   drawer = view.getViewById(page,"sideDrawer");
 
   console.log("GLOBAL ID: " + global_id);
@@ -282,6 +287,7 @@ exports.pageLoaded = function(args)
 
   page.bindingContext = home;
 };
+
 
 exports.toggleDrawer = function() {
   drawer.toggleDrawerState();
@@ -692,6 +698,34 @@ function listenLangWebViewEvents()
         };
 
     page.frame.navigate(nav);
+  });
+
+  oLangWebViewInterface.on('layer_nuvole', function (data) {
+    if(data.flag)
+      home.set("layer_nuvole", "visible");
+    else
+      home.set("layer_nuvole", "collapsed");
+  });
+
+  oLangWebViewInterface.on('layer_vento', function (data) {
+    if(data.flag)
+      home.set("layer_vento", "visible");
+    else
+      home.set("layer_vento", "collapsed");
+  });
+
+  oLangWebViewInterface.on('layer_neve', function (data) {
+    if(data.flag)
+      home.set("layer_neve", "visible");
+    else
+      home.set("layer_neve", "collapsed");
+  });
+
+  oLangWebViewInterface.on('layer_pioggia', function (data) {
+    if(data.flag)
+      home.set("layer_pioggia", "visible");
+    else
+      home.set("layer_pioggia", "collapsed");
   });
 }
 
