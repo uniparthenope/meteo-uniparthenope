@@ -679,7 +679,7 @@ oWebViewInterface1.on('data', function (cor)
 
     if (map == null)
     {
-        map = new L.Map('map', {zoomControl: false, attributionControl:true});
+        map = new L.Map('map', {zoomControl: false, attributionControl:false});
         map.setView(center, zoom);
 
         var layerInstance = Esri_WorldImagery;

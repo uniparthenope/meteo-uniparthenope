@@ -765,11 +765,11 @@ exports.tap = function (args)
     console.log(args.object.selectedIndexes[0]);
     console.log(pageData.get("altezza"));
 
-    if (pageData.get("altezza") >= 0 && pageData.get("altezza") <= 270 && args.object.selectedIndexes[0] == undefined)
+    if (pageData.get("altezza") >= 0 && pageData.get("altezza") <= 315 && args.object.selectedIndexes[0] == undefined)
         pageData.set("altezza", 1350);
-    else if (pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] == undefined) {
+    else if (pageData.get("altezza") >= 1350 && args.object.selectedIndexes[0] == undefined) {
         pageData.set("altezza", 1350);
-    } else if (pageData.get("altezza") == 1350 && args.object.selectedIndexes[0] != undefined) {
+    } else if (pageData.get("altezza") >= 1350 && args.object.selectedIndexes[0] != undefined) {
         pageData.set("altezza", altezza);
     }
 };

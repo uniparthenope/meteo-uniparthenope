@@ -26,15 +26,6 @@
                         <Image src="~/images/arrow.png"></Image>
                     </StackLayout>
 
-                    <StackLayout verticalAlignment="bottom" horizontalAlignment="right" marginBottom="80" marginRight="12">
-                        <StackLayout orientation="horizontal">
-                            <Image opacity="0.7" src="~/images/colorbar/bar_nuvole_verticale.png" height="65%" visibility="{{ layer_nuvole }}"></Image>
-                            <Image opacity="0.7" src="~/images/colorbar/bar_pioggia_verticale.png" height="65%" visibility="{{ layer_pioggia }}"></Image>
-                            <Image opacity="0.7" src="~/images/colorbar/bar_neve_verticale.png" height="65%" visibility="{{ layer_neve }}"></Image>
-                            <Image opacity="0.7" src="~/images/colorbar/bar_vento_verticale.png" height="65%" visibility="{{ layer_vento }}"></Image>
-                        </StackLayout>
-                    </StackLayout>
-
                     <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0" width="220">
                         <StackLayout verticalAlignment="center" horizontalAlignment="center">
                             <Label text="{{ position }}" style="font-weight:bold; flex-grow:1; font-size: 16" margin="5 5 0 5"/>
@@ -89,20 +80,30 @@
                         </StackLayout>
                     </StackLayout>
 
-                    <StackLayout margin="0 10 15 10" class="blue_background" row="0" col="0" horizontalAlignment="center" verticalAlignment="bottom" orientation="horizontal" height="50">
-                        <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
-                            <Image src="~/images/back.png" height="25"></Image>
+                    <StackLayout orientation="vertical" horizontalAlignment="center" verticalAlignment="bottom" >
+                        <StackLayout margin="0 10 15 10" class="blue_background" row="0" col="0" orientation="horizontal" height="50" horizontalAlignment="center">
+                            <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
+                                <Image src="~/images/back.png" height="40"></Image>
+                            </StackLayout>
+
+                            <StackLayout horizontalAlignment="center" tap="toggleDrawer" verticalAlignment="center">
+                                <Label text="{{ data }}"></Label>
+                            </StackLayout>
+
+                            <StackLayout orientation="horizontal" horizontalAlignment="right" tap="onTapNext" verticalAlignment="center" marginLeft="15" marginRight="15">
+                                <Image src="~/images/next1.png" height="40"></Image>
+                            </StackLayout>
                         </StackLayout>
 
-                        <StackLayout horizontalAlignment="center" tap="toggleDrawer" verticalAlignment="center">
-                            <Label text="{{ data }}"></Label>
-                        </StackLayout>
-
-                        <StackLayout orientation="horizontal" horizontalAlignment="right" tap="onTapNext" verticalAlignment="center" marginLeft="15" marginRight="15">
-                            <Image src="~/images/next1.png" height="25"></Image>
+                        <StackLayout>
+                            <Image opacity="0.9" src="~/images/colorbar/bar_nuvole_windy.png"  visibility="{{ layer_nuvole }}"></Image>
+                            <Image opacity="0.8" src="~/images/colorbar/bar_vento_windy.png"  visibility="{{ layer_vento }}"></Image>
+                            <Image opacity="0.8" src="~/images/colorbar/bar_pioggia_windy.png"  visibility="{{ layer_pioggia }}"></Image>
+                            <!--
+                            <Image opacity="0.7" src="~/images/colorbar/bar_neve_verticale.png" visibility="{{ layer_neve }}"></Image>
+                            -->
                         </StackLayout>
                     </StackLayout>
-
                 </GridLayout>
             </StackLayout>
         </sd:RadSideDrawer.mainContent>

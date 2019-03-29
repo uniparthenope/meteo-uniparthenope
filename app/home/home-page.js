@@ -860,7 +860,6 @@ function didAutoComplete  (args) {
 exports.didAutoComplete = didAutoComplete;
 
 exports.toggleDrawer = function() {
-  console.log("Tap");
   drawer.toggleDrawerState();
 };
 
