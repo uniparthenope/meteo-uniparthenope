@@ -81,14 +81,15 @@
                     <accordion:Accordion.itemHeaderTemplate>
                         <GridLayout>
                             <FlexboxLayout flexDirection="row">
-                                <StackLayout flexGrow="1" class="font-weight-bold text-center" width="40%">
+                                <StackLayout flexGrow="1" class="font-weight-bold text-center" width="39%">
                                     <Label text="{{ forecast }}"/>
                                     <Image src="{{ image }}" height="25" width="15"></Image>
                                 </StackLayout>
-                                <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
-                                <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
+                                <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
+                                <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="14%" textWrap="true"/>
+                                <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
+                                <Image src="{{ image_arrow }}" flexGrow="1" width="5%"></Image>
                             </FlexboxLayout>
                         </GridLayout>
                     </accordion:Accordion.itemHeaderTemplate>

@@ -20,6 +20,7 @@ var pageData;
 var id;
 var data;
 var map;
+var image_arrow;
 var products;
 var outputs;
 var prod;
@@ -61,7 +62,8 @@ function pageLoaded(args) {
         outputs: outputs,
         steps: steps,
         hours: hours,
-        items: items
+        items: items,
+        image_arrow: image_arrow
     });
     pageData.set("isBusy", true);//Load animation
     pageData.set("isHeigh", "25");
@@ -558,6 +560,7 @@ function print_series(id)
                         TMax: data.timeseries[i]['t2c-max'],
                         Wind: data.timeseries[i].winds + " " + data.timeseries[i].ws10n,
                         Rain: data.timeseries[i].crh,
+                        image_arrow: "~/images/next.png",
                         items: [
                             {
                                 forecast: "00:00 UTC",
@@ -765,8 +768,9 @@ exports.tap = function (args)
     console.log(args.object.selectedIndexes[0]);
     console.log(pageData.get("altezza"));
 
-    if (pageData.get("altezza") >= 0 && pageData.get("altezza") <= 315 && args.object.selectedIndexes[0] == undefined)
+    if (pageData.get("altezza") >= 0 && pageData.get("altezza") <= 315 && args.object.selectedIndexes[0] == undefined) {
         pageData.set("altezza", 1350);
+    }
     else if (pageData.get("altezza") >= 1350 && args.object.selectedIndexes[0] == undefined) {
         pageData.set("altezza", 1350);
     } else if (pageData.get("altezza") >= 1350 && args.object.selectedIndexes[0] != undefined) {
