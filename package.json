@@ -34,6 +34,7 @@
     "nativescript-nested-scrollview": "^1.0.0",
     "nativescript-permissions": "^1.2.3",
     "nativescript-social-share": "1.5.1",
+    "nativescript-statusbar": "^5.0.0",
     "nativescript-theme-core": "1.0.4",
     "nativescript-ui-autocomplete": "3.11.0",
     "nativescript-ui-calendar": "3.10.0",

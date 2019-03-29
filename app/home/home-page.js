@@ -57,6 +57,7 @@ exports.pageLoaded = function(args)
   home.set("layer_nuvole", "visible");
   home.set("layer_neve", "visible");
   home.set("layer_pioggia", "visible");
+  home.set("layer_temp", "collapsed");
 
   drawer = view.getViewById(page,"sideDrawer");
 
@@ -726,6 +727,13 @@ function listenLangWebViewEvents()
       home.set("layer_pioggia", "visible");
     else
       home.set("layer_pioggia", "collapsed");
+  });
+
+  oLangWebViewInterface.on('layer_temp', function (data) {
+    if(data.flag)
+      home.set("layer_temp", "visible");
+    else
+      home.set("layer_temp", "collapsed");
   });
 }
 

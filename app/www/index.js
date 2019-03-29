@@ -710,11 +710,13 @@ oWebViewInterface1.on('data', function (cor)
                 if(lingua == "it") {
                     if (e.name === 'Temperatura') {
                         Temp_State = true;
+                        oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                     }
                 }
                 else {
                     if (e.name === 'Temperature') {
                         Temp_State = true;
+                        oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                     }
                 }
             },
@@ -722,11 +724,13 @@ oWebViewInterface1.on('data', function (cor)
                 if(lingua == "it") {
                     if (e.name === 'Temperatura') {
                         Temp_State = false;
+                        oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                     }
                 }
                 else {
                     if (e.name === 'Temperature') {
                         Temp_State = false;
+                        oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                     }
                 }
             }
@@ -914,11 +918,13 @@ oWebViewInterface1.on('new_data', function (cor)
             if(lingua == "it") {
                 if (e.name === 'Temperatura') {
                     Temp_State = true;
+                    oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                 }
             }
             else {
                 if (e.name === 'Temperature') {
                     Temp_State = true;
+                    oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                 }
             }
         },
@@ -926,11 +932,13 @@ oWebViewInterface1.on('new_data', function (cor)
             if(lingua == "it") {
                 if (e.name === 'Temperatura') {
                     Temp_State = false;
+                    oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                 }
             }
             else {
                 if (e.name === 'Temperature') {
                     Temp_State = false;
+                    oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                 }
             }
         }

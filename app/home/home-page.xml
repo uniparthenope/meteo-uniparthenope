@@ -1,5 +1,7 @@
-<Page actionBarHidden="true" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:sd="nativescript-ui-sidedrawer" loaded="pageLoaded" xmlns:lv="nativescript-ui-autocomplete">
+<Page actionBarHidden="true" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:sd="nativescript-ui-sidedrawer" loaded="pageLoaded" xmlns:lv="nativescript-ui-autocomplete" xmlns:x="nativescript-statusbar">
     <ActionBar title="MeteoUniparthenope"/>
+
+    <x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,1)" />
 
     <sd:RadSideDrawer id="sideDrawer">
         <sd:RadSideDrawer.drawerContent>
@@ -97,11 +99,10 @@
 
                         <StackLayout>
                             <Image opacity="0.9" src="~/images/colorbar/bar_nuvole_windy.png"  visibility="{{ layer_nuvole }}"></Image>
-                            <Image opacity="0.8" src="~/images/colorbar/bar_vento_windy.png"  visibility="{{ layer_vento }}"></Image>
+                            <Image opacity="0.8" src="~/images/colorbar/bar_neve_windy.png"  visibility="{{ layer_neve }}"></Image>
                             <Image opacity="0.8" src="~/images/colorbar/bar_pioggia_windy.png"  visibility="{{ layer_pioggia }}"></Image>
-                            <!--
-                            <Image opacity="0.7" src="~/images/colorbar/bar_neve_verticale.png" visibility="{{ layer_neve }}"></Image>
-                            -->
+                            <Image opacity="0.9" src="~/images/colorbar/bar_temp_windy.png"  visibility="{{ layer_temp}}"></Image>
+                            <Image opacity="0.8" src="~/images/colorbar/bar_vento_windy.png"  visibility="{{ layer_vento }}"></Image>
                         </StackLayout>
                     </StackLayout>
                 </GridLayout>

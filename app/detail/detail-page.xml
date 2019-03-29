@@ -55,7 +55,7 @@
 
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
             <ScrollView orientation="vertical">
-            <StackLayout class="blue_background_opac" marginTop="20" visibility="{{ table_android }}">
+            <StackLayout class="white_background_border" marginTop="20" visibility="{{ table_android }}">
                 <FlexboxLayout flexDirection="row">
                     <!-- Use even flexGrow to achieve uniform grid -->
                     <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
@@ -93,8 +93,9 @@
                         </GridLayout>
                     </accordion:Accordion.itemHeaderTemplate>
 
+
                     <accordion:Accordion.itemContentTemplate>
-                        <StackLayout backgroundColor="#00008b">
+                        <StackLayout class="white_background">
                             <GridLayout>
                                 <FlexboxLayout flexDirection="row">
                                     <StackLayout flexGrow="1" class="font-weight-bold text-center" width="55%">
@@ -191,9 +192,9 @@
             </StackLayout>
 
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
-            <StackLayout margin="0 10 15 10" class="blue_background_opac" row="0" col="0" horizontalAlignment="center" verticalAlignment="bottom" orientation="horizontal" height="50">
+            <StackLayout marginTop="20" class="blue_background_opac" row="0" col="0" orientation="horizontal" height="50" horizontalAlignment="center">
                 <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
-                    <Image src="~/images/back.png" height="25"></Image>
+                    <Image src="~/images/back.png" height="40"></Image>
                 </StackLayout>
 
                 <StackLayout horizontalAlignment="center" tap="toggleDrawer" verticalAlignment="center">
@@ -201,11 +202,11 @@
                 </StackLayout>
 
                 <StackLayout orientation="horizontal" horizontalAlignment="right" tap="onTapNext" verticalAlignment="center" marginLeft="15" marginRight="15">
-                    <Image src="~/images/next1.png" height="25"></Image>
+                    <Image src="~/images/next1.png" height="40"></Image>
                 </StackLayout>
             </StackLayout>
 
-            <Image src="{{ map }}" marginTop="10" visibility="{{ _map }}"/>
+            <Image src="{{ map }}" marginTop="15" visibility="{{ _map }}"/>
             <Image src="{{ colorbar1 }}" marginTop="5" visibility="{{ colorbar1_visible }}"/>
             <Image src="{{ colorbar2 }}" marginTop="5" visibility="{{ colorbar2_visible }}"/>
             <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>

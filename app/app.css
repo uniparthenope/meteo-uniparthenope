@@ -38,6 +38,15 @@ SearchBar{
     background-color: rgba(255,255,255,0.8);
     color:rgba(30,76,117,1);
 }
+
+.white_background_border{
+    border-color:rgba(30,76,117,1);
+    border-width: 2;
+    border-radius: 12dp;
+    background-color: rgba(255,255,255,0.8);
+    color:rgba(30,76,117,1);
+}
+
 .blue_background{
     background-color: rgba(30,76,117,0.8);
     color: white;

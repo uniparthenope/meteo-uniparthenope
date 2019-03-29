@@ -18,8 +18,8 @@
             <Label textAlignment="center" textWrap="true" text="{{ _L('info_sviluppatori') }}" marginTop="10"></Label>
             <Label textAlignment="center" textWrap="true" text="{{ _L('info_gestione_dati') }}" marginTop="10"></Label>
             <Label textAlignment="center" textWrap="true" text="{{ _L('info_logo') }}" marginTop="10"></Label>
-            <Button textWrap="true" text="Copyright ©" ontap="onTapCopy" class="blue_background" margin="10 5 0 5"></Button>
-            <Button textWrap="true" text="Disclaimer" ontap="onTapDisclaimer" class="blue_background" margin="10 5 10 5"></Button>
+            <Button textWrap="true" text="Copyright ©" ontap="onTapCopy" class="blue_background_opac" margin="10 5 0 5"></Button>
+            <Button textWrap="true" text="Disclaimer" ontap="onTapDisclaimer" class="blue_background_opac" margin="10 5 10 5"></Button>
         </StackLayout>
     </ScrollView>
 
