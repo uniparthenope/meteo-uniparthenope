@@ -11,10 +11,9 @@ function pageLoaded(args)
     const page = args.object;
     const info = new Observable.fromObject({});
     appversion.getVersionName().then(function(v) {
+        console.log(v);
         info.set("version", v);
     });
-
-    console.log(_L("greetings"));
 
     page.bindingContext = info;
 }
