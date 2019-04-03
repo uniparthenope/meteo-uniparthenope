@@ -8,8 +8,18 @@
             <ScrollView>
                 <StackLayout class="white_background">
                     <Image src="~/images/logo.png" margin="5 5 5 5" horizontalAlignment="center"></Image>
-                    <Label text="{{ _L('home_preferiti') }}" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
 
+                    <Label text="{{ _L('home_impostazioni') }}" marginTop="20" tap="onTapSettings" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginBottom="15" />
+                    <Label text="Info" tap="onTapInfo" verticalAlignment="center" horizontalAlignment="left" style="flex-grow:1; font-size: 18" marginLeft="15"/>
+
+                    <Label text="{{ _L('home_selezione_data') }}" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
+                    <DatePicker class="blue_col" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
+                    <StackLayout margin="0 20 0 20" height="4px" backgroundColor="rgba(30,76,117,1)" marginBottom="20" />
+
+                    <StackLayout verticalAlignment="center" horizontalAlignment="left" orientation="horizontal">
+                        <Label text="{{ _L('home_preferiti') }}" style=" flex-grow:1; font-size: 18" marginLeft="15" horizontalAlignment="center"/>
+                        <Image src="~/images/star_pref.png" height="18" marginLeft="5" horizontalAlignment="center"></Image>
+                    </StackLayout>
                     <ListView
                             height="{{ heigt_pref }}"
                             items="{{ myPref }}"
@@ -19,16 +29,10 @@
                             row="2">
                         <ListView.itemTemplate>
                             <StackLayout class="list-group-item">
-                                <Label text="{{ title }}" textWrap="true" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12"/>
+                                <Label text="{{ title }}" textWrap="true" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12" marginLeft="5"/>
                             </StackLayout>
                         </ListView.itemTemplate>
                     </ListView>
-
-                    <Label text="{{ _L('home_selezione_data') }}" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
-                    <DatePicker class="blue_col" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
-                    <StackLayout margin="0 20 0 20" height="4px" backgroundColor="rgba(30,76,117,1)" marginBottom="20" />
-                    <Label text="{{ _L('home_impostazioni') }}" tap="onTapSettings" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginBottom="15" />
-                    <Label text="Info" tap="onTapInfo" verticalAlignment="center" horizontalAlignment="left" style="flex-grow:1; font-size: 18" marginLeft="15"/>
                 </StackLayout>
             </ScrollView>
         </sd:RadSideDrawer.drawerContent>
