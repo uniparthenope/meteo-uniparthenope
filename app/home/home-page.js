@@ -1088,5 +1088,6 @@ function onItemTap(args) {
           .catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
     });
   }
+  drawer.closeDrawer();
 }
 exports.onItemTap = onItemTap;
