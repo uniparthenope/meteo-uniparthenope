@@ -11,6 +11,7 @@
                     <Label text="{{ _L('home_preferiti') }}" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
 
                     <ListView
+                            height="{{ heigt_pref }}"
                             items="{{ myPref }}"
                             itemTap="onItemTap"
                             class="list-group"
@@ -18,7 +19,7 @@
                             row="2">
                         <ListView.itemTemplate>
                             <StackLayout class="list-group-item">
-                                <Label text="{{ title }}" textWrap="true" color="rgba(30,76,117,1)"/>
+                                <Label text="{{ title }}" textWrap="true" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12"/>
                             </StackLayout>
                         </ListView.itemTemplate>
                     </ListView>

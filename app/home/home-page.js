@@ -61,6 +61,7 @@ exports.pageLoaded = function(args)
   myPref.splice(0);
   for(var i=0; i<preferiti.length; i++)
     myPref.push({"title": preferiti[i]});
+  home.set("heigt_pref", 50*preferiti.length);
 
   home.set("current_position", "collapsed");
   home.set("search", "collapsed");
@@ -973,6 +974,7 @@ exports.onTapStar = function()
     myPref.splice(0);
     for(var i=0; i<preferiti.length; i++)
       myPref.push({"title": preferiti[i]});
+    home.set("heigt_pref", 50*preferiti.length);
   }
   else if(home.get("no_pref") == "collapsed")
   {
@@ -990,6 +992,7 @@ exports.onTapStar = function()
     for(var i=0; i<preferiti.length; i++)
       myPref.push({"title": preferiti[i]});
   }
+  home.set("heigt_pref", 50*preferiti.length);
 };
 
 
