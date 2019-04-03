@@ -8,6 +8,21 @@
             <ScrollView>
                 <StackLayout class="white_background">
                     <Image src="~/images/logo.png" margin="5 5 5 5" horizontalAlignment="center"></Image>
+                    <Label text="{{ _L('home_preferiti') }}" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
+
+                    <ListView
+                            items="{{ myPref }}"
+                            itemTap="onItemTap"
+                            class="list-group"
+                            id="listView"
+                            row="2">
+                        <ListView.itemTemplate>
+                            <StackLayout class="list-group-item">
+                                <Label text="{{ title }}" textWrap="true" color="rgba(30,76,117,1)"/>
+                            </StackLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+
                     <Label text="{{ _L('home_selezione_data') }}" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
                     <DatePicker class="blue_col" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
                     <StackLayout margin="0 20 0 20" height="4px" backgroundColor="rgba(30,76,117,1)" marginBottom="20" />
@@ -37,18 +52,22 @@
                             <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
                                 <Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
                             </StackLayout>
-                            <StackLayout orientation="vertical" verticalAlignment="center" horizontalAlignment="right">
-                                <StackLayout horizontalAlignment="center" verticalAlignment="center" orientation="horizontal">
-                                    <Label text="{{ temp }}"  style="font-size: 24" horizontalAlignment="left"/>
-                                    <Image src="~/images/details_button.png" height="25" marginLeft="40" tap="onTapDetail"></Image>
-                                </StackLayout>
 
-                                <StackLayout orientation="horizontal" horizontalAlignment="left" marginTop="5">
-                                    <Label text="{{ wind_direction }}" style="font-weight:bold;" horizontalAlignment="center" verticalAlignment="center" marginRight="10"/>
-                                    <Label text="{{ wind }}" horizontalAlignment="center" verticalAlignment="center" />
-                                    <Image src="~/images/location.png" height="25" tap="onTapCenter" marginLeft="10"></Image>
+                            <StackLayout orientation="vertical" verticalAlignment="center" horizontalAlignment="center" marginLeft="18">
+                                <Label text="{{ temp }}"  style="font-size: 24"/>
+
+                                <StackLayout orientation="horizontal" marginTop="5">
+                                    <Label text="{{ wind_direction }}" style="font-weight:bold;" marginRight="10"/>
+                                    <Label text="{{ wind }}"/>
                                 </StackLayout>
                             </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout orientation="horizontal" horizontalAlignment="center" marginTop="5">
+                            <Image src="~/images/star.png" height="20" tap="onTapStar" visibility="{{ no_pref }}"></Image>
+                            <Image src="~/images/star_pref.png" height="20" tap="onTapStar" visibility="{{ pref }}"></Image>
+                            <Image src="~/images/location.png" height="20" tap="onTapCenter" marginLeft="40"></Image>
+                            <Image src="~/images/details_button.png" height="20" marginLeft="40" tap="onTapDetail"></Image>
                         </StackLayout>
 
                         <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="top" horizontalAlignment="center" row="0" col="0" margin="0 0 0 10" width="210">
@@ -98,10 +117,10 @@
                         </StackLayout>
 
                         <StackLayout>
-                            <Image opacity="0.9" src="~/images/colorbar/bar_nuvole_windy.png"  visibility="{{ layer_nuvole }}"></Image>
-                            <Image opacity="0.8" src="~/images/colorbar/bar_neve_windy.png"  visibility="{{ layer_neve }}"></Image>
-                            <Image opacity="0.8" src="~/images/colorbar/bar_pioggia_windy.png"  visibility="{{ layer_pioggia }}"></Image>
                             <Image opacity="0.9" src="~/images/colorbar/bar_temp_windy.png"  visibility="{{ layer_temp}}"></Image>
+                            <Image opacity="0.9" src="~/images/colorbar/bar_nuvole_windy.png"  visibility="{{ layer_nuvole }}"></Image>
+                            <Image opacity="0.8" src="~/images/colorbar/bar_pioggia_windy.png"  visibility="{{ layer_pioggia }}"></Image>
+                            <Image opacity="0.8" src="~/images/colorbar/bar_neve_windy.png"  visibility="{{ layer_neve }}"></Image>
                             <Image opacity="0.8" src="~/images/colorbar/bar_vento_windy.png"  visibility="{{ layer_vento }}"></Image>
                         </StackLayout>
                     </StackLayout>

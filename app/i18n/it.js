@@ -8,6 +8,7 @@ module.exports = {
     home_selezione_data: 'Selezionare data: ',
     home_impostazioni: 'Impostazioni',
     home_ricerca: 'Ricerca Luogo ...',
+    home_preferiti: 'Preferiti: ',
     impostazioni_titolo: 'Impostazioni',
     impostazioni_temp: 'Temperatura: ',
     impostazioni_vento: 'Vento: ',

@@ -94,7 +94,6 @@
                         </GridLayout>
                     </accordion:Accordion.itemHeaderTemplate>
 
-
                     <accordion:Accordion.itemContentTemplate>
                         <StackLayout class="white_background">
                             <GridLayout>

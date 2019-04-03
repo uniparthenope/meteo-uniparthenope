@@ -34,6 +34,8 @@ var longitudine;
 let page;
 var homeViewModel = new HomeViewModel();
 var url_api = "https://api.meteo.uniparthenope.it/";
+var preferiti;
+var myPref = new ObservableArray();
 
 function setupWebViewInterface(page)
 {
@@ -49,9 +51,21 @@ exports.pageLoaded = function(args)
   contatore++;
   console.log("Contatore: " + contatore);
 
-  home = new Observable.fromObject({});
+  preferiti = JSON.parse(appSetting.getString("preferiti" , "[]"));
+
+  home = new Observable.fromObject({
+    myPref: myPref
+  });
+
+  console.log(preferiti.length);
+  myPref.splice(0);
+  for(var i=0; i<preferiti.length; i++)
+    myPref.push({"title": preferiti[i]});
+
   home.set("current_position", "collapsed");
   home.set("search", "collapsed");
+  home.set("no_pref", "visible");
+  home.set("pref", "collapsed");
 
   home.set("layer_vento", "visible");
   home.set("layer_nuvole", "visible");
@@ -80,9 +94,9 @@ exports.pageLoaded = function(args)
     home.set("maxDate", new Date(2030, 4, 12));
 
     if(platformModule.device.language == 'it')
-      print_data = nome_giorno[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+      print_data = nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
     else
-      print_data = name_day[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+      print_data = name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log(print_data);
@@ -97,9 +111,9 @@ exports.pageLoaded = function(args)
     home.set("maxDate", new Date(2030, 4, 12));
 
     if(platformModule.device.language == 'it')
-     print_data = nome_giorno[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+      print_data = nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
     else
-      print_data = name_day[data.getUTCDay()] + " " + anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+      print_data = name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log(print_data);
@@ -145,6 +159,25 @@ exports.pageLoaded = function(args)
 
                 id = data[0].id;
                 global_id = id;
+
+                var found = false;
+                console.log(preferiti);
+                for(var i=0; i<preferiti.length; i++) {
+                  if(place_selected === preferiti[i])
+                  {
+                    found = true;
+                  }
+                }
+                console.log(found);
+                if(found)
+                {
+                  home.set("pref", "visible");
+                  home.set("no_pref", "collapsed");
+                }
+                else {
+                  home.set("no_pref", "visible");
+                  home.set("pref", "collapsed");
+                }
 
                 fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
                   //console.log(data1);
@@ -254,6 +287,26 @@ exports.pageLoaded = function(args)
           console.log("POSTO : " + place_selected);
         }
 
+        var found = false;
+        console.log(preferiti);
+        for(var i=0; i<preferiti.length; i++) {
+          console.log(preferiti[i]);
+          if(place_selected === preferiti[i])
+          {
+            found = true;
+          }
+        }
+        console.log(found);
+        if(found)
+        {
+          home.set("pref", "visible");
+          home.set("no_pref", "collapsed");
+        }
+        else {
+          home.set("no_pref", "visible");
+          home.set("pref", "collapsed");
+        }
+
         if (data1.result == "ok") {
           home.set("current_position", "visible");
           if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -310,9 +363,9 @@ function onDatePickerLoaded(args)
     data = new Date(anno, mese-1, giorno);
 
     if(platformModule.device.language == 'it')
-      home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+      home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
     else
-      home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+      home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
     oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 
@@ -367,9 +420,9 @@ function onDatePickerLoaded(args)
     data = new Date(anno, mese-1, giorno);
 
     if(platformModule.device.language == 'it')
-      home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+      home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
     else
-      home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+      home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
     oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
     oLangWebViewInterface.emit('new_data', {data:currData});
@@ -418,9 +471,9 @@ function onDatePickerLoaded(args)
     data = new Date(anno, mese-1, giorno);
 
     if(platformModule.device.language == 'it')
-      home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+      home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
     else
-      home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+      home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
     oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 
@@ -501,9 +554,9 @@ function onTapNext()
   }
 
   if(platformModule.device.language == 'it')
-    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
   else
-    home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
   oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 
@@ -583,9 +636,9 @@ function onTapBack()
   }
 
   if(platformModule.device.language == 'it')
-    home.set("data", nome_giorno[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
   else
-    home.set("data", name_day[temp_data.getDay()] + " " +anno+"/"+mese+"/"+giorno+" "+ora+":00");
+    home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
   oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 
@@ -828,6 +881,26 @@ function didAutoComplete  (args) {
       console.log(id);
       global_id = id;
 
+      var found = false;
+      console.log(preferiti);
+      for(var i=0; i<preferiti.length; i++) {
+        console.log(preferiti[i]);
+        if(place_selected == preferiti[i])
+        {
+          found = true;
+        }
+      }
+      console.log(found);
+      if(found)
+      {
+        home.set("pref", "visible");
+        home.set("no_pref", "collapsed");
+      }
+      else {
+        home.set("no_pref", "visible");
+        home.set("pref", "collapsed");
+      }
+
       fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
         //console.log(data1);
         if (data1.result == "ok") {
@@ -887,3 +960,133 @@ exports.onTapDetail = function (args)
 
     page.frame.navigate(nav);
 };
+
+exports.onTapStar = function()
+{
+  if(home.get("no_pref") == "visible")
+  {
+    home.set("no_pref", "collapsed");
+    home.set("pref", "visible");
+    preferiti.push(place_selected);
+    console.log(preferiti);
+    appSetting.setString("preferiti", JSON.stringify(preferiti));
+    myPref.splice(0);
+    for(var i=0; i<preferiti.length; i++)
+      myPref.push({"title": preferiti[i]});
+  }
+  else if(home.get("no_pref") == "collapsed")
+  {
+    var index = preferiti.indexOf(place_selected);
+    if (index > -1) {
+      preferiti.splice(index, 1);
+    }
+    console.log(preferiti);
+
+    appSetting.setString("preferiti", JSON.stringify(preferiti));
+
+    home.set("no_pref", "visible");
+    home.set("pref", "collapsed");
+    myPref.splice(0);
+    for(var i=0; i<preferiti.length; i++)
+      myPref.push({"title": preferiti[i]});
+  }
+};
+
+
+function onItemTap(args) {
+  const index = args.index;
+  console.log(myPref.getItem(index).title);
+  oLangWebViewInterface.emit('place_searched', {name:myPref.getItem(index).title});
+
+  place_selected = (myPref.getItem(index).title);
+  console.log("POSTO : " + place_selected);
+
+  if(gps_on) {
+    home.set("search", "collapsed");
+
+    let url = url_api + "places/search/byname/" + place_selected;
+    url = url.replace(/ /g, "%20");
+    console.log(url);
+
+    fetch(url).then((response) => response.json()).then((data) => {
+      var id;
+      console.log(data.length);
+      for(let i=0; i<data.length; i++)
+      {
+        let name1 = data[i].long_name.it;
+        console.log(name1);
+        let name_new;
+        let __name;
+        if (name1.includes("Municipalit"))
+        {
+          console.log("MUN");
+          var tmp = name1.split("-");
+          name_new = tmp.pop();
+          __name = name_new;
+
+          if(__name === place_selected)
+            id = data[i].id;
+        }
+        else
+        {
+          console.log("NO MUN");
+          if(name1 === place_selected)
+            id = data[i].id;
+        }
+      }
+      console.log(id);
+      global_id = id;
+
+      var found = false;
+      console.log(preferiti);
+      for(var i=0; i<preferiti.length; i++) {
+        console.log(preferiti[i]);
+        if(place_selected === preferiti[i])
+        {
+          found = true;
+        }
+      }
+      console.log("Trovato: " + found);
+      if(found)
+      {
+        home.set("pref", "visible");
+        home.set("no_pref", "collapsed");
+      }
+      else {
+        home.set("no_pref", "visible");
+        home.set("pref", "collapsed");
+      }
+
+      fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+        //console.log(data1);
+        if (data1.result == "ok") {
+          home.set("current_position", "visible");
+
+          home.set("position", place_selected);
+          if (appSetting.getNumber("Temperatura", 0) == 0)
+            home.set("temp", data1.forecast.t2c + " °C");
+          else if (appSetting.getNumber("Temperatura", 0) == 1) {
+            home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+          }
+          if (appSetting.getNumber("Vento", 0) == 0)
+            home.set("wind", data1.forecast.ws10n + " kn");
+          else if (appSetting.getNumber("Vento", 0) == 1) {
+            home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+          } else if (appSetting.getNumber("Vento", 0) == 2) {
+            home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+          } else if (appSetting.getNumber("Vento", 0) == 3) {
+            home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+          }
+
+          home.set("wind_direction", data1.forecast.winds);
+          home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+        } else if (data1.result == "error") {
+          home.set("current_position", "collapsed");
+          dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+        }
+      })
+          .catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
+    });
+  }
+}
+exports.onItemTap = onItemTap;
