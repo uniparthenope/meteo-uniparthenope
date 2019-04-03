@@ -21,15 +21,18 @@
                         <Image src="~/images/star_pref.png" height="18" marginLeft="5" horizontalAlignment="center"></Image>
                     </StackLayout>
                     <ListView
+                            marginBottom="20"
+                            itemTap="onItemTap"
                             height="{{ heigt_pref }}"
                             items="{{ myPref }}"
-                            itemTap="onItemTap"
                             class="list-group"
                             id="listView"
                             row="2">
                         <ListView.itemTemplate>
-                            <StackLayout class="list-group-item">
-                                <Label text="{{ title }}" textWrap="true" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12" marginLeft="5"/>
+                            <StackLayout class="list-group-item" orientation="horizontal">
+                                <Label text="{{ title }}" width="70%" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12" marginLeft="5" horizontalAlignment="left"/>
+                                <Label text=" " width="10%"></Label>
+                                <Image src="~/images/trash.png" horizontalAlignment="right" width="20%" height="20" tap="remove"></Image>
                             </StackLayout>
                         </ListView.itemTemplate>
                     </ListView>

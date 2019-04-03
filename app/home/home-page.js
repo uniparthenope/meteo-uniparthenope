@@ -60,7 +60,7 @@ exports.pageLoaded = function(args)
   console.log(preferiti.length);
   myPref.splice(0);
   for(var i=0; i<preferiti.length; i++)
-    myPref.push({"title": preferiti[i]});
+    myPref.push({"title": preferiti[i], id: myPref.length});
   home.set("heigt_pref", 50*preferiti.length);
 
   home.set("current_position", "collapsed");
@@ -973,7 +973,7 @@ exports.onTapStar = function()
     appSetting.setString("preferiti", JSON.stringify(preferiti));
     myPref.splice(0);
     for(var i=0; i<preferiti.length; i++)
-      myPref.push({"title": preferiti[i]});
+      myPref.push({"title": preferiti[i], id: myPref.length});
     home.set("heigt_pref", 50*preferiti.length);
   }
   else if(home.get("no_pref") == "collapsed")
@@ -990,7 +990,7 @@ exports.onTapStar = function()
     home.set("pref", "collapsed");
     myPref.splice(0);
     for(var i=0; i<preferiti.length; i++)
-      myPref.push({"title": preferiti[i]});
+      myPref.push({"title": preferiti[i], id: myPref.length});
   }
   home.set("heigt_pref", 50*preferiti.length);
 };
@@ -1094,3 +1094,32 @@ function onItemTap(args) {
   drawer.closeDrawer();
 }
 exports.onItemTap = onItemTap;
+
+exports.remove = function (args) {
+  var btn = args.object;
+  var tappedItemData = btn.bindingContext;
+
+  myPref.some(function (item, index) {
+    if(item.id === tappedItemData.id) {
+      var place = myPref.getItem(index).title;
+
+      var index = preferiti.indexOf(place);
+      if (index > -1) {
+        preferiti.splice(index, 1);
+      }
+      console.log(preferiti);
+
+      appSetting.setString("preferiti", JSON.stringify(preferiti));
+      myPref.splice(0);
+      for(var i=0; i<preferiti.length; i++)
+        myPref.push({"title": preferiti[i], id: myPref.length});
+
+      if(place === place_selected && home.get("pref") === "visible") {
+        home.set("pref", "collapsed");
+        home.set("no_pref", "visible");
+      }
+
+      return false;
+    }
+  });
+};
