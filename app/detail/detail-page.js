@@ -13,6 +13,7 @@ require("nativescript-accordion");
 const platformModule = require("tns-core-modules/platform");
 const http = require("http");
 
+var drawer;
 var press;
 var temp;
 var single_item;
@@ -41,6 +42,7 @@ let print_data;
 let mesi = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
 var items;
 let altezza;
+var _data;
 
 function pageLoaded(args) {
     var page = args.object;
@@ -92,12 +94,19 @@ function pageLoaded(args) {
     data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
 
+    drawer = view.getViewById(page,"sideDrawer");
+
     prod = "wrf5";
     output = "gen";
     step = "0";
     hour = "24";
 
     print_data = get_print_data(data);
+
+    _data = new Date(anno, mese-1, giorno);
+    pageData.set("date_pick", _data);
+    pageData.set("minDate", new Date(2018, 0, 29));
+    pageData.set("maxDate", new Date(2030, 4, 12));
 
     pageData.set("data", print_data);
 
@@ -190,7 +199,7 @@ exports.dropDownSelectedIndexChanged2 = function (args) {
     if(step == '1') {
         pageData.set("hours_visibility", "visible");
         hour = "24";
-        pageData.set("hint_hours", "24");
+        pageData.set("hint_hours", "1 giorno");
     }
     else {
         pageData.set("hours_visibility", "collapsed");
@@ -799,9 +808,10 @@ function print_map(id, prod, output, data)
                 else if(output == "crh")
                 {
                     pageData.set("colorbar1_visible", "visible");
-                    pageData.set("colorbar2_visible", "collapsed");
+                    pageData.set("colorbar2_visible", "visible");
                     pageData.set("colorbar3_visible", "collapsed");
                     pageData.set("colorbar1", "~/images/colorbar/bar_nuvole.png");
+                    pageData.set("colorbar2", "~/images/colorbar/bar_pioggia.png");
                 }
                 else if(output == "crd")
                 {
@@ -1014,18 +1024,35 @@ function onTapNext()
 {
     if((parseInt(ora)+1) >23)
     {
-        ora =0;
+        ora = "00";
+        var endDate = _data.setDate(_data.getDate() + 1);
+        _data = new Date(endDate);
+        console.log("DATA: " + _data);
+
+        anno = _data.getUTCFullYear();
+        mese = _data.getUTCMonth() + 1;
+        if(mese < 10)
+            mese = "0" + mese;
+        giorno = _data.getDate();
+        if(giorno < 10)
+            giorno = "0" + giorno;
+        data = anno+""+mese+""+giorno+"Z"+ora+"00";
+        console.log("Data: " + data);
     }
     else
+    {
         ora++;
 
-    if(ora < 10)
-        ora = "0" + ora;
+        if(ora < 10)
+            ora = "0" + ora;
 
-    data = anno+""+mese+""+giorno+"Z"+ora+"00";
+        data = anno+""+mese+""+giorno+"Z"+ora+"00";
+        console.log("Data: " + data);
+    }
 
     pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
 
+    print_meteo(id, data);
     print_map(id, prod, output, data);
 }
 exports.onTapNext = onTapNext;
@@ -1034,18 +1061,86 @@ function onTapBack()
 {
     if((parseInt(ora)-1) < 0)
     {
-        ora = 23;
+        ora = "23";
+        var endDate = _data.setDate(_data.getDate() - 1);
+        _data = new Date(endDate);
+        console.log(_data);
+
+        anno =_data.getUTCFullYear();
+        mese = _data.getUTCMonth() + 1;
+        if(mese < 10)
+            mese = "0" + mese;
+        giorno = _data.getDate();
+        if(giorno < 10)
+            giorno = "0" + giorno;
+        data = anno+""+mese+""+giorno+"Z"+ora+"00";
+        console.log("Data: " + data);
     }
     else
+    {
         ora--;
 
-    if(ora < 10)
-        ora = "0" + ora;
+        if(ora < 10)
+            ora = "0" + ora;
 
-    data = anno+""+mese+""+giorno+"Z"+ora+"00";
+        data = anno+""+mese+""+giorno+"Z"+ora+"00";
+        console.log("Data: " + data);
+    }
 
     pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
 
+    print_meteo(id, data);
     print_map(id, prod, output, data);
 }
 exports.onTapBack = onTapBack;
+
+exports.toggleDrawer = function() {
+    drawer.toggleDrawerState();
+};
+
+function onDatePickerLoaded(args)
+{
+    const datePicker = args.object;
+    datePicker.on("dayChange", (args) => {
+        console.log("Giorno cambiato: " + args.value);
+        data = " ";
+        if (args.value < 10)
+            giorno = "0"+args.value;
+        else
+            giorno = args.value;
+
+        _data = new Date(anno, mese-1, giorno);
+        data = anno+""+mese+""+giorno+"Z"+ora+"00";
+
+        pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
+        print_meteo(id, data);
+        print_map(id, prod, output, data);
+    });
+
+    datePicker.on("monthChange", (args) => {
+        console.log("Mese cambiato");
+        data = " ";
+        if (args.value < 10)
+            mese = "0"+args.value;
+        else
+            mese = args.value;
+        _data = new Date(anno, mese-1, giorno);
+        data = anno+""+mese+""+giorno+"Z"+ora+"00";
+
+        pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
+        print_meteo(id, data);
+        print_map(id, prod, output, data);
+    });
+
+    datePicker.on("yearChange", (args) => {
+        data = "";
+        anno = args.value;
+        _data = new Date(anno, mese-1, giorno);
+        data = anno+""+mese+""+giorno+"Z"+ora+"00";
+
+        pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
+        print_meteo(id, data);
+        print_map(id, prod, output, data);
+    });
+}
+exports.onDatePickerLoaded = onDatePickerLoaded;
