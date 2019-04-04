@@ -529,9 +529,8 @@ function onTapNext()
     data = new Date(endDate);
     console.log("DATA: " + data);
 
-
-    anno = data.getUTCFullYear();
-    mese = data.getUTCMonth() + 1;
+    anno = data.getFullYear();
+    mese = data.getMonth() + 1;
     if(mese < 10)
       mese = "0" + mese;
     giorno = data.getDate();
@@ -612,8 +611,8 @@ function onTapBack()
     data = new Date(endDate);
     console.log(data);
 
-    anno = data.getUTCFullYear();
-    mese = data.getUTCMonth() + 1;
+    anno = data.getFullYear();
+    mese = data.getMonth() + 1;
     if(mese < 10)
       mese = "0" + mese;
     giorno = data.getDate();

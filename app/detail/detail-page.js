@@ -1029,8 +1029,8 @@ function onTapNext()
         _data = new Date(endDate);
         console.log("DATA: " + _data);
 
-        anno = _data.getUTCFullYear();
-        mese = _data.getUTCMonth() + 1;
+        anno =_data.getFullYear();
+        mese = _data.getMonth() + 1;
         if(mese < 10)
             mese = "0" + mese;
         giorno = _data.getDate();
@@ -1065,8 +1065,8 @@ function onTapBack()
         _data = new Date(endDate);
         console.log(_data);
 
-        anno =_data.getUTCFullYear();
-        mese = _data.getUTCMonth() + 1;
+        anno =_data.getFullYear();
+        mese = _data.getMonth() + 1;
         if(mese < 10)
             mese = "0" + mese;
         giorno = _data.getDate();
