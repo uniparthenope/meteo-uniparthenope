@@ -529,11 +529,12 @@ function onTapNext()
     data = new Date(endDate);
     console.log("DATA: " + data);
 
+
     anno = data.getUTCFullYear();
     mese = data.getUTCMonth() + 1;
     if(mese < 10)
       mese = "0" + mese;
-    giorno = data.getUTCDate();
+    giorno = data.getDate();
     if(giorno < 10)
       giorno = "0" + giorno;
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
@@ -615,7 +616,7 @@ function onTapBack()
     mese = data.getUTCMonth() + 1;
     if(mese < 10)
       mese = "0" + mese;
-    giorno = data.getUTCDate();
+    giorno = data.getDate();
     if(giorno < 10)
       giorno = "0" + giorno;
     currData = anno+""+mese+""+giorno+"Z"+ora+"00";
