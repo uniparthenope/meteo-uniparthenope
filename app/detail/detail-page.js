@@ -138,7 +138,7 @@ function get_print_data(data)
     giorno = data.substring(6,8);
     ora = data.substring(9,11);
 
-    data_final = anno + "/" + mese + "/" + giorno + " " + ora + ":00";
+    data_final = giorno + "/" + mese + "/" + anno + " " + ora + ":00";
     return data_final;
 }
 
@@ -1050,8 +1050,7 @@ function onTapNext()
         console.log("Data: " + data);
     }
 
-    pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
-
+    pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
     print_meteo(id, data);
     print_map(id, prod, output, data);
 }
@@ -1087,8 +1086,7 @@ function onTapBack()
         console.log("Data: " + data);
     }
 
-    pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
-
+    pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
     print_meteo(id, data);
     print_map(id, prod, output, data);
 }
@@ -1112,7 +1110,7 @@ function onDatePickerLoaded(args)
         _data = new Date(anno, mese-1, giorno);
         data = anno+""+mese+""+giorno+"Z"+ora+"00";
 
-        pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
+        pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
         print_meteo(id, data);
         print_map(id, prod, output, data);
     });
@@ -1127,7 +1125,7 @@ function onDatePickerLoaded(args)
         _data = new Date(anno, mese-1, giorno);
         data = anno+""+mese+""+giorno+"Z"+ora+"00";
 
-        pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
+        pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
         print_meteo(id, data);
         print_map(id, prod, output, data);
     });
@@ -1138,7 +1136,7 @@ function onDatePickerLoaded(args)
         _data = new Date(anno, mese-1, giorno);
         data = anno+""+mese+""+giorno+"Z"+ora+"00";
 
-        pageData.set("data", anno+"/"+mese+"/"+giorno+" "+ora+":00");
+        pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
         print_meteo(id, data);
         print_map(id, prod, output, data);
     });

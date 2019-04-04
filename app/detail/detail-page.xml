@@ -70,7 +70,6 @@
                     <ScrollView orientation="vertical">
                     <StackLayout class="white_background_border" marginTop="20" visibility="{{ table_android }}">
                         <FlexboxLayout flexDirection="row">
-                            <!-- Use even flexGrow to achieve uniform grid -->
                             <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
                             <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
                                 <Label text="T Min"/>
