@@ -80,7 +80,7 @@ exports.pageLoaded = function(args)
 
   if(contatore == 1) {
     data = new Date();
-    ora = data.getUTCHours();
+    ora = data.getHours();
     if (ora < 10)
       ora = '0' + ora;
     mese = data.getUTCMonth() + 1;
