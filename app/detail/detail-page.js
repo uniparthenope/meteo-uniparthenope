@@ -12,6 +12,7 @@ var imageSource = require("image-source");
 require("nativescript-accordion");
 const platformModule = require("tns-core-modules/platform");
 const http = require("http");
+var nativescript_webview_interface_1 = require("nativescript-webview-interface");
 
 var drawer;
 var press;
@@ -46,6 +47,7 @@ var _data;
 
 function pageLoaded(args) {
     var page = args.object;
+    setupWebViewInterface(page);
     temp = new ObservableArray();
     press = new ObservableArray();
     single_item = new ObservableArray();
@@ -69,22 +71,21 @@ function pageLoaded(args) {
     });
     pageData.set("isBusy", true);//Load animation
     pageData.set("isHeigh", "25");
-    pageData.set("isBusy_graphic", true);//Load animation
-    pageData.set("isHeigh_graphic", "25");
     pageData.set("isBusy1", true);//Load animation
     pageData.set("isHeigh1", "25");
     pageData.set("isBusy_graphic1", true);//Load animation
     pageData.set("isHeigh_graphic1", "25");
-    pageData.set("isBusy_meteo", true);//Load animation
+    pageData.set("isBusy_meteo", true);
     pageData.set("isHeigh_meteo", "25");
-    pageData.set("isBusy_map", true);//Load animation
+    pageData.set("isBusy_map", true);
     pageData.set("isHeigh_map", "25");
     pageData.set("table_ios", "collapsed");
     pageData.set("table_android", "collapsed");
-    pageData.set("graphic", "collapsed");
-    pageData.set("graphic1", "collapsed");
     pageData.set("meteo", "collapsed");
     pageData.set("_map", "collapsed");
+    pageData.set("graphic", "collapsed");
+    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isHeigh_graphic", "25");
     pageData.set("hours_visibility", "visible");
     pageData.set("colorbar1_visible", "collapsed");
     pageData.set("colorbar2_visible", "collapsed");
@@ -100,6 +101,10 @@ function pageLoaded(args) {
     output = "gen";
     step = "0";
     hour = "24";
+
+    setTimeout(function () {
+        oLangWebViewInterface.emit("lingua", {lingua:platformModule.device.language});
+    }, 900);
 
     print_data = get_print_data(data);
 
@@ -174,6 +179,10 @@ exports.dropDownSelectedIndexChanged = function (args) {
     single_item.splice(0);
     temp.splice(0);
     press.splice(0);
+
+    pageData.set("graphic", "collapsed");
+    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isHeigh_graphic", "25");
     print_chart(id, prod, output, hour, step);
 
     console.log(prod + " " + output);
@@ -187,6 +196,10 @@ exports.dropDownSelectedIndexChanged1 = function (args) {
     single_item.splice(0);
     temp.splice(0);
     press.splice(0);
+
+    pageData.set("graphic", "collapsed");
+    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isHeigh_graphic", "25");
     print_chart(id, prod, output, hour, step);
 
     console.log(prod + " " + output);
@@ -209,6 +222,10 @@ exports.dropDownSelectedIndexChanged2 = function (args) {
     single_item.splice(0);
     temp.splice(0);
     press.splice(0);
+
+    pageData.set("graphic", "collapsed");
+    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isHeigh_graphic", "25");
     print_chart(id, prod, output, hour, step);
 };
 
@@ -219,6 +236,10 @@ exports.dropDownSelectedIndexChanged3 = function (args) {
     single_item.splice(0);
     temp.splice(0);
     press.splice(0);
+
+    pageData.set("graphic", "collapsed");
+    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isHeigh_graphic", "25");
     print_chart(id, prod, output, hour, step);
 };
 
@@ -272,203 +293,12 @@ function monthOfYear(date) {
         return isNaN(month) ? null : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month];
 };
 
-function print_chart(place, product, output, hour, step)
+
+function print_chart(id, prod, output, hour, step)
 {
-    let url = "https://api.meteo.uniparthenope.it/products/" + product + "/timeseries/" + place + "?hours=" + hour +"&step=" + step;
-    console.log(url);
-
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            var timeSeries=data['timeseries'];
-            for (var i = 0; i < timeSeries.length; i++) {
-                let date=timeSeries[i].dateTime;
-                let month = date.substring(4, 6);
-                let day = date.substring(6, 8);
-                let ora = date.substring(9,11);
-                let sDateTime=month + "-" + day + "H" + ora;
-
-                if(product == 'wrf5')
-                {
-                    if(output == 'gen' || output == 'tsp')
-                    {
-                        if(platformModule.device.language == 'it')
-                        {
-                            pageData.set("title_1", "Temperatura (°C)");
-                            pageData.set("title_2", "Pressione (hPa)");
-                        }
-                        else
-                        {
-                            pageData.set("title_1", "Temperature (°C)");
-                            pageData.set("title_2", "Pressure (hPa)");
-                        }
-
-                        temp.push({key: sDateTime, val: (timeSeries[i].t2c)});
-                        press.push({key: sDateTime, val: (timeSeries[i].slp)});
-                        pageData.set("isBusy_graphic", false);
-                        pageData.set("isHeigh_graphic", "0");
-                        pageData.set("graphic", "visible");
-                        pageData.set("isBusy_graphic1", false);
-                        pageData.set("isHeigh_graphic1", "0");
-                        pageData.set("graphic1", "collapsed");
-                    }
-                    else if(output == 'wn1')
-                    {
-                        if(platformModule.device.language == 'it')
-                        {
-                            pageData.set("title_1", "Velocità vento 10m (knt)");
-                            pageData.set("title_2", "Velocità vento 10m (°N)");
-                        }
-                        else
-                        {
-                            pageData.set("title_1", "Wind Speed 10m (knt)");
-                            pageData.set("title_2", "Wind Speed 10m (°N)");
-                        }
-
-                        temp.push({key: sDateTime, val: (timeSeries[i].ws10n)});
-                        press.push({key: sDateTime, val: (timeSeries[i].wd10)});
-                        pageData.set("isBusy_graphic", false);
-                        pageData.set("isHeigh_graphic", "0");
-                        pageData.set("graphic", "visible");
-                        pageData.set("isBusy_graphic1", false);
-                        pageData.set("isHeigh_graphic1", "0");
-                        pageData.set("graphic1", "collapsed");
-                    }
-                    else if(output == 'crh')
-                    {
-                        if(platformModule.device.language == 'it')
-                        {
-                            pageData.set("title_1", "Pioggia (mm)");
-                            pageData.set("title_2", "Nuvolosità (%)");
-                        }
-                        else
-                        {
-                            pageData.set("title_1", "Rain (mm)");
-                            pageData.set("title_2", "Cloudiness (%)");
-                        }
-
-                        temp.push({key: sDateTime, val: (timeSeries[i].crh)});
-                        press.push({key: sDateTime, val: (timeSeries[i].clf * 100).toFixed(2)});
-                        pageData.set("isBusy_graphic", false);
-                        pageData.set("isHeigh_graphic", "0");
-                        pageData.set("graphic", "visible");
-                        pageData.set("isBusy_graphic1", false);
-                        pageData.set("isHeigh_graphic1", "0");
-                        pageData.set("graphic1", "collapsed");
-                    }
-                }
-                else if(product == 'rms3')
-                {
-                    if(output == 'gen' || output == 'scu')
-                    {
-                        if(platformModule.device.language == 'it')
-                        {
-                            pageData.set("title_1", "Corrente superficiale (m/s)");
-                            pageData.set("title_2", "Direzione corrente superficiale (°N)");
-                        }
-                        else
-                        {
-                            pageData.set("title_1", "Sea surface current (mm)");
-                            pageData.set("title_2", "Sea surface current direction (%)");
-                        }
-
-                        temp.push({key: sDateTime, val: (timeSeries[i].scm)});
-                        press.push({key: sDateTime, val: (timeSeries[i].scd)});
-                        pageData.set("isBusy_graphic", false);
-                        pageData.set("isHeigh_graphic", "0");
-                        pageData.set("graphic", "visible");
-                        pageData.set("isBusy_graphic1", false);
-                        pageData.set("isHeigh_graphic1", "0");
-                        pageData.set("graphic1", "collapsed");
-                    }
-                    else if(output == 'sts')
-                    {
-                        if(platformModule.device.language == 'it')
-                        {
-                            pageData.set("title_1", "Temperatura superficiale (°C)");
-                            pageData.set("title_2", "Salinità superficiale (1/1000)");
-                        }
-                        else
-                        {
-                            pageData.set("title_1", "Sea surface temperature (°C)");
-                            pageData.set("title_2", "Sea surface salinity (1/1000)");
-                        }
-
-                        temp.push({key: sDateTime, val: (timeSeries[i].sst)});
-                        press.push({key: sDateTime, val: (timeSeries[i].sss)});
-                        pageData.set("isBusy_graphic", false);
-                        pageData.set("isHeigh_graphic", "0");
-                        pageData.set("graphic", "visible");
-                        pageData.set("isBusy_graphic1", false);
-                        pageData.set("isHeigh_graphic1", "0");
-                        pageData.set("graphic1", "collapsed");
-                    }
-                    else if(output == 'sss')
-                    {
-                        if(platformModule.device.language == 'it')
-                        {
-                            pageData.set("title_s", "Salinità superficiale");
-                        }
-                        else
-                        {
-                            pageData.set("title_s", "Sea surface salinity");
-                        }
-
-                        pageData.set("graphic", "collapsed");
-                        single_item.push({key: sDateTime, val: (timeSeries[i].sss)});
-                        pageData.set("isBusy_graphic1", false);
-                        pageData.set("isHeigh_graphic1", "0");
-                        pageData.set("graphic1", "visible");
-                        pageData.set("isBusy_graphic", false);
-                        pageData.set("isHeigh_graphic", "0");
-                        pageData.set("graphic", "collapsed");
-                    }
-                    else if(output == "sst")
-                    {
-                        if(platformModule.device.language == 'it')
-                        {
-                            pageData.set("title_s", "Temperatura superficiale");
-                        }
-                        else
-                        {
-                            pageData.set("title_s", "Sea surface temperature");
-                        }
-
-                        single_item.push({key: sDateTime, val: (timeSeries[i].sst)});
-                        pageData.set("isBusy_graphic1", false);
-                        pageData.set("isHeigh_graphic1", "0");
-                        pageData.set("graphic1", "visible");
-                        pageData.set("isBusy_graphic", false);
-                        pageData.set("isHeigh_graphic", "0");
-                        pageData.set("graphic", "collapsed");
-                    }
-                }
-                else if(product == 'wcm3')
-                {
-                    if(output == 'gen' || output == 'con')
-                    {
-                        if(platformModule.device.language == 'it')
-                        {
-                            pageData.set("title_s", "Concentrazione particelle");
-                        }
-                        else
-                        {
-                            pageData.set("title_s", "Concentration of particles");
-                        }
-
-                        single_item.push({key: sDateTime, val: timeSeries[i].con});
-                        pageData.set("isBusy_graphic1", false);
-                        pageData.set("isHeigh_graphic1", "0");
-                        pageData.set("graphic1", "visible");
-                        pageData.set("isBusy_graphic", false);
-                        pageData.set("isHeigh_graphic", "0");
-                        pageData.set("graphic", "collapsed");
-                    }
-                }
-            }
-        }).catch(error => console.error("[GRAFICO] ERROR DATA ", error));
-
-    return;
+    setTimeout(function () {
+        oLangWebViewInterface.emit("chart", {prod: prod, place:id, hours:hour, step:step, output:output});
+    }, 900);
 }
 
 function print_meteo(id, data)
@@ -1142,3 +972,25 @@ function onDatePickerLoaded(args)
     });
 }
 exports.onDatePickerLoaded = onDatePickerLoaded;
+
+var oLangWebViewInterface;
+function setupWebViewInterface(page)
+{
+    var webView = page.getViewById('webView');
+    oLangWebViewInterface = new nativescript_webview_interface_1.WebViewInterface(webView, '~/www/chart.html');
+    listenLangWebViewEvents();
+}
+
+function listenLangWebViewEvents()
+{
+    oLangWebViewInterface.on('load_chart', function(eventData)
+    {
+       console.log(eventData.status);
+       if(eventData.status === "OK")
+       {
+           pageData.set("graphic", "visible");
+           pageData.set("isBusy_graphic", false);
+           pageData.set("isHeigh_graphic", "0");
+       }
+    });
+}

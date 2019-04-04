@@ -239,104 +239,13 @@
                                          selectedIndexChanged="dropDownSelectedIndexChanged3"
                                          row="0" colSpan="2" />
                         </StackLayout>
-
-                        <ActivityIndicator  class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
-                        <chart:RadCartesianChart height="350" marginTop="20" seriesSelectionMode="Multiple" visibility="{{ graphic }}">
-                            <chart:RadCartesianChart.series>
-                                <chart:BarSeries
-                                        seriesName="1"
-                                        legendTitle="{{ title_1 }}"
-                                        items="{{ temp }}"
-                                        categoryProperty="key"
-                                        valueProperty="val"
-                                        showLabels="false">
-                                    <chart:BarSeries.labelStyle>
-                                        <chart:BarSeriesStyle margin="10" fontStyle="Bold"/>
-                                    </chart:BarSeries.labelStyle>
-                                    <chart:BarSeries.horizontalAxis>
-                                        <chart:CategoricalAxis labelFitMode="Rotate"  height="0"  labelTextColor="rgba(30,76,117,1)"/>
-                                    </chart:BarSeries.horizontalAxis>
-                                    <chart:BarSeries.verticalAxis>
-                                        <chart:LinearAxis  labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
-                                    </chart:BarSeries.verticalAxis>
-                                </chart:BarSeries>
-                                <chart:LineSeries
-                                        seriesName="2"
-                                        legendTitle="{{ title_2 }}"
-                                        items="{{ press }}"
-                                        categoryProperty="key"
-                                        valueProperty="val"
-                                        showLabels="false">
-                                    <chart:LineSeries.labelStyle>
-                                        <chart:LineSeriesStyle margin="10" fontStyle="Bold"/>
-                                    </chart:LineSeries.labelStyle>
-                                    <chart:LineSeries.horizontalAxis>
-                                        <chart:CategoricalAxis labelFitMode="Rotate" height="0" hidden="true" verticalLocation="Down" zPosition="0"/>
-                                    </chart:LineSeries.horizontalAxis>
-                                    <chart:LineSeries.verticalAxis>
-                                        <chart:LinearAxis horizontalLocation="Right" labelFormat="%.0f" labelTextColor="rgba(30,76,117,1)"/>
-                                    </chart:LineSeries.verticalAxis>
-                                </chart:LineSeries>
-                            </chart:RadCartesianChart.series>
-
-                            <chart:RadCartesianChart.legend>
-                                <chart:RadLegendView position="Top" enableSelection="true"/>
-                            </chart:RadCartesianChart.legend>
-
-                            <chart:RadCartesianChart.palettes>
-                                <chart:Palette seriesName="1">
-                                    <chart:Palette.entries>
-                                        <chart:PaletteEntry fillColor="rgba(117,145,167,1)" strokeColor="rgba(117,145,167,1)"/>
-                                    </chart:Palette.entries>
-                                </chart:Palette>
-
-                                <chart:Palette seriesName="2">
-                                    <chart:Palette.entries>
-                                        <chart:PaletteEntry
-                                                android:fillColor="rgba(30,76,117,1)"
-                                                ios:fillColor="rgba(30,76,117,1)"
-                                                strokeColor="rgba(30,76,117,1)" strokeWidth="3"
-                                                android:strokeWidth="6" />
-                                    </chart:Palette.entries>
-                                </chart:Palette>
-                            </chart:RadCartesianChart.palettes>
-                        </chart:RadCartesianChart>
                     </StackLayout>
 
-                    <ActivityIndicator  class="activity-indicator" busy="{{ isBusy_graphic1 }}" height="{{isHeigh_graphic1}}" />
-                    <chart:RadCartesianChart height="350" marginTop="20" visibility="{{ graphic1 }}">
-                        <chart:RadCartesianChart.series>
-                            <chart:BarSeries
-                                    seriesName="1"
-                                    legendTitle="{{ title_s }}"
-                                    items="{{ single_item }}"
-                                    categoryProperty="key"
-                                    valueProperty="val"
-                                    showLabels="false">
-                                <chart:BarSeries.labelStyle>
-                                    <chart:BarSeriesStyle margin="10" fontStyle="Bold"/>
-                                </chart:BarSeries.labelStyle>
-                                <chart:BarSeries.horizontalAxis>
-                                    <chart:CategoricalAxis labelFitMode="Rotate"  height="0" labelTextColor="rgba(30,76,117,1)"/>
-                                </chart:BarSeries.horizontalAxis>
-                                <chart:BarSeries.verticalAxis>
-                                    <chart:LinearAxis  labelFormat="%.00f" labelTextColor="rgba(30,76,117,1)"/>
-                                </chart:BarSeries.verticalAxis>
-                            </chart:BarSeries>
-                        </chart:RadCartesianChart.series>
+                    <ActivityIndicator class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
+                    <ContentView class="map" visibility="{{ graphic }}">
+                        <web-view id="webView"></web-view>
+                    </ContentView>
 
-                        <chart:RadCartesianChart.legend>
-                            <chart:RadLegendView position="Top" enableSelection="true"/>
-                        </chart:RadCartesianChart.legend>
-
-                        <chart:RadCartesianChart.palettes>
-                            <chart:Palette seriesName="1">
-                                <chart:Palette.entries>
-                                    <chart:PaletteEntry fillColor="rgba(117,145,167,1)" strokeColor="rgba(117,145,167,1)"/>
-                                </chart:Palette.entries>
-                            </chart:Palette>
-                        </chart:RadCartesianChart.palettes>
-                    </chart:RadCartesianChart>
                 </StackLayout>
             </ui:NestedScrollView>
         </sd:RadSideDrawer.mainContent>
