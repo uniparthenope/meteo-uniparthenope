@@ -21,6 +21,7 @@
                         <Image src="~/images/star_pref.png" height="18" marginLeft="5" horizontalAlignment="center"></Image>
                     </StackLayout>
                     <ListView
+                            rowHeight="50"
                             marginBottom="20"
                             itemTap="onItemTap"
                             height="{{ heigt_pref }}"

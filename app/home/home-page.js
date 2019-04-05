@@ -991,8 +991,8 @@ exports.onTapStar = function()
     myPref.splice(0);
     for(var i=0; i<preferiti.length; i++)
       myPref.push({"title": preferiti[i], id: myPref.length});
+    home.set("heigt_pref", 50*preferiti.length);
   }
-  home.set("heigt_pref", 50*preferiti.length);
 };
 
 
@@ -1113,6 +1113,7 @@ exports.remove = function (args) {
       myPref.splice(0);
       for(var i=0; i<preferiti.length; i++)
         myPref.push({"title": preferiti[i], id: myPref.length});
+      home.set("heigt_pref", 50*preferiti.length);
 
       if(place === place_selected && home.get("pref") === "visible") {
         home.set("pref", "collapsed");
