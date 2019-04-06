@@ -36,6 +36,7 @@ var homeViewModel = new HomeViewModel();
 var url_api = "https://api.meteo.uniparthenope.it/";
 var preferiti;
 var myPref = new ObservableArray();
+var application = require("application");
 
 function setupWebViewInterface(page)
 {
@@ -83,21 +84,21 @@ exports.pageLoaded = function(args)
     ora = data.getHours();
     if (ora < 10)
       ora = '0' + ora;
-    mese = data.getUTCMonth() + 1;
+    mese = data.getMonth() + 1;
     if (mese < 10)
       mese = '0' + mese;
-    giorno = data.getUTCDate();
+    giorno = data.getDate();
     if (giorno < 10)
       giorno = '0' + giorno;
-    anno = data.getUTCFullYear();
+    anno = data.getFullYear();
     home.set("date_pick", data);
     home.set("minDate", new Date(2018, 0, 29));
     home.set("maxDate", new Date(2030, 4, 12));
 
     if(platformModule.device.language == 'it')
-      print_data = nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
+      print_data = nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
     else
-      print_data = name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
+      print_data = name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log(print_data);
@@ -112,9 +113,9 @@ exports.pageLoaded = function(args)
     home.set("maxDate", new Date(2030, 4, 12));
 
     if(platformModule.device.language == 'it')
-      print_data = nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
+      print_data = nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
     else
-      print_data = name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
+      print_data = name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log(print_data);
@@ -364,9 +365,9 @@ function onDatePickerLoaded(args)
     data = new Date(anno, mese-1, giorno);
 
     if(platformModule.device.language == 'it')
-      home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
+      home.set("data", nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
     else
-      home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
+      home.set("data", name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
     oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 
@@ -421,9 +422,9 @@ function onDatePickerLoaded(args)
     data = new Date(anno, mese-1, giorno);
 
     if(platformModule.device.language == 'it')
-      home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
+      home.set("data", nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
     else
-      home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
+      home.set("data", name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
     oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
     oLangWebViewInterface.emit('new_data', {data:currData});
@@ -472,9 +473,9 @@ function onDatePickerLoaded(args)
     data = new Date(anno, mese-1, giorno);
 
     if(platformModule.device.language == 'it')
-      home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
+      home.set("data", nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
     else
-      home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
+      home.set("data", name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
     oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 
@@ -555,9 +556,9 @@ function onTapNext()
   }
 
   if(platformModule.device.language == 'it')
-    home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
+    home.set("data", nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
   else
-    home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
+    home.set("data", name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
   oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 
@@ -637,9 +638,9 @@ function onTapBack()
   }
 
   if(platformModule.device.language == 'it')
-    home.set("data", nome_giorno[data.getUTCDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
+    home.set("data", nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
   else
-    home.set("data", name_day[data.getUTCDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
+    home.set("data", name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
   oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
 

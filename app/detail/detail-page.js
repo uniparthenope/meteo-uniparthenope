@@ -44,6 +44,7 @@ let mesi = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott"
 var items;
 let altezza;
 var _data;
+var application = require("application");
 
 function pageLoaded(args) {
     var page = args.object;
