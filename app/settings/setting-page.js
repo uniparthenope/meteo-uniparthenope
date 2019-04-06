@@ -43,31 +43,6 @@ function pageLoaded(args)
         }
     });
 
-    //setting.set("gpsSelection", press);
-    setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
-    {
-        if (propertyChangeData.propertyName === "gpsSelection")
-        {
-            if (propertyChangeData.value == 1)
-            {
-                const promptOptions = {
-                    title: "SignalK",
-                    message: "Inserire URL server",
-                    okButtonText: "Ok",
-                    cancelButtonText: "Cancel",
-                    defaultText: "URL",
-                    inputType: "text",
-                    capitalizationType: "sentences"
-                };
-                prompt(promptOptions).then((r) => {
-                    console.log("Dialog result: ", r.result);
-                    console.log("Text: ", r.text);
-                });
-            }
-
-        }
-    });
-
     page.bindingContext = setting;
 }
 
