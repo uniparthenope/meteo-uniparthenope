@@ -8,14 +8,25 @@ global.global_id = " ";
 
 application.run({ moduleName: "app-root" });
 
-application.on(application.suspendEvent, (args) => {
+application.on(application.exitEvent, (args) => {
     if (args.android) {
         contatore = 0;
         global_id = " ";
-        console.log("Activity: " + args.android);
+        console.log("Exit: " + args.android);
     } else if (args.ios) {
         contatore = 0;
         global_id = " ";
-        console.log("UIApplication: " + args.ios);
+        console.log("Exit: " + args.ios);
+    }
+});
+
+
+application.on(application.suspendEvent, (args) => {
+    if (args.android) {
+        contatore = 1;
+        console.log("Suspend: " + args.android);
+    } else if (args.ios) {
+        contatore = 1;
+        console.log("Suspend: " + args.ios);
     }
 });

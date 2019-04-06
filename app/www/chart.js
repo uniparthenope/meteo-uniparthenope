@@ -658,6 +658,9 @@ oWebViewInterface1.on("chart", function (cor) {
     }
 
     var options= {
+        credits: {
+            enabled: false
+        },
         animationEnabled: true,
         theme: "light2",
         title: {
