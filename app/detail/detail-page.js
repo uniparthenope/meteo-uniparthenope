@@ -13,6 +13,7 @@ require("nativescript-accordion");
 const platformModule = require("tns-core-modules/platform");
 const http = require("http");
 var nativescript_webview_interface_1 = require("nativescript-webview-interface");
+var image_zoom = require("nativescript-image-zoom").ImageZoom;
 
 var drawer;
 var press;
@@ -618,9 +619,32 @@ exports.tap = function (args)
     }
 };
 
+function getDataCache() {
+    var curr = new Date();
+    var cache_data = " ";
+    var a = curr.getFullYear();
+    var m = curr.getMonth();
+    if(m < 10)
+        m = "0" + m;
+    var g = curr.getDate();
+    if(g < 10)
+        g = "0" + g;
+    var h = curr.getHours();
+    if(h < 10)
+        h = "0" + h;
+
+    cache_data = a + "" + m + "" + g + "Z" + h;
+
+    return cache_data;
+}
+
 function print_map(id, prod, output, data)
 {
-    var url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output;
+    var curr_data = getDataCache();
+    console.log("DATA CACHE: ", curr_data);
+
+    var url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output + "&rand=" + curr_data;
+    console.log("MAP: " + url_map);
 
     imageSource.fromUrl(url_map)
         .then(function () {

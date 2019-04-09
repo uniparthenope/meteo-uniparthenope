@@ -212,6 +212,25 @@ var baseLayers = {
     "Open Street Map": osmLayer
 };
 
+function getDataCache() {
+    var curr = new Date();
+    var cache_data = " ";
+    var a = curr.getFullYear();
+    var m = curr.getMonth();
+    if(m < 10)
+        m = "0" + m;
+    var g = curr.getDate();
+    if(g < 10)
+        g = "0" + g;
+    var h = curr.getHours();
+    if(h < 10)
+        h = "0" + h;
+
+    cache_data = a + "" + m + "" + g + "Z" + h;
+
+    return cache_data;
+}
+
 function get_beaufort(nodi)
 {
     if(nodi < 1)
@@ -297,7 +316,9 @@ function change_domain(bounds)
 }
 
 function addInfoLayer() {
-    var geojsonURL = url_api + 'apps/owm/wrf5/' + prefix + '/{z}/{x}/{y}.geojson?date=' + currData;
+    var dataCache = getDataCache();
+
+    var geojsonURL = url_api + 'apps/owm/wrf5/' + prefix + '/{z}/{x}/{y}.geojson?date=' + currData + "&rnad=" + dataCache;
 
     if (infoLayer != null) {
         controlLayers.removeLayer(infoLayer);
@@ -476,7 +497,8 @@ function onClick()
 
 function addWindLayer()
 {
-    let url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData;
+    var dataCache = getDataCache();
+    let url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData + "&rand=" + dataCache;
 
     fetch(url_wind).then((response) => response.json()).then((data) =>
     {
@@ -526,7 +548,9 @@ function addCloudLayer() {
         map.removeLayer(cloudLayer);
     }
 
+    var dataCache = getDataCache();
     let url_cloud = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+    console.log("URL NUVOLE: " + url_cloud);
 
     cloudLayer = L.tileLayer.wms(url_cloud, {
             layers: 'CLDFRA_TOTAL',

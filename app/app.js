@@ -1,5 +1,4 @@
 let application = require("tns-core-modules/application");
-var frame = require("ui/frame");
 require('tns-i18n')('en');
 
 global.contatore = 0;
