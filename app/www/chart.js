@@ -422,6 +422,7 @@ oWebViewInterface1.on("chart", function (cor) {
             axisY2 = {
                 title: title2,
                 maximum: 360,
+                minimum:0,
                 interval: 45,
                 includeZero: false,
                 suffix: " °",
@@ -540,6 +541,7 @@ oWebViewInterface1.on("chart", function (cor) {
             axisY2 = {
                 title: title2,
                 maximum: 360,
+                minimum:0,
                 interval: 45,
                 includeZero: false,
                 suffix: " °",
