@@ -112,8 +112,8 @@ function pageLoaded(args) {
 
     _data = new Date(anno, mese-1, giorno);
     pageData.set("date_pick", _data);
-    pageData.set("minDate", new Date(2018, 0, 29));
-    pageData.set("maxDate", new Date(2030, 4, 12));
+    pageData.set("minDate", new Date(2018, 0, 1));
+    pageData.set("maxDate", max_data);
 
     pageData.set("data", print_data);
 
@@ -891,6 +891,9 @@ function print_hours()
 
 function onTapNext()
 {
+    if(_data > max_data)
+        return;
+
     if((parseInt(ora)+1) >23)
     {
         ora = "00";

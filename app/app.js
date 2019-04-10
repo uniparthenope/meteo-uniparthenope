@@ -4,6 +4,8 @@ require('tns-i18n')('en');
 global.contatore = 0;
 global.place_selected = "";
 global.global_id = " ";
+global.global_data = " ";
+global.max_data = " ";
 
 application.run({ moduleName: "app-root" });
 
