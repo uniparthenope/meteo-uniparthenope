@@ -1,4 +1,4 @@
-<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:chart="nativescript-ui-chart" xmlns:dd="nativescript-drop-down" xmlns:accordion="nativescript-accordion" xmlns:ui="nativescript-nested-scrollview" xmlns:sd="nativescript-ui-sidedrawer">
+<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:dd="nativescript-drop-down" xmlns:accordion="nativescript-accordion" xmlns:ui="nativescript-nested-scrollview" xmlns:sd="nativescript-ui-sidedrawer">
     <ActionBar class="blue_background_action_bar" flat="true">
         <Label text="{{ titolo }}" fontSize="20"></Label>
     </ActionBar>
@@ -242,7 +242,7 @@
                     </StackLayout>
 
                     <ActivityIndicator class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
-                    <ContentView class="map" visibility="{{ graphic }}">
+                    <ContentView class="map" visibility="{{ graphic }}" height="350" width="100%">
                         <web-view id="webView"></web-view>
                     </ContentView>
 

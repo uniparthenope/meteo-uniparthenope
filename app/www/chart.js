@@ -328,7 +328,6 @@ var oWebViewInterface1 = window.nsWebViewInterface;
 var prod;
 var output;
 var place;
-var ncepDate=null;
 var step;
 var hours;
 var lingua;
@@ -338,6 +337,7 @@ oWebViewInterface1.on("lingua", function (cor) {
 });
 
 oWebViewInterface1.on("chart", function (cor) {
+    console.log("QUI");
     prod = cor.prod;
     place = cor.place;
     output = cor.output;
@@ -783,7 +783,7 @@ oWebViewInterface1.on("chart", function (cor) {
             }
             chart.render();
 
-            oWebViewInterface1.emit("load_chart", {status:"OK"});
-
         }).catch(error => console.error("[GRAFICO] ERROR DATA ", error));
+
+    oWebViewInterface1.emit("load_chart", {status:"OK"});
 });

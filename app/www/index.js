@@ -563,7 +563,8 @@ function addCloudLayer() {
             ABOVEMAXCOLOR: "extend",
             BELOWMINCOLOR: "transparent",
             BGCOLOR: "extend",
-            LOGSCALE: "false"
+            LOGSCALE: "false",
+            RAND: dataCache
         }
     );
 
@@ -586,6 +587,7 @@ function addT2CLayer() {
         map.removeLayer(t2cLayer);
     }
 
+    var dataCache = getDataCache();
     let url_temp = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
     t2cLayer = L.tileLayer.wms(url_temp, {
@@ -599,7 +601,8 @@ function addT2CLayer() {
             ABOVEMAXCOLOR: "extend",
             BELOWMINCOLOR: "extend",
             BGCOLOR: "extend",
-            LOGSCALE: "false"
+            LOGSCALE: "false",
+            RAND: dataCache
         }
     );
 
@@ -622,6 +625,7 @@ function addRainLayer() {
         map.removeLayer(rainLayer);
     }
 
+    var dataCache = getDataCache();
     let url_rain = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
     rainLayer = L.tileLayer.wms(url_rain, {
@@ -635,7 +639,8 @@ function addRainLayer() {
             ABOVEMAXCOLOR: "extend",
             BELOWMINCOLOR: "transparent",
             BGCOLOR: "extend",
-            LOGSCALE: "false"
+            LOGSCALE: "false",
+            RAND: dataCache
         }
     );
 
@@ -658,6 +663,7 @@ function addSnowLayer() {
         map.removeLayer(snowLayer);
     }
 
+    var dataCache = getDataCache();
     let url_snow = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
     snowLayer = L.tileLayer.wms(url_snow, {
@@ -671,7 +677,8 @@ function addSnowLayer() {
             ABOVEMAXCOLOR: "extend",
             BELOWMINCOLOR: "transparent",
             BGCOLOR: "extend",
-            LOGSCALE: "false"
+            LOGSCALE: "false",
+            RAND: dataCache
         }
     );
 

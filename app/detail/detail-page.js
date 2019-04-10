@@ -149,11 +149,6 @@ function get_print_data(data)
     return data_final;
 }
 
-exports.childTapped = function(args)
-{
-    console.log("Prova");
-};
-
 exports.dropDownSelectedIndexChanged = function (args) {
     var out = products.getItem(args.object.selectedIndex);
     prod = products_map.get(out);
@@ -214,7 +209,10 @@ exports.dropDownSelectedIndexChanged2 = function (args) {
     if(step == '1') {
         pageData.set("hours_visibility", "visible");
         hour = "24";
-        pageData.set("hint_hours", "1 giorno");
+        if(platformModule.device.language == "it")
+            pageData.set("hint_hours", "1 giorno");
+        else
+            pageData.set("hint_hours", "1 day");
     }
     else {
         pageData.set("hours_visibility", "collapsed");
@@ -788,7 +786,12 @@ function print_prod()
             .map(([k]) => k);
 
         console.log(_prod);
-        pageData.set("hint_prod", _prod);
+
+        if(platformModule.device.language == "it")
+            pageData.set("hint_prod", "Meteo alta risoluzione 7 giorni");
+        else
+            pageData.set("hint_prod", "High resolution weather forecast 7 days");
+        //pageData.set("hint_prod", _prod);
 
         pageData.set("products", products);
     });
@@ -820,7 +823,12 @@ function print_output(prod)
             .map(([k]) => k);
 
         console.log(_out);
-        pageData.set("hint_output", _out);
+
+        if(platformModule.device.language == "it")
+            pageData.set("hint_output", "Visualizzazione generale");
+        else
+            pageData.set("hint_output", "General Forecast");
+        //pageData.set("hint_output", _out);
 
         pageData.set("outputs", outputs);
     });
@@ -847,7 +855,8 @@ function print_steps()
         .map(([k]) => k);
 
     console.log(_out);
-    pageData.set("hint_steps", _out);
+
+    pageData.set("hint_steps", "auto");
 }
 
 function print_hours()
@@ -872,7 +881,12 @@ function print_hours()
     console.log(_out);
 
     pageData.set("hours_visibility", "collapsed");
-    pageData.set("hint_hours", _out);
+
+    if(platformModule.device.language == "it")
+        pageData.set("hint_hours", "1 giorno");
+    else
+        pageData.set("hint_hours", "1 day");
+    //pageData.set("hint_hours", _out);
 };
 
 function onTapNext()
