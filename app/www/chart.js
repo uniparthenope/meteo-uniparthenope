@@ -785,7 +785,7 @@ oWebViewInterface1.on("chart", function (cor) {
             }
             chart.render();
 
-        }).catch(error => console.error("[GRAFICO] ERROR DATA ", error));
+            oWebViewInterface1.emit("load_chart", {status:"OK"});
 
-    oWebViewInterface1.emit("load_chart", {status:"OK"});
+        }).catch(error => console.error("[GRAFICO] ERROR DATA ", error));
 });

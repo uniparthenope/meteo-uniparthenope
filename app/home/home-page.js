@@ -278,7 +278,8 @@ exports.pageLoaded = function(args)
         }, 800);
         console.log("Error: " + (e.message || e));
       });
-    } else {
+    }
+    else {
       fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
         var place = data1.place.long_name.it;
 
