@@ -69,7 +69,7 @@ function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
             views.setTextViewText(temp_name, (data1.timeseries[i]['dateTime']).substring(6,8) + "/" + (data1.timeseries[i]['dateTime']).substring(4,6));
 
             var temp_temp = context.getResources().getIdentifier("@id/tempDay_" + i, "layout", context.getPackageName());
-            views.setTextViewText(temp_temp, data1.timeseries[i]['t2c'] + "°C");
+            views.setTextViewText(temp_temp, data1.timeseries[i]['t2c'] + " °C");
         }
 
         var startAppIntent = new android.content.Intent(context, com.tns.NativeScriptActivity.class); // the activity defined in AndroidManifest
