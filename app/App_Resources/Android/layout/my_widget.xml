@@ -4,6 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:background="#441E4C75"
+              android:gravity="center"
               android:padding="8dip">
 
 
@@ -12,11 +13,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="Boscoreale"
+            android:text="Napoli"
             android:textColor="#ffffff"
-            android:textSize="26dip"
-            android:layout_gravity="center"
-    />
+            android:textSize="22dp"
+            android:layout_gravity="center"/>
 
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                   android:layout_marginBottom="2dip">
 
         <ImageView
-                android:id="@+id/taps_image"
+                android:id="@+id/image_meteo"
                 android:layout_width="50dip"
                 android:layout_height="50dip"
                 android:layout_marginRight="25dip"
@@ -38,18 +38,19 @@
                       android:layout_gravity="center">
 
             <TextView
-
+                    android:id="@+id/temperatura"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="14,2 *C"
+                    android:text=" "
                     android:textColor="#ffffff"
                     android:textSize="18dip"
                     android:layout_gravity="center"
             />
             <TextView
+                    android:id="@+id/dir_vento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="WWS"
+                    android:text=" "
                     android:textColor="#ffffff"
                     android:textSize="14dip"
                     android:layout_gravity="center"
@@ -75,6 +76,7 @@
                       android:orientation="horizontal">
 
             <ImageView
+                    android:id="@+id/imageDay_1"
                     android:layout_width="25dip"
                     android:layout_height="25dip"
                     android:layout_gravity="center"
@@ -85,6 +87,7 @@
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <TextView
+                        android:id="@+id/nameDay_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LUN"
@@ -94,9 +97,9 @@
                         android:layout_gravity="center"
                 />
                 <TextView
+                        android:id="@+id/tempDay_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
@@ -113,6 +116,7 @@
                       android:orientation="horizontal">
 
             <ImageView
+                    android:id="@+id/imageDay_2"
                     android:layout_width="25dip"
                     android:layout_height="25dip"
                     android:layout_gravity="center"
@@ -123,6 +127,7 @@
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <TextView
+                        android:id="@+id/nameDay_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LUN"
@@ -134,7 +139,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:id="@+id/tempDay_2"
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
@@ -150,6 +155,7 @@
                       android:orientation="horizontal">
 
             <ImageView
+                    android:id="@+id/imageDay_3"
                     android:layout_width="25dip"
                     android:layout_height="25dip"
                     android:layout_gravity="center"
@@ -160,6 +166,7 @@
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <TextView
+                        android:id="@+id/nameDay_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LUN"
@@ -171,7 +178,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:id="@+id/tempDay_3"
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
@@ -188,6 +195,7 @@
                       android:orientation="horizontal">
 
             <ImageView
+                    android:id="@+id/imageDay_4"
                     android:layout_width="25dip"
                     android:layout_height="25dip"
                     android:layout_gravity="center"
@@ -198,6 +206,7 @@
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <TextView
+                        android:id="@+id/nameDay_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LUN"
@@ -209,7 +218,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:id="@+id/tempDay_4"
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
@@ -226,6 +235,7 @@
                       android:layout_weight="1">
 
             <ImageView
+                    android:id="@+id/imageDay_5"
                     android:layout_width="25dip"
                     android:layout_height="25dip"
                     android:layout_gravity="center"
@@ -236,6 +246,7 @@
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <TextView
+                        android:id="@+id/nameDay_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LUN"
@@ -247,7 +258,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:id="@+id/tempDay_5"
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
