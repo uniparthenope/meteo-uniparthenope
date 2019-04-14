@@ -4,7 +4,9 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:initialKeyguardLayout="@layout/my_widget"
         android:initialLayout="@layout/my_widget"
-        android:resizeMode="horizontal|vertical"
-        android:updatePeriodMillis="18000000"
+        android:resizeMode="horizontal"
+        android:minHeight="40dp"
+        android:minWidth="330dp"
+        android:updatePeriodMillis="21600000"
         android:widgetCategory="home_screen">
 </appwidget-provider>

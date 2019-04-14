@@ -26,7 +26,7 @@ const appSetting = require("application-settings");
 
             // retrieve our layout and all its views
             var views = new android.widget.RemoteViews(context.getPackageName(), R.layout.my_widget);
-            views.setTextViewText(R.id.taps_text, data1.place.long_name.it);
+            //views.setTextViewText(R.id.position, data1.place.long_name.it);
 
             var intent = new android.content.Intent(context, com.tns.MyWidget.class);
             intent.setAction(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE);
@@ -38,8 +38,8 @@ const appSetting = require("application-settings");
             var pI = android.app.PendingIntent.getBroadcast(context, 0, intent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
             var pI2 = android.app.PendingIntent.getActivity(context, 0, startAppIntent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
 
-            views.setOnClickPendingIntent(R.id.tap_button, pI);
-            views.setOnClickPendingIntent(R.id.go_app, pI2);
+            //views.setOnClickPendingIntent(R.id.tap_button, pI);
+            //views.setOnClickPendingIntent(R.id.go_app, pI2);
 
             appWidgetManager.updateAppWidget(widgetId, views);
         });

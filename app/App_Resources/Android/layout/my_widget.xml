@@ -1,45 +1,259 @@
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="horizontal"
-              android:background="#33000000"
+              android:orientation="vertical"
+              android:background="#441E4C75"
               android:padding="8dp">
 
-    <ImageView
-            android:id="@+id/taps_image"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/icon"/>
 
     <TextView
-            android:id="@+id/taps_text"
+            android:id="@+id/position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="8dp"
-            android:text=""
+            android:text="Boscoreale"
             android:textColor="#ffffff"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="26sp"
+            android:layout_gravity="center"
+    />
 
-    <TextView
-            android:id="@+id/appwidget_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="8dp"
-            android:text="TAPS"
-            android:textColor="#ffffff"
-            android:textSize="24sp" />
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_gravity="center"
+                  android:layout_marginBottom="2dp">
 
-    <Button
-            android:id="@+id/tap_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="TOUCH ME!"/>
+        <ImageView
+                android:id="@+id/taps_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/icon"/>
 
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_gravity="center">
+
+            <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14,2 *C"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+            />
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WWS"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+            />
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_gravity="center"
+    >
+
+        <!--   1   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--   2   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:layout_weight="1"
+                      android:orientation="horizontal">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+        <!--   3   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--   4   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--   5   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:gravity="center"
+                      android:layout_weight="1">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>
