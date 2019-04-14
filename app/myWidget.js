@@ -21,12 +21,13 @@ const appSetting = require("application-settings");
 
     function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
         console.log(appSetting.getString("lastKnownPosition", ""));
+
         fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "") + "?opt=place").then((response) => response.json()).then((data1) => {
             console.log(data1.place.long_name.it);
 
             // retrieve our layout and all its views
             var views = new android.widget.RemoteViews(context.getPackageName(), R.layout.my_widget);
-            //views.setTextViewText(R.id.position, data1.place.long_name.it);
+            views.setTextViewText(R.id.position, data1.place.long_name.it);
 
             var intent = new android.content.Intent(context, com.tns.MyWidget.class);
             intent.setAction(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE);

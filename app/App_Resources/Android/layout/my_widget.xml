@@ -4,16 +4,17 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:background="#441E4C75"
-              android:padding="8dp">
+              android:padding="8dip">
 
 
     <TextView
             android:id="@+id/position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="Boscoreale"
             android:textColor="#ffffff"
-            android:textSize="26sp"
+            android:textSize="26dip"
             android:layout_gravity="center"
     />
 
@@ -21,13 +22,13 @@
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
                   android:layout_gravity="center"
-                  android:layout_marginBottom="2dp">
+                  android:layout_marginBottom="2dip">
 
         <ImageView
                 android:id="@+id/taps_image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="25dp"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_marginRight="25dip"
                 android:src="@drawable/icon"/>
 
 
@@ -42,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:text="14,2 *C"
                     android:textColor="#ffffff"
-                    android:textSize="18sp"
+                    android:textSize="18dip"
                     android:layout_gravity="center"
             />
             <TextView
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:text="WWS"
                     android:textColor="#ffffff"
-                    android:textSize="14sp"
+                    android:textSize="14dip"
                     android:layout_gravity="center"
             />
 
@@ -74,10 +75,10 @@
                       android:orientation="horizontal">
 
             <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="10dip"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -88,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                 />
@@ -98,7 +99,7 @@
 
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:layout_gravity="center"
                 />
             </LinearLayout>
@@ -112,10 +113,10 @@
                       android:orientation="horizontal">
 
             <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="10dip"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -126,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                 />
@@ -136,7 +137,7 @@
 
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:layout_gravity="center"
                 />
             </LinearLayout>
@@ -149,10 +150,10 @@
                       android:orientation="horizontal">
 
             <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="10dip"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -163,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                 />
@@ -173,7 +174,7 @@
 
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:layout_gravity="center"
                 />
             </LinearLayout>
@@ -187,10 +188,10 @@
                       android:orientation="horizontal">
 
             <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="10dip"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -201,7 +202,7 @@
                         android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                 />
@@ -211,7 +212,7 @@
 
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:layout_gravity="center"
                 />
             </LinearLayout>
@@ -225,10 +226,10 @@
                       android:layout_weight="1">
 
             <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="10dip"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -239,7 +240,7 @@
                         android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                 />
@@ -249,7 +250,7 @@
 
                         android:text="LUN"
                         android:textColor="#ffffff"
-                        android:textSize="11dp"
+                        android:textSize="11dip"
                         android:layout_gravity="center"
                 />
             </LinearLayout>
