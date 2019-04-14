@@ -6,6 +6,7 @@ const appSetting = require("application-settings");
     var R = it.meteo.uniparthenope.R; // reduces syntax noise, stands for 'android resources'
     var rng = new java.util.Random();
     var views;
+    var data = new Date();
 
     android.appwidget.AppWidgetProvider.extend("com.tns.MyWidget2", {
         // is called each time the widget is added to the homescreen, or update ticks
@@ -22,8 +23,21 @@ const appSetting = require("application-settings");
 
     function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
         console.log(appSetting.getString("lastKnownPosition", "com63049"));
+        let ora = data.getHours();
+        if (ora < 10)
+            ora = '0' + ora;
+        let mese = data.getMonth() + 1;
+        if (mese < 10)
+            mese = '0' + mese;
+        let giorno = data.getDate();
+        if (giorno < 10)
+            giorno = '0' + giorno;
+        let anno = data.getFullYear();
 
-        fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "com63049") + "?opt=place").then((response) => response.json()).then((data1) => {
+        let currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
+        console.log(currData);
+
+        fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "com63049") + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
             console.log(data1.place.long_name.it);
 
             var temp_place;
