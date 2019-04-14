@@ -29,6 +29,7 @@ var nome_giorno = ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"];
 var name_day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var temp_data;
 var gps_on = false;
+var box_place = false;
 var latitudine;
 var longitudine;
 let page;
@@ -143,101 +144,134 @@ exports.pageLoaded = function(args)
           }).then(function (loc) {
             if (loc) {
               home.set("search", "collapsed");
-              latitudine = loc.latitude;
-              longitudine = loc.longitude;
+              latitudine = (loc.latitude).toString();
+              longitudine = (loc.longitude).toString();
               console.log(latitudine);
               console.log(longitudine);
               var place, id;
 
-              fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
-                place = data[0].long_name.it;
+              if(latitudine.includes("-") || longitudine.includes("-")){
+                home.set("search", "visible");
+                home.set("current_position", "collapsed");
+                box_place = false;
 
-                if (place.includes("Municipalit")) {
-                  var tmp = place.split("-");
-                  var tmp1 = tmp.pop();
-                  home.set("position", tmp1);
-                  place_selected = tmp1;
-                  console.log("POSTO : " + place_selected);
-                } else {
-                  home.set("position", place);
-                  place_selected = place;
-                  console.log("POSTO : " + place_selected);
-                }
+                setTimeout(function () {
+                  oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+                }, 800);
 
-                id = data[0].id;
-                global_id = id;
+                setTimeout(function () {
+                  oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
+                }, 800);
 
-                var found = false;
-                console.log(preferiti);
-                for(var i=0; i<preferiti.length; i++) {
-                  if(place_selected === preferiti[i])
+                setTimeout(function () {
+                  oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
+                }, 800);
+
+                setTimeout(function () {
+                  oLangWebViewInterface.emit('settings', {
+                    gradi: appSetting.getNumber("Temperatura", 0),
+                    vento: appSetting.getNumber("Vento", 0),
+                    pressione: appSetting.getNumber("Pressione", 0)
+                  });
+                }, 800);
+              }
+              else{
+                fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
+                  console.log(data);
+
+                  place = data[0].long_name.it;
+
+                  if (place.includes("Municipalit")) {
+                    var tmp = place.split("-");
+                    var tmp1 = tmp.pop();
+                    home.set("position", tmp1);
+                    place_selected = tmp1;
+                    console.log("POSTO : " + place_selected);
+                  } else {
+                    home.set("position", place);
+                    place_selected = place;
+                    console.log("POSTO : " + place_selected);
+                  }
+
+                  id = data[0].id;
+                  global_id = id;
+
+                  var found = false;
+                  console.log(preferiti);
+                  for(var i=0; i<preferiti.length; i++) {
+                    if(place_selected === preferiti[i])
+                    {
+                      found = true;
+                    }
+                  }
+                  console.log(found);
+                  if(found)
                   {
-                    found = true;
+                    home.set("pref", "visible");
+                    home.set("no_pref", "collapsed");
                   }
-                }
-                console.log(found);
-                if(found)
-                {
-                  home.set("pref", "visible");
-                  home.set("no_pref", "collapsed");
-                }
-                else {
-                  home.set("no_pref", "visible");
-                  home.set("pref", "collapsed");
-                }
-
-                fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-                  //console.log(data1);
-                  if (data1.result == "ok") {
-                    home.set("current_position", "visible");
-                    if (appSetting.getNumber("Temperatura", 0) == 0)
-                      home.set("temp", data1.forecast.t2c + " °C");
-                    else if (appSetting.getNumber("Temperatura", 0) == 1) {
-                      home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
-                    }
-                    if (appSetting.getNumber("Vento", 0) == 0)
-                      home.set("wind", data1.forecast.ws10n + " kn");
-                    else if (appSetting.getNumber("Vento", 0) == 1) {
-                      home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
-                    } else if (appSetting.getNumber("Vento", 0) == 2) {
-                      home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
-                    } else if (appSetting.getNumber("Vento", 0) == 3) {
-                      home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
-                    }
-
-                    home.set("wind_direction", data1.forecast.winds);
-                    home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
-                  } else if (data1.result == "error") {
-                    home.set("current_position", "collapsed");
-                    dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+                  else {
+                    home.set("no_pref", "visible");
+                    home.set("pref", "collapsed");
                   }
 
-                  setTimeout(function () {
-                    oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
-                  }, 900);
+                  fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+                    //console.log(data1);
+                    if (data1.result == "ok") {
+                      home.set("current_position", "visible");
+                      box_place = true;
+                      if (appSetting.getNumber("Temperatura", 0) == 0)
+                        home.set("temp", data1.forecast.t2c + " °C");
+                      else if (appSetting.getNumber("Temperatura", 0) == 1) {
+                        home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+                      }
+                      if (appSetting.getNumber("Vento", 0) == 0)
+                        home.set("wind", data1.forecast.ws10n + " kn");
+                      else if (appSetting.getNumber("Vento", 0) == 1) {
+                        home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+                      } else if (appSetting.getNumber("Vento", 0) == 2) {
+                        home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+                      } else if (appSetting.getNumber("Vento", 0) == 3) {
+                        home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+                      }
 
-                  setTimeout(function () {
-                    oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
-                  }, 900);
+                      home.set("wind_direction", data1.forecast.winds);
+                      home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+                    } else if (data1.result == "error") {
+                      home.set("current_position", "collapsed");
+                      box_place = false;
+                      home.set("search", "visible");
+                      dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+                    }
 
-                  setTimeout(function () {
-                    oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
-                  }, 900);
+                    setTimeout(function () {
+                      oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+                    }, 500);
 
-                  setTimeout(function () {
-                    oLangWebViewInterface.emit('settings', {
-                      gradi: appSetting.getNumber("Temperatura", 0),
-                      vento: appSetting.getNumber("Vento", 0),
-                      pressione: appSetting.getNumber("Pressione", 0)
-                    });
-                  }, 900);
-                })
-                    .catch(error => console.error("[SEARCH] ERROR DATA ", error));
-              });
+                    setTimeout(function () {
+                      oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
+                    }, 500);
+
+                    setTimeout(function () {
+                      oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
+                    }, 500);
+
+                    setTimeout(function () {
+                      oLangWebViewInterface.emit('settings', {
+                        gradi: appSetting.getNumber("Temperatura", 0),
+                        vento: appSetting.getNumber("Vento", 0),
+                        pressione: appSetting.getNumber("Pressione", 0)
+                      });
+                    }, 500);
+                  })
+                      .catch(error => console.error("[SEARCH] ERROR DATA ", error));
+                });
+              }
             }
           }, function (e) {
             dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
             home.set("current_position", "collapsed");
+            box_place = false;
             home.set("search", "visible");
             setTimeout(function () {
               oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
@@ -259,6 +293,7 @@ exports.pageLoaded = function(args)
       }, function (e) {
         gps_on = false;
         home.set("current_position", "collapsed");
+        box_place = false;
         home.set("search", "visible");
 
         setTimeout(function () {
@@ -317,6 +352,7 @@ exports.pageLoaded = function(args)
 
         if (data1.result == "ok") {
           home.set("current_position", "visible");
+          box_place = true;
           if (appSetting.getNumber("Temperatura", 0) == 0)
             home.set("temp", data1.forecast.t2c + " °C");
           else if (appSetting.getNumber("Temperatura", 0) == 1) {
@@ -336,6 +372,7 @@ exports.pageLoaded = function(args)
           home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
         } else if (data1.result == "error") {
           home.set("current_position", "collapsed");
+          box_place = false;
           dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
         }
       })
@@ -460,11 +497,12 @@ function send_data() {
 
   var position = home.get("position");
   console.log(position);
-  if(gps_on) {
+  if(box_place) {
     home.set("search", "collapsed");
     fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
       if (data1.result == "ok") {
         home.set("current_position", "visible");
+        box_place = true;
         if (appSetting.getNumber("Temperatura", 0) == 0)
           home.set("temp", data1.forecast.t2c + " °C");
         else if (appSetting.getNumber("Temperatura", 0) == 1) {
@@ -484,10 +522,10 @@ function send_data() {
         home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
       } else if (data1.result == "error") {
         home.set("current_position", "collapsed");
+        box_place = false;
         dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
       }
-    })
-        .catch(error => console.error("[SEARCH] ERROR DATA ", error));
+    }).catch(error => console.error("[SEARCH] ERROR DATA ", error));
   }
 }
 
@@ -649,7 +687,10 @@ if(platformModule.isIOS)
       }
     });
 
-    home.set("posti", items);
+    if(box_place)
+      home.set("posti_visible", items);
+    else
+      home.set("posti_invisible", items);
   }
   exports.onTextChanged = onTextChanged;
 }
@@ -667,7 +708,10 @@ if(platformModule.isAndroid)
       }
     });
 
-    home.set("posti", items);
+    if(box_place)
+      home.set("posti_visible", items);
+    else
+      home.set("posti_invisible", items);
   }
   exports.onTextChanged = onTextChanged;
 }
@@ -691,98 +735,102 @@ function didAutoComplete  (args) {
   place_selected = _name;
   console.log("POSTO : " + place_selected);
 
-  if(gps_on) {
-    home.set("search", "collapsed");
+  box_place = true;
 
-    let url = url_api + "places/search/byname/" + _name;
-    url = url.replace(/ /g, "%20");
-    console.log(url);
+  home.set("search", "collapsed");
 
-    fetch(url).then((response) => response.json()).then((data) => {
-      var id;
-      console.log(data.length);
-      for(let i=0; i<data.length; i++)
+  let url = url_api + "places/search/byname/" + place_selected;
+  url = url.replace(/ /g, "%20");
+  console.log(url);
+
+  fetch(url).then((response) => response.json()).then((data) => {
+    var id;
+    console.log(data.length);
+    for(let i=0; i<data.length; i++)
+    {
+      let name1 = data[i].long_name.it;
+      console.log(name1);
+      let name_new;
+      let __name;
+      if (name1.includes("Municipalit"))
       {
-        let name1 = data[i].long_name.it;
-        console.log(name1);
-        let name_new;
-        let __name;
-        if (name1.includes("Municipalit"))
-        {
-          console.log("MUN");
-          var tmp = name1.split("-");
-          name_new = tmp.pop();
-          __name = name_new;
+        console.log("MUN");
+        var tmp = name1.split("-");
+        name_new = tmp.pop();
+        __name = name_new;
 
-          if(__name === _name)
-            id = data[i].id;
-        }
-        else
-        {
-          console.log("NO MUN");
-          if(name1 === _name)
-            id = data[i].id;
-        }
+        if(__name === place_selected)
+          id = data[i].id;
       }
-      console.log(id);
-      global_id = id;
-
-      var found = false;
-      console.log(preferiti);
-      for(var i=0; i<preferiti.length; i++) {
-        console.log(preferiti[i]);
-        if(place_selected == preferiti[i])
-        {
-          found = true;
-        }
-      }
-      console.log(found);
-      if(found)
+      else
       {
-        home.set("pref", "visible");
-        home.set("no_pref", "collapsed");
+        console.log("NO MUN");
+        if(name1 === place_selected)
+          id = data[i].id;
       }
-      else {
-        home.set("no_pref", "visible");
-        home.set("pref", "collapsed");
+    }
+    console.log(id);
+    global_id = id;
+
+    var found = false;
+    console.log(preferiti);
+    for(var i=0; i<preferiti.length; i++) {
+      console.log(preferiti[i]);
+      if(place_selected === preferiti[i])
+      {
+        found = true;
       }
+    }
+    console.log("Trovato: " + found);
+    if(found)
+    {
+      home.set("pref", "visible");
+      home.set("no_pref", "collapsed");
+    }
+    else {
+      home.set("no_pref", "visible");
+      home.set("pref", "collapsed");
+    }
 
-      fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-        //console.log(data1);
-        if (data1.result == "ok") {
-          home.set("current_position", "visible");
-          if (appSetting.getNumber("Temperatura", 0) == 0)
-            home.set("temp", data1.forecast.t2c + " °C");
-          else if (appSetting.getNumber("Temperatura", 0) == 1) {
-            home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
-          }
-          if (appSetting.getNumber("Vento", 0) == 0)
-            home.set("wind", data1.forecast.ws10n + " kn");
-          else if (appSetting.getNumber("Vento", 0) == 1) {
-            home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
-          } else if (appSetting.getNumber("Vento", 0) == 2) {
-            home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
-          } else if (appSetting.getNumber("Vento", 0) == 3) {
-            home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
-          }
+    fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+      //console.log(data1);
+      if (data1.result == "ok") {
+        home.set("current_position", "visible");
+        box_place = true;
 
-          home.set("wind_direction", data1.forecast.winds);
-          home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
-        } else if (data1.result == "error") {
-          home.set("current_position", "collapsed");
-          dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+        home.set("position", place_selected);
+        if (appSetting.getNumber("Temperatura", 0) == 0)
+          home.set("temp", data1.forecast.t2c + " °C");
+        else if (appSetting.getNumber("Temperatura", 0) == 1) {
+          home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
         }
-      })
-          .catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
-    });
-  }
+        if (appSetting.getNumber("Vento", 0) == 0)
+          home.set("wind", data1.forecast.ws10n + " kn");
+        else if (appSetting.getNumber("Vento", 0) == 1) {
+          home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+        } else if (appSetting.getNumber("Vento", 0) == 2) {
+          home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+        } else if (appSetting.getNumber("Vento", 0) == 3) {
+          home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+        }
 
-  if(platformModule.isAndroid) {
-    var autocompletetxt = page.getViewById("autocomplete");
-    autocompletetxt.focus();
-    utils.ad.showSoftInput(autocompletetxt.nativeView);
-    utils.ad.dismissSoftInput();
-  }
+        home.set("wind_direction", data1.forecast.winds);
+        home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+      } else if (data1.result == "error") {
+        home.set("current_position", "collapsed");
+        box_place = false;
+        dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+      }
+    })
+        .catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
+
+    if(platformModule.isAndroid) {
+      var autocompletetxt = page.getViewById("autocomplete");
+      autocompletetxt.focus();
+      utils.ad.showSoftInput(autocompletetxt.nativeView);
+      utils.ad.dismissSoftInput();
+    }
+  });
 }
 exports.didAutoComplete = didAutoComplete;
 
@@ -849,93 +897,96 @@ function onItemTap(args) {
   place_selected = (myPref.getItem(index).title);
   console.log("POSTO : " + place_selected);
 
-  if(gps_on) {
-    home.set("search", "collapsed");
+  box_place = true;
 
-    let url = url_api + "places/search/byname/" + place_selected;
-    url = url.replace(/ /g, "%20");
-    console.log(url);
+  home.set("search", "collapsed");
 
-    fetch(url).then((response) => response.json()).then((data) => {
-      var id;
-      console.log(data.length);
-      for(let i=0; i<data.length; i++)
+  let url = url_api + "places/search/byname/" + place_selected;
+  url = url.replace(/ /g, "%20");
+  console.log(url);
+
+  fetch(url).then((response) => response.json()).then((data) => {
+    var id;
+    console.log(data.length);
+    for(let i=0; i<data.length; i++)
+    {
+      let name1 = data[i].long_name.it;
+      console.log(name1);
+      let name_new;
+      let __name;
+      if (name1.includes("Municipalit"))
       {
-        let name1 = data[i].long_name.it;
-        console.log(name1);
-        let name_new;
-        let __name;
-        if (name1.includes("Municipalit"))
-        {
-          console.log("MUN");
-          var tmp = name1.split("-");
-          name_new = tmp.pop();
-          __name = name_new;
+        console.log("MUN");
+        var tmp = name1.split("-");
+        name_new = tmp.pop();
+        __name = name_new;
 
-          if(__name === place_selected)
-            id = data[i].id;
-        }
-        else
-        {
-          console.log("NO MUN");
-          if(name1 === place_selected)
-            id = data[i].id;
-        }
+        if(__name === place_selected)
+          id = data[i].id;
       }
-      console.log(id);
-      global_id = id;
-
-      var found = false;
-      console.log(preferiti);
-      for(var i=0; i<preferiti.length; i++) {
-        console.log(preferiti[i]);
-        if(place_selected === preferiti[i])
-        {
-          found = true;
-        }
-      }
-      console.log("Trovato: " + found);
-      if(found)
+      else
       {
-        home.set("pref", "visible");
-        home.set("no_pref", "collapsed");
+        console.log("NO MUN");
+        if(name1 === place_selected)
+          id = data[i].id;
       }
-      else {
-        home.set("no_pref", "visible");
-        home.set("pref", "collapsed");
+    }
+    console.log(id);
+    global_id = id;
+
+    var found = false;
+    console.log(preferiti);
+    for(var i=0; i<preferiti.length; i++) {
+      console.log(preferiti[i]);
+      if(place_selected === preferiti[i])
+      {
+        found = true;
       }
+    }
+    console.log("Trovato: " + found);
+    if(found)
+    {
+      home.set("pref", "visible");
+      home.set("no_pref", "collapsed");
+    }
+    else {
+      home.set("no_pref", "visible");
+      home.set("pref", "collapsed");
+    }
 
-      fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-        //console.log(data1);
-        if (data1.result == "ok") {
-          home.set("current_position", "visible");
+    fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+      //console.log(data1);
+      if (data1.result == "ok") {
+        home.set("current_position", "visible");
+        box_place = true;
 
-          home.set("position", place_selected);
-          if (appSetting.getNumber("Temperatura", 0) == 0)
-            home.set("temp", data1.forecast.t2c + " °C");
-          else if (appSetting.getNumber("Temperatura", 0) == 1) {
-            home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
-          }
-          if (appSetting.getNumber("Vento", 0) == 0)
-            home.set("wind", data1.forecast.ws10n + " kn");
-          else if (appSetting.getNumber("Vento", 0) == 1) {
-            home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
-          } else if (appSetting.getNumber("Vento", 0) == 2) {
-            home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
-          } else if (appSetting.getNumber("Vento", 0) == 3) {
-            home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
-          }
-
-          home.set("wind_direction", data1.forecast.winds);
-          home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
-        } else if (data1.result == "error") {
-          home.set("current_position", "collapsed");
-          dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+        home.set("position", place_selected);
+        if (appSetting.getNumber("Temperatura", 0) == 0)
+          home.set("temp", data1.forecast.t2c + " °C");
+        else if (appSetting.getNumber("Temperatura", 0) == 1) {
+          home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
         }
-      })
-          .catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
-    });
-  }
+        if (appSetting.getNumber("Vento", 0) == 0)
+          home.set("wind", data1.forecast.ws10n + " kn");
+        else if (appSetting.getNumber("Vento", 0) == 1) {
+          home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+        } else if (appSetting.getNumber("Vento", 0) == 2) {
+          home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+        } else if (appSetting.getNumber("Vento", 0) == 3) {
+          home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+        }
+
+        home.set("wind_direction", data1.forecast.winds);
+        home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+      } else if (data1.result == "error") {
+        home.set("current_position", "collapsed");
+        box_place = false;
+        dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+      }
+    })
+        .catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
+  });
+
   drawer.closeDrawer();
 }
 exports.onItemTap = onItemTap;

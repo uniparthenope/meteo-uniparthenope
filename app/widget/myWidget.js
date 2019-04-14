@@ -25,7 +25,6 @@
 
         // retrieve our layout and all its views
         var views = new android.widget.RemoteViews(context.getPackageName(), R.layout.widget);
-
         views.setTextViewText(R.id.taps_next, text);
 
         var intent = new android.content.Intent(context, com.tns.MyWidget.class);
