@@ -21,9 +21,9 @@ const appSetting = require("application-settings");
     });
 
     function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
-        console.log(appSetting.getString("lastKnownPosition", ""));
+        console.log(appSetting.getString("lastKnownPosition", "com63049"));
 
-        fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "") + "?opt=place").then((response) => response.json()).then((data1) => {
+        fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "com63049") + "?opt=place").then((response) => response.json()).then((data1) => {
             console.log(data1.place.long_name.it);
 
             var temp_place;
@@ -56,7 +56,7 @@ const appSetting = require("application-settings");
             var pI2 = android.app.PendingIntent.getActivity(context, 0, startAppIntent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
 
             //views.setOnClickPendingIntent(R.id.tap_button, pI);
-            //views.setOnClickPendingIntent(R.id.go_app, pI2);
+            views.setOnClickPendingIntent(R.id.go_app, pI2);
 
             appWidgetManager.updateAppWidget(widgetId, views);
         });
