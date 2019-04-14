@@ -192,6 +192,7 @@ exports.pageLoaded = function(args)
                   id = data[0].id;
                   global_id = id;
                   appSetting.setString("lastKnownPosition", global_id);
+                  appSetting.setString("lastKnownPositionName", place_selected);
 
                   var found = false;
                   console.log(preferiti);

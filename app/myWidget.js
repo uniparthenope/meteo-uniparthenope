@@ -1,48 +1,84 @@
 const appSetting = require("application-settings");
 
-(function () {
-    // yay for JavaScript closures!
-    var taps = -1;
-    var R = it.meteo.uniparthenope.R; // reduces syntax noise, stands for 'android resources'
-    var rng = new java.util.Random();
+var taps = -1;
+var R = it.meteo.uniparthenope.R; // reduces syntax noise, stands for 'android resources'
+var rng = new java.util.Random();
+var views;
+var data = new Date();
+var name;
 
-    android.appwidget.AppWidgetProvider.extend("com.tns.MyWidget", {
-        // is called each time the widget is added to the homescreen, or update ticks
-        onUpdate: function (context, appWidgetManager, appWidgetIds) {
-            // gets the number of instances of the same widget on the homescreen
-            var appWidgetsLen = appWidgetIds.length;
+android.appwidget.AppWidgetProvider.extend("com.tns.MyWidget", {
+    // is called each time the widget is added to the homescreen, or update ticks
+    onUpdate: function (context, appWidgetManager, appWidgetIds) {
+        // gets the number of instances of the same widget on the homescreen
+        var appWidgetsLen = appWidgetIds.length;
 
-            // for each widget - update - we want them to be consistent
-            for (i = 0; i < appWidgetsLen; i++) {
-                updateWidget(context, appWidgetManager, appWidgetIds, appWidgetIds[i]);
-            }
+        // for each widget - update - we want them to be consistent
+        for (i = 0; i < appWidgetsLen; i++) {
+            updateWidget(context, appWidgetManager, appWidgetIds, appWidgetIds[i]);
         }
+    }
+});
+
+function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
+    console.log(appSetting.getString("lastKnownPosition", "com63049"));
+    console.log(appSetting.getString("lastKnownPositionName", "Comune di Napoli"));
+
+    let ora = data.getHours();
+    if (ora < 10)
+        ora = '0' + ora;
+    let mese = data.getMonth() + 1;
+    if (mese < 10)
+        mese = '0' + mese;
+    let giorno = data.getDate();
+    if (giorno < 10)
+        giorno = '0' + giorno;
+    let anno = data.getFullYear();
+
+    let currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
+    console.log(currData);
+
+    fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "com63049") + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
+        views = new android.widget.RemoteViews(context.getPackageName(), R.layout.my_widget);
+        // retrieve our layout and all its views
+        views.setTextViewText(R.id.position, appSetting.getString("lastKnownPositionName", "Comune di Napoli"));
+        views.setTextViewText(R.id.temperatura, data1.forecast.t2c + " °C");
+        views.setTextViewText(R.id.text_meteo, data1.forecast.text.it);
+        views.setTextViewText(R.id.vento, data1.forecast.ws10n + " kn");
+        var name_image = data1.forecast.icon;
+        var img = name_image.substr(0, name_image.indexOf('.'));
+        var temp_id = context.getResources().getIdentifier("@drawable/" + img, "layout", context.getPackageName());
+        views.setImageViewResource(R.id.image_meteo, temp_id);
+
+        appWidgetManager.updateAppWidget(widgetId, views);
     });
 
-    function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
-        console.log(appSetting.getString("lastKnownPosition", ""));
+    fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + appSetting.getString("lastKnownPosition", "com63049") + "?hours=0&step=24").then((response) => response.json()).then((data1) => {
+        // retrieve our layout and all its views
+        views = new android.widget.RemoteViews(context.getPackageName(), R.layout.my_widget);
 
-        fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "") + "?opt=place").then((response) => response.json()).then((data1) => {
-            console.log(data1.place.long_name.it);
+        for(let i=1; i <data1.timeseries.length; i++)
+        {
+            var name_image = data1.timeseries[i]['icon'];
+            var img = name_image.substr(0, name_image.indexOf('.'));
+            var temp_id = context.getResources().getIdentifier("@drawable/" + img, "layout", context.getPackageName());
+            var temp_id_1 = context.getResources().getIdentifier("@id/imageDay_" + i, "layout", context.getPackageName());
+            views.setImageViewResource(temp_id_1, temp_id);
 
-            // retrieve our layout and all its views
-            var views = new android.widget.RemoteViews(context.getPackageName(), R.layout.my_widget);
-            views.setTextViewText(R.id.position, data1.place.long_name.it);
+            var temp_name = context.getResources().getIdentifier("@id/nameDay_" + i, "layout", context.getPackageName());
+            views.setTextViewText(temp_name, (data1.timeseries[i]['dateTime']).substring(6,8) + "/" + (data1.timeseries[i]['dateTime']).substring(4,6));
 
-            var intent = new android.content.Intent(context, com.tns.MyWidget.class);
-            intent.setAction(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+            var temp_temp = context.getResources().getIdentifier("@id/tempDay_" + i, "layout", context.getPackageName());
+            views.setTextViewText(temp_temp, data1.timeseries[i]['t2c'] + "°C");
+        }
 
-            var startAppIntent = new android.content.Intent(context, com.tns.NativeScriptActivity.class); // the activity defined in AndroidManifest
-            startAppIntent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        var startAppIntent = new android.content.Intent(context, com.tns.NativeScriptActivity.class); // the activity defined in AndroidManifest
+        startAppIntent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
 
-            var pI = android.app.PendingIntent.getBroadcast(context, 0, intent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
-            var pI2 = android.app.PendingIntent.getActivity(context, 0, startAppIntent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
+        var pI2 = android.app.PendingIntent.getActivity(context, 0, startAppIntent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
 
-            //views.setOnClickPendingIntent(R.id.tap_button, pI);
-            //views.setOnClickPendingIntent(R.id.go_app, pI2);
+        views.setOnClickPendingIntent(R.id.go_app, pI2);
 
-            appWidgetManager.updateAppWidget(widgetId, views);
-        });
-    }
-})();
+        appWidgetManager.updateAppWidget(widgetId, views);
+    });
+}

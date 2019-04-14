@@ -4,8 +4,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:initialKeyguardLayout="@layout/my_widget"
         android:initialLayout="@layout/my_widget"
-        android:resizeMode="horizontal|vertical"
-        android:minHeight="40dip"
+        android:resizeMode="horizontal"
+        android:minHeight="110dip"
         android:minWidth="330dip"
         android:updatePeriodMillis="21600000"
         android:widgetCategory="home_screen">
