@@ -1,6 +1,7 @@
 let application = require("tns-core-modules/application");
 require('tns-i18n')('en');
 
+global.url_api = "https://api.meteo.uniparthenope.it/";
 global.contatore = 0;
 global.place_selected = "";
 global.global_id = " ";

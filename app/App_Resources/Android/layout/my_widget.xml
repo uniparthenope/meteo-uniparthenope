@@ -19,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_margin="8dp"
-            android:text="0"
+            android:text=""
             android:textColor="#ffffff"
             android:textSize="30sp"
             android:textStyle="bold" />

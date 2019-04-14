@@ -34,7 +34,6 @@ var latitudine;
 var longitudine;
 let page;
 var homeViewModel = new HomeViewModel();
-var url_api = "https://api.meteo.uniparthenope.it/";
 var preferiti;
 var myPref = new ObservableArray();
 var application = require("application");
@@ -177,10 +176,7 @@ exports.pageLoaded = function(args)
               }
               else{
                 fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
-                  console.log(data);
-
                   place = data[0].long_name.it;
-
                   if (place.includes("Municipalit")) {
                     var tmp = place.split("-");
                     var tmp1 = tmp.pop();
@@ -195,6 +191,7 @@ exports.pageLoaded = function(args)
 
                   id = data[0].id;
                   global_id = id;
+                  appSetting.setString("lastKnownPosition", global_id);
 
                   var found = false;
                   console.log(preferiti);
@@ -821,8 +818,7 @@ function didAutoComplete  (args) {
         box_place = false;
         dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
       }
-    })
-        .catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
+    }).catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
 
     if(platformModule.isAndroid) {
       var autocompletetxt = page.getViewById("autocomplete");
