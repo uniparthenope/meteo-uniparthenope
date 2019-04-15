@@ -4,7 +4,6 @@ var taps = -1;
 var R = it.meteo.uniparthenope.R; // reduces syntax noise, stands for 'android resources'
 var rng = new java.util.Random();
 var views;
-var data = new Date();
 var name;
 
 android.appwidget.AppWidgetProvider.extend("com.tns.MyWidget", {
@@ -24,6 +23,7 @@ function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
     console.log(appSetting.getString("lastKnownPosition", "com63049"));
     console.log(appSetting.getString("lastKnownPositionName", "Comune di Napoli"));
 
+    var data = new Date();
     let ora = data.getHours();
     if (ora < 10)
         ora = '0' + ora;
@@ -44,7 +44,7 @@ function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
         views.setTextViewText(R.id.position, appSetting.getString("lastKnownPositionName", "Comune di Napoli"));
         views.setTextViewText(R.id.temperatura, data1.forecast.t2c + " °C");
         views.setTextViewText(R.id.text_meteo, data1.forecast.text.it);
-        views.setTextViewText(R.id.vento, data1.forecast.ws10n + " kn");
+        views.setTextViewText(R.id.vento, data1.forecast.winds + "  " + data1.forecast.ws10n + " kn");
         var name_image = data1.forecast.icon;
         var img = name_image.substr(0, name_image.indexOf('.'));
         var temp_id = context.getResources().getIdentifier("@drawable/" + img, "layout", context.getPackageName());
@@ -69,7 +69,7 @@ function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
             views.setTextViewText(temp_name, (data1.timeseries[i]['dateTime']).substring(6,8) + "/" + (data1.timeseries[i]['dateTime']).substring(4,6));
 
             var temp_temp = context.getResources().getIdentifier("@id/tempDay_" + i, "layout", context.getPackageName());
-            views.setTextViewText(temp_temp, data1.timeseries[i]['t2c'] + " °C");
+            views.setTextViewText(temp_temp, data1.timeseries[i]['t2c'] + "°C");
         }
 
         var startAppIntent = new android.content.Intent(context, com.tns.NativeScriptActivity.class); // the activity defined in AndroidManifest

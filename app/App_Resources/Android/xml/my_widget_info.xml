@@ -5,8 +5,8 @@
         android:initialKeyguardLayout="@layout/my_widget"
         android:initialLayout="@layout/my_widget"
         android:resizeMode="horizontal|vertical"
-        android:minHeight="40dip"
-        android:minWidth="330dip"
-        android:updatePeriodMillis="21600000"
+        android:minHeight="56dp"
+        android:minWidth="330dp"
+        android:updatePeriodMillis="1800000"
         android:widgetCategory="home_screen">
 </appwidget-provider>

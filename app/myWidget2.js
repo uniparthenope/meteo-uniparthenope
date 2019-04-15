@@ -6,7 +6,6 @@ const appSetting = require("application-settings");
     var R = it.meteo.uniparthenope.R; // reduces syntax noise, stands for 'android resources'
     var rng = new java.util.Random();
     var views;
-    var data = new Date();
 
     android.appwidget.AppWidgetProvider.extend("com.tns.MyWidget2", {
         // is called each time the widget is added to the homescreen, or update ticks
@@ -23,6 +22,7 @@ const appSetting = require("application-settings");
 
     function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
         console.log(appSetting.getString("lastKnownPosition", "com63049"));
+        var data = new Date();
         let ora = data.getHours();
         if (ora < 10)
             ora = '0' + ora;
