@@ -57,90 +57,16 @@ const appSetting = require("application-settings");
             views.setTextViewText(R.id.wind, data1.forecast.ws10n + " kn");
             console.log(data1.forecast.icon);
             var name_image = data1.forecast.icon;
-            setImage(name_image);
-
-            var intent = new android.content.Intent(context, com.tns.MyWidget.class);
-            intent.setAction(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+            var img = name_image.substr(0, name_image.indexOf('.'));
+            var temp_id = context.getResources().getIdentifier("@drawable/" + img, "layout", context.getPackageName());
+            views.setImageViewResource(R.id.image_meteo, temp_id);
 
             var startAppIntent = new android.content.Intent(context, com.tns.NativeScriptActivity.class); // the activity defined in AndroidManifest
             startAppIntent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-
-            var pI = android.app.PendingIntent.getBroadcast(context, 0, intent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
             var pI2 = android.app.PendingIntent.getActivity(context, 0, startAppIntent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
-
-            //views.setOnClickPendingIntent(R.id.tap_button, pI);
             views.setOnClickPendingIntent(R.id.go_app, pI2);
 
             appWidgetManager.updateAppWidget(widgetId, views);
         });
-    }
-
-    function setImage(name_image){
-        if(name_image.includes("cloudy1.png")) {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy1);
-        }
-        else if(name_image.includes("cloudy1_night.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy1_night);
-        }
-        else if(name_image.includes("cloudy2.png"))
-        {
-            console.log("QUI");
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy2);
-        }
-        else if(name_image.includes("cloudy2_night.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy2_night);
-        }
-        else if(name_image.includes("cloudy3.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy3);
-        }
-        else if(name_image.includes("cloudy3_night.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy3_night);
-        }
-        else if(name_image.includes("cloudy4.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy4);
-        }
-        else if(name_image.includes("cloudy4_night.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy4_night);
-        }
-        else if(name_image.includes("cloudy5.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy5);
-        }
-        else if(name_image.includes("cloudy5_night.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.cloudy5_night);
-        }
-
-        else if(name_image.includes("shower1.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.shower1);
-        }
-        else if(name_image.includes("shower1_night.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.shower1_night);
-        }
-        else if(name_image.includes("shower2.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.shower2);
-        }
-        else if(name_image.includes("shower2_night.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.shower2_night);
-        }
-        else if(name_image.includes("shower3.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.shower3);
-        }
-        else if(name_image.includes("shower3_night.png"))
-        {
-            views.setImageViewResource(R.id.image_meteo, R.drawable.shower3_night);
-        }
     }
 })();
