@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#441E4C75"
+        android:background="@drawable/widget_background"
         android:gravity="center"
         android:padding="4dp"
         android:id="@+id/go_app">
