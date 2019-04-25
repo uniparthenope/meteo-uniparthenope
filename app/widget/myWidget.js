@@ -1,18 +1,13 @@
 const appSetting = require("application-settings");
 
-var taps = -1;
 var R = it.meteo.uniparthenope.R; // reduces syntax noise, stands for 'android resources'
 var rng = new java.util.Random();
 var views;
-var name;
 
-android.appwidget.AppWidgetProvider.extend("com.tns.MyWidget", {
-    // is called each time the widget is added to the homescreen, or update ticks
+android.appwidget.AppWidgetProvider.extend("com.tns.First", {
     onUpdate: function (context, appWidgetManager, appWidgetIds) {
-        // gets the number of instances of the same widget on the homescreen
         var appWidgetsLen = appWidgetIds.length;
 
-        // for each widget - update - we want them to be consistent
         for (i = 0; i < appWidgetsLen; i++) {
             updateWidget(context, appWidgetManager, appWidgetIds, appWidgetIds[i]);
         }

@@ -2,8 +2,8 @@
 <!-- 110x250dp defines minimal area of 2x4 tiles -->
 <appwidget-provider
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:initialKeyguardLayout="@layout/my_widget"
-        android:initialLayout="@layout/my_widget"
+        android:initialKeyguardLayout="@layout/my_widget2"
+        android:initialLayout="@layout/my_widget2"
         android:resizeMode="horizontal|vertical"
         android:minHeight="56dp"
         android:minWidth="330dp"
