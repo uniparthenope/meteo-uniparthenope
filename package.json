@@ -9,7 +9,7 @@
       "version": "3.4.1"
     },
     "tns-android": {
-      "version": "5.2.0"
+      "version": "5.3.1"
     }
   },
   "scripts": {
@@ -55,7 +55,7 @@
     "babel-types": "6.26.0",
     "babylon": "6.18.0",
     "lazy": "1.0.11",
-    "nativescript-dev-webpack": "0.20.0",
+    "nativescript-dev-webpack": "^0.21.2",
     "tns-platform-declarations": "5.2.0"
   }
 }
