@@ -23,7 +23,7 @@
             android:name="com.tns.NativeScriptApplication"
             android:allowBackup="true"
             android:icon="@drawable/icon"
-            android:label="@string/app_name"
+            android:label="MeteoUniparthenope"
             android:theme="@style/AppTheme">
 
         <activity
@@ -42,7 +42,8 @@
 
         <activity android:name="com.tns.ErrorReportActivity"/>
 
-        <receiver android:name="com.tns.First">
+        <receiver android:name="com.tns.First"
+                  android:label="5Days">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -52,7 +53,8 @@
                     android:resource="@xml/my_widget_info" />
         </receiver>
 
-        <receiver android:name="com.tns.Second">
+        <receiver android:name="com.tns.Second"
+                  android:label="5Hours">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -62,12 +64,14 @@
                     android:resource="@xml/my_widget_info2" />
         </receiver>
 
-        <receiver android:name="com.tns.Third">
+        <receiver android:name="com.tns.Third"
+                  android:label="Winds">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
+
                     android:name="android.appwidget.provider"
                     android:resource="@xml/my_widget_info3" />
         </receiver>
