@@ -80,7 +80,7 @@
                         </StackLayout>
 
                         <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="top" horizontalAlignment="center" row="0" col="0" margin="0 0 0 10" width="210">
-                            <lv:RadAutoCompleteTextView hint="{{ _L('home_ricerca') }}" id="autocomplete" items="{{ posti_visible }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
+                            <lv:RadAutoCompleteTextView hint="{{ _L('home_ricerca') }}" id="autocomplete" items="{{ posti_visible }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete" style="placeholder-color: white;">
                                 <lv:RadAutoCompleteTextView.suggestionView>
                                     <lv:SuggestionView suggestionViewHeight="150" class="blue_col">
                                         <lv:SuggestionView.suggestionItemTemplate>
