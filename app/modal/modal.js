@@ -76,6 +76,9 @@ exports.back = function () {
 exports.confirm = function () {
     ora = modal.getViewById("hours_search").selectedIndex;
 
+    if(ora < 10)
+        ora = "0" + ora;
+
     let data_final = data_selected + "Z" + ora + "00";
 
     console.log(data_final);
