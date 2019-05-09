@@ -15,7 +15,6 @@ const http = require("http");
 var nativescript_webview_interface_1 = require("nativescript-webview-interface");
 var image_zoom = require("nativescript-image-zoom").ImageZoom;
 
-var drawer;
 var press;
 var temp;
 var single_item;
@@ -96,8 +95,6 @@ function pageLoaded(args) {
     id = page.navigationContext.id;
     data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
-
-    drawer = view.getViewById(page,"sideDrawer");
 
     prod = "wrf5";
     output = "gen";
@@ -957,56 +954,6 @@ function onTapBack()
 }
 exports.onTapBack = onTapBack;
 
-exports.toggleDrawer = function() {
-    drawer.toggleDrawerState();
-};
-
-function onDatePickerLoaded(args)
-{
-    const datePicker = args.object;
-    datePicker.on("dayChange", (args) => {
-        console.log("Giorno cambiato: " + args.value);
-        data = " ";
-        if (args.value < 10)
-            giorno = "0"+args.value;
-        else
-            giorno = args.value;
-
-        _data = new Date(anno, mese-1, giorno);
-        data = anno+""+mese+""+giorno+"Z"+ora+"00";
-
-        pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
-        print_meteo(id, data);
-        print_map(id, prod, output, data);
-    });
-
-    datePicker.on("monthChange", (args) => {
-        console.log("Mese cambiato");
-        data = " ";
-        if (args.value < 10)
-            mese = "0"+args.value;
-        else
-            mese = args.value;
-        _data = new Date(anno, mese-1, giorno);
-        data = anno+""+mese+""+giorno+"Z"+ora+"00";
-
-        pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
-        print_meteo(id, data);
-        print_map(id, prod, output, data);
-    });
-
-    datePicker.on("yearChange", (args) => {
-        data = "";
-        anno = args.value;
-        _data = new Date(anno, mese-1, giorno);
-        data = anno+""+mese+""+giorno+"Z"+ora+"00";
-
-        pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
-        print_meteo(id, data);
-        print_map(id, prod, output, data);
-    });
-}
-exports.onDatePickerLoaded = onDatePickerLoaded;
 
 var oLangWebViewInterface;
 function setupWebViewInterface(page)
@@ -1029,3 +976,32 @@ function listenLangWebViewEvents()
        }
     });
 }
+
+exports.showModal = function (args) {
+    const page = args.object.page;
+    page.showModal(
+        "./modal/modal",
+        {
+            context: ora
+        },
+        function closeCallback(result) {
+            if (result) {
+                console.log("Result was: ", result);
+                currData = result;
+                anno = result.substring(0, 4);
+                mese = result.substring(4, 6);
+                giorno = result.substring(6,8);
+                ora = result.substring(9,11);
+                console.log(ora);
+
+                _data = new Date(anno, mese-1, giorno);
+                data = anno+""+mese+""+giorno+"Z"+ora+"00";
+
+                pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
+                print_meteo(id, data);
+                print_map(id, prod, output, data);
+            }
+        },
+        false
+    );
+};

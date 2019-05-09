@@ -3,251 +3,236 @@
         <Label text="{{ titolo }}" fontSize="20"></Label>
     </ActionBar>
 
-    <sd:RadSideDrawer id="sideDrawer">
-        <sd:RadSideDrawer.drawerContent>
-            <ScrollView>
-                <StackLayout class="white_background">
-                    <Image src="~/images/logo.png" margin="5 5 5 5" horizontalAlignment="center"></Image>
+    <ui:NestedScrollView>
+        <StackLayout orientation="vertical" verticalAlignment="top" margin="10 10 10 10">
+            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
+            <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="10 10 5 10">
+                    <Label text="{{ _L('detail_temp') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ temperatura }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
 
-                    <Label text="{{ _L('home_selezione_data') }}" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginTop="20"/>
-                    <DatePicker class="blue_col" id="datePicker" loaded="onDatePickerLoaded" date="{{ date_pick }}" minDate="{{ minDate }}" maxDate="{{ maxDate }}"></DatePicker>
-                </StackLayout>
-            </ScrollView>
-        </sd:RadSideDrawer.drawerContent>
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
+                    <Label text="{{ _L('detail_meteo') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ _meteo }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
 
-        <sd:RadSideDrawer.mainContent>
-            <ui:NestedScrollView>
-                <StackLayout orientation="vertical" verticalAlignment="top" margin="10 10 10 10">
-                    <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
-                    <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="10 10 5 10">
-                            <Label text="{{ _L('detail_temp') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ temperatura }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
+                    <Label text="{{ _L('detail_nuvole') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ cloud }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
 
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                            <Label text="{{ _L('detail_meteo') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ _meteo }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
+                    <Label text="{{ _L('detail_umidita') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ humidity }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
 
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                            <Label text="{{ _L('detail_nuvole') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ cloud }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
+                    <Label text="{{ _L('detail_press') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ pressione }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
 
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                            <Label text="{{ _L('detail_umidita') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ humidity }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
+                    <Label text="{{ _L('detail_dir_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ wind_direction }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
 
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                            <Label text="{{ _L('detail_press') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ pressione }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
+                    <Label text="{{ _L('detail_vel_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ wind_speed }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
 
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                            <Label text="{{ _L('detail_dir_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ wind_direction }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
+                    <Label text="{{ _L('detail_temp_perc') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ wind_chill }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
 
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                            <Label text="{{ _L('detail_vel_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ wind_speed }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
+                <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 10 10">
+                    <Label text="{{ _L('detail_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ wind }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
+            </StackLayout>
 
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                            <Label text="{{ _L('detail_temp_perc') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ wind_chill }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
+            <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
+            <ScrollView orientation="vertical">
+                <StackLayout class="white_background_border" marginTop="20" visibility="{{ table_android }}">
+                    <FlexboxLayout flexDirection="row">
+                        <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="T Min"/>
+                            <Label text="(°C)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="T Max"/>
+                            <Label text="(°C)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="{{_L('detail_vento1')}}"/>
+                            <Label text="(Kn)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="{{_L('detail_pioggia')}}"/>
+                            <Label text="(mm)"></Label>
+                        </StackLayout>
+                    </FlexboxLayout>
 
-                        <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 10 10">
-                            <Label text="{{ _L('detail_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
-                            <Label text="{{ wind }}" verticalAlignment="center" style="font-weight:bold;"/>
-                        </FlexboxLayout>
-                    </StackLayout>
+                    <accordion:Accordion class="blue_background_opac" onTap="tap" marginTop="5" height="{{ altezza }}" items="{{items}}" allowMultiple="false" selectedIndexes="{{selectedIndexes}}">
+                        <accordion:Accordion.itemHeaderTemplate>
+                            <GridLayout>
+                                <FlexboxLayout flexDirection="row">
+                                    <StackLayout flexGrow="1" class="font-weight-bold text-center" width="39%">
+                                        <Label text="{{ forecast }}"/>
+                                        <Image src="{{ image }}" height="25" width="15"></Image>
+                                    </StackLayout>
+                                    <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
+                                    <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
+                                    <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="14%" textWrap="true"/>
+                                    <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
+                                    <Image src="{{ image_arrow }}" flexGrow="1" width="5%"></Image>
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </accordion:Accordion.itemHeaderTemplate>
 
-                    <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
-                    <ScrollView orientation="vertical">
-                    <StackLayout class="white_background_border" marginTop="20" visibility="{{ table_android }}">
-                        <FlexboxLayout flexDirection="row">
-                            <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
-                            <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                                <Label text="T Min"/>
-                                <Label text="(°C)"></Label>
-                            </StackLayout>
-                            <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                                <Label text="T Max"/>
-                                <Label text="(°C)"></Label>
-                            </StackLayout>
-                            <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                                <Label text="{{_L('detail_vento1')}}"/>
-                                <Label text="(Kn)"></Label>
-                            </StackLayout>
-                            <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                                <Label text="{{_L('detail_pioggia')}}"/>
-                                <Label text="(mm)"></Label>
-                            </StackLayout>
-                        </FlexboxLayout>
-
-                        <accordion:Accordion class="blue_background_opac" onTap="tap" marginTop="5" height="{{ altezza }}" items="{{items}}" allowMultiple="false" selectedIndexes="{{selectedIndexes}}">
-                            <accordion:Accordion.itemHeaderTemplate>
+                        <accordion:Accordion.itemContentTemplate>
+                            <StackLayout class="white_background">
                                 <GridLayout>
                                     <FlexboxLayout flexDirection="row">
-                                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="39%">
+                                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="55%">
                                             <Label text="{{ forecast }}"/>
                                             <Image src="{{ image }}" height="25" width="15"></Image>
                                         </StackLayout>
-                                        <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
-                                        <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
-                                        <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="14%" textWrap="true"/>
-                                        <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
-                                        <Image src="{{ image_arrow }}" flexGrow="1" width="5%"></Image>
+                                        <Label text="{{ Temperatura }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                        <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
+                                        <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
                                     </FlexboxLayout>
                                 </GridLayout>
-                            </accordion:Accordion.itemHeaderTemplate>
-
-                            <accordion:Accordion.itemContentTemplate>
-                                <StackLayout class="white_background">
-                                    <GridLayout>
-                                        <FlexboxLayout flexDirection="row">
-                                            <StackLayout flexGrow="1" class="font-weight-bold text-center" width="55%">
-                                                <Label text="{{ forecast }}"/>
-                                                <Image src="{{ image }}" height="25" width="15"></Image>
-                                            </StackLayout>
-                                            <Label text="{{ Temperatura }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                            <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
-                                            <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                        </FlexboxLayout>
-                                    </GridLayout>
-                                </StackLayout>
-                            </accordion:Accordion.itemContentTemplate>
-                        </accordion:Accordion>
-                    </StackLayout>
-                    </ScrollView>
-
-                    <ScrollView orientation="vertical">
-                        <StackLayout class="blue_background_opac" marginTop="20" visibility="{{ table_ios }}">
-                            <FlexboxLayout flexDirection="row">
-                                <!-- Use even flexGrow to achieve uniform grid -->
-                                <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
-                                <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                                    <Label text="T Min"/>
-                                    <Label text="(°C)"></Label>
-                                </StackLayout>
-                                <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                                    <Label text="T Max"/>
-                                    <Label text="(°C)"></Label>
-                                </StackLayout>
-                                <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                                    <Label text="{{_L('detail_vento1')}}"/>
-                                    <Label text="(Kn)"></Label>
-                                </StackLayout>
-                                <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
-                                    <Label text="{{_L('detail_pioggia')}}"/>
-                                    <Label text="(mm)"></Label>
-                                </StackLayout>
-                            </FlexboxLayout>
-
-                            <accordion:Accordion class="blue_background_opac" marginTop="5" height="{{ altezza }}" items="{{items}}" allowMultiple="false" selectedIndexes="{{selectedIndexes}}">
-                                <accordion:Accordion.itemHeaderTemplate>
-                                    <GridLayout>
-                                        <FlexboxLayout flexDirection="row">
-                                            <StackLayout flexGrow="1" class="font-weight-bold text-center" width="40%">
-                                                <Label text="{{ forecast }}"/>
-                                                <Image src="{{ image }}" height="25" width="15"></Image>
-                                            </StackLayout>
-                                            <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                            <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                            <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
-                                            <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                        </FlexboxLayout>
-                                    </GridLayout>
-                                </accordion:Accordion.itemHeaderTemplate>
-
-                                <accordion:Accordion.itemContentTemplate>
-                                    <StackLayout backgroundColor="#00008b">
-                                        <GridLayout>
-                                            <FlexboxLayout flexDirection="row">
-                                                <StackLayout flexGrow="1" class="font-weight-bold text-center" width="55%">
-                                                    <Label text="{{ forecast }}"/>
-                                                    <Image src="{{ image }}" height="25" width="15"></Image>
-                                                </StackLayout>
-                                                <Label text="{{ Temperatura }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                                <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
-                                                <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                            </FlexboxLayout>
-                                        </GridLayout>
-                                    </StackLayout>
-                                </accordion:Accordion.itemContentTemplate>
-                            </accordion:Accordion>
-                        </StackLayout>
-                    </ScrollView>
-
-                    <StackLayout orientation="vertical" marginTop="10">
-                        <StackLayout margin="5 5 5 5">
-                            <dd:DropDown
-                                    items="{{ products }}" selectedIndex="{{ selectedIndex }}"
-                                    hint = "{{ hint_prod }}"
-                                    selectedValue = "{{ selectedValue }}"
-                                         opened="dropDownOpened" closed="dropDownClosed"
-                                         selectedIndexChanged="dropDownSelectedIndexChanged"
-                                         row="0" colSpan="2" />
-                        </StackLayout>
-
-                        <StackLayout margin="5 5 5 5">
-                            <dd:DropDown items="{{ outputs }}" selectedIndex="{{ selectedIndex1 }}"
-                                         hint="{{ hint_output }}"
-                                         opened="dropDownOpened1" closed="dropDownClosed1"
-                                         selectedIndexChanged="dropDownSelectedIndexChanged1"
-                                         row="0" colSpan="2" />
-                        </StackLayout>
-                    </StackLayout>
-
-                    <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
-                    <StackLayout marginTop="20" class="blue_background_opac" row="0" col="0" orientation="horizontal" height="50" horizontalAlignment="center">
-                        <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
-                            <Image src="~/images/back.png" height="40"></Image>
-                        </StackLayout>
-
-                        <StackLayout horizontalAlignment="center" tap="toggleDrawer" verticalAlignment="center">
-                            <Label text="{{ data }}"></Label>
-                        </StackLayout>
-
-                        <StackLayout orientation="horizontal" horizontalAlignment="right" tap="onTapNext" verticalAlignment="center" marginLeft="15" marginRight="15">
-                            <Image src="~/images/next1.png" height="40"></Image>
-                        </StackLayout>
-                    </StackLayout>
-
-                    <Image src="{{ map }}" marginTop="15" visibility="{{ _map }}"/>
-                    <Image src="{{ colorbar1 }}" marginTop="5" visibility="{{ colorbar1_visible }}"/>
-                    <Image src="{{ colorbar2 }}" marginTop="5" visibility="{{ colorbar2_visible }}"/>
-                    <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>
-
-                    <StackLayout margin="5 5 5 5">
-                        <Label text="{{ _L('detail_aggregazione') }}"></Label>
-                        <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
-                                     hint="{{ hint_steps }}"
-                                     opened="dropDownOpened2" closed="dropDownClosed2"
-                                     selectedIndexChanged="dropDownSelectedIndexChanged2"
-                                     row="0" colSpan="2" />
-
-                        <StackLayout orientation="vertical" visibility="{{ hours_visibility }}">
-                            <Label text="{{_L('detail_ore')}}"></Label>
-                            <dd:DropDown items="{{ hours }}" selectedIndex="{{ selectedIndex3 }}"
-                                         hint="{{ hint_hours }}"
-                                         opened="dropDownOpened3" closed="dropDownClosed3"
-                                         selectedIndexChanged="dropDownSelectedIndexChanged3"
-                                         row="0" colSpan="2" />
-                        </StackLayout>
-                    </StackLayout>
-
-                    <ActivityIndicator class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
-                    <ContentView class="map" visibility="{{ graphic }}" height="350" width="100%">
-                        <web-view id="webView"></web-view>
-                    </ContentView>
-
+                            </StackLayout>
+                        </accordion:Accordion.itemContentTemplate>
+                    </accordion:Accordion>
                 </StackLayout>
-            </ui:NestedScrollView>
-        </sd:RadSideDrawer.mainContent>
-    </sd:RadSideDrawer>
+            </ScrollView>
+
+            <ScrollView orientation="vertical">
+                <StackLayout class="blue_background_opac" marginTop="20" visibility="{{ table_ios }}">
+                    <FlexboxLayout flexDirection="row">
+                        <!-- Use even flexGrow to achieve uniform grid -->
+                        <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="T Min"/>
+                            <Label text="(°C)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="T Max"/>
+                            <Label text="(°C)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="{{_L('detail_vento1')}}"/>
+                            <Label text="(Kn)"></Label>
+                        </StackLayout>
+                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
+                            <Label text="{{_L('detail_pioggia')}}"/>
+                            <Label text="(mm)"></Label>
+                        </StackLayout>
+                    </FlexboxLayout>
+
+                    <accordion:Accordion class="blue_background_opac" marginTop="5" height="{{ altezza }}" items="{{items}}" allowMultiple="false" selectedIndexes="{{selectedIndexes}}">
+                        <accordion:Accordion.itemHeaderTemplate>
+                            <GridLayout>
+                                <FlexboxLayout flexDirection="row">
+                                    <StackLayout flexGrow="1" class="font-weight-bold text-center" width="40%">
+                                        <Label text="{{ forecast }}"/>
+                                        <Image src="{{ image }}" height="25" width="15"></Image>
+                                    </StackLayout>
+                                    <Label text="{{ TMin }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                    <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                    <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
+                                    <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </accordion:Accordion.itemHeaderTemplate>
+
+                        <accordion:Accordion.itemContentTemplate>
+                            <StackLayout backgroundColor="#00008b">
+                                <GridLayout>
+                                    <FlexboxLayout flexDirection="row">
+                                        <StackLayout flexGrow="1" class="font-weight-bold text-center" width="55%">
+                                            <Label text="{{ forecast }}"/>
+                                            <Image src="{{ image }}" height="25" width="15"></Image>
+                                        </StackLayout>
+                                        <Label text="{{ Temperatura }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                        <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
+                                        <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                    </FlexboxLayout>
+                                </GridLayout>
+                            </StackLayout>
+                        </accordion:Accordion.itemContentTemplate>
+                    </accordion:Accordion>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout orientation="vertical" marginTop="10">
+                <StackLayout margin="5 5 5 5">
+                    <dd:DropDown
+                            items="{{ products }}" selectedIndex="{{ selectedIndex }}"
+                            hint = "{{ hint_prod }}"
+                            selectedValue = "{{ selectedValue }}"
+                            opened="dropDownOpened" closed="dropDownClosed"
+                            selectedIndexChanged="dropDownSelectedIndexChanged"
+                            row="0" colSpan="2" />
+                </StackLayout>
+
+                <StackLayout margin="5 5 5 5">
+                    <dd:DropDown items="{{ outputs }}" selectedIndex="{{ selectedIndex1 }}"
+                                 hint="{{ hint_output }}"
+                                 opened="dropDownOpened1" closed="dropDownClosed1"
+                                 selectedIndexChanged="dropDownSelectedIndexChanged1"
+                                 row="0" colSpan="2" />
+                </StackLayout>
+            </StackLayout>
+
+            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
+            <StackLayout marginTop="20" class="blue_background_opac" row="0" col="0" orientation="horizontal" height="50" horizontalAlignment="center">
+                <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
+                    <Image src="~/images/back.png" height="40"></Image>
+                </StackLayout>
+
+                <StackLayout horizontalAlignment="center" tap="showModal" verticalAlignment="center">
+                    <Label text="{{ data }}"></Label>
+                </StackLayout>
+
+                <StackLayout orientation="horizontal" horizontalAlignment="right" tap="onTapNext" verticalAlignment="center" marginLeft="15" marginRight="15">
+                    <Image src="~/images/next1.png" height="40"></Image>
+                </StackLayout>
+            </StackLayout>
+
+            <Image src="{{ map }}" marginTop="15" visibility="{{ _map }}"/>
+            <Image src="{{ colorbar1 }}" marginTop="5" visibility="{{ colorbar1_visible }}"/>
+            <Image src="{{ colorbar2 }}" marginTop="5" visibility="{{ colorbar2_visible }}"/>
+            <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>
+
+            <StackLayout margin="5 5 5 5">
+                <Label text="{{ _L('detail_aggregazione') }}"></Label>
+                <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
+                             hint="{{ hint_steps }}"
+                             opened="dropDownOpened2" closed="dropDownClosed2"
+                             selectedIndexChanged="dropDownSelectedIndexChanged2"
+                             row="0" colSpan="2" />
+
+                <StackLayout orientation="vertical" visibility="{{ hours_visibility }}">
+                    <Label text="{{_L('detail_ore')}}"></Label>
+                    <dd:DropDown items="{{ hours }}" selectedIndex="{{ selectedIndex3 }}"
+                                 hint="{{ hint_hours }}"
+                                 opened="dropDownOpened3" closed="dropDownClosed3"
+                                 selectedIndexChanged="dropDownSelectedIndexChanged3"
+                                 row="0" colSpan="2" />
+                </StackLayout>
+            </StackLayout>
+
+            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
+            <ContentView class="map" visibility="{{ graphic }}" height="350" width="100%">
+                <web-view id="webView"></web-view>
+            </ContentView>
+
+        </StackLayout>
+    </ui:NestedScrollView>
 </Page>

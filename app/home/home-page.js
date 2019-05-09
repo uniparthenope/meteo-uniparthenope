@@ -390,50 +390,6 @@ exports.toggleDrawer = function() {
   drawer.toggleDrawerState();
 };
 
-function onDatePickerLoaded(args)
-{
-  const datePicker = args.object;
-  datePicker.on("dayChange", (args) => {
-    console.log("Giorno cambiato: " + args.value);
-    currData = " ";
-    if (args.value < 10)
-      giorno = "0"+args.value;
-    else
-      giorno = args.value;
-
-    currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    temp_data = new Date(anno, mese-1, giorno);
-    data = new Date(anno, mese-1, giorno);
-
-    send_data();
-  });
-
-  datePicker.on("monthChange", (args) => {
-      console.log("Mese cambiato");
-    currData = " ";
-    if (args.value < 10)
-      mese = "0"+args.value;
-    else
-      mese = args.value;
-    currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    temp_data = new Date(anno, mese-1, giorno);
-    data = new Date(anno, mese-1, giorno);
-
-    send_data();
-  });
-
-  datePicker.on("yearChange", (args) => {
-    currData = "";
-    anno = args.value;
-    currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    temp_data = new Date(anno, mese-1, giorno);
-    data = new Date(anno, mese-1, giorno);
-
-    send_data();
-  });
-}
-exports.onDatePickerLoaded = onDatePickerLoaded;
-
 function onTapNext()
 {
   if(data > max_data)
@@ -1016,4 +972,31 @@ exports.remove = function (args) {
       return false;
     }
   });
+};
+
+exports.showModal = function (args) {
+  const page = args.object.page;
+  page.showModal(
+      "./modal/modal",
+      {
+        context: ora
+      },
+      function closeCallback(result) {
+        if (result) {
+          console.log("Result was: ", result);
+          currData = result;
+          anno = result.substring(0, 4);
+          mese = result.substring(4, 6);
+          giorno = result.substring(6,8);
+          ora = result.substring(9,11);
+          console.log(ora);
+
+          temp_data = new Date(anno, mese-1, giorno);
+          data = new Date(anno, mese-1, giorno);
+
+          send_data();
+        }
+      },
+      false
+  );
 };
