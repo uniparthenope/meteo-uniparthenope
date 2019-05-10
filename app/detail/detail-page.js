@@ -13,14 +13,7 @@ require("nativescript-accordion");
 const platformModule = require("tns-core-modules/platform");
 const http = require("http");
 var nativescript_webview_interface_1 = require("nativescript-webview-interface");
-var image_zoom = require("nativescript-image-zoom").ImageZoom;
-var gestures = require("tns-core-modules/ui/gestures");
-let utils = require("tns-core-modules/utils/utils");
 
-let density;
-let prevDeltaX;
-let prevDeltaY;
-let startScale = 1;
 
 var press;
 var temp;
@@ -52,9 +45,10 @@ var items;
 let altezza;
 var _data;
 var application = require("application");
+let page;
 
 function pageLoaded(args) {
-    var page = args.object;
+    page = args.object;
     setupWebViewInterface(page);
     temp = new ObservableArray();
     press = new ObservableArray();
@@ -98,64 +92,6 @@ function pageLoaded(args) {
     pageData.set("colorbar1_visible", "collapsed");
     pageData.set("colorbar2_visible", "collapsed");
     pageData.set("colorbar3_visible", "collapsed");
-
-    let map_zoom = page.getViewById("map");
-    density = utils.layout.getDisplayDensity();
-    map_zoom.translateX = 0;
-    map_zoom.translateY = 0;
-    map_zoom.scaleX = 1;
-    map_zoom.scaleY = 1;
-
-    map_zoom.on(gestures.GestureTypes.pinch, function (args) {
-        if (args.state === 1) {
-            const newOriginX = args.getFocusX() - map_zoom.translateX;
-            const newOriginY = args.getFocusY() - map_zoom.translateY;
-
-            const oldOriginX = map_zoom.originX * map_zoom.getMeasuredWidth();
-            const oldOriginY = map_zoom.originY * map_zoom.getMeasuredHeight();
-
-            map_zoom.translateX += (oldOriginX - newOriginX) * (1 - map_zoom.scaleX);
-            map_zoom.translateY += (oldOriginY - newOriginY) * (1 - map_zoom.scaleY);
-
-            map_zoom.originX = newOriginX / map_zoom.getMeasuredWidth();
-            map_zoom.originY = newOriginY / map_zoom.getMeasuredHeight();
-
-            startScale = map_zoom.scaleX;
-        }
-
-        else if (args.scale && args.scale !== 1) {
-            let newScale = startScale * args.scale;
-            newScale = Math.min(8, newScale);
-            newScale = Math.max(0.125, newScale);
-
-            map_zoom.scaleX = newScale;
-            map_zoom.scaleY = newScale;
-        }
-    });
-
-    map_zoom.on(gestures.GestureTypes.pan, function (args) {
-        if (args.state === 1) {
-            prevDeltaX = 0;
-            prevDeltaY = 0;
-        }
-        else if (args.state === 2) {
-            map_zoom.translateX += args.deltaX - prevDeltaX;
-            map_zoom.translateY += args.deltaY - prevDeltaY;
-
-            prevDeltaX = args.deltaX;
-            prevDeltaY = args.deltaY;
-        }
-    });
-
-    map_zoom.on(gestures.GestureTypes.doubleTap, function (args) {
-        console.log("DOUBLE TAP");
-        map_zoom.animate({
-            translate: { x: 0, y: 0 },
-            scale: { x: 1, y: 1 },
-            curve: "easeOut",
-            duration: 300
-        });
-    });
 
     id = page.navigationContext.id;
     data = page.navigationContext.data;
@@ -691,12 +627,13 @@ function getDataCache() {
     return cache_data;
 }
 
+let url_map;
 function print_map(id, prod, output, data)
 {
     var curr_data = getDataCache();
     console.log("DATA CACHE: ", curr_data);
 
-    var url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output + "&rand=" + curr_data;
+    url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output + "&rand=" + curr_data;
     console.log("MAP: " + url_map);
 
     imageSource.fromUrl(url_map)
@@ -1065,6 +1002,22 @@ exports.showModal = function (args) {
                 pageData.set("data", giorno+"/"+mese+"/"+anno+" "+ora+":00");
                 print_meteo(id, data);
                 print_map(id, prod, output, data);
+            }
+        },
+        false
+    );
+};
+
+exports.onTapMap = function (args) {
+    const page = args.object.page;
+    page.showModal(
+        "./modal_map/modal_map",
+        {
+            context: url_map
+        },
+        function closeCallback(result) {
+            if (result) {
+
             }
         },
         false

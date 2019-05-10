@@ -1,6 +1,8 @@
 const topmost = require("ui/frame").topmost;
 let closeCallback;
 var dialogs = require("tns-core-modules/ui/dialogs");
+const platformModule = require("tns-core-modules/platform");
+
 
 let modal;
 let ora;
@@ -23,6 +25,18 @@ exports.onShownModally = function (args) {
                                                             "05", "06", "07", "08", "09", "10", "11",
                                                             "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
 
+    if(platformModule.device.language.includes("it")) {
+        modal.getViewById("button_close").text = "Chiudi";
+        modal.getViewById("button_confirm").text = "Conferma";
+        modal.getViewById("button_back").text = "Indietro";
+        modal.getViewById("data_text").text = "Seleziona ora: ";
+    }
+    else {
+        modal.getViewById("button_close").text = "Close";
+        modal.getViewById("button_confirm").text = "Confirm";
+        modal.getViewById("button_back").text = "Back";
+        modal.getViewById("data_text").text = "Select hour: ";
+    }
     closeCallback = args.closeCallback; // The closecallback method, which you can call to close the modal
 };
 

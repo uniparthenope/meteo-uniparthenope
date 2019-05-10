@@ -4,14 +4,14 @@
             <StackLayout xmlns:calendar="nativescript-ui-calendar"  >
                 <calendar:RadCalendar height="1000px" dateSelected="onDateSelected"/>
             </StackLayout>
-            <Button class="blue_background_opac" text="Close" tap="close" />
+            <Button class="blue_background_opac" text="" tap="close" id="button_close" />
         </StackLayout>
 
         <StackLayout id="ora" visibility="collapsed" orientation="vertical" width="80%">
-            <Label text="Seleziona ora: " marginBottom="10"/>
+            <Label id="data_text" text="" marginBottom="10"/>
             <ListPicker class="list_picker" id="hours_search" items="{{ listPickerHour }}" selectedIndex="{{ selectedListPickerIndex }}" />
-            <Button class="blue_background_opac" text="Conferma" tap="confirm" marginBottom="10"/>
-            <Button class="blue_background_opac" text="Indietro" tap="back"/>
+            <Button id="button_confirm" class="blue_background_opac" text="" tap="confirm" marginBottom="10"/>
+            <Button id="button_back" class="blue_background_opac" text="" tap="back"/>
         </StackLayout>
     </StackLayout>
 </Page>

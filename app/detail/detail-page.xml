@@ -3,7 +3,7 @@
         <Label text="{{ titolo }}" fontSize="20"></Label>
     </ActionBar>
 
-    <ui:NestedScrollView>
+    <ui:NestedScrollView id="scrollview">
         <StackLayout orientation="vertical" verticalAlignment="top" margin="10 10 10 10">
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
             <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
@@ -205,7 +205,7 @@
                 </StackLayout>
             </StackLayout>
 
-            <StackLayout>
+            <StackLayout tap="onTapMap">
                 <Image id="map" src="{{ map }}" marginTop="15" visibility="{{ _map }}"/>
             </StackLayout>
             <Image src="{{ colorbar1 }}" marginTop="5" visibility="{{ colorbar1_visible }}"/>

@@ -26,5 +26,10 @@ module.exports = {
     detail_vento1: 'Wind',
     detail_pioggia: 'Rain',
     detail_aggregazione: 'Hourly Aggregation: ',
-    detail_ore: 'Hours: '
+    detail_ore: 'Hours: ',
+    zoom_map : "Double tap to zoom.",
+    modal_confirm : "Confirm",
+    modal_back : "Back",
+    modal_ora : "Select hour: ",
+    modal_close : "Chiudi"
 };
