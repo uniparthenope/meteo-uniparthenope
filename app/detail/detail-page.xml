@@ -205,7 +205,9 @@
                 </StackLayout>
             </StackLayout>
 
-            <Image src="{{ map }}" marginTop="15" visibility="{{ _map }}"/>
+            <StackLayout>
+                <Image id="map" src="{{ map }}" marginTop="15" visibility="{{ _map }}"/>
+            </StackLayout>
             <Image src="{{ colorbar1 }}" marginTop="5" visibility="{{ colorbar1_visible }}"/>
             <Image src="{{ colorbar2 }}" marginTop="5" visibility="{{ colorbar2_visible }}"/>
             <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>
