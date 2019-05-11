@@ -41,9 +41,9 @@ async function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
     views.setTextViewText(R.id.temperatura, data1.forecast.t2c + " °C");
     views.setTextViewText(R.id.text_meteo, data1.forecast.text.it);
     views.setTextViewText(R.id.vento, data1.forecast.winds + "  " + data1.forecast.ws10n + " kn");
-    var name_image = data1.forecast.icon;
-    var img = name_image.substr(0, name_image.indexOf('.'));
-    var temp_id = context.getResources().getIdentifier("@drawable/" + img, "layout", context.getPackageName());
+    let image = getImageName(data1.forecast.winds, data1.forecast.ws10n);
+    console.log(image);
+    var temp_id = context.getResources().getIdentifier("@drawable/" + image, "layout", context.getPackageName());
     views.setImageViewResource(R.id.image_meteo, temp_id);
 
     for(let i=1; i<6; i++)
@@ -79,15 +79,21 @@ async function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
 
         let data1 = await response.json();
 
+        console.log("-----------------------------------------------");
         console.log(i);
         console.log(ora);
         console.log(data1['forecast']['icon']);
         console.log(data1['forecast']['winds']);
         console.log(data1['forecast']['ws10n']);
 
-        var name_image = data1['forecast']['icon'];
-        var img = name_image.substr(0, name_image.indexOf('.'));
-        var temp_id = context.getResources().getIdentifier("@drawable/" + img, "layout", context.getPackageName());
+        let dir = data1['forecast']['winds'];
+        let wind = data1['forecast']['ws10n'];
+
+        let image = getImageName(dir, wind);
+        console.log(image);
+
+        var temp_id = context.getResources().getIdentifier("@drawable/" + image, "layout", context.getPackageName());
+        console.log(temp_id);
         var temp_id_1 = context.getResources().getIdentifier("@id/imageDay_" + i, "layout", context.getPackageName());
         views.setImageViewResource(temp_id_1, temp_id);
 
@@ -95,8 +101,11 @@ async function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
         var temp_name = context.getResources().getIdentifier("@id/nameDay_" + i, "layout", context.getPackageName());
         views.setTextViewText(temp_name, ora + ":00");
 
-        var temp_temp = context.getResources().getIdentifier("@id/tempDay_" + i, "layout", context.getPackageName());
-        views.setTextViewText(temp_temp, data1.forecast.winds + "  " + data1.forecast.ws10n);
+        var temp_dir = context.getResources().getIdentifier("@id/dir_" + i, "layout", context.getPackageName());
+        views.setTextViewText(temp_dir, data1['forecast']['winds']);
+
+        var temp_wind = context.getResources().getIdentifier("@id/wind_" + i, "layout", context.getPackageName());
+        views.setTextViewText(temp_wind, data1['forecast']['ws10n'] + " kn");
     }
 
     var startAppIntent = new android.content.Intent(context, com.tns.NativeScriptActivity.class); // the activity defined in AndroidManifest
@@ -107,4 +116,46 @@ async function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
     views.setOnClickPendingIntent(R.id.go_app, pI2);
 
     appWidgetManager.updateAppWidget(widgetId, views);
+}
+
+function getImageName(dir, wind) {
+    let image_name;
+    let _wind;
+    let _dir;
+
+    if(dir === "NNE" || dir === "ENE")
+        _dir = "ne";
+
+    else if(dir === "SSE" || dir === "ESE")
+        _dir = "se";
+
+    else if(dir === "SSW" || dir === "WSW")
+        _dir = "sw";
+
+    else if(dir === "WNW" || dir === "NNW")
+        _dir = "nw";
+
+    else
+        _dir = dir.toLowerCase();
+
+    if(wind >=0 && wind < 11)
+        _wind = 10;
+    else if(wind >=11 && wind < 21)
+        _wind = 20;
+    else if(wind >= 21 && wind < 31)
+        _wind = 30;
+    else if(wind >=31 && wind < 41)
+        _wind = 40;
+    else if(wind >=41 && wind < 51)
+        _wind = 50;
+    else if(wind >=51 && wind < 61)
+        _wind = 60;
+    else if(wind >= 61 && wind < 71)
+        _wind = 70;
+    else if(wind >=71)
+        _wind = 100;
+
+    image_name = "wind_" + _dir + "_" + _wind;
+
+    return image_name;
 }

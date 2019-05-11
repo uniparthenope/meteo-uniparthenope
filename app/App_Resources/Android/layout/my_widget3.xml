@@ -30,6 +30,7 @@
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="25dp"
+                android:background="@drawable/white_background_wind"
                 android:src="@drawable/icon"/>
 
 
@@ -95,6 +96,7 @@
                     android:layout_height="25dip"
                     android:layout_gravity="center"
                     android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -111,7 +113,17 @@
                         android:layout_gravity="center"
                 />
                 <TextView
-                        android:id="@+id/tempDay_1"
+                        android:id="@+id/dir_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+
+                <TextView
+                        android:id="@+id/wind_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LUN"
@@ -135,6 +147,7 @@
                     android:layout_height="25dip"
                     android:layout_gravity="center"
                     android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -153,7 +166,16 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tempDay_2"
+                        android:id="@+id/dir_2"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/wind_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
@@ -161,6 +183,7 @@
                 />
             </LinearLayout>
         </LinearLayout>
+
         <!--   3   -->
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -174,6 +197,7 @@
                     android:layout_height="25dip"
                     android:layout_gravity="center"
                     android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -192,7 +216,16 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tempDay_3"
+                        android:id="@+id/dir_3"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/wind_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
@@ -214,6 +247,7 @@
                     android:layout_height="25dip"
                     android:layout_gravity="center"
                     android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -232,7 +266,16 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tempDay_4"
+                        android:id="@+id/dir_4"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/wind_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
@@ -254,6 +297,7 @@
                     android:layout_height="25dip"
                     android:layout_gravity="center"
                     android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
                     android:src="@drawable/icon"/>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -272,7 +316,16 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tempDay_5"
+                        android:id="@+id/dir_5"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/wind_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="LUN"
                         android:textColor="#ffffff"
                         android:textSize="11dip"
