@@ -44,9 +44,6 @@ exports.close = function (args) {
     const page = topmost().currentPage;
     if (page && page.modal) {
         page.modal.closeModal();
-        /* The closecallback still does get called, so you need to handle it
-           you can also simply call closeCallback() by passing nothing to close the modal
-           this is just an alternate way */
     }
 };
 

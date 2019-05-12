@@ -49,11 +49,11 @@
                     </StackLayout>
 
                     <StackLayout class="blue_background" marginLeft="10" marginTop="12" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0" width="220">
-                        <StackLayout verticalAlignment="center" horizontalAlignment="center">
+                        <StackLayout verticalAlignment="center" horizontalAlignment="center" tap="onTapDetail">
                             <Label text="{{ position }}" style="font-weight:bold; flex-grow:1; font-size: 16" margin="5 5 0 5"/>
                         </StackLayout>
 
-                        <StackLayout orientation="horizontal" marginTop="5">
+                        <StackLayout orientation="horizontal" marginTop="5" tap="onTapDetail">
                             <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="left" height="50" width="70">
                                 <Image src="{{ icon }}" height="50" margin="0 10 0 10"/>
                             </StackLayout>
