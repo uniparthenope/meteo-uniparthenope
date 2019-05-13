@@ -14,6 +14,7 @@ var dialog = require("tns-core-modules/ui/dialogs");
 require( "nativescript-master-technology" );
 const platformModule = require("tns-core-modules/platform");
 const perm_loc = require("nativescript-advanced-permissions/location");
+const Color = require("tns-core-modules/color").Color;
 
 var drawer;
 var oLangWebViewInterface;
@@ -74,6 +75,8 @@ exports.pageLoaded = function(args)
   home.set("layer_temp", "collapsed");
 
   drawer = view.getViewById(page,"sideDrawer");
+
+  let search_view = page.getViewById("autocomplete");
 
   console.log("GLOBAL ID: " + global_id);
 
@@ -756,6 +759,21 @@ function didAutoComplete  (args) {
   });
 }
 exports.didAutoComplete = didAutoComplete;
+
+exports.onAutoCompleteTextViewLoaded = function(args){
+  console.log("QUI");
+  const nativeView = (args.object).nativeView, color = new Color("#ffffff");
+  console.log(nativeView);
+
+  if (platformModule.isIOS) {
+    nativeView.textField.textColor = color.ios;
+  }
+
+  if (platformModule.isAndroid) {
+    nativeView.getTextField().setTextColor(color.android);
+    nativeView.getTextField().setHintTextColor(color.android);
+  }
+};
 
 exports.toggleDrawer = function() {
   drawer.toggleDrawerState();

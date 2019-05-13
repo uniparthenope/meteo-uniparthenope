@@ -20,6 +20,7 @@ SearchBar{
     tab-text-color: white;
     textColorHint:white;
 }
+
 .btn {
     font-size: 18;
     color: rgba(30,76,117,1);

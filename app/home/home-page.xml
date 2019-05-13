@@ -48,9 +48,12 @@
                         <Image src="~/images/arrow.png"></Image>
                     </StackLayout>
 
-                    <StackLayout class="blue_background_action_bar" orientation="vertical" verticalAlignment="top" row="0" col="0"  height="40" width="100%">
-                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="center" horizontalAlignment="center" row="0" col="0" width="100%">
-                            <lv:RadAutoCompleteTextView hint="{{ _L('home_ricerca') }}" id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete">
+                    <GridLayout class="blue_background_action_bar" verticalAlignment="top" row="0" col="0"  height="50">
+                        <StackLayout width="10%" horizontalAlignment="left" verticalAlignment="center">
+                            <Image src="~/images/search.png" width="20"></Image>
+                        </StackLayout>
+                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="center" horizontalAlignment="right" row="0" col="0" width="90%">
+                            <lv:RadAutoCompleteTextView hint="{{ _L('home_ricerca') }}" id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete" loaded="onAutoCompleteTextViewLoaded">
                                 <lv:RadAutoCompleteTextView.suggestionView>
                                     <lv:SuggestionView suggestionViewHeight="150" class="blue_col">
                                         <lv:SuggestionView.suggestionItemTemplate>
@@ -62,7 +65,7 @@
                                 </lv:RadAutoCompleteTextView.suggestionView>
                             </lv:RadAutoCompleteTextView>
                         </StackLayout>
-                    </StackLayout>
+                    </GridLayout>
 
                     <StackLayout class="blue_background" marginLeft="10" marginTop="60" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0" width="200">
                         <StackLayout verticalAlignment="center" horizontalAlignment="center" tap="onTapDetail" marginTop="10" marginLeft="5" marginRight="5">
