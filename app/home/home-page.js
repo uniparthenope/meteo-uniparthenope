@@ -755,6 +755,8 @@ function didAutoComplete  (args) {
       autocompletetxt.focus();
       utils.ad.showSoftInput(autocompletetxt.nativeView);
       utils.ad.dismissSoftInput();
+      const nativeView = (args.object).nativeView;
+      nativeView.getTextField().setText("");
     }
   });
 }
