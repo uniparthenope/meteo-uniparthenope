@@ -30,6 +30,7 @@ var nome_giorno = ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"];
 var name_day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var temp_data;
 var gps_on = false;
+var box_place = false;
 var latitudine;
 var longitudine;
 let page;
@@ -151,6 +152,7 @@ exports.pageLoaded = function(args)
 
               if(latitudine.includes("-") || longitudine.includes("-")){
                 home.set("current_position", "collapsed");
+                box_place = false;
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
@@ -215,6 +217,7 @@ exports.pageLoaded = function(args)
                     //console.log(data1);
                     if (data1.result == "ok") {
                       home.set("current_position", "visible");
+                      box_place = true;
                       if (appSetting.getNumber("Temperatura", 0) == 0)
                         home.set("temp", data1.forecast.t2c + " °C");
                       else if (appSetting.getNumber("Temperatura", 0) == 1) {
@@ -233,6 +236,7 @@ exports.pageLoaded = function(args)
                       home.set("wind_direction", data1.forecast.winds);
                       home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
                     } else if (data1.result == "error") {
+                      box_place = false;
                       home.set("current_position", "collapsed");
                       dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
                     }
@@ -264,6 +268,8 @@ exports.pageLoaded = function(args)
           }, function (e) {
             dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
             home.set("current_position", "collapsed");
+            box_place = false;
+
             setTimeout(function () {
               oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
             }, 800);
@@ -284,6 +290,7 @@ exports.pageLoaded = function(args)
       }, function (e) {
         gps_on = false;
         home.set("current_position", "collapsed");
+        box_place = false;
 
         setTimeout(function () {
           oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
@@ -341,6 +348,7 @@ exports.pageLoaded = function(args)
 
         if (data1.result == "ok") {
           home.set("current_position", "visible");
+          box_place = true;
           if (appSetting.getNumber("Temperatura", 0) == 0)
             home.set("temp", data1.forecast.t2c + " °C");
           else if (appSetting.getNumber("Temperatura", 0) == 1) {
@@ -360,6 +368,7 @@ exports.pageLoaded = function(args)
           home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
         } else if (data1.result == "error") {
           home.set("current_position", "collapsed");
+          box_place = false;
           dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
         }
       })
@@ -441,31 +450,35 @@ function send_data() {
   var position = home.get("position");
   console.log(position);
 
-  fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-    if (data1.result == "ok") {
-      home.set("current_position", "visible");
-      if (appSetting.getNumber("Temperatura", 0) == 0)
-        home.set("temp", data1.forecast.t2c + " °C");
-      else if (appSetting.getNumber("Temperatura", 0) == 1) {
-        home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
-      }
-      if (appSetting.getNumber("Vento", 0) == 0)
-        home.set("wind", data1.forecast.ws10n + " kn");
-      else if (appSetting.getNumber("Vento", 0) == 1) {
-        home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
-      } else if (appSetting.getNumber("Vento", 0) == 2) {
-        home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
-      } else if (appSetting.getNumber("Vento", 0) == 3) {
-        home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
-      }
+  if(box_place){
+    fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
+      if (data1.result == "ok") {
+        home.set("current_position", "visible");
+        box_place = true;
+        if (appSetting.getNumber("Temperatura", 0) == 0)
+          home.set("temp", data1.forecast.t2c + " °C");
+        else if (appSetting.getNumber("Temperatura", 0) == 1) {
+          home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+        }
+        if (appSetting.getNumber("Vento", 0) == 0)
+          home.set("wind", data1.forecast.ws10n + " kn");
+        else if (appSetting.getNumber("Vento", 0) == 1) {
+          home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+        } else if (appSetting.getNumber("Vento", 0) == 2) {
+          home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+        } else if (appSetting.getNumber("Vento", 0) == 3) {
+          home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+        }
 
-      home.set("wind_direction", data1.forecast.winds);
-      home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
-    } else if (data1.result == "error") {
-      home.set("current_position", "collapsed");
-      dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
-    }
-  }).catch(error => console.error("[SEARCH] ERROR DATA ", error));
+        home.set("wind_direction", data1.forecast.winds);
+        home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+      } else if (data1.result == "error") {
+        home.set("current_position", "collapsed");
+        box_place = false;
+        dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+      }
+    }).catch(error => console.error("[SEARCH] ERROR DATA ", error));
+  }
 }
 
 function onTapBack()
@@ -667,6 +680,7 @@ function didAutoComplete  (args) {
   }
   place_selected = _name;
   console.log("POSTO : " + place_selected);
+  box_place = true;
 
   let url = url_api + "places/search/byname/" + place_selected;
   url = url.replace(/ /g, "%20");
@@ -725,6 +739,7 @@ function didAutoComplete  (args) {
       //console.log(data1);
       if (data1.result == "ok") {
         home.set("current_position", "visible");
+        box_place = true;
 
         home.set("position", place_selected);
         if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -746,6 +761,7 @@ function didAutoComplete  (args) {
         home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
       } else if (data1.result == "error") {
         home.set("current_position", "collapsed");
+        box_place = false;
         dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
       }
     }).catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
@@ -840,6 +856,8 @@ function onItemTap(args) {
   place_selected = (myPref.getItem(index).title);
   console.log("POSTO : " + place_selected);
 
+  box_place = true;
+
   let url = url_api + "places/search/byname/" + place_selected;
   url = url.replace(/ /g, "%20");
   console.log(url);
@@ -897,6 +915,7 @@ function onItemTap(args) {
       //console.log(data1);
       if (data1.result == "ok") {
         home.set("current_position", "visible");
+        box_place = true;
 
         home.set("position", place_selected);
         if (appSetting.getNumber("Temperatura", 0) == 0)
@@ -918,6 +937,7 @@ function onItemTap(args) {
         home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
       } else if (data1.result == "error") {
         home.set("current_position", "collapsed");
+        box_place = false;
         dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
       }
     })
