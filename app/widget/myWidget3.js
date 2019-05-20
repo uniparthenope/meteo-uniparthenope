@@ -14,7 +14,7 @@ android.appwidget.AppWidgetProvider.extend("com.tns.Third", {
     }
 });
 
-async function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
+function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
     console.log(appSetting.getString("lastKnownPosition", "com63049"));
     console.log(appSetting.getString("lastKnownPositionName", "Comune di Napoli"));
 
@@ -32,22 +32,22 @@ async function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
 
     let currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
 
-    let response = await fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "com63049") + "?date=" + currData + "&opt=place");
+    fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "com63049") + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
+        views = new android.widget.RemoteViews(context.getPackageName(), R.layout.my_widget3);
+        // retrieve our layout and all its views
+        views.setTextViewText(R.id.position, appSetting.getString("lastKnownPositionName", "Comune di Napoli"));
+        views.setTextViewText(R.id.temperatura, data1.forecast.t2c + " °C");
+        views.setTextViewText(R.id.text_meteo, data1.forecast.text.it);
+        views.setTextViewText(R.id.vento, data1.forecast.winds + "  " + data1.forecast.ws10n + " kn");
+        let image = getImageName(data1.forecast.winds, data1.forecast.ws10n);
+        console.log(image);
+        var temp_id = context.getResources().getIdentifier("@drawable/" + image, "layout", context.getPackageName());
+        views.setImageViewResource(R.id.image_meteo, temp_id);
 
-    let data1 = await response.json();
+        appWidgetManager.updateAppWidget(widgetId, views);
+    });
 
-    views = new android.widget.RemoteViews(context.getPackageName(), R.layout.my_widget3);
-    views.setTextViewText(R.id.position, appSetting.getString("lastKnownPositionName", "Comune di Napoli"));
-    views.setTextViewText(R.id.temperatura, data1.forecast.t2c + " °C");
-    views.setTextViewText(R.id.text_meteo, data1.forecast.text.it);
-    views.setTextViewText(R.id.vento, data1.forecast.winds + "  " + data1.forecast.ws10n + " kn");
-    let image = getImageName(data1.forecast.winds, data1.forecast.ws10n);
-    console.log(image);
-    var temp_id = context.getResources().getIdentifier("@drawable/" + image, "layout", context.getPackageName());
-    views.setImageViewResource(R.id.image_meteo, temp_id);
-
-    for(let i=1; i<6; i++)
-    {
+    for(let i=1; i<6; i++){
         if((parseInt(ora)+1) >23)
         {
             ora = "00";
@@ -73,49 +73,40 @@ async function updateWidget(context, appWidgetManager, appWidgetIds, widgetId) {
 
             currData = anno+""+mese+""+giorno+"Z"+ora+"00";
         }
-        console.log("Data: " + currData);
 
-        let response = await fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "com63049") + "?date=" + currData + "&opt=place");
+        fetch(url_api + "products/wrf5/forecast/" + appSetting.getString("lastKnownPosition", "com63049") + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
+            views = new android.widget.RemoteViews(context.getPackageName(), R.layout.my_widget3);
 
-        let data1 = await response.json();
+            let dir = data1['forecast']['winds'];
+            let wind = data1['forecast']['ws10n'];
 
-        console.log("-----------------------------------------------");
-        console.log(i);
-        console.log(ora);
-        console.log(data1['forecast']['icon']);
-        console.log(data1['forecast']['winds']);
-        console.log(data1['forecast']['ws10n']);
+            let image = getImageName(dir, wind);
 
-        let dir = data1['forecast']['winds'];
-        let wind = data1['forecast']['ws10n'];
-
-        let image = getImageName(dir, wind);
-        console.log(image);
-
-        var temp_id = context.getResources().getIdentifier("@drawable/" + image, "layout", context.getPackageName());
-        console.log(temp_id);
-        var temp_id_1 = context.getResources().getIdentifier("@id/imageDay_" + i, "layout", context.getPackageName());
-        views.setImageViewResource(temp_id_1, temp_id);
+            var temp_id = context.getResources().getIdentifier("@drawable/" + image, "layout", context.getPackageName());
+            var temp_id_1 = context.getResources().getIdentifier("@id/imageDay_" + i, "layout", context.getPackageName());
+            views.setImageViewResource(temp_id_1, temp_id);
 
 
-        var temp_name = context.getResources().getIdentifier("@id/nameDay_" + i, "layout", context.getPackageName());
-        views.setTextViewText(temp_name, ora + ":00");
+            var temp_name = context.getResources().getIdentifier("@id/nameDay_" + i, "layout", context.getPackageName());
+            let ora = (data1['forecast']['dateTime']).substring(9,11);
+            views.setTextViewText(temp_name, ora + ":00");
 
-        var temp_dir = context.getResources().getIdentifier("@id/dir_" + i, "layout", context.getPackageName());
-        views.setTextViewText(temp_dir, data1['forecast']['winds']);
+            var temp_dir = context.getResources().getIdentifier("@id/dir_" + i, "layout", context.getPackageName());
+            views.setTextViewText(temp_dir, data1['forecast']['winds']);
 
-        var temp_wind = context.getResources().getIdentifier("@id/wind_" + i, "layout", context.getPackageName());
-        views.setTextViewText(temp_wind, data1['forecast']['ws10n'] + " kn");
+            var temp_wind = context.getResources().getIdentifier("@id/wind_" + i, "layout", context.getPackageName());
+            views.setTextViewText(temp_wind, data1['forecast']['ws10n'] + " kn");
+
+            var startAppIntent = new android.content.Intent(context, com.tns.NativeScriptActivity.class); // the activity defined in AndroidManifest
+            startAppIntent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+
+            var pI2 = android.app.PendingIntent.getActivity(context, 0, startAppIntent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
+
+            views.setOnClickPendingIntent(R.id.go_app, pI2);
+
+            appWidgetManager.updateAppWidget(widgetId, views);
+        });
     }
-
-    var startAppIntent = new android.content.Intent(context, com.tns.NativeScriptActivity.class); // the activity defined in AndroidManifest
-    startAppIntent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-
-    var pI2 = android.app.PendingIntent.getActivity(context, 0, startAppIntent, android.app.PendingIntent.FLAG_UPDATE_CURRENT);
-
-    views.setOnClickPendingIntent(R.id.go_app, pI2);
-
-    appWidgetManager.updateAppWidget(widgetId, views);
 }
 
 function getImageName(dir, wind) {
