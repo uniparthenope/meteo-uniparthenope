@@ -29,6 +29,7 @@
         <activity
                 android:name="com.tns.NativeScriptActivity"
                 android:label="MeteoUniparthenope"
+                android:windowSoftInputMode = "adjustPan"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:theme="@style/LaunchScreenTheme">
 
