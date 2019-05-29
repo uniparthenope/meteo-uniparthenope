@@ -68,3 +68,9 @@ SearchBar{
 .blue_col {
     color: rgba(30,76,117,1);
 }
+
+.class_image_bar{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
