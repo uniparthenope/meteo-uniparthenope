@@ -111,6 +111,14 @@
                         </StackLayout>
 
                         <StackLayout>
+                            <GridLayout horizontalAlignment="center" width="100%" columns="*,*,*,*,*,auto" backgroundColor="black" height="50px" opacity="0.8" visibility="{{ layer_vento }}">
+                                <Label col="0" text="0" fontSize="11" marginLeft="5" color="red"/>
+                                <Label col="1" text="0.25" fontSize="11" color="red"/>
+                                <Label col="2" text="0.45" fontSize="11" color="red"/>
+                                <Label col="3" text="0.55" fontSize="11" color="red"/>
+                                <Label col="4" text="0.75" fontSize="11" color="red"/>
+                                <Label col="5" text="1%" fontSize="11" marginRight="5" color="red"/>
+                            </GridLayout>
                             <Image id="img1" height="50px" opacity="0.9" src="~/images/colorbar/bar_temp_windy.png" stretch="aspectFill" visibility="{{ layer_temp}}"></Image>
                             <Image id="img2" height="50px" width="100%" opacity="0.9" src="~/images/colorbar/bar_nuvole_windy.png" stretch="aspectFill" visibility="{{ layer_nuvole }}"></Image>
                             <Image id="img3" height="50px" opacity="0.8" src="~/images/colorbar/bar_pioggia_windy.png" stretch="aspectFill" visibility="{{ layer_pioggia }}"></Image>
