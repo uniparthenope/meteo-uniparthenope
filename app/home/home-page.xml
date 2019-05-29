@@ -111,11 +111,11 @@
                         </StackLayout>
 
                         <StackLayout>
-                            <Image opacity="0.9" src="~/images/colorbar/bar_temp_windy.png"  visibility="{{ layer_temp}}"></Image>
-                            <Image opacity="0.9" src="~/images/colorbar/bar_nuvole_windy.png"  visibility="{{ layer_nuvole }}"></Image>
-                            <Image opacity="0.8" src="~/images/colorbar/bar_pioggia_windy.png"  visibility="{{ layer_pioggia }}"></Image>
-                            <Image opacity="0.8" src="~/images/colorbar/bar_neve_windy.png"  visibility="{{ layer_neve }}"></Image>
-                            <Image opacity="0.8" src="~/images/colorbar/bar_vento_windy.png"  visibility="{{ layer_vento }}"></Image>
+                            <Image id="img1" height="50px" opacity="0.9" src="~/images/colorbar/bar_temp_windy.png" stretch="aspectFill" visibility="{{ layer_temp}}"></Image>
+                            <Image id="img2" height="50px" width="100%" opacity="0.9" src="~/images/colorbar/bar_nuvole_windy.png" stretch="aspectFill" visibility="{{ layer_nuvole }}"></Image>
+                            <Image id="img3" height="50px" opacity="0.8" src="~/images/colorbar/bar_pioggia_windy.png" stretch="aspectFill" visibility="{{ layer_pioggia }}"></Image>
+                            <Image id="img4" height="50px" opacity="0.8" src="~/images/colorbar/bar_neve_windy.png" stretch="aspectFill" visibility="{{ layer_neve }}"></Image>
+                            <Image id="img5" height="50px" opacity="0.8" src="~/images/colorbar/bar_vento_windy.png" stretch="aspectFill" visibility="{{ layer_vento }}"></Image>
                         </StackLayout>
                     </StackLayout>
                 </GridLayout>
