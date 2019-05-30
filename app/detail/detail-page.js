@@ -13,6 +13,7 @@ require("nativescript-accordion");
 const platformModule = require("tns-core-modules/platform");
 const http = require("http");
 var nativescript_webview_interface_1 = require("nativescript-webview-interface");
+var utilityModule = require("utils/utils");
 
 
 var press;
@@ -46,6 +47,7 @@ let altezza;
 var _data;
 var application = require("application");
 let page;
+var oLangWebViewInterface;
 
 function pageLoaded(args) {
     page = args.object;
@@ -101,6 +103,17 @@ function pageLoaded(args) {
     output = "gen";
     step = "0";
     hour = "24";
+
+    var webView = page.getViewById('webView');
+    webView.on('loadStarted', (args) => {
+        console.log("QUI: " + args.url);
+        if(args.url.includes(".com")){
+            utilityModule.openUrl(args.url);
+            oLangWebViewInterface.destroy();
+            setupWebViewInterface(page);
+            return true;
+        }
+    });
 
     setTimeout(function () {
         oLangWebViewInterface.emit("lingua", {lingua:platformModule.device.language});
@@ -956,8 +969,6 @@ function onTapBack()
 }
 exports.onTapBack = onTapBack;
 
-
-var oLangWebViewInterface;
 function setupWebViewInterface(page)
 {
     var webView = page.getViewById('webView');

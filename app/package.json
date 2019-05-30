@@ -5,6 +5,5 @@
     },
     "main": "app.js",
     "name": "tns-template-blank",
-    "version": "3.1.1",
-    "profiling": "timeline"
+    "version": "3.1.1"
 }
