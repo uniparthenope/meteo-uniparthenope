@@ -15,6 +15,8 @@ require( "nativescript-master-technology" );
 const platformModule = require("tns-core-modules/platform");
 const perm_loc = require("nativescript-advanced-permissions/location");
 const Color = require("tns-core-modules/color").Color;
+let BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
+let barcodescanner = new BarcodeScanner();
 
 var drawer;
 var oLangWebViewInterface;
@@ -34,10 +36,8 @@ var box_place = false;
 var latitudine;
 var longitudine;
 let page;
-var homeViewModel = new HomeViewModel();
 var preferiti;
 var myPref = new ObservableArray();
-var application = require("application");
 
 function setupWebViewInterface(page)
 {
@@ -1004,3 +1004,90 @@ exports.showModal = function (args) {
       false
   );
 };
+
+function QRCode(){
+  barcodescanner.hasCameraPermission().then(permitted => {
+    if(permitted)
+      scan();
+    else{
+      barcodescanner.requestCameraPermission().then(
+          function () {
+            console.log("Camera permission requested");
+
+            scan();
+          });
+    }
+  }, (err) => {
+    alert(err);
+  });
+}
+exports.QRCode = QRCode;
+
+function scan(){
+  barcodescanner.scan({
+    formats: "QR_CODE",
+    cancelLabelBackgroundColor: "#333333", // iOS only, default '#000000' (black)
+    message: "Scansiona un QR-Code per i dettagli sul place.", // Android only, default is 'Place a barcode inside the viewfinder rectangle to scan it.'
+    preferFrontCamera: false,     // Android only, default false
+    showFlipCameraButton: false,   // default false
+    showTorchButton: false,       // iOS only, default false
+    torchOn: false,               // launch with the flashlight on (default false)
+    resultDisplayDuration: 500,   // Android only, default 1500 (ms), set to 0 to disable echoing the scanned text
+    beepOnScan: true,             // Play or Suppress beep on scan (default true)
+    orientation: "portrait",
+    openSettingsIfPermissionWasPreviouslyDenied: true, // On iOS you can send the user to the settings app if access was previously denied
+    closeCallback: () => {
+      console.log("Scanner closed @ " + new Date().getTime());
+    }
+  }).then(
+      function (result) {
+        setTimeout(function () {
+          console.log(result.text);
+          if(result.text.startsWith("http://")){
+            let tmp = result.text.split("=");
+            let place = tmp.pop();
+
+            if(place != "") {
+              fetch(url_api + "products/wrf5/forecast/" + place + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
+              if (data1.result == "ok") {
+                home.set("current_position", "visible");
+                box_place = true;
+
+                global_id = place;
+                place_selected = data1.place.long_name.it;
+                oLangWebViewInterface.emit('place_searched', {name: data1.place.long_name.it});
+
+                home.set("position", data1.place.long_name.it);
+                if (appSetting.getNumber("Temperatura", 0) == 0)
+                  home.set("temp", data1.forecast.t2c + " °C");
+                else if (appSetting.getNumber("Temperatura", 0) == 1) {
+                  home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+                }
+                if (appSetting.getNumber("Vento", 0) == 0)
+                  home.set("wind", data1.forecast.ws10n + " kn");
+                else if (appSetting.getNumber("Vento", 0) == 1) {
+                  home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+                } else if (appSetting.getNumber("Vento", 0) == 2) {
+                  home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+                } else if (appSetting.getNumber("Vento", 0) == 3) {
+                  home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+                }
+
+                home.set("wind_direction", data1.forecast.winds);
+                home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+              }
+              else if (data1.result == "error") {
+                home.set("current_position", "collapsed");
+                box_place = false;
+                dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+              }
+            })
+                .catch(error => console.error("[QR-CODE] ERROR", error));}
+          }
+          }, 500);
+      },
+      function (errorMessage) {
+        console.log("No scan. " + errorMessage);
+      }
+  );
+}

@@ -74,3 +74,15 @@ SearchBar{
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.green_iDate{
+    color: #7fff00;
+}
+
+.orange_iDate{
+    color: orange;
+}
+
+.red_iDate{
+    color: red;
+}

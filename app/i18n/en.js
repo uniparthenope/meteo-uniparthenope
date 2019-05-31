@@ -23,6 +23,7 @@ module.exports = {
     detail_vel_vento: 'WIND SPEED:',
     detail_temp_perc: 'WIND CHILL:',
     detail_vento: 'WIND:',
+    idate : 'INITIALIZED AT:',
     detail_vento1: 'Wind',
     detail_pioggia: 'Rain',
     detail_aggregazione: 'Hourly Aggregation: ',

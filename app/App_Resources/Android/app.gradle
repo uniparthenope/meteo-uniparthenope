@@ -5,11 +5,11 @@
 //	compile 'com.android.support:recyclerview-v7:+'
 //}
 
-android {  
-  defaultConfig {  
+android {
+  defaultConfig {
     generatedDensities = []
     applicationId = "it.meteo.uniparthenope"
-    
+
     //override supported platforms
     // ndk {
     //       abiFilters.clear()
@@ -27,8 +27,8 @@ android {
     googlePlayServicesVersion = "11.2.+"
   }
 
-  aaptOptions {  
-    additionalParameters "--no-version-vectors"  
+  aaptOptions {
+    additionalParameters "--no-version-vectors"
   }
 }
 
@@ -46,3 +46,14 @@ if(settingsGradleFile.exists())
 {
     apply from: settingsGradleFile;
 }
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+      def requested = details.requested
+      if (requested.group == 'com.android.support') {
+         if (!requested.name.startsWith("multidex")) {
+          details.useVersion '26.0.+'
+         }
+      }
+    }
+  }

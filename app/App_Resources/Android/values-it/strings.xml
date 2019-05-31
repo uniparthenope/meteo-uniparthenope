@@ -9,6 +9,7 @@
   <string name="detail_aggregazione">"Aggregazione per ore: "</string>
   <string name="detail_pioggia">"Pioggia"</string>
   <string name="detail_vento1">"Vento"</string>
+  <string name="idate">"INIZIALIZZATO ALLE:"</string>
   <string name="detail_vento">"VENTO:"</string>
   <string name="detail_temp_perc">"TEMPERATURA PERCEPITA:"</string>
   <string name="detail_vel_vento">"VELOCITÀ VENTO:"</string>

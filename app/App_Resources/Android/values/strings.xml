@@ -9,6 +9,7 @@
   <string name="detail_aggregazione">"Hourly Aggregation: "</string>
   <string name="detail_pioggia">"Rain"</string>
   <string name="detail_vento1">"Wind"</string>
+  <string name="idate">"INITIALIZED AT:"</string>
   <string name="detail_vento">"WIND:"</string>
   <string name="detail_temp_perc">"WIND CHILL:"</string>
   <string name="detail_vel_vento">"WIND SPEED:"</string>

@@ -51,6 +51,11 @@
                     <Label text="{{ _L('detail_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
                     <Label text="{{ wind }}" verticalAlignment="center" style="font-weight:bold;"/>
                 </FlexboxLayout>
+
+                <FlexboxLayout class="{{ initialized }}" flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 10 10">
+                    <Label text="{{ _L('idate') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                    <Label text="{{ idate }}" verticalAlignment="center" style="font-weight:bold;"/>
+                </FlexboxLayout>
             </StackLayout>
 
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
@@ -88,7 +93,7 @@
                                     <Label text="{{ TMax }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
                                     <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="14%" textWrap="true"/>
                                     <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="14%"/>
-                                    <Image src="{{ image_arrow }}" flexGrow="1" width="5%"></Image>
+                                    <Image src="{{ image_arrow }}" flexGrow="1" width="15"></Image>
                                 </FlexboxLayout>
                             </GridLayout>
                         </accordion:Accordion.itemHeaderTemplate>

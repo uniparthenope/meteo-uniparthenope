@@ -48,11 +48,13 @@
                         <Image src="~/images/arrow.png"></Image>
                     </StackLayout>
 
-                    <GridLayout class="blue_background_action_bar" verticalAlignment="top" row="0" col="0"  height="50">
-                        <StackLayout width="10%" horizontalAlignment="left" verticalAlignment="center">
+                    <GridLayout class="blue_background_action_bar" verticalAlignment="top" row="0" col="0" height="50">
+                        <StackLayout width="17%" horizontalAlignment="left" verticalAlignment="center" orientation="horizontal">
+                            <Image src="~/images/qr-code.png" width="20" marginLeft="10" marginRight="10" tap="QRCode"></Image>
                             <Image src="~/images/search.png" width="20"></Image>
                         </StackLayout>
-                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="center" horizontalAlignment="right" row="0" col="0" width="90%">
+
+                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="center" horizontalAlignment="right" width="83%">
                             <lv:RadAutoCompleteTextView hint="{{ _L('home_ricerca') }}" id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete" loaded="onAutoCompleteTextViewLoaded">
                                 <lv:RadAutoCompleteTextView.suggestionView>
                                     <lv:SuggestionView suggestionViewHeight="150" class="blue_col">
@@ -111,7 +113,7 @@
                         </StackLayout>
 
                         <StackLayout>
-                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_temp_windy.png" height="50px" opacity="0.8" visibility="{{ layer_temp }}">
+                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_temp_windy.png" height="15" opacity="0.8" visibility="{{ layer_temp }}">
                                 <Label col="0" text="-40" fontSize="11" marginLeft="5" color="white"/>
                                 <Label col="1" text="-25" fontSize="11" color="white"/>
                                 <Label col="2" text="-10" fontSize="11" color="white"/>
@@ -124,7 +126,8 @@
                                 <Label col="9" text="40" fontSize="11" color="white"/>
                                 <Label col="10" text="50°C" fontSize="11" marginRight="5" color="white"/>
                             </GridLayout>
-                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_nuvole_windy.png" height="50px" opacity="0.8" visibility="{{ layer_nuvole }}">
+
+                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_nuvole_windy.png" height="15" opacity="0.8" visibility="{{ layer_nuvole }}">
                                 <Label col="0" text="0" fontSize="11" marginLeft="5" color="#a9a9a9"/>
                                 <Label col="1" text="0.25" fontSize="11" color="white"/>
                                 <Label col="2" text="0.45" fontSize="11" color="white"/>
@@ -132,7 +135,8 @@
                                 <Label col="4" text="0.75" fontSize="11" color="white"/>
                                 <Label col="5" text="1%" fontSize="11" marginRight="5" color="white"/>
                             </GridLayout>
-                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_pioggia_windy.png" height="50px" opacity="0.8" visibility="{{ layer_pioggia }}">
+
+                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_pioggia_windy.png" height="15" opacity="0.8" visibility="{{ layer_pioggia }}">
                                 <Label col="0" text="0" fontSize="11" marginLeft="5" color="#a9a9a9"/>
                                 <Label col="1" text="1" fontSize="11" color="white"/>
                                 <Label col="2" text="3" fontSize="11" color="white"/>
@@ -144,7 +148,7 @@
                                 <Label col="8" text="50" fontSize="11" color="white"/>
                                 <Label col="9" text="60mm" fontSize="11" marginRight="5" color="white"/>
                             </GridLayout>
-                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_neve_windy.png" height="50px" opacity="0.8" visibility="{{ layer_neve }}">
+                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_neve_windy.png" height="15" opacity="0.8" visibility="{{ layer_neve }}">
                                 <Label col="0" text="0" fontSize="11" marginLeft="5" color="#a9a9a9"/>
                                 <Label col="1" text="2.5" fontSize="11" color="white"/>
                                 <Label col="2" text="5.5" fontSize="11" color="white"/>
@@ -152,7 +156,7 @@
                                 <Label col="4" text="11.5" fontSize="11" color="white"/>
                                 <Label col="5" text="15.5cm" fontSize="11" marginRight="5" color="white"/>
                             </GridLayout>
-                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_vento_windy.png" height="50px" opacity="0.8" visibility="{{ layer_vento }}">
+                            <GridLayout class="class_image_bar" horizontalAlignment="center" width="100%" columns="*,*,*,*,*,*,*,*,*,auto" backgroundImage="~/images/colorbar/bar_vento_windy.png" height="15" opacity="0.8" visibility="{{ layer_vento }}">
                                 <Label col="0" text="0" fontSize="11" marginLeft="5" color="#a9a9a9"/>
                                 <Label col="1" text="3" fontSize="11" color="white"/>
                                 <Label col="2" text="5" fontSize="11" color="white"/>

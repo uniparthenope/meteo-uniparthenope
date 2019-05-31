@@ -106,7 +106,6 @@ function pageLoaded(args) {
 
     var webView = page.getViewById('webView');
     webView.on('loadStarted', (args) => {
-        console.log("QUI: " + args.url);
         if(args.url.includes(".com")){
             utilityModule.openUrl(args.url);
             oLangWebViewInterface.destroy();
@@ -374,6 +373,26 @@ function print_meteo(id, data)
                 }
 
                 pageData.set("wind", data.forecast.winds);
+
+                let iDate = data.forecast.iDate;
+                let iDateString;
+                iDateString = iDate.substring(9,11) + ":00 del " + iDate.substring(6,8) + " " + iDate.substring(4,6) + " " + iDate.substring(0,4);
+                let date = new Date();
+                let myData = new Date(iDate.substring(0,4), iDate.substring(4,6)-1, iDate.substring(6,8), 0, 0, 0);
+                console.log(date);
+                console.log(myData);
+
+                let diff = date - myData;
+                console.log(diff);
+                if(diff <= 86400000)
+                    pageData.set("initialized", "green_iDate");
+                else if(diff > 86400000 && diff <= 259200000)
+                    pageData.set("initialized", "orange_iDate");
+                else
+                    pageData.set("initialized", "red_iDate");
+
+                pageData.set("idate", iDateString);
+
             }
             else if (data.result == "error")
             {

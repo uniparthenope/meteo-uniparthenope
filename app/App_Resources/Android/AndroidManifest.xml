@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="__PACKAGE__"
           android:versionCode="29"
           android:versionName="2.9">
@@ -10,16 +11,16 @@
             android:largeScreens="true"
             android:xlargeScreens="true"/>
 
-    <uses-sdk
-            android:minSdkVersion="17"
-            android:targetSdkVersion="__APILEVEL__"/>
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
 
     <application
+            tools:replace="android:label"
             android:name="com.tns.NativeScriptApplication"
             android:allowBackup="true"
             android:icon="@drawable/icon"
@@ -76,5 +77,6 @@
                     android:name="android.appwidget.provider"
                     android:resource="@xml/my_widget_info3" />
         </receiver>
+
     </application>
 </manifest>
