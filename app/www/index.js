@@ -166,8 +166,8 @@ var img_array = {
 var domain = "d01";
 var prefix = "reg";
 var map = null;
-var zoom = 5;
-var center = new L.LatLng(40.85, 14.28);
+var zoom;
+var center;
 var controlLayers = null;
 var overlayMaps = {};
 var windLayer = null;
@@ -704,6 +704,20 @@ oWebViewInterface1.on('data', function (cor)
     var mese = cor.mese;
     var giorno = cor.giorno;
     var ora = cor.ora;
+    zoom = cor.zoom;
+    var m = cor.map;
+
+    if (zoom >= 0 && zoom <= 6)
+    {
+        prefix = 'reg';
+    }
+    else if (zoom >= 7 && zoom <= 10)
+    {
+        prefix = 'prov';
+    }
+    else {
+        prefix = 'com';
+    }
 
     currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
     console.log("Data: " + currData);
@@ -711,19 +725,37 @@ oWebViewInterface1.on('data', function (cor)
     if (map == null)
     {
         map = new L.Map('map', {zoomControl: false, attributionControl:false});
+        center = new L.LatLng(cor.lat, cor.lang);
         map.setView(center, zoom);
 
-        var layerInstance = Esri_WorldImagery;
-        layerInstance.addTo(map);
+        if(m === "Satellite"){
+            var layerInstance = Esri_WorldImagery;
+            layerInstance.addTo(map);
+        }
+        else if(m === "Grey Canvas"){
+            var layerInstance = Esri_DarkGreyCanvas;
+            layerInstance.addTo(map);
+        }
+        else if(m === "Open Street Map"){
+            var layerInstance = osmLayer;
+            layerInstance.addTo(map);
+        }
 
         map.on('zoomend', function () {
             zoom = map.getZoom();
             change_domain(map.getBounds());
+            oWebViewInterface1.emit('zoom', {zoom:zoom});
         });
 
         map.on('moveend', function (e) {
             center = map.getBounds().getCenter();
             change_domain(map.getBounds());
+            oWebViewInterface1.emit('center_map', {center:center});
+        });
+
+        map.on('baselayerchange', function (e) {
+            console.log(e.name);
+            oWebViewInterface1.emit('layer_map', {map:e.name});
         });
 
         controlLayers = L.control.activeLayers(baseLayers, overlayMaps, {

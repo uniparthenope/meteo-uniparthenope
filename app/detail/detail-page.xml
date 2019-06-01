@@ -4,7 +4,7 @@
     </ActionBar>
 
     <ui:NestedScrollView id="scrollview">
-        <StackLayout orientation="vertical" verticalAlignment="top" margin="10 10 10 10">
+        <StackLayout orientation="vertical" margin="10 10 10 10">
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
             <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
                 <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="10 10 5 10">

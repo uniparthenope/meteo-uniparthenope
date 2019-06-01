@@ -158,9 +158,12 @@ exports.pageLoaded = function(args)
                   oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
                 }, 800);
 
+
+                console.log("Zoom: " + appSetting.getNumber("zoom", 5));
+
                 setTimeout(function () {
-                  oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
-                }, 800);
+                  oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
+                }, 500);
 
                 setTimeout(function () {
                   oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
@@ -246,7 +249,7 @@ exports.pageLoaded = function(args)
                     }, 500);
 
                     setTimeout(function () {
-                      oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
+                      oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
                     }, 500);
 
                     setTimeout(function () {
@@ -275,9 +278,8 @@ exports.pageLoaded = function(args)
             }, 800);
 
             setTimeout(function () {
-              oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
-            }, 800);
-
+              oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
+            }, 500);
             setTimeout(function () {
               oLangWebViewInterface.emit('settings', {
                 gradi: appSetting.getNumber("Temperatura", 0),
@@ -297,8 +299,8 @@ exports.pageLoaded = function(args)
         }, 800);
 
         setTimeout(function () {
-          oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora});
-        }, 800);
+          oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
+        }, 500);
 
         setTimeout(function () {
           oLangWebViewInterface.emit('settings', {
@@ -623,6 +625,21 @@ function listenLangWebViewEvents()
       home.set("layer_temp", "visible");
     else
       home.set("layer_temp", "collapsed");
+  });
+
+  oLangWebViewInterface.on('zoom', function (data) {
+    console.log("Zoom: " + data.zoom);
+    appSetting.setNumber("zoom", data.zoom);
+  });
+
+  oLangWebViewInterface.on('layer_map', function (data) {
+    console.log("Mappa: " + data.map);
+    appSetting.setString("map", data.map);
+  });
+
+  oLangWebViewInterface.on('center_map', function (data) {
+    appSetting.setNumber("lat_center", data.center.lat);
+    appSetting.setNumber("lang_center", data.center.lng);
   });
 }
 

@@ -49,12 +49,11 @@
                     </StackLayout>
 
                     <GridLayout class="blue_background_action_bar" verticalAlignment="top" row="0" col="0" height="50">
-                        <StackLayout width="17%" horizontalAlignment="left" verticalAlignment="center" orientation="horizontal">
-                            <Image src="~/images/qr-code.png" width="20" marginLeft="10" marginRight="10" tap="QRCode"></Image>
-                            <Image src="~/images/search.png" width="20"></Image>
+                        <StackLayout width="10%" horizontalAlignment="left" verticalAlignment="center">
+                            <Image src="~/images/search.png" width="20" marginLeft="5"></Image>
                         </StackLayout>
 
-                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="center" horizontalAlignment="right" width="83%">
+                        <StackLayout xmlns:lv="nativescript-ui-autocomplete" verticalAlignment="center" horizontalAlignment="center" width="80%">
                             <lv:RadAutoCompleteTextView hint="{{ _L('home_ricerca') }}" id="autocomplete" items="{{ posti }}" completionMode="Contains" suggestMode="Suggest" textChanged="onTextChanged" didAutoComplete="didAutoComplete" loaded="onAutoCompleteTextViewLoaded">
                                 <lv:RadAutoCompleteTextView.suggestionView>
                                     <lv:SuggestionView suggestionViewHeight="150" class="blue_col">
@@ -66,6 +65,10 @@
                                     </lv:SuggestionView>
                                 </lv:RadAutoCompleteTextView.suggestionView>
                             </lv:RadAutoCompleteTextView>
+                        </StackLayout>
+
+                        <StackLayout width="10%" horizontalAlignment="right" verticalAlignment="center">
+                            <Image src="~/images/qr-code.png" width="20" tap="QRCode" marginRight="5"></Image>
                         </StackLayout>
                     </GridLayout>
 
