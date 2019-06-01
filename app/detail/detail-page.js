@@ -393,7 +393,11 @@ function print_meteo(id, data)
 
 function set_iDate(iDate) {
     let iDateString;
-    iDateString = iDate.substring(9,11) + ":00 del " + iDate.substring(6,8) + " " + iDate.substring(4,6) + " " + iDate.substring(0,4);
+    if(platformModule.device.language.includes("it"))
+        iDateString = iDate.substring(9,11) + ":00 del " + iDate.substring(6,8) + " " + iDate.substring(4,6) + " " + iDate.substring(0,4);
+    else
+        iDateString = iDate.substring(9,11) + ":00 of " + iDate.substring(6,8) + " " + iDate.substring(4,6) + " " + iDate.substring(0,4);
+
     let date = new Date();
     let myData = new Date(iDate.substring(0,4), iDate.substring(4,6)-1, iDate.substring(6,8), 0, 0, 0);
     console.log(date);
