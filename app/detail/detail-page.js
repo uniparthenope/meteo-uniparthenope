@@ -632,17 +632,29 @@ function print_series(id)
     return;
 }
 
-exports.tap = function (args)
-{
-    console.log(args.object.selectedIndexes[0]);
-    console.log(pageData.get("altezza"));
+exports.onChange = function(args){
+    console.log("Index changed: " + args.index);
+};
 
-    if (pageData.get("altezza") >= 0 && pageData.get("altezza") <= 315 && args.object.selectedIndexes[0] == undefined) {
+let temp_index = -1;
+exports.tapped = function(args){
+    if(args.index != temp_index){
+        temp_index = args.index;
+        for(let i=0; i<items.length; i++){
+            if(i == temp_index){
+                items.getItem(temp_index).image_arrow = "~/images/down.png";
+            }
+            else {
+                items.getItem(i).image_arrow = "~/images/next.png";
+            }
+            page.getViewById("accordion").refresh();
+        }
         pageData.set("altezza", 1350);
     }
-    else if (pageData.get("altezza") >= 1350 && args.object.selectedIndexes[0] == undefined) {
-        pageData.set("altezza", 1350);
-    } else if (pageData.get("altezza") >= 1350 && args.object.selectedIndexes[0] != undefined) {
+    else if(temp_index == args.index){
+        items.getItem(args.index).image_arrow = "~/images/next.png";
+        page.getViewById("accordion").refresh();
+        temp_index = -1;
         pageData.set("altezza", altezza);
     }
 };
