@@ -54,6 +54,11 @@ SearchBar{
     border-radius: 10dp;
 }
 
+.blue_background_report{
+    background-color: rgba(30,76,117,0.8);
+    color: white;
+}
+
 .blue_background_opac{
     background-color: rgba(30,76,117,1);
     color: white;

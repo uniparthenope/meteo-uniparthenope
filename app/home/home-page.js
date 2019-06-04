@@ -1108,3 +1108,7 @@ function scan(){
       }
   );
 }
+
+exports.onTapReport = function () {
+  page.frame.navigate("bollettino/bollettino");
+};

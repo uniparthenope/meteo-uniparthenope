@@ -48,6 +48,7 @@
     "nativescript-ui-listview": "5.1.1",
     "nativescript-ui-sidedrawer": "5.1.0",
     "nativescript-webview-interface": "^1.4.2",
+    "nativescript-xml2js": "^0.5.2",
     "tns-core-modules": "5.2.0",
     "tns-i18n": "0.0.10"
   },
