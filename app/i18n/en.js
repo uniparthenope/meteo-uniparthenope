@@ -7,7 +7,7 @@ module.exports = {
     info_logo: 'Logo: Francesco Peluso',
     home_selezione_data: 'Select date: ',
     home_impostazioni: 'Settings',
-    home_bollettino : 'Report',
+    home_bollettino : 'Weather Report',
     home_ricerca: 'Search Place ...',
     home_preferiti: 'Favourites: ',
     impostazioni_titolo: 'Settings',
@@ -33,5 +33,5 @@ module.exports = {
     modal_confirm : "Confirm",
     modal_back : "Back",
     modal_ora : "Select hour: ",
-    modal_close : "Chiudi"
+    modal_close : "Close"
 };
