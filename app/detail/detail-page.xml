@@ -59,7 +59,7 @@
             </StackLayout>
 
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
-            <StackLayout class="white_background_border" marginTop="20" visibility="{{ table_android }}">
+            <StackLayout class="white_background_border" marginTop="20" visibility="{{ table }}">
                 <FlexboxLayout flexDirection="row">
                     <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
                     <StackLayout flexGrow="1" class="font-weight-bold text-center" width="15%">
@@ -115,6 +115,26 @@
                 </accordion:Accordion>
             </StackLayout>
 
+            <StackLayout orientation="vertical" marginTop="10">
+                <StackLayout margin="5 5 5 5">
+                    <dd:DropDown
+                            items="{{ products }}" selectedIndex="{{ selectedIndex }}"
+                            hint = "{{ hint_prod }}"
+                            selectedValue = "{{ selectedValue }}"
+                            opened="dropDownOpened" closed="dropDownClosed"
+                            selectedIndexChanged="dropDownSelectedIndexChanged"
+                            row="0" colSpan="2" />
+                </StackLayout>
+
+                <StackLayout margin="5 5 5 5">
+                    <dd:DropDown items="{{ outputs }}" selectedIndex="{{ selectedIndex1 }}"
+                                 hint="{{ hint_output }}"
+                                 opened="dropDownOpened1" closed="dropDownClosed1"
+                                 selectedIndexChanged="dropDownSelectedIndexChanged1"
+                                 row="0" colSpan="2" />
+                </StackLayout>
+            </StackLayout>
+
             <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
             <StackLayout marginTop="20" class="blue_background_opac" row="0" col="0" orientation="horizontal" height="50" horizontalAlignment="center">
                 <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
@@ -130,6 +150,7 @@
                 </StackLayout>
             </StackLayout>
 
+
             <StackLayout tap="onTapMap">
                 <Image id="map" src="{{ map }}" marginTop="15" visibility="{{ _map }}"/>
             </StackLayout>
@@ -137,7 +158,7 @@
             <Image src="{{ colorbar2 }}" marginTop="5" visibility="{{ colorbar2_visible }}"/>
             <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>
 
-            <StackLayout margin="5 5 5 5">
+            <StackLayout marginTop="10" marginLeft="5" marginRight="5" marginBottom="10">
                 <Label text="{{ _L('detail_aggregazione') }}"></Label>
                 <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
                              hint="{{ hint_steps }}"

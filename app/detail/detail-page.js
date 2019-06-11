@@ -623,10 +623,7 @@ function print_series(id)
             pageData.set("items", items);
             pageData.set("isBusy", false);
             pageData.set("isHeigh", "0");
-            if(platformModule.isAndroid)
-                pageData.set("table_android", "visible");
-            if(platformModule.isIOS)
-                pageData.set("table_ios", "visible");
+            pageData.set("table", "visible");
         }).catch(error => console.error("[LABEL] ERROR DATA", error));
 
     return;
@@ -638,24 +635,26 @@ exports.onChange = function(args){
 
 let temp_index = -1;
 exports.tapped = function(args){
-    if(args.index != temp_index){
-        temp_index = args.index;
-        for(let i=0; i<items.length; i++){
-            if(i == temp_index){
-                items.getItem(temp_index).image_arrow = "~/images/down.png";
+    if(platformModule.isAndroid){
+        if(args.index != temp_index){
+            temp_index = args.index;
+            for(let i=0; i<items.length; i++){
+                if(i == temp_index){
+                    items.getItem(temp_index).image_arrow = "~/images/down.png";
+                }
+                else {
+                    items.getItem(i).image_arrow = "~/images/next.png";
+                }
+                page.getViewById("accordion").refresh();
             }
-            else {
-                items.getItem(i).image_arrow = "~/images/next.png";
-            }
-            page.getViewById("accordion").refresh();
+            pageData.set("altezza", 1350);
         }
-        pageData.set("altezza", 1350);
-    }
-    else if(temp_index == args.index){
-        items.getItem(args.index).image_arrow = "~/images/next.png";
-        page.getViewById("accordion").refresh();
-        temp_index = -1;
-        pageData.set("altezza", altezza);
+        else if(temp_index == args.index){
+            items.getItem(args.index).image_arrow = "~/images/next.png";
+            page.getViewById("accordion").refresh();
+            temp_index = -1;
+            pageData.set("altezza", altezza);
+        }
     }
 };
 
