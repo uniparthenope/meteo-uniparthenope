@@ -7,7 +7,7 @@ module.exports = {
     info_logo: 'Logo: Francesco Peluso',
     home_selezione_data: 'Select date: ',
     home_impostazioni: 'Settings',
-    home_bollettino : 'Weather Report',
+    home_bollettino : 'Weather Reports',
     home_ricerca: 'Search Place ...',
     home_preferiti: 'Favourites: ',
     impostazioni_titolo: 'Settings',
