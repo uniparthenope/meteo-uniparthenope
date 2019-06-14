@@ -791,17 +791,24 @@ function didAutoComplete  (args) {
       const nativeView = (args.object).nativeView;
       nativeView.getTextField().setText("");
     }
+    else{
+      const nativeView = (args.object).nativeView;
+      nativeView.textField.text = "";
+    }
   });
 }
 exports.didAutoComplete = didAutoComplete;
 
+
 exports.onAutoCompleteTextViewLoaded = function(args){
   console.log("QUI");
-  const nativeView = (args.object).nativeView, color = new Color("#ffffff");
-  console.log(nativeView);
+  const nativeView = (args.object).nativeView;
+  let color = new Color("#ffffff");
+  let background = new Color("#1e4c75");
 
   if (platformModule.isIOS) {
     nativeView.textField.textColor = color.ios;
+    nativeView.backgroundColor = background.ios;
   }
 
   if (platformModule.isAndroid) {

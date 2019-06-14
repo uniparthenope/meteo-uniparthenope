@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="modal_close">"Chiudi"</string>
+  <string name="modal_close">"Close"</string>
   <string name="modal_ora">"Select hour: "</string>
   <string name="modal_back">"Back"</string>
   <string name="modal_confirm">"Confirm"</string>
@@ -26,7 +26,7 @@
   <string name="impostazioni_titolo">"Settings"</string>
   <string name="home_preferiti">"Favourites: "</string>
   <string name="home_ricerca">"Search Place ..."</string>
-  <string name="home_bollettino">"Report"</string>
+  <string name="home_bollettino">"Weather Reports"</string>
   <string name="home_impostazioni">"Settings"</string>
   <string name="home_selezione_data">"Select date: "</string>
   <string name="info_logo">"Logo: Francesco Peluso"</string>

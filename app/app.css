@@ -91,3 +91,9 @@ SearchBar{
 .red_iDate{
     color: red;
 }
+
+ListView
+{
+    background-color: transparent;
+    opacity: 0.7;
+}

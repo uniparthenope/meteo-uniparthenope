@@ -9,7 +9,6 @@ var getViewById = require("tns-core-modules/ui/core/view").getViewById;
 const appSetting = require("application-settings");
 var dialog = require("tns-core-modules/ui/dialogs");
 var imageSource = require("image-source");
-require("nativescript-accordion");
 const platformModule = require("tns-core-modules/platform");
 const http = require("http");
 var nativescript_webview_interface_1 = require("nativescript-webview-interface");
@@ -83,8 +82,7 @@ function pageLoaded(args) {
     pageData.set("isHeigh_meteo", "25");
     pageData.set("isBusy_map", true);
     pageData.set("isHeigh_map", "25");
-    pageData.set("table_ios", "collapsed");
-    pageData.set("table_android", "collapsed");
+    pageData.set("table", "collapsed");
     pageData.set("meteo", "collapsed");
     pageData.set("_map", "collapsed");
     pageData.set("graphic", "collapsed");
@@ -394,9 +392,9 @@ function print_meteo(id, data)
 function set_iDate(iDate) {
     let iDateString;
     if(platformModule.device.language.includes("it"))
-        iDateString = iDate.substring(9,11) + ":00 del " + iDate.substring(6,8) + " " + iDate.substring(4,6) + " " + iDate.substring(0,4);
+        iDateString = iDate.substring(9,11) + ":00 del " + iDate.substring(6,8) + "-" + iDate.substring(4,6) + "-" + iDate.substring(0,4);
     else
-        iDateString = iDate.substring(9,11) + ":00 of " + iDate.substring(6,8) + " " + iDate.substring(4,6) + " " + iDate.substring(0,4);
+        iDateString = iDate.substring(9,11) + ":00 of " + iDate.substring(6,8) + "-" + iDate.substring(4,6) + "-" + iDate.substring(0,4);
 
     let date = new Date();
     let myData = new Date(iDate.substring(0,4), iDate.substring(4,6)-1, iDate.substring(6,8), 0, 0, 0);
@@ -629,32 +627,32 @@ function print_series(id)
     return;
 }
 
-exports.onChange = function(args){
-    console.log("Index changed: " + args.index);
-};
-
 let temp_index = -1;
 exports.tapped = function(args){
-    if(platformModule.isAndroid){
-        if(args.index != temp_index){
-            temp_index = args.index;
-            for(let i=0; i<items.length; i++){
-                if(i == temp_index){
-                    items.getItem(temp_index).image_arrow = "~/images/down.png";
-                }
-                else {
-                    items.getItem(i).image_arrow = "~/images/next.png";
-                }
-                page.getViewById("accordion").refresh();
+    let index;
+    if(platformModule.isAndroid)
+        index = args.index;
+    else
+        index = args.parentIndex;
+
+    if(index != temp_index){
+        temp_index = index;
+        for(let i=0; i<items.length; i++){
+            if(i == temp_index){
+                items.getItem(temp_index).image_arrow = "~/images/down.png";
             }
-            pageData.set("altezza", 1350);
-        }
-        else if(temp_index == args.index){
-            items.getItem(args.index).image_arrow = "~/images/next.png";
+            else {
+                items.getItem(i).image_arrow = "~/images/next.png";
+            }
             page.getViewById("accordion").refresh();
-            temp_index = -1;
-            pageData.set("altezza", altezza);
         }
+        pageData.set("altezza", 1350);
+    }
+    else if(temp_index == index){
+        items.getItem(index).image_arrow = "~/images/next.png";
+        page.getViewById("accordion").refresh();
+        temp_index = -1;
+        pageData.set("altezza", altezza);
     }
 };
 

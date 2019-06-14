@@ -25,6 +25,7 @@
                             items="{{ myPref }}"
                             class="list-group"
                             id="listView"
+                            itemLoading="onItemLoading"
                             row="2">
                         <ListView.itemTemplate>
                             <StackLayout class="list-group-item" orientation="horizontal">

@@ -460,7 +460,7 @@ oWebViewInterface1.on("chart", function (cor) {
             axisY= {
                 title: title1,
                 includeZero: false,
-                suffix: " °",
+                suffix: " mm",
                 labelFontSize: 12,
                 titleFontSize: 10
             };

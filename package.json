@@ -5,11 +5,11 @@
   "repository": "<fill-your-repository-here>",
   "nativescript": {
     "id": "it.meteo.uniparthenope",
-    "tns-ios": {
-      "version": "3.4.1"
-    },
     "tns-android": {
-      "version": "5.3.1"
+      "version": "5.4.0"
+    },
+    "tns-ios": {
+      "version": "5.4.2"
     }
   },
   "scripts": {
@@ -49,7 +49,7 @@
     "nativescript-ui-sidedrawer": "5.1.0",
     "nativescript-webview-interface": "^1.4.2",
     "nativescript-xml2js": "^0.5.2",
-    "tns-core-modules": "5.2.0",
+    "tns-core-modules": "^5.4.2",
     "tns-i18n": "0.0.10"
   },
   "devDependencies": {
@@ -57,7 +57,7 @@
     "babel-types": "6.26.0",
     "babylon": "6.18.0",
     "lazy": "1.0.11",
-    "nativescript-dev-webpack": "^0.24.0",
+    "nativescript-dev-webpack": "^0.24.1",
     "tns-platform-declarations": "5.2.0"
   }
 }

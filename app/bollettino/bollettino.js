@@ -1,7 +1,5 @@
-const observableModule = require("tns-core-modules/data/observable");
 const ObservableArray = require("data/observable-array").ObservableArray;
 const Observable = require("data/observable");
-const app = require("tns-core-modules/application");
 let xml2js = require('nativescript-xml2js');
 let fs = require("tns-core-modules/file-system");
 const httpModule = require("tns-core-modules/http");
@@ -13,9 +11,10 @@ let items;
 function onNavigatingTo(args) {
     page = args.object;
     items = new ObservableArray();
-    viewModel = observableModule.fromObject({
+    viewModel = Observable.fromObject({
         items:items
     });
+
 
     let dest = fs.path.join(fs.knownFolders.currentApp().path, "/rss.xml");
     let url = "https://meteo.uniparthenope.it/rss/weatherreports";
@@ -23,15 +22,11 @@ function onNavigatingTo(args) {
         let parser = new xml2js.Parser();
         r.readText().then(function  (data){
             parser.parseString(data, function (err, result) {
-                //console.log(result);
-
                 for(let i=0; i<result.rss.channel[0].item.length; i++)
                 {
-                    console.log(result.rss.channel[0].item[i]);
                     const myHtmlString = result.rss.channel[0].item[i].description.toString();
                     const title = result.rss.channel[0].item[i].title.toString();
                     const date = result.rss.channel[0].item[i].pubDate.toString();
-
                     let data = extractData(date);
 
                     items.push({
@@ -59,8 +54,10 @@ function onNavigatingTo(args) {
 
     page.bindingContext = viewModel;
 }
+
+
 function extractData(data) {
-    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",];
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
     let day = data.substr(5,2);
     let month = data.substr(8,3);

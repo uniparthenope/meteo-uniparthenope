@@ -1,18 +1,17 @@
 <Page class="page"
       navigatingTo="onNavigatingTo"
       actionBarHidden="false"
-      xmlns="http://schemas.nativescript.org/tns.xsd"
-      xmlns:accordion="nativescript-accordion">
+      xmlns="http://schemas.nativescript.org/tns.xsd">
 
     <ActionBar class="blue_background_action_bar">
         <Label class="" text="Bollettino" fontSize="20"></Label>
     </ActionBar>
 
-    <StackLayout>
+    <StackLayout xmlns:accordion="nativescript-accordion">
         <ScrollView height="100%">
-            <accordion:Accordion  items="{{items}}" allowMultiple="false" height="100%">
+            <accordion:Accordion id="accordion" items="{{items}}" allowMultiple="false" height="100%">
                 <accordion:Accordion.itemHeaderTemplate>
-                    <StackLayout horizontalAlignment="center" verticalAlignment="bottom" class="blue_background_report">
+                    <StackLayout horizontalAlignment="center" verticalAlignment="bottom" class="blue_background_report" width="100%">
                         <Label text="{{title}}" horizontalAlignment="center" textWrap="true" margin="5 5 5 5"/>
                         <Label text="{{date_text}}" fontSize="11" margin="5 5 5 5"/>
                     </StackLayout>
@@ -24,6 +23,7 @@
                     </StackLayout>
                 </accordion:Accordion.itemContentTemplate>
             </accordion:Accordion>
+
         </ScrollView>
 
     </StackLayout>
