@@ -19,6 +19,7 @@
   <string name="detail_nuvole">"CLOUDINESS:"</string>
   <string name="detail_meteo">"WEATHER:"</string>
   <string name="detail_temp">"TEMPERATURE:"</string>
+  <string name="impostazioni_mappa">"Map: "</string>
   <string name="impostazioni_posizione">"Position: "</string>
   <string name="impostazioni_pressione">"Pressure: "</string>
   <string name="impostazioni_vento">"Wind: "</string>

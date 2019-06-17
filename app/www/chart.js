@@ -684,18 +684,16 @@ oWebViewInterface1.on("chart", function (cor) {
 
     var chart = new CanvasJS.Chart("chartContainer", options);
 
-    fetch(timeseriesUrl)
-        .then((response) => response.json())
-        .then((data) => {
+    $.getJSON(timeseriesUrl, function(data){
             var timeSeries=data['timeseries'];
             for (var i = 0; i < timeSeries.length; i++) {
-                let date = timeSeries[i].dateTime;
-                let year = date.substring(0,4);
-                let month = date.substring(4, 6);
-                let day = date.substring(6, 8);
-                let hour = date.substring(9, 11);
-                let sDateTime = year + "-" + month + "-" + day + "T" + hour + ":00:00Z";
-                let dateTime = new Date(sDateTime);
+                var date = timeSeries[i].dateTime;
+                var year = date.substring(0,4);
+                var month = date.substring(4, 6);
+                var day = date.substring(6, 8);
+                var hour = date.substring(9, 11);
+                var sDateTime = year + "-" + month + "-" + day + "T" + hour + ":00:00Z";
+                var dateTime = new Date(sDateTime);
 
                 if (prod==='wrf5') {
                     if (output === "gen" || output === "tsp") {
@@ -787,5 +785,5 @@ oWebViewInterface1.on("chart", function (cor) {
 
             oWebViewInterface1.emit("load_chart", {status:"OK"});
 
-        }).catch(error => console.error("[GRAFICO] ERROR DATA ", error));
+        });
 });

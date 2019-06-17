@@ -1,5 +1,4 @@
 var frameModule = require("tns-core-modules/ui/frame");
-var HomeViewModel = require("./home-view-model");
 var geolocation = require("nativescript-geolocation");
 var nativescript_webview_interface_1 = require("nativescript-webview-interface");
 var Observable = require("data/observable");
@@ -59,6 +58,7 @@ exports.pageLoaded = function(args)
     myPref: myPref
   });
 
+
   console.log(preferiti.length);
   myPref.splice(0);
   for(var i=0; i<preferiti.length; i++)
@@ -76,8 +76,6 @@ exports.pageLoaded = function(args)
   home.set("layer_temp", "collapsed");
 
   drawer = view.getViewById(page,"sideDrawer");
-
-  let search_view = page.getViewById("autocomplete");
 
   console.log("GLOBAL ID: " + global_id);
 
@@ -679,7 +677,7 @@ if(platformModule.isAndroid)
   exports.onTextChanged = onTextChanged;
 }
 
-function didAutoComplete  (args) {
+function didAutoComplete (args) {
   let name = (args.text);
   console.log(name);
   var name_new;

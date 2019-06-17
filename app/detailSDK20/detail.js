@@ -13,6 +13,8 @@ var autocompleteModule = require("nativescript-ui-autocomplete");
 var utils = require("tns-core-modules/utils/utils");
 let BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
 let barcodescanner = new BarcodeScanner();
+var geolocation = require("nativescript-geolocation");
+const perm_loc = require("nativescript-advanced-permissions/location");
 
 var press;
 var temp;
@@ -96,8 +98,22 @@ function pageLoaded(args) {
     pageData.set("colorbar2_visible", "collapsed");
     pageData.set("colorbar3_visible", "collapsed");
 
-    id = page.navigationContext.id;
-    data = page.navigationContext.data;
+    data = new Date();
+    global_date = data;
+    max_data = new Date(global_date.getFullYear(), global_date.getMonth(), global_date.getDate() + 5);
+
+    ora = data.getHours();
+    if (ora < 10)
+        ora = '0' + ora;
+    mese = data.getMonth() + 1;
+    if (mese < 10)
+        mese = '0' + mese;
+    giorno = data.getDate();
+    if (giorno < 10)
+        giorno = '0' + giorno;
+    anno = data.getFullYear();
+    data = anno + "" + mese + "" + giorno + "Z" + ora + "00";
+
     console.log("[DATA DETTAGLI]" + data);
 
     prod = "wrf5";
@@ -135,21 +151,82 @@ function pageLoaded(args) {
 
     pageData.set("data", print_data);
 
-    print_chart(id, prod, output, hour, step);
+    console.log("LOCATION PERMISSION: ", perm_loc.hasLocationPermissions());
 
-    print_meteo(id, data);
+    geolocation.enableLocationRequest().then(function () {
+        geolocation.isEnabled().then(function (isEnabled) {
+            geolocation.getCurrentLocation({
+                desiredAccuracy: 3,
+                updateDistance: 10,
+                maximumAge: 10000,
+                timeout: 10000
+            }).then(function (loc) {
+                if (loc) {
+                    latitudine = (loc.latitude).toString();
+                    longitudine = (loc.longitude).toString();
+                    console.log(latitudine);
+                    console.log(longitudine);
 
-    print_series(id);
+                    fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data1) => {
+                        id = data1[0].id;
+                        console.log(id);
 
-    print_map(id, prod, output, data);
+                        print_chart(id, prod, output, hour, step);
 
-    print_prod();
+                        print_meteo(id, data);
 
-    print_output(prod);
+                        print_series(id);
 
-    print_steps();
+                        print_map(id, prod, output, data);
 
-    print_hours();
+                        print_prod();
+
+                        print_output(prod);
+
+                        print_steps();
+
+                        print_hours();
+                    }).catch(error => console.error("[SEARCH] ", error));
+                }
+            }, function (e) {
+                dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
+                id = "com63049";
+                print_chart(id, prod, output, hour, step);
+
+                print_meteo(id, data);
+
+                print_series(id);
+
+                print_map(id, prod, output, data);
+
+                print_prod();
+
+                print_output(prod);
+
+                print_steps();
+
+                print_hours();
+            });
+        });
+    }, function (e) {
+        console.log(e);
+        id = "com63049";
+        print_chart(id, prod, output, hour, step);
+
+        print_meteo(id, data);
+
+        print_series(id);
+
+        print_map(id, prod, output, data);
+
+        print_prod();
+
+        print_output(prod);
+
+        print_steps();
+
+        print_hours();
+    });
 
     page.bindingContext = pageData;
 }
@@ -322,7 +399,7 @@ function print_chart(id, prod, output, hour, step)
 function print_meteo(id, data)
 {
     let url = "https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data + "&opt=place";
-    console.log(url);
+    console.log("Meteo: " + url);
 
     var lingua;
     if(platformModule.device.language == 'it')
@@ -1026,13 +1103,13 @@ function listenLangWebViewEvents()
 {
     oLangWebViewInterface.on('load_chart', function(eventData)
     {
-       console.log(eventData.status);
-       if(eventData.status === "OK")
-       {
-           pageData.set("graphic", "visible");
-           pageData.set("isBusy_graphic", false);
-           pageData.set("isHeigh_graphic", "0");
-       }
+        console.log(eventData.status);
+        if(eventData.status === "OK")
+        {
+            pageData.set("graphic", "visible");
+            pageData.set("isBusy_graphic", false);
+            pageData.set("isHeigh_graphic", "0");
+        }
     });
 }
 
@@ -1141,6 +1218,7 @@ if(platformModule.isAndroid)
 
 exports.didAutoComplete = function (args) {
     id = autocomplete_map.get(args.text);
+    console.log(id);
 
     print_chart(id, prod, output, hour, step);
 

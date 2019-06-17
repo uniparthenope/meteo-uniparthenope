@@ -2,11 +2,10 @@ var frameModule = require("ui/frame");
 var observableModule = require("data/observable");
 var ObservableArray = require("data/observable-array").ObservableArray;
 var Observable = require("data/observable");
-var PageSettingViewModel = require("./settings-view-model");
-var settingViewModel = new PageSettingViewModel();
 const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
 const segmentedBarModule = require("tns-core-modules/ui/segmented-bar");
 const appSettings = require("application-settings");
+const platformModule = require("tns-core-modules/platform");
 
 function pageLoaded(args)
 {
@@ -15,6 +14,7 @@ function pageLoaded(args)
     var temp = appSettings.getNumber("Temperatura", 0);
     var wind = appSettings.getNumber("Vento", 0);
     var press = appSettings.getNumber("Pressione", 0);
+    var map = appSettings.getNumber("Mappa", 0);
 
     setting.set("tempSelection", temp);
     setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
@@ -42,6 +42,26 @@ function pageLoaded(args)
             appSettings.setNumber("Pressione", propertyChangeData.value);
         }
     });
+
+    setting.set("mapSelection", map);
+    setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
+    {
+        if (propertyChangeData.propertyName === "mapSelection")
+        {
+            appSettings.setNumber("Mappa", propertyChangeData.value);
+        }
+    });
+
+    if(platformModule.isAndroid){
+        if(platformModule.device.sdkVersion <= 20)
+            page.getViewById("map").visibility = "collapsed";
+        else
+            page.getViewById("map").visibility = "visible";
+    }
+    else{
+        page.getViewById("map").visibility = "visible";
+    }
+
 
     page.bindingContext = setting;
 }

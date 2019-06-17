@@ -183,16 +183,20 @@ var pressione;
 var temp = 0;
 var wind_speed;
 var pressure;
-var latitudine;
+var latitudine; 
 var longitudine;
-let info_id = "";
-let citta = "";
-let lingua = "";
+var info_id = "";
+var citta = "";
+var lingua = "";
 var temp_string;
 var umidita_string;
 var pressione_string;
 var dir_vento_string;
 var vento_string;
+var meteo_string;
+var nuvole_string;
+var temp_perc_string;
+var vel_vento_string;
 
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: ''
@@ -355,6 +359,7 @@ function addInfoLayer() {
                             dateTime = feature.properties.dateTime;
                             humidity = feature.properties.rh2; //umidity
                             press_sim = null;
+                            meteo =  null;
 
 
                             if(pressione == 0)
@@ -378,11 +383,13 @@ function addInfoLayer() {
                             if(gradi == 0)
                             {
                                 temp = feature.properties.t2c; //temp
+                                temp_chill = feature.properties.wchill;
                                 gradi_sim = "&#176C";
                             }
                             else if(gradi == 1)
                             {
                                 temp = ((feature.properties.t2c * 1.8) + 32).toFixed(2);
+                                temp_chill = ((feature.properties.wchill * 1.8) + 32).toFixed(2);
                                 gradi_sim = "&#176F";
                             }
                             text = feature.properties.text;
@@ -418,6 +425,8 @@ function addInfoLayer() {
                                 gradi_sim = "&#176F";
                             }
                             winds = feature.properties.winds; //winds
+                            meteo = feature.properties['text'][lingua];
+                            nuvole = (feature.properties.clf * 100).toFixed(2) + " %";
 
                             popupString = "<div class='popup' onclick='onClick()'>" +
                                 "<table class='tg' style='undefined;table-layout: fixed; width: 230px'>" +
@@ -431,7 +440,7 @@ function addInfoLayer() {
                                 "<tr>" +
                                 "<td class='tg-7un6'>ID</td>" +
                                 "<td class='tg-7un6' id='info_id'>" + id + "</td>" +
-                                "</tr>"
+                                "</tr>" +
                                 "<tr>" +
                                 "<td class='tg-7un6'>PAESE</td>" +
                                 "<td class='tg-7un6'>" + country + "</td>" +
@@ -445,6 +454,14 @@ function addInfoLayer() {
                                 "<td class='tg-7un6'>" + temp + " " + gradi_sim + "</td>" +
                                 "</tr>" +
                                 "<tr>" +
+                                "<td class='tg-7un6'>" + meteo_string + "</td>" +
+                                "<td class='tg-7un6'>" + meteo + "</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<td class='tg-7un6'>" + nuvole_string + "</td>" +
+                                "<td class='tg-7un6'>" + nuvole + "</td>" +
+                                "</tr>" +
+                                "<tr>" +
                                 "<td class='tg-7un6'>" + umidita_string + "</td>" +
                                 "<td class='tg-7un6'>" + humidity + "%</td>" +
                                 "</tr>" +
@@ -456,6 +473,15 @@ function addInfoLayer() {
                                 "<td class='tg-7un6'>" + dir_vento_string + "</td>" +
                                 "<td class='tg-7un6'>" + wind_direction + " N</td>" +
                                 "</tr>" +
+                                "<tr>" +
+                                "<td class='tg-7un6'>" + vel_vento_string + "</td>" +
+                                "<td class='tg-7un6'>" + wind_speed + " " + wind_sim + "</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<td class='tg-7un6'>" + temp_perc_string + "</td>" +
+                                "<td class='tg-7un6'>" + temp_chill + " " + gradi_sim + "</td>" +
+                                "</tr>" +
+                                "<tr>" +
                                 "<td class='tg-j0tj'>" + vento_string + "</td>" +
                                 "<td class='tg-j0tj'>" + winds + "</td>" +
                                 "</tr>" +
@@ -498,16 +524,15 @@ function onClick()
 function addWindLayer()
 {
     var dataCache = getDataCache();
-    let url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData + "&rand=" + dataCache;
+    var url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData + "&rand=" + dataCache;
 
-    fetch(url_wind).then((response) => response.json()).then((data) =>
-    {
+    $.getJSON(url_wind, function(data){
+    //fetch(url_wind).then((response) => response.json()).then((data) =>{
         if (windLayer != null)
         {
             controlLayers.removeLayer(windLayer);
             map.removeLayer(windLayer);
         }
-
 
         windLayer = L.velocityLayer({
             displayValues: false,
@@ -549,7 +574,7 @@ function addCloudLayer() {
     }
 
     var dataCache = getDataCache();
-    let url_cloud = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+    var url_cloud = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
     console.log("URL NUVOLE: " + url_cloud);
 
     cloudLayer = L.tileLayer.wms(url_cloud, {
@@ -588,7 +613,7 @@ function addT2CLayer() {
     }
 
     var dataCache = getDataCache();
-    let url_temp = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+    var url_temp = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
     t2cLayer = L.tileLayer.wms(url_temp, {
             layers: 'T2C',
@@ -626,7 +651,7 @@ function addRainLayer() {
     }
 
     var dataCache = getDataCache();
-    let url_rain = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+    var url_rain = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
     rainLayer = L.tileLayer.wms(url_rain, {
             layers: 'DELTA_RAIN',
@@ -664,7 +689,7 @@ function addSnowLayer() {
     }
 
     var dataCache = getDataCache();
-    let url_snow = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+    var url_snow = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
     snowLayer = L.tileLayer.wms(url_snow, {
             layers: 'HOURLY_SWE',
@@ -1193,6 +1218,10 @@ oWebViewInterface1.on('language', function (cor) {
        pressione_string = "PRESSIONE";
        dir_vento_string = "DIREZIONE VENTO";
        vento_string = "VENTO";
+       meteo_string = "METEO";
+       nuvole_string = "NUVOLOSIT&Agrave";
+       vel_vento_string = "VEL. VENTO";
+       temp_perc_string = "TEMP. PERCEPITA"
    }
    else
    {
@@ -1201,6 +1230,10 @@ oWebViewInterface1.on('language', function (cor) {
        pressione_string = "PRESSURE";
        dir_vento_string = "WIND DIRECTION";
        vento_string = "WIND";
+       meteo_string = "WEATHER";
+       nuvole_string = "CLOUDINESS";
+       vel_vento_string = "WIND SPEED";
+       temp_perc_string = "WIND CHILL";
    }
 });
 
@@ -1209,7 +1242,8 @@ oWebViewInterface1.on('centro', function(cor)
     var url = url_api + "products/wrf5/forecast/" + cor.id +"?opt=place";
     console.log(url);
 
-    fetch(url).then((response) => response.json()).then((data) =>
+    $.getJSON(url, function(data)
+    //fetch(url).then((response) => response.json()).then((data) =>
     {
         map.fitBounds([
             [data.place.bbox.coordinates[0][1], data.place.bbox.coordinates[0][0]],
@@ -1232,17 +1266,18 @@ oWebViewInterface1.on('centro', function(cor)
 
 oWebViewInterface1.on('place_searched', function (cor)
 {
-    fetch( url_api+ "places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
+    $.getJSON(url_api+ "places/search/byname/" + cor.name, function(data)
+    //fetch( url_api+ "places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
     {
         console.log(cor.name);
         var id;
         console.log(data.length);
-        for(let i=0; i<data.length; i++)
+        for(var i=0; i<data.length; i++)
         {
-            let name = data[i].long_name.it;
+            var name = data[i].long_name.it;
             console.log(name);
-            let name_new;
-            let _name;
+            var name_new;
+            var _name;
             if (name.includes("Municipalit"))
             {
                 console.log("MUN");

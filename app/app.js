@@ -1,5 +1,7 @@
 let application = require("tns-core-modules/application");
+const platformModule = require("tns-core-modules/platform");
 require('tns-i18n')('en');
+const appSettings = require("application-settings");
 
 global.url_api = "https://api.meteo.uniparthenope.it/";
 global.contatore = 0;
@@ -7,8 +9,7 @@ global.place_selected = "";
 global.global_id = " ";
 global.global_data = " ";
 global.max_data = " ";
-
-application.run({ moduleName: "app-root" });
+global.page = " ";
 
 application.on(application.exitEvent, (args) => {
     if (args.android) {
@@ -32,3 +33,21 @@ application.on(application.suspendEvent, (args) => {
         console.log("Suspend: " + args.ios);
     }
 });
+
+if(platformModule.isAndroid) {
+    console.log("SDK version: " + platformModule.device.sdkVersion);
+    if (platformModule.device.sdkVersion <= 20)
+        application.run({moduleName: "app-root1"});
+    else {
+        if(appSettings.getNumber("Mappa", 0) === 0)
+            application.run({moduleName: "app-root"});
+        else
+            application.run({moduleName: "app-root1"});
+    }
+}
+else{
+    if(appSettings.getNumber("Mappa", 0) === 0)
+        application.run({moduleName: "app-root"});
+    else
+        application.run({moduleName: "app-root1"});
+}

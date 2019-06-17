@@ -15,6 +15,7 @@ module.exports = {
     impostazioni_vento: 'Wind: ',
     impostazioni_pressione: 'Pressure: ',
     impostazioni_posizione: 'Position: ',
+    impostazioni_mappa : 'Map: ',
     detail_temp: 'TEMPERATURE:',
     detail_meteo: 'WEATHER:',
     detail_nuvole: 'CLOUDINESS:',

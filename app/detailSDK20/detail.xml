@@ -5,7 +5,6 @@
 
     <x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,1)" />
 
-
     <sd:RadSideDrawer id="sideDrawer">
         <sd:RadSideDrawer.drawerContent>
             <ScrollView>

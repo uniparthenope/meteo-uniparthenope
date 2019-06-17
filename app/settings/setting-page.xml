@@ -37,6 +37,16 @@
                     </SegmentedBar.items>
                 </SegmentedBar>
             </StackLayout>
+
+            <StackLayout orientation="horizontal" verticalAlignment="center" id="map">
+                <Label class="blue_col" width="30%" text="{{_L('impostazioni_mappa')}}" horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
+                <SegmentedBar width="70%" selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ mapSelection }}" horizontalAlignment="right">
+                    <SegmentedBar.items>
+                        <SegmentedBarItem title="yes"/>
+                        <SegmentedBarItem title="no"/>
+                    </SegmentedBar.items>
+                </SegmentedBar>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </Page>
