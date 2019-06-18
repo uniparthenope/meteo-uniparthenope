@@ -61,6 +61,8 @@ function pageLoaded(args) {
     steps = new ObservableArray();
     hours = new ObservableArray();
     items = new ObservableArray();
+    contatore_detail++;
+    console.log("Contatore: " + contatore_detail);
 
     drawer = view.getViewById(page,"sideDrawer");
 
@@ -151,66 +153,89 @@ function pageLoaded(args) {
 
     pageData.set("data", print_data);
 
-    console.log("LOCATION PERMISSION: ", perm_loc.hasLocationPermissions());
+    if(contatore_detail == 1){
+        console.log("LOCATION PERMISSION: ", perm_loc.hasLocationPermissions());
 
-    geolocation.enableLocationRequest().then(function () {
-        geolocation.isEnabled().then(function (isEnabled) {
-            geolocation.getCurrentLocation({
-                desiredAccuracy: 3,
-                updateDistance: 10,
-                maximumAge: 10000,
-                timeout: 10000
-            }).then(function (loc) {
-                if (loc) {
-                    latitudine = (loc.latitude).toString();
-                    longitudine = (loc.longitude).toString();
-                    console.log(latitudine);
-                    console.log(longitudine);
+        geolocation.enableLocationRequest().then(function () {
+            geolocation.isEnabled().then(function (isEnabled) {
+                geolocation.getCurrentLocation({
+                    desiredAccuracy: 3,
+                    updateDistance: 10,
+                    maximumAge: 10000,
+                    timeout: 10000
+                }).then(function (loc) {
+                    if (loc) {
+                        latitudine = (loc.latitude).toString();
+                        longitudine = (loc.longitude).toString();
+                        console.log(latitudine);
+                        console.log(longitudine);
 
-                    fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data1) => {
-                        id = data1[0].id;
-                        console.log(id);
+                        fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data1) => {
+                            id = data1[0].id;
+                            global.global_id_detail = id;
+                            console.log(id);
 
-                        print_chart(id, prod, output, hour, step);
+                            print_chart(id, prod, output, hour, step);
 
-                        print_meteo(id, data);
+                            print_meteo(id, data);
 
-                        print_series(id);
+                            print_series(id);
 
-                        print_map(id, prod, output, data);
+                            print_map(id, prod, output, data);
 
-                        print_prod();
+                            print_prod();
 
-                        print_output(prod);
+                            print_output(prod);
 
-                        print_steps();
+                            print_steps();
 
-                        print_hours();
-                    }).catch(error => console.error("[SEARCH] ", error));
-                }
-            }, function (e) {
-                dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
-                id = "com63049";
-                print_chart(id, prod, output, hour, step);
+                            print_hours();
+                        }).catch(error => console.error("[SEARCH] ", error));
+                    }
+                }, function (e) {
+                    dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
+                    id = "com63049";
+                    print_chart(id, prod, output, hour, step);
 
-                print_meteo(id, data);
+                    print_meteo(id, data);
 
-                print_series(id);
+                    print_series(id);
 
-                print_map(id, prod, output, data);
+                    print_map(id, prod, output, data);
 
-                print_prod();
+                    print_prod();
 
-                print_output(prod);
+                    print_output(prod);
 
-                print_steps();
+                    print_steps();
 
-                print_hours();
+                    print_hours();
+                });
             });
+        }, function (e) {
+            console.log(e);
+            id = "com63049";
+            print_chart(id, prod, output, hour, step);
+
+            print_meteo(id, data);
+
+            print_series(id);
+
+            print_map(id, prod, output, data);
+
+            print_prod();
+
+            print_output(prod);
+
+            print_steps();
+
+            print_hours();
         });
-    }, function (e) {
-        console.log(e);
-        id = "com63049";
+    }
+    else{
+        id = global.global_id_detail;
+        console.log(id);
+
         print_chart(id, prod, output, hour, step);
 
         print_meteo(id, data);
@@ -226,14 +251,13 @@ function pageLoaded(args) {
         print_steps();
 
         print_hours();
-    });
+    }
 
     page.bindingContext = pageData;
 }
 exports.pageLoaded = pageLoaded;
 
-function get_print_data(data)
-{
+function get_print_data(data) {
     let data_final;
     anno = data.substring(0,4);
     mese = data.substring(4, 6);
@@ -1218,6 +1242,7 @@ if(platformModule.isAndroid)
 
 exports.didAutoComplete = function (args) {
     id = autocomplete_map.get(args.text);
+    global.global_id_detail = id;
     console.log(id);
 
     print_chart(id, prod, output, hour, step);

@@ -59,6 +59,8 @@ function pageLoaded(args) {
     steps = new ObservableArray();
     hours = new ObservableArray();
     items = new ObservableArray();
+    contatore_detail++;
+    console.log("Contatore: " + contatore_detail);
 
     drawer = view.getViewById(page,"sideDrawer");
 
@@ -96,7 +98,13 @@ function pageLoaded(args) {
     pageData.set("colorbar2_visible", "collapsed");
     pageData.set("colorbar3_visible", "collapsed");
 
-    id = page.navigationContext.id;
+    if(contatore_detail == 1){
+        id = page.navigationContext.id;
+        global.global_id_detail = id;
+    }
+    else{
+        id = global.global_id_detail;
+    }
     data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
 
@@ -128,11 +136,6 @@ function pageLoaded(args) {
 
     print_data = get_print_data(data);
 
-    _data = new Date(anno, mese-1, giorno);
-    pageData.set("date_pick", _data);
-    pageData.set("minDate", new Date(2018, 0, 1));
-    pageData.set("maxDate", max_data);
-
     pageData.set("data", print_data);
 
     print_chart(id, prod, output, hour, step);
@@ -154,6 +157,7 @@ function pageLoaded(args) {
     page.bindingContext = pageData;
 }
 exports.pageLoaded = pageLoaded;
+
 
 function get_print_data(data)
 {
@@ -1141,6 +1145,7 @@ if(platformModule.isAndroid)
 
 exports.didAutoComplete = function (args) {
     id = autocomplete_map.get(args.text);
+    global.global_id_detail = id;
 
     print_chart(id, prod, output, hour, step);
 
@@ -1297,8 +1302,7 @@ exports.remove = function (args) {
     });
 };
 
-function onTapSettings(args)
-{
+function onTapSettings(args) {
     var button = args.object;
     const page = button.page;
 
@@ -1306,8 +1310,7 @@ function onTapSettings(args)
 }
 exports.onTapSettings = onTapSettings;
 
-function onTapInfo(args)
-{
+function onTapInfo(args) {
     const button = args.object;
     const  page = button.page;
 

@@ -5,20 +5,27 @@ const appSettings = require("application-settings");
 
 global.url_api = "https://api.meteo.uniparthenope.it/";
 global.contatore = 0;
+global.contatore_detail = 0;
 global.place_selected = "";
 global.global_id = " ";
 global.global_data = " ";
 global.max_data = " ";
 global.page = " ";
+global.global_id_detail = " ";
+global.global_data_detail = " ";
 
 application.on(application.exitEvent, (args) => {
     if (args.android) {
         contatore = 0;
+        contatore_detail = 0;
         global_id = " ";
+        global_id_detail = " ";
         console.log("Exit: " + args.android);
     } else if (args.ios) {
         contatore = 0;
+        contatore_detail = 0;
         global_id = " ";
+        global_id_detail = " ";
         console.log("Exit: " + args.ios);
     }
 });
@@ -27,16 +34,18 @@ application.on(application.exitEvent, (args) => {
 application.on(application.suspendEvent, (args) => {
     if (args.android) {
         contatore = 1;
+        contatore_detail = 1;
         console.log("Suspend: " + args.android);
     } else if (args.ios) {
         contatore = 1;
+        contatore_detail = 1;
         console.log("Suspend: " + args.ios);
     }
 });
 
 if(platformModule.isAndroid) {
     console.log("SDK version: " + platformModule.device.sdkVersion);
-    if (platformModule.device.sdkVersion <= 20)
+    if (platformModule.device.sdkVersion <= 19)
         application.run({moduleName: "app-root1"});
     else {
         if(appSettings.getNumber("Mappa", 0) === 0)

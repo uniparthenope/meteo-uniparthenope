@@ -1,16 +1,12 @@
-var frameModule = require("tns-core-modules/ui/frame");
 var geolocation = require("nativescript-geolocation");
 var nativescript_webview_interface_1 = require("nativescript-webview-interface");
 var Observable = require("data/observable");
 var ObservableArray = require("data/observable-array").ObservableArray;
-const connectivityModule = require("tns-core-modules/connectivity");
 const appSetting = require("application-settings");
-const getFrameById = require("tns-core-modules/ui/frame").getFrameById;
 var autocompleteModule = require("nativescript-ui-autocomplete");
 var view = require("ui/core/view");
 var utils = require("tns-core-modules/utils/utils");
 var dialog = require("tns-core-modules/ui/dialogs");
-require( "nativescript-master-technology" );
 const platformModule = require("tns-core-modules/platform");
 const perm_loc = require("nativescript-advanced-permissions/location");
 const Color = require("tns-core-modules/color").Color;
@@ -38,15 +34,13 @@ let page;
 var preferiti;
 var myPref = new ObservableArray();
 
-function setupWebViewInterface(page)
-{
+function setupWebViewInterface(page){
   var webView = page.getViewById('webView');
   oLangWebViewInterface = new nativescript_webview_interface_1.WebViewInterface(webView, '~/www/index.html');
   listenLangWebViewEvents();
 }
 
-exports.pageLoaded = function(args)
-{
+exports.pageLoaded = function(args) {
   page = args.object;
   setupWebViewInterface(page);
   contatore++;
@@ -195,24 +189,7 @@ exports.pageLoaded = function(args)
                   appSetting.setString("lastKnownPosition", global_id);
                   appSetting.setString("lastKnownPositionName", place_selected);
 
-                  var found = false;
-                  console.log(preferiti);
-                  for(var i=0; i<preferiti.length; i++) {
-                    if(place_selected === preferiti[i])
-                    {
-                      found = true;
-                    }
-                  }
-                  console.log(found);
-                  if(found)
-                  {
-                    home.set("pref", "visible");
-                    home.set("no_pref", "collapsed");
-                  }
-                  else {
-                    home.set("no_pref", "visible");
-                    home.set("pref", "collapsed");
-                  }
+                  set_preferiti();
 
                   fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
                     //console.log(data1);
@@ -326,25 +303,7 @@ exports.pageLoaded = function(args)
           console.log("POSTO : " + place_selected);
         }
 
-        var found = false;
-        console.log(preferiti);
-        for(var i=0; i<preferiti.length; i++) {
-          console.log(preferiti[i]);
-          if(place_selected === preferiti[i])
-          {
-            found = true;
-          }
-        }
-        console.log(found);
-        if(found)
-        {
-          home.set("pref", "visible");
-          home.set("no_pref", "collapsed");
-        }
-        else {
-          home.set("no_pref", "visible");
-          home.set("pref", "collapsed");
-        }
+        set_preferiti();
 
         if (data1.result == "ok") {
           home.set("current_position", "visible");
@@ -383,13 +342,11 @@ exports.pageLoaded = function(args)
   page.bindingContext = home;
 };
 
-
 exports.toggleDrawer = function() {
   drawer.toggleDrawerState();
 };
 
-function onTapNext()
-{
+exports.onTapNext = function() {
   if(data > max_data)
     return;
 
@@ -430,7 +387,6 @@ function onTapNext()
 
   send_data();
 }
-exports.onTapNext = onTapNext;
 
 function send_data() {
   if(platformModule.device.language == 'it')
@@ -481,8 +437,7 @@ function send_data() {
   }
 }
 
-function onTapBack()
-{
+exports.onTapBack = function() {
   if((parseInt(ora)-1) < 0)
   {
     ora = "23";
@@ -517,34 +472,26 @@ function onTapBack()
 
   send_data();
 }
-exports.onTapBack = onTapBack;
 
-function onTapSettings(args)
-{
+exports.onTapSettings =function(args) {
   var button = args.object;
   const page = button.page;
 
   page.frame.navigate("settings/setting-page");
 }
-exports.onTapSettings = onTapSettings;
 
-function onTapInfo(args)
-{
+exports.onTapInfo = function(args) {
     const button = args.object;
     const  page = button.page;
 
     page.frame.navigate("info/info-page");
 }
-exports.onTapInfo = onTapInfo;
 
-function onTapCenter()
-{
+exports.onTapCenter = function() {
   oLangWebViewInterface.emit('centro', {id:global_id});
 }
-exports.onTapCenter = onTapCenter;
 
-function get_beaufort(nodi)
-{
+function get_beaufort(nodi) {
   if(nodi < 1)
     return 0;
   if(nodi>= 1 && nodi<=2)
@@ -573,8 +520,7 @@ function get_beaufort(nodi)
     return 12;
 }
 
-function listenLangWebViewEvents()
-{
+function listenLangWebViewEvents() {
   oLangWebViewInterface.on('detail', function(eventData)
   {
     console.log(eventData);
@@ -641,16 +587,20 @@ function listenLangWebViewEvents()
   });
 }
 
-if(platformModule.isIOS)
-{
+let autocomplete_map;
+if(platformModule.isIOS) {
   var items = new ObservableArray([]);
-  function onTextChanged(args)
+    autocomplete_map = new Map();
+
+    function onTextChanged(args)
   {
     fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
     {
       items.splice(0);
-      for(let i=0; i<data.length; i++) {
-        items.push(new autocompleteModule.TokenModel(data[i].label));
+        autocomplete_map.clear();
+        for(let i=0; i<data.length; i++) {
+            autocomplete_map.set(data[i].label, data[i].id);
+            items.push(new autocompleteModule.TokenModel(data[i].label));
       }
     });
 
@@ -658,17 +608,17 @@ if(platformModule.isIOS)
   }
   exports.onTextChanged = onTextChanged;
 }
-
-if(platformModule.isAndroid)
-{
+if(platformModule.isAndroid) {
   var items;
   function onTextChanged(args)
   {
     fetch(url_api + "places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
     {
-      items = new ObservableArray([]);
+        autocomplete_map = new Map();
+        items = new ObservableArray([]);
       for(let i=0; i<data.length; i++) {
-        items.push(new autocompleteModule.TokenModel(data[i].label));
+          autocomplete_map.set(data[i].label, data[i].id);
+          items.push(new autocompleteModule.TokenModel(data[i].label));
       }
     });
 
@@ -677,126 +627,72 @@ if(platformModule.isAndroid)
   exports.onTextChanged = onTextChanged;
 }
 
-function didAutoComplete (args) {
-  let name = (args.text);
-  console.log(name);
-  var name_new;
-  var _name;
-  if (name.includes("Municipalit")) {
-    var tmp = name.split("-");
-    name_new = tmp.pop();
-    home.set("position", name_new);
-    _name = name_new;
-    oLangWebViewInterface.emit('place_searched', {name:_name});
-  } else {
-    home.set("position", name);
-    _name = name;
-    oLangWebViewInterface.emit('place_searched', {name:_name});
-  }
-  place_selected = _name;
-  console.log("POSTO : " + place_selected);
-  box_place = true;
+exports.didAutoComplete = function(args) {
+    global_id = autocomplete_map.get(args.text);
 
-  let url = url_api + "places/search/byname/" + place_selected;
-  url = url.replace(/ /g, "%20");
-  console.log(url);
+    oLangWebViewInterface.emit('centro', {id:global_id});
 
-  fetch(url).then((response) => response.json()).then((data) => {
-    var id;
-    console.log(data.length);
-    for(let i=0; i<data.length; i++)
-    {
-      let name1 = data[i].long_name.it;
-      console.log(name1);
-      let name_new;
-      let __name;
-      if (name1.includes("Municipalit"))
-      {
-        console.log("MUN");
-        var tmp = name1.split("-");
-        name_new = tmp.pop();
-        __name = name_new;
+    fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData + "&opt=place").then((response) => response.json()).then((data1) => {
+        console.log(data1);
+        if (data1.result == "ok") {
+            home.set("current_position", "visible");
+            box_place = true;
 
-        if(__name === place_selected)
-          id = data[i].id;
-      }
-      else
-      {
-        console.log("NO MUN");
-        if(name1 === place_selected)
-          id = data[i].id;
-      }
-    }
-    console.log(id);
-    global_id = id;
+          var place = data1.place.long_name.it;
 
-    var found = false;
-    console.log(preferiti);
-    for(var i=0; i<preferiti.length; i++) {
-      console.log(preferiti[i]);
-      if(place_selected === preferiti[i])
-      {
-        found = true;
-      }
-    }
-    console.log("Trovato: " + found);
-    if(found)
-    {
-      home.set("pref", "visible");
-      home.set("no_pref", "collapsed");
-    }
-    else {
-      home.set("no_pref", "visible");
-      home.set("pref", "collapsed");
-    }
+          if (place.includes("Municipalit")) {
+            var tmp = place.split("-");
+            var tmp1 = tmp.pop();
+            home.set("position", tmp1);
+            place_selected = tmp1;
+            console.log("POSTO : " + place_selected);
+          } else {
+            home.set("position", place);
+            place_selected = place;
+            console.log("POSTO : " + place_selected);
+          }
 
-    fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
-      //console.log(data1);
-      if (data1.result == "ok") {
-        home.set("current_position", "visible");
-        box_place = true;
+            set_preferiti();
 
-        home.set("position", place_selected);
-        if (appSetting.getNumber("Temperatura", 0) == 0)
-          home.set("temp", data1.forecast.t2c + " °C");
-        else if (appSetting.getNumber("Temperatura", 0) == 1) {
-          home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
-        }
-        if (appSetting.getNumber("Vento", 0) == 0)
-          home.set("wind", data1.forecast.ws10n + " kn");
-        else if (appSetting.getNumber("Vento", 0) == 1) {
-          home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
-        } else if (appSetting.getNumber("Vento", 0) == 2) {
-          home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
-        } else if (appSetting.getNumber("Vento", 0) == 3) {
-          home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+            home.set("position", place_selected);
+            if (appSetting.getNumber("Temperatura", 0) == 0)
+                home.set("temp", data1.forecast.t2c + " °C");
+            else if (appSetting.getNumber("Temperatura", 0) == 1) {
+                home.set("temp", ((data1.forecast.t2c * 1.8) + 32).toFixed(2) + " °F");
+            }
+            if (appSetting.getNumber("Vento", 0) == 0)
+                home.set("wind", data1.forecast.ws10n + " kn");
+            else if (appSetting.getNumber("Vento", 0) == 1) {
+                home.set("wind", (data1.forecast.ws10n * 1.852).toFixed(2) + " km/h");
+            } else if (appSetting.getNumber("Vento", 0) == 2) {
+                home.set("wind", (data1.forecast.ws10n * 0.514444).toFixed(2) + " m/s");
+            } else if (appSetting.getNumber("Vento", 0) == 3) {
+                home.set("wind", (get_beaufort(data1.forecast.ws10n)) + " beaufort");
+            }
+
+            home.set("wind_direction", data1.forecast.winds);
+            home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
+        } else if (data1.result == "error") {
+            home.set("current_position", "collapsed");
+            box_place = false;
+            dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
         }
 
-        home.set("wind_direction", data1.forecast.winds);
-        home.set("icon", '~/meteo_icon/' + data1.forecast.icon);
-      } else if (data1.result == "error") {
-        home.set("current_position", "collapsed");
-        box_place = false;
-        dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
+      if(platformModule.isAndroid) {
+        var autocompletetxt = page.getViewById("autocomplete");
+        autocompletetxt.focus();
+        utils.ad.showSoftInput(autocompletetxt.nativeView);
+        utils.ad.dismissSoftInput();
+        const nativeView = (args.object).nativeView;
+        nativeView.getTextField().setText("");
       }
+      else{
+        const nativeView = (args.object).nativeView;
+        nativeView.textField.text = "";
+      }
+
     }).catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
-
-    if(platformModule.isAndroid) {
-      var autocompletetxt = page.getViewById("autocomplete");
-      autocompletetxt.focus();
-      utils.ad.showSoftInput(autocompletetxt.nativeView);
-      utils.ad.dismissSoftInput();
-      const nativeView = (args.object).nativeView;
-      nativeView.getTextField().setText("");
-    }
-    else{
-      const nativeView = (args.object).nativeView;
-      nativeView.textField.text = "";
-    }
-  });
 }
-exports.didAutoComplete = didAutoComplete;
-
 
 exports.onAutoCompleteTextViewLoaded = function(args){
   console.log("QUI");
@@ -819,8 +715,7 @@ exports.toggleDrawer = function() {
   drawer.toggleDrawerState();
 };
 
-exports.onTapDetail = function (args)
-{
+exports.onTapDetail = function (args) {
   const button = args.object;
   const  page = button.page;
 
@@ -836,8 +731,7 @@ exports.onTapDetail = function (args)
     page.frame.navigate(nav);
 };
 
-exports.onTapStar = function()
-{
+exports.onTapStar = function() {
   if(home.get("no_pref") == "visible")
   {
     home.set("no_pref", "collapsed");
@@ -869,8 +763,7 @@ exports.onTapStar = function()
   }
 };
 
-
-function onItemTap(args) {
+exports.onItemTap = function(args) {
   const index = args.index;
   console.log(myPref.getItem(index).title);
   oLangWebViewInterface.emit('place_searched', {name:myPref.getItem(index).title});
@@ -911,27 +804,9 @@ function onItemTap(args) {
       }
     }
     console.log(id);
-    global_id = id;
+    global.global_id = id;
 
-    var found = false;
-    console.log(preferiti);
-    for(var i=0; i<preferiti.length; i++) {
-      console.log(preferiti[i]);
-      if(place_selected === preferiti[i])
-      {
-        found = true;
-      }
-    }
-    console.log("Trovato: " + found);
-    if(found)
-    {
-      home.set("pref", "visible");
-      home.set("no_pref", "collapsed");
-    }
-    else {
-      home.set("no_pref", "visible");
-      home.set("pref", "collapsed");
-    }
+    set_preferiti();
 
     fetch(url_api + "products/wrf5/forecast/" + global_id + "?date=" + currData).then((response) => response.json()).then((data1) => {
       //console.log(data1);
@@ -967,8 +842,7 @@ function onItemTap(args) {
   });
 
   drawer.closeDrawer();
-}
-exports.onItemTap = onItemTap;
+};
 
 exports.remove = function (args) {
   var btn = args.object;
@@ -1027,7 +901,7 @@ exports.showModal = function (args) {
   );
 };
 
-function QRCode(){
+exports.QRCode = function(){
   barcodescanner.hasCameraPermission().then(permitted => {
     if(permitted)
       scan();
@@ -1043,7 +917,6 @@ function QRCode(){
     alert(err);
   });
 }
-exports.QRCode = QRCode;
 
 function scan(){
   barcodescanner.scan({
@@ -1117,3 +990,22 @@ function scan(){
 exports.onTapReport = function () {
   page.frame.navigate("bollettino/bollettino");
 };
+
+function set_preferiti(){
+  var found = false;
+  for(var i=0; i<preferiti.length; i++) {
+    if(place_selected === preferiti[i])
+    {
+      found = true;
+    }
+  }
+  if(found)
+  {
+    home.set("pref", "visible");
+    home.set("no_pref", "collapsed");
+  }
+  else {
+    home.set("no_pref", "visible");
+    home.set("pref", "collapsed");
+  }
+}

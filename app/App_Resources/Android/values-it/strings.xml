@@ -19,7 +19,7 @@
   <string name="detail_nuvole">"NUVOLOSITÀ:"</string>
   <string name="detail_meteo">"METEO"</string>
   <string name="detail_temp">"TEMPERATURA:"</string>
-  <string name="impostazioni_mappa">"Mappa: "</string>
+  <string name="impostazioni_mappa">"Inizia con: "</string>
   <string name="impostazioni_posizione">"Posizione: "</string>
   <string name="impostazioni_pressione">"Pressione: "</string>
   <string name="impostazioni_vento">"Vento: "</string>

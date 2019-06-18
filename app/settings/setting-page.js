@@ -16,6 +16,15 @@ function pageLoaded(args)
     var press = appSettings.getNumber("Pressione", 0);
     var map = appSettings.getNumber("Mappa", 0);
 
+    if(platformModule.device.language.includes("it")){
+        setting.set("map", "Mappa");
+        setting.set("detail", "Dettagli");
+    }
+    else{
+        setting.set("map", "Map");
+        setting.set("detail", "Details");
+    }
+
     setting.set("tempSelection", temp);
     setting.on(observableModule.Observable.propertyChangeEvent, (propertyChangeData) =>
     {
@@ -53,7 +62,7 @@ function pageLoaded(args)
     });
 
     if(platformModule.isAndroid){
-        if(platformModule.device.sdkVersion <= 20)
+        if(platformModule.device.sdkVersion <= 19)
             page.getViewById("map").visibility = "collapsed";
         else
             page.getViewById("map").visibility = "visible";

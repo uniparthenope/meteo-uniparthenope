@@ -197,6 +197,13 @@ var meteo_string;
 var nuvole_string;
 var temp_perc_string;
 var vel_vento_string;
+var Info_State;
+var Temp_State;
+var Nuv_State;
+var Pioggia_State;
+var Vento_State;
+var Neve_State;
+
 
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: ''
@@ -235,8 +242,7 @@ function getDataCache() {
     return cache_data;
 }
 
-function get_beaufort(nodi)
-{
+function get_beaufort(nodi) {
     if(nodi < 1)
         return 0;
     if(nodi>= 1 && nodi<=2)
@@ -265,8 +271,7 @@ function get_beaufort(nodi)
         return 12;
 }
 
-function change_domain(bounds)
-{
+function change_domain(bounds) {
     var new_prefix = "reg";
     if (zoom >= 0 && zoom <= 6)
     {
@@ -515,14 +520,12 @@ function addInfoLayer() {
     controlLayers.addOverlay(infoLayer, "Info");
 }
 
-function onClick()
-{
+function onClick() {
     oWebViewInterface1.emit('detail', {info_id:info_id});
 }
 
 
-function addWindLayer()
-{
+function addWindLayer() {
     var dataCache = getDataCache();
     var url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData + "&rand=" + dataCache;
 
@@ -716,15 +719,7 @@ function addSnowLayer() {
         controlLayers.addOverlay(snowLayer, "Snow");
 }
 
-var Info_State;
-var Temp_State;
-var Nuv_State;
-var Pioggia_State;
-var Vento_State;
-var Neve_State;
-
-oWebViewInterface1.on('data', function (cor)
-{
+oWebViewInterface1.on('data', function (cor) {
     var anno = cor.anno;
     var mese = cor.mese;
     var giorno = cor.giorno;
@@ -986,8 +981,7 @@ oWebViewInterface1.on('data', function (cor)
     addSnowLayer();
 });
 
-oWebViewInterface1.on('new_data', function (cor)
-{
+oWebViewInterface1.on('new_data', function (cor) {
     console.log(cor.data);
     currData = cor.data;
 
@@ -1200,8 +1194,7 @@ oWebViewInterface1.on('location', function (cor) {
     DynaMarker.setLatLng([cor.lat, cor.lang]).addTo(map);
 });
 
-oWebViewInterface1.on('settings', function (cor)
-{
+oWebViewInterface1.on('settings', function (cor) {
     gradi = cor.gradi;
     vento = cor.vento;
     pressione = cor.pressione;
@@ -1237,8 +1230,7 @@ oWebViewInterface1.on('language', function (cor) {
    }
 });
 
-oWebViewInterface1.on('centro', function(cor)
-{
+oWebViewInterface1.on('centro', function(cor) {
     var url = url_api + "products/wrf5/forecast/" + cor.id +"?opt=place";
     console.log(url);
 
@@ -1264,20 +1256,18 @@ oWebViewInterface1.on('centro', function(cor)
     });
 });
 
-oWebViewInterface1.on('place_searched', function (cor)
-{
-    $.getJSON(url_api+ "places/search/byname/" + cor.name, function(data)
-    //fetch( url_api+ "places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
+oWebViewInterface1.on('place_searched', function (cor) {
+    fetch( url_api+ "places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
     {
         console.log(cor.name);
         var id;
         console.log(data.length);
-        for(var i=0; i<data.length; i++)
+        for(let i=0; i<data.length; i++)
         {
-            var name = data[i].long_name.it;
+            let name = data[i].long_name.it;
             console.log(name);
-            var name_new;
-            var _name;
+            let name_new;
+            let _name;
             if (name.includes("Municipalit"))
             {
                 console.log("MUN");
