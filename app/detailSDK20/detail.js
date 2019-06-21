@@ -68,6 +68,9 @@ function pageLoaded(args) {
     drawer = view.getViewById(page,"sideDrawer");
 
     console.log("Notifications enabled?" +  messaging.messaging.areNotificationsEnabled());
+
+    //messaging.messaging.subscribeToTopic("weather").then(() => console.log("Subscribed to topic"));
+
     messaging.messaging.registerForPushNotifications({
         onPushTokenReceivedCallback(token) {
             console.log("Firebase plugin received a push token: " + token);
@@ -117,8 +120,6 @@ function pageLoaded(args) {
         // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
         showNotificationsWhenInForeground: true
     }).then(() => console.log("Registered for push"));
-
-    messaging.messaging.subscribeToTopic("weather").then(() => console.log("Subscribed to topic"));
 
     pageData = new Observable.fromObject({
         temp: temp,
