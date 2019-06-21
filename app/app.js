@@ -14,6 +14,21 @@ global.page = " ";
 global.global_id_detail = " ";
 global.global_data_detail = " ";
 
+var firebase = require("nativescript-plugin-firebase");
+
+firebase.init({
+    // Optionally pass in properties for database, authentication and cloud messaging,
+    // see their respective docs.
+    iOSEmulatorFlush: true
+}).then(
+    function () {
+        console.log("firebase.init done");
+    },
+    function (error) {
+        console.log("firebase.init error: " + error);
+    }
+);
+
 application.on(application.exitEvent, (args) => {
     if (args.android) {
         contatore = 0;

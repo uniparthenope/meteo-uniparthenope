@@ -12,6 +12,7 @@ const perm_loc = require("nativescript-advanced-permissions/location");
 const Color = require("tns-core-modules/color").Color;
 let BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
 let barcodescanner = new BarcodeScanner();
+let messaging = require("nativescript-plugin-firebase/messaging");
 
 var drawer;
 var oLangWebViewInterface;
@@ -52,6 +53,58 @@ exports.pageLoaded = function(args) {
     myPref: myPref
   });
 
+  console.log("Notifications enabled?" +  messaging.messaging.areNotificationsEnabled());
+  messaging.messaging.registerForPushNotifications({
+    onPushTokenReceivedCallback(token) {
+      console.log("Firebase plugin received a push token: " + token);
+    },
+
+    onMessageReceivedCallback (message) {
+      console.log("Push message received: " + message.title);
+      console.log("Foreground: " + message.foreground);
+
+      let route;
+      if (message.foreground){
+        dialog.confirm({
+          title: message.title,
+          message: message.body,
+          okButtonText: "open",
+          neutralButtonText: "cancel"
+        }).then(function (result) {
+          // result argument is boolean
+          if(result){
+            if (message.data.contentType) {
+              let contentType = message.data.contentType;
+              if (contentType === 'bollettino') {
+                route = "bollettino/bollettino";
+              }
+              page.frame.navigate(route);
+            }
+          }
+          console.log("Dialog result: " + result);
+        });
+      }
+      else{
+        /**if the message arrived when the app is in the background, this code is executed when the user taps on the notification **/
+        console.log("message", message);
+
+        if (message.data.contentType) {
+          let contentType = message.data.contentType;
+          if (contentType === 'bollettino') {
+            route = "bollettino/bollettino";
+          }
+          page.frame.navigate(route);
+        }
+      }
+    },
+    // Whether you want this plugin to automatically display the notifications or just notify the callback. Currently used on iOS only. Default true.
+    showNotifications: true,
+
+    // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
+    showNotificationsWhenInForeground: true
+  }).then(() => console.log("Registered for push"));
+
+  messaging.messaging.subscribeToTopic("weather").then(() => console.log("Subscribed to topic"));
 
   console.log(preferiti.length);
   myPref.splice(0);
@@ -692,7 +745,7 @@ exports.didAutoComplete = function(args) {
       }
 
     }).catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
-}
+};
 
 exports.onAutoCompleteTextViewLoaded = function(args){
   console.log("QUI");
@@ -719,14 +772,16 @@ exports.onTapDetail = function (args) {
   const button = args.object;
   const  page = button.page;
 
-    const nav =
-        {
-          moduleName: "detail/detail-page",
-          context: {
-            id: global_id,
-            data: currData
-          }
-        };
+  console.log("DETAIL ID: " + global_id);
+
+  const nav =
+      {
+        moduleName: "detail/detail-page",
+        context: {
+          id: global_id,
+          data: currData
+        }
+      };
 
     page.frame.navigate(nav);
 };
@@ -803,8 +858,8 @@ exports.onItemTap = function(args) {
           id = data[i].id;
       }
     }
-    console.log(id);
-    global.global_id = id;
+    global_id = id;
+    console.log("ID TAP ITEM: " + global_id);
 
     set_preferiti();
 
@@ -916,7 +971,7 @@ exports.QRCode = function(){
   }, (err) => {
     alert(err);
   });
-}
+};
 
 function scan(){
   barcodescanner.scan({

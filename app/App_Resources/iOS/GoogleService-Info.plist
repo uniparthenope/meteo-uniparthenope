@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1055616291823-v6ukcdkhirj4onh5tk81v7sbj2hsfs67.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1055616291823-v6ukcdkhirj4onh5tk81v7sbj2hsfs67</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAO_oRY8GJk3EUEW41yfdiZyRWS5ll2BxE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1055616291823</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>it.meteo.uniparthenope</string>
+	<key>PROJECT_ID</key>
+	<string>meteo-uniparthenope</string>
+	<key>STORAGE_BUCKET</key>
+	<string>meteo-uniparthenope.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1055616291823:ios:d93fe0b3fc6a274e</string>
+	<key>DATABASE_URL</key>
+	<string>https://meteo-uniparthenope.firebaseio.com</string>
+</dict>
+</plist>

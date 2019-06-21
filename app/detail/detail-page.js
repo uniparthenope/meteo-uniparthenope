@@ -13,6 +13,7 @@ var autocompleteModule = require("nativescript-ui-autocomplete");
 var utils = require("tns-core-modules/utils/utils");
 let BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
 let barcodescanner = new BarcodeScanner();
+let application = require("tns-core-modules/application");
 
 var press;
 var temp;
@@ -62,6 +63,10 @@ function pageLoaded(args) {
     contatore_detail++;
     console.log("Contatore: " + contatore_detail);
 
+    if(platformModule.isIOS){
+        page.enableSwipeBackNavigation = false;
+    }
+
     drawer = view.getViewById(page,"sideDrawer");
 
     pageData = new Observable.fromObject({
@@ -101,9 +106,11 @@ function pageLoaded(args) {
     if(contatore_detail == 1){
         id = page.navigationContext.id;
         global.global_id_detail = id;
+        console.log(id);
     }
     else{
         id = global.global_id_detail;
+        console.log(id);
     }
     data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
@@ -112,6 +119,7 @@ function pageLoaded(args) {
     output = "gen";
     step = "0";
     hour = "24";
+
 
     preferiti = JSON.parse(appSetting.getString("preferiti" , "[]"));
     console.log("Preferiti: " + preferiti);
@@ -1321,3 +1329,9 @@ exports.onTapInfo = onTapInfo;
 exports.onTapReport = function () {
     page.frame.navigate("bollettino/bollettino");
 };
+
+if(platformModule.isAndroid){
+    application.android.on(application.AndroidApplication.activityBackPressedEvent, (args) => {
+        contatore_detail = 0;
+    });
+}

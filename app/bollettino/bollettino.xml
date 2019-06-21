@@ -4,7 +4,7 @@
       xmlns="http://schemas.nativescript.org/tns.xsd">
 
     <ActionBar class="blue_background_action_bar">
-        <Label class="" text="Bollettino" fontSize="20"></Label>
+        <Label class="" text="{{ _L('home_bollettino') }}" fontSize="20"></Label>
     </ActionBar>
 
     <StackLayout xmlns:accordion="nativescript-accordion">
