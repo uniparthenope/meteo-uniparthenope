@@ -63,7 +63,6 @@ function onNavigatingTo(args) {
     page.bindingContext = viewModel;
 }
 
-
 function extractData(data) {
     const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 

@@ -84,8 +84,9 @@ exports.pageLoaded = function(args) {
           console.log("Dialog result: " + result);
         });
       }
+      /*
       else{
-        /**if the message arrived when the app is in the background, this code is executed when the user taps on the notification **/
+        if the message arrived when the app is in the background, this code is executed when the user taps on the notification
         console.log("message", message);
 
         if (message.data.contentType) {
@@ -95,7 +96,7 @@ exports.pageLoaded = function(args) {
           }
           page.frame.navigate(route);
         }
-      }
+      }*/
     },
     // Whether you want this plugin to automatically display the notifications or just notify the callback. Currently used on iOS only. Default true.
     showNotifications: true,
