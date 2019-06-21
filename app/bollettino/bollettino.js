@@ -24,10 +24,18 @@ function onNavigatingTo(args) {
             parser.parseString(data, function (err, result) {
                 for(let i=0; i<result.rss.channel[0].item.length; i++)
                 {
-                    const myHtmlString = result.rss.channel[0].item[i].description.toString();
+                    let myHtmlString = result.rss.channel[0].item[i].description.toString();
                     const title = result.rss.channel[0].item[i].title.toString();
                     const date = result.rss.channel[0].item[i].pubDate.toString();
                     let data = extractData(date);
+
+                    let index = myHtmlString.search('img alt');
+                    if(index != -1){
+                        let temp = myHtmlString.slice(index);
+                        let index1 = temp.search('align-left');
+                        let string_temp = myHtmlString.slice(index-4, index+index1+88);
+                        myHtmlString = myHtmlString.replace(string_temp, " ");
+                    }
 
                     items.push({
                         title: title,
