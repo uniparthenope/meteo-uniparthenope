@@ -106,11 +106,11 @@ function pageLoaded(args) {
     if(contatore_detail == 1){
         id = page.navigationContext.id;
         global.global_id_detail = id;
-        console.log(id);
+        console.log("[Dettagli] id: " + id);
     }
     else{
         id = global.global_id_detail;
-        console.log(id);
+        console.log("[Dettagli] id: " + id);
     }
     data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
@@ -435,13 +435,19 @@ function set_iDate(iDate) {
     pageData.set("idate", iDateString);
 }
 
+let temp_alt;
 function print_series(id)
 {
     items.splice(0);
+    pageData.set("altezza", temp_alt);
+    pageData.set("meteo", "collapsed");
+    pageData.set("isBusy_meteo", true);
+    pageData.set("isHeigh_meteo", "25");
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?hours=0&step=24")
         .then((response) => response.json())
         .then((data) => {
             pageData.set("altezza", data.timeseries.length * 45);
+            temp_alt = data.timeseries.length * 45;
             altezza = data.timeseries.length * 45;
             for (let i = 0; i < data.timeseries.length; i++) {
                 let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + data.timeseries[i]['dateTime'] + "&hours=24";
