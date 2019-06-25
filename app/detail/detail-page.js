@@ -82,6 +82,7 @@ function pageLoaded(args) {
         image_arrow: image_arrow,
         myPref: myPref
     });
+
     pageData.set("isBusy", true);//Load animation
     pageData.set("isHeigh", "25");
     pageData.set("isBusy1", true);//Load animation
@@ -105,11 +106,11 @@ function pageLoaded(args) {
 
     if(contatore_detail == 1){
         id = page.navigationContext.id;
-        global.global_id_detail = id;
-        console.log("[Dettagli] id: " + id);
+        global_id_detail = id;
+        console.log("[Dettagli] id (contatore 1): " + id);
     }
     else{
-        id = global.global_id_detail;
+        id = global_id_detail;
         console.log("[Dettagli] id: " + id);
     }
     data = page.navigationContext.data;
@@ -440,7 +441,7 @@ function print_series(id)
 {
     items.splice(0);
     pageData.set("altezza", temp_alt);
-    pageData.set("meteo", "collapsed");
+    pageData.set("table", "collapsed");
     pageData.set("isBusy_meteo", true);
     pageData.set("isHeigh_meteo", "25");
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?hours=0&step=24")
@@ -713,6 +714,10 @@ function print_map(id, prod, output, data)
     url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output + "&rand=" + curr_data;
     console.log("MAP: " + url_map);
 
+    pageData.set("isBusy_map", true);
+    pageData.set("isHeigh_map", "25");
+    pageData.set("_map", "collapsed");
+
     imageSource.fromUrl(url_map)
         .then(function () {
             pageData.map = url_map;
@@ -826,7 +831,7 @@ function print_map(id, prod, output, data)
         pageData.set("isBusy_map", false);
         pageData.set("isHeigh_map", "0");
         pageData.set("_map", "visible");
-    }).catch(err => {console.log("Somthing went wrong!");});
+    }).catch(err => {console.log("Errore: " + err);});
 }
 
 function print_prod()

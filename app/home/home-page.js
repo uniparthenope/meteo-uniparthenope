@@ -773,6 +773,7 @@ exports.onTapDetail = function (args) {
   const button = args.object;
   const  page = button.page;
 
+
   console.log("DETAIL ID: " + global_id);
 
   const nav =
