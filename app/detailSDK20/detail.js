@@ -13,10 +13,9 @@ var autocompleteModule = require("nativescript-ui-autocomplete");
 var utils = require("tns-core-modules/utils/utils");
 let BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
 let barcodescanner = new BarcodeScanner();
-var geolocation = require("nativescript-geolocation");
-const perm_loc = require("nativescript-advanced-permissions/location");
-let messaging = require("nativescript-plugin-firebase/messaging");
+let application = require("tns-core-modules/application");
 
+let lingua;
 var press;
 var temp;
 var single_item;
@@ -65,11 +64,21 @@ function pageLoaded(args) {
     contatore_detail++;
     console.log("Contatore: " + contatore_detail);
 
+    if(platformModule.isIOS){
+        page.enableSwipeBackNavigation = false;
+    }
+
     drawer = view.getViewById(page,"sideDrawer");
+
+    if(platformModule.device.language.includes("it"))
+        lingua = "it";
+    else
+        lingua = "en";
+
 
     console.log("Notifications enabled?" +  messaging.messaging.areNotificationsEnabled());
 
-    //messaging.messaging.subscribeToTopic("weather").then(() => console.log("Subscribed to topic"));
+    messaging.messaging.subscribeToTopic("weather").then(() => console.log("Subscribed to topic"));
 
     messaging.messaging.registerForPushNotifications({
         onPushTokenReceivedCallback(token) {
@@ -134,6 +143,7 @@ function pageLoaded(args) {
         image_arrow: image_arrow,
         myPref: myPref
     });
+
     pageData.set("isBusy", true);//Load animation
     pageData.set("isHeigh", "25");
     pageData.set("isBusy1", true);//Load animation
@@ -155,22 +165,16 @@ function pageLoaded(args) {
     pageData.set("colorbar2_visible", "collapsed");
     pageData.set("colorbar3_visible", "collapsed");
 
-    data = new Date();
-    global_date = data;
-    max_data = new Date(global_date.getFullYear(), global_date.getMonth(), global_date.getDate() + 5);
-
-    ora = data.getHours();
-    if (ora < 10)
-        ora = '0' + ora;
-    mese = data.getMonth() + 1;
-    if (mese < 10)
-        mese = '0' + mese;
-    giorno = data.getDate();
-    if (giorno < 10)
-        giorno = '0' + giorno;
-    anno = data.getFullYear();
-    data = anno + "" + mese + "" + giorno + "Z" + ora + "00";
-
+    if(contatore_detail == 1){
+        id = page.navigationContext.id;
+        global_id_detail = id;
+        console.log("[Dettagli] id (contatore 1): " + id);
+    }
+    else{
+        id = global_id_detail;
+        console.log("[Dettagli] id: " + id);
+    }
+    data = page.navigationContext.data;
     console.log("[DATA DETTAGLI]" + data);
 
     prod = "wrf5";
@@ -196,123 +200,36 @@ function pageLoaded(args) {
     });
 
     setTimeout(function () {
-        oLangWebViewInterface.emit("lingua", {lingua:platformModule.device.language});
+        oLangWebViewInterface.emit("lingua", {lingua:lingua});
     }, 900);
 
     print_data = get_print_data(data);
 
-    _data = new Date(anno, mese-1, giorno);
-    pageData.set("date_pick", _data);
-    pageData.set("minDate", new Date(2018, 0, 1));
-    pageData.set("maxDate", max_data);
-
     pageData.set("data", print_data);
 
-    if(contatore_detail == 1){
-        console.log("LOCATION PERMISSION: ", perm_loc.hasLocationPermissions());
+    print_chart(id, prod, output, hour, step);
 
-        geolocation.enableLocationRequest().then(function () {
-            geolocation.isEnabled().then(function (isEnabled) {
-                geolocation.getCurrentLocation({
-                    desiredAccuracy: 3,
-                    updateDistance: 10,
-                    maximumAge: 10000,
-                    timeout: 10000
-                }).then(function (loc) {
-                    if (loc) {
-                        latitudine = (loc.latitude).toString();
-                        longitudine = (loc.longitude).toString();
-                        console.log(latitudine);
-                        console.log(longitudine);
+    print_meteo(id, data);
 
-                        fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data1) => {
-                            id = data1[0].id;
-                            global.global_id_detail = id;
-                            console.log(id);
+    print_series(id);
 
-                            print_chart(id, prod, output, hour, step);
+    print_map(id, prod, output, data);
 
-                            print_meteo(id, data);
+    print_prod();
 
-                            print_series(id);
+    print_output(prod);
 
-                            print_map(id, prod, output, data);
+    print_steps();
 
-                            print_prod();
-
-                            print_output(prod);
-
-                            print_steps();
-
-                            print_hours();
-                        }).catch(error => console.error("[SEARCH] ", error));
-                    }
-                }, function (e) {
-                    dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
-                    id = "com63049";
-                    print_chart(id, prod, output, hour, step);
-
-                    print_meteo(id, data);
-
-                    print_series(id);
-
-                    print_map(id, prod, output, data);
-
-                    print_prod();
-
-                    print_output(prod);
-
-                    print_steps();
-
-                    print_hours();
-                });
-            });
-        }, function (e) {
-            console.log(e);
-            id = "com63049";
-            print_chart(id, prod, output, hour, step);
-
-            print_meteo(id, data);
-
-            print_series(id);
-
-            print_map(id, prod, output, data);
-
-            print_prod();
-
-            print_output(prod);
-
-            print_steps();
-
-            print_hours();
-        });
-    }
-    else{
-        id = global.global_id_detail;
-        console.log(id);
-
-        print_chart(id, prod, output, hour, step);
-
-        print_meteo(id, data);
-
-        print_series(id);
-
-        print_map(id, prod, output, data);
-
-        print_prod();
-
-        print_output(prod);
-
-        print_steps();
-
-        print_hours();
-    }
+    print_hours();
 
     page.bindingContext = pageData;
 }
 exports.pageLoaded = pageLoaded;
 
-function get_print_data(data) {
+
+function get_print_data(data)
+{
     let data_final;
     anno = data.substring(0,4);
     mese = data.substring(4, 6);
@@ -383,7 +300,7 @@ exports.dropDownSelectedIndexChanged2 = function (args) {
     if(step == '1') {
         pageData.set("hours_visibility", "visible");
         hour = "24";
-        if(platformModule.device.language == "it")
+        if(platformModule.device.language.includes('it'))
             pageData.set("hint_hours", "1 giorno");
         else
             pageData.set("hint_hours", "1 day");
@@ -453,7 +370,7 @@ function dayOfWeek(date) {
     let day = date.substring(6, 8);
 
     let dayOfWeek = new Date(year + "-" + month + "-" + day).getDay();
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         return isNaN(dayOfWeek) ? null : ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'][dayOfWeek];
     else
         return isNaN(dayOfWeek) ? null : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
@@ -461,7 +378,7 @@ function dayOfWeek(date) {
 
 function monthOfYear(date) {
     let month = parseInt(date.substring(4, 6)) - 1;
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         return isNaN(month) ? null : ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"][month];
     else
         return isNaN(month) ? null : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month];
@@ -478,10 +395,10 @@ function print_chart(id, prod, output, hour, step)
 function print_meteo(id, data)
 {
     let url = "https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data + "&opt=place";
-    console.log("Meteo: " + url);
+    console.log(url);
 
     var lingua;
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         lingua = 'it';
     else
         lingua = 'en';
@@ -579,13 +496,19 @@ function set_iDate(iDate) {
     pageData.set("idate", iDateString);
 }
 
+let temp_alt;
 function print_series(id)
 {
     items.splice(0);
+    pageData.set("altezza", temp_alt);
+    pageData.set("table", "collapsed");
+    pageData.set("isBusy_meteo", true);
+    pageData.set("isHeigh_meteo", "25");
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?hours=0&step=24")
         .then((response) => response.json())
         .then((data) => {
             pageData.set("altezza", data.timeseries.length * 45);
+            temp_alt = data.timeseries.length * 45;
             altezza = data.timeseries.length * 45;
             for (let i = 0; i < data.timeseries.length; i++) {
                 let url = "https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?date=" + data.timeseries[i]['dateTime'] + "&hours=24";
@@ -851,6 +774,10 @@ function print_map(id, prod, output, data)
     url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output + "&rand=" + curr_data;
     console.log("MAP: " + url_map);
 
+    pageData.set("isBusy_map", true);
+    pageData.set("isHeigh_map", "25");
+    pageData.set("_map", "collapsed");
+
     imageSource.fromUrl(url_map)
         .then(function () {
             pageData.map = url_map;
@@ -964,13 +891,13 @@ function print_map(id, prod, output, data)
         pageData.set("isBusy_map", false);
         pageData.set("isHeigh_map", "0");
         pageData.set("_map", "visible");
-    }).catch(err => {console.log("Somthing went wrong!");});
+    }).catch(err => {console.log("Errore: " + err);});
 }
 
 function print_prod()
 {
     let language;
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         language = 'it';
     else
         language = 'en';
@@ -994,7 +921,7 @@ function print_prod()
 
         console.log(_prod);
 
-        if(platformModule.device.language == "it")
+        if(platformModule.device.language.includes('it'))
             pageData.set("hint_prod", "Meteo alta risoluzione 7 giorni");
         else
             pageData.set("hint_prod", "High resolution weather forecast 7 days");
@@ -1007,7 +934,7 @@ function print_prod()
 function print_output(prod)
 {
     let language;
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         language = 'it';
     else
         language = 'en';
@@ -1031,11 +958,10 @@ function print_output(prod)
 
         console.log(_out);
 
-        if(platformModule.device.language == "it")
+        if(platformModule.device.language.includes('it'))
             pageData.set("hint_output", "Visualizzazione generale");
         else
             pageData.set("hint_output", "General Forecast");
-        //pageData.set("hint_output", _out);
 
         pageData.set("outputs", outputs);
     });
@@ -1046,7 +972,7 @@ function print_steps()
     var key = ['0', '1', '3', '6', '12', '24'];
     var value = null;
 
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         value = ['auto', '1 H', '3 H', '6 H', '12 H', '1 Giorno'];
     else
         value = ['auto', '1 H', '3 H', '6 H', '12 H', '1 Day'];
@@ -1071,7 +997,7 @@ function print_hours()
     var key = ['0', '24', '48', '72'];
     var value = null;
 
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         value = ['Tutte', '1 Giorno', '2 Giorni', '3 Giorni'];
     else
         value = ['All', '1 Day', '2 Days', '3 Days'];
@@ -1089,7 +1015,7 @@ function print_hours()
 
     pageData.set("hours_visibility", "collapsed");
 
-    if(platformModule.device.language == "it")
+    if(platformModule.device.language.includes('it'))
         pageData.set("hint_hours", "1 giorno");
     else
         pageData.set("hint_hours", "1 day");
@@ -1298,7 +1224,10 @@ if(platformModule.isAndroid)
 exports.didAutoComplete = function (args) {
     id = autocomplete_map.get(args.text);
     global.global_id_detail = id;
-    console.log(id);
+
+    pageData.set("graphic", "collapsed");
+    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isHeigh_graphic", "25");
 
     print_chart(id, prod, output, hour, step);
 
@@ -1455,8 +1384,7 @@ exports.remove = function (args) {
     });
 };
 
-function onTapSettings(args)
-{
+function onTapSettings(args) {
     var button = args.object;
     const page = button.page;
 
@@ -1464,8 +1392,7 @@ function onTapSettings(args)
 }
 exports.onTapSettings = onTapSettings;
 
-function onTapInfo(args)
-{
+function onTapInfo(args) {
     const button = args.object;
     const  page = button.page;
 
@@ -1476,3 +1403,9 @@ exports.onTapInfo = onTapInfo;
 exports.onTapReport = function () {
     page.frame.navigate("bollettino/bollettino");
 };
+
+if(platformModule.isAndroid){
+    application.android.on(application.AndroidApplication.activityBackPressedEvent, (args) => {
+        contatore_detail = 0;
+    });
+}

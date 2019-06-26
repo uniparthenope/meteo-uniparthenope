@@ -1,7 +1,11 @@
 let application = require("tns-core-modules/application");
 const platformModule = require("tns-core-modules/platform");
-require('tns-i18n')('en');
 const appSettings = require("application-settings");
+
+if((platformModule.device.language).includes("it"))
+    require('tns-i18n')('it');
+else
+    require('tns-i18n')('en');
 
 global.url_api = "https://api.meteo.uniparthenope.it/";
 global.contatore = 0;

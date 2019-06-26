@@ -2,5 +2,6 @@
     <StackLayout>
         <Image src="{{ map }}" id="map"/>
         <Label id="map_text" text="" marginTop="20" horizontalAlignment="center"/>
+        <Button class="blue_background_opac" text="" tap="close" id="button_close" />
     </StackLayout>
 </Page>

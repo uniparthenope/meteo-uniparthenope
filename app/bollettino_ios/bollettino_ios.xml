@@ -1,0 +1,26 @@
+<Page class="page"
+      navigatingTo="onNavigatingTo"
+      actionBarHidden="false"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="blue_background_action_bar">
+        <Label class="" text="{{ _L('home_bollettino') }}" fontSize="20"></Label>
+    </ActionBar>
+
+    <GridLayout xmlns:flv="nativescript-folding-list-view" visibility="{{ios}}">
+        <flv:FoldingListView items="{{ items }}" foldedRowHeight="75">
+           <flv:FoldingListView.foregroundItemTemplate>
+               <StackLayout horizontalAlignment="center" verticalAlignment="bottom" class="blue_background_report" width="100%">
+                   <Label text="{{title}}" horizontalAlignment="center" textWrap="true" margin="5 5 5 5"/>
+                   <Label text="{{date_text}}" fontSize="11" margin="5 5 5 5"/>
+               </StackLayout>
+           </flv:FoldingListView.foregroundItemTemplate>
+           <flv:FoldingListView.containerItemTemplate>
+               <StackLayout heigth="100%">
+                   <Label text="{{title}}" horizontalAlignment="center" textWrap="true" margin="5 5 5 5"/>
+                   <HtmlView textWrap="true" html="{{ desc }}" color="#009432"></HtmlView>
+               </StackLayout>
+           </flv:FoldingListView.containerItemTemplate>
+       </flv:FoldingListView>
+    </GridLayout>
+</Page>

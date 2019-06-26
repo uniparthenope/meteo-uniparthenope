@@ -3,9 +3,9 @@ var gestures = require("tns-core-modules/ui/gestures");
 let utils = require("tns-core-modules/utils/utils");
 var imageSource = require("image-source");
 const platformModule = require("tns-core-modules/platform");
+const topmost = require("ui/frame").topmost;
 
 let modal;
-
 let density;
 let prevDeltaX;
 let prevDeltaY;
@@ -14,21 +14,22 @@ let double_tap = false;
 
 exports.onShownModally = function (args) {
     modal = args.object;
-    /*
-        now you can do modal.getViewById("<id of element>");
-    */
 
-    const context = args.context; // The context that was passed to this modal
+    const context = args.context;
 
     console.log("Context passed was: ");
     console.log(JSON.stringify(context));
 
     let map_zoom = modal.getViewById("map");
 
-    if(platformModule.device.language.includes("it"))
+    if(platformModule.device.language.includes("it")) {
         modal.getViewById("map_text").text = "Doppio click per zoom";
-    else
+        modal.getViewById("button_close").text = "Chiudi";
+    }
+    else {
         modal.getViewById("map_text").text = "Double tap to zoom";
+        modal.getViewById("button_close").text = "Close";
+    }
 
     imageSource.fromUrl(context.context)
         .then(function () {
@@ -107,6 +108,12 @@ exports.onShownModally = function (args) {
     });
 
 
-    closeCallback = args.closeCallback; // The closecallback method, which you can call to close the modal
+    closeCallback = args.closeCallback;
 };
 
+exports.close = function (args) {
+    const page = topmost().currentPage;
+    if (page && page.modal) {
+        page.modal.closeModal();
+    }
+};

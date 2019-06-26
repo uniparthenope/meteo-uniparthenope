@@ -1,6 +1,6 @@
-var apiBaseUrl="https://api.meteo.uniparthenope.it";
+let apiBaseUrl="https://api.meteo.uniparthenope.it";
 
-var conColors = [
+let conColors = [
     "#FFFFFF",
     "#CCFFFF",
     "#3366FF",
@@ -10,7 +10,7 @@ var conColors = [
     "#660033"
 ];
 
-var scmColors = [
+let scmColors = [
     "#F8F0FD",
     "#E1CAFF",
     "#60F3F0",
@@ -22,7 +22,7 @@ var scmColors = [
 
 ];
 
-var sssColors = [
+let sssColors = [
     "#1001F3",
     "#0076FF",
     "#04B6FF",
@@ -33,7 +33,7 @@ var sssColors = [
     "#DBADAC"
 ];
 
-var sstColors = [
+let sstColors = [
     "#140756",
     "#4141C7",
     "#206EEB",
@@ -60,7 +60,7 @@ var sstColors = [
 ];
 
 
-var tempColors = [
+let tempColors = [
     "#2400d8",
     "#181cf7",
     "#2857ff",
@@ -81,7 +81,7 @@ var tempColors = [
     "#a50021"
 ];
 
-var windColors = [
+let windColors = [
     "#000033",
     "#0117BA",
     "#011FF3",
@@ -108,7 +108,7 @@ var windColors = [
 
 
 function sss2color(sss) {
-    var index=0;
+    let index=0;
 
     // 37.5 37.75 38 38.25 38.5 38.75 39
     if (sss<37.5) {
@@ -133,7 +133,7 @@ function sss2color(sss) {
 }
 
 function sst2color(sst) {
-    var index=0;
+    let index=0;
 
     // 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
     if (sst<10) {
@@ -186,7 +186,7 @@ function sst2color(sst) {
 }
 
 function con2color(conc) {
-    var index=0;
+    let index=0;
 
     // 1 18 230 700 4600 46000
     if (conc<18) {
@@ -207,7 +207,7 @@ function con2color(conc) {
 }
 
 function scm2color(scm) {
-    var index=0;
+    let index=0;
 
     // 0.1 0.2 0.3 0.4 0.5 0.6 0.7
     if (scm<0.1) {
@@ -232,7 +232,7 @@ function scm2color(scm) {
 }
 
 function temp2color(temp) {
-    var index=0;
+    let index=0;
 
     // -40 -30 -20 -15 -10 -5 0 3 6 9 12 15 18 21 25 30 40 50
     if (temp>=-40 && temp<-30) {
@@ -277,7 +277,7 @@ function temp2color(temp) {
 }
 
 function windKnt2color(ws) {
-    var index=0;
+    let index=0;
 
     if (ws>=0 && ws<1) {
         index=0;
@@ -324,41 +324,40 @@ function windKnt2color(ws) {
     return windColors[index+1];
 }
 
-var oWebViewInterface1 = window.nsWebViewInterface;
-var prod;
-var output;
-var place;
-var step;
-var hours;
-var lingua;
+let oWebViewInterface1 = window.nsWebViewInterface;
+let prod;
+let output;
+let place;
+let step;
+let hours;
+let lingua;
 
 oWebViewInterface1.on("lingua", function (cor) {
     lingua = cor.lingua;
 });
 
 oWebViewInterface1.on("chart", function (cor) {
-    console.log("QUI");
     prod = cor.prod;
     place = cor.place;
     output = cor.output;
     hours = cor.hours;
     step = cor.step;
 
-    var timeseriesUrl=apiBaseUrl+"/products/"+prod+"/timeseries/"+place+"?hours="+hours+"&step="+step;
+    let timeseriesUrl=apiBaseUrl+"/products/"+prod+"/timeseries/"+place+"?hours="+hours+"&step="+step;
 
     console.log("timeseriesUrl: "+timeseriesUrl);
 
-    var title = "Forecast";
-    var dataPoints = [];
-    var dataPoints2 = [];
-    var data=[];
-    var axisY=null, axisY2=null, colorSet=null;
+    let title = "Forecast";
+    let dataPoints = [];
+    let dataPoints2 = [];
+    let data=[];
+    let axisY=null, axisY2=null, colorSet=null;
 
     if (prod==='wrf5') {
         if (output === "gen" || output === "tsp") {
             fontSize: 18;
-            var title1;
-            var title2;
+            let title1;
+            let title2;
             if(lingua == "it") {
                 title = "Pressione e Temperatura";
                 title1 = "Pressione a livello del mare (HPa)";
@@ -399,8 +398,8 @@ oWebViewInterface1.on("chart", function (cor) {
             });
         } else if (output==="wn1") {
             fontSize: 18;
-            var title1;
-            var title2;
+            let title1;
+            let title2;
             if(lingua == "it") {
                 title = "Velocità e direzione del vento a 10m";
                 title1 = "Velocità del vento a 10m";
@@ -444,8 +443,8 @@ oWebViewInterface1.on("chart", function (cor) {
             });
         } else if (output==="crh") {
             fontSize: 18;
-            var title1;
-            var title2;
+            let title1;
+            let title2;
             if(lingua == "it") {
                 title = "Nuvole e pioggia";
                 title1 = "Pioggia cumulata oraria (mm)";
@@ -489,7 +488,7 @@ oWebViewInterface1.on("chart", function (cor) {
     } else if (prod==='wcm3') {
         if (output === "gen" || output === "con") {
             fontSize: 18;
-            var title1;
+            let title1;
             if(lingua == "it") {
                 title = "Concentrazione particelle";
                 title1 = "Numero di particelle";
@@ -518,8 +517,8 @@ oWebViewInterface1.on("chart", function (cor) {
         if (output === "gen" || output === "scu") {
             fontSize: 18;
 
-            var title1;
-            var title2;
+            let title1;
+            let title2;
             if(lingua == "it") {
                 title = "Corrente superficiale";
                 title1 = "Velocità corrente superficiale (m/s)";
@@ -563,7 +562,7 @@ oWebViewInterface1.on("chart", function (cor) {
             });
         } else if (output === "sst") {
             fontSize: 18;
-            var title1;
+            let title1;
             if(lingua == "it") {
                 title = "Temperatura superficiale";
                 title1 = "Temperatura superficiale (°C)";
@@ -589,7 +588,7 @@ oWebViewInterface1.on("chart", function (cor) {
 
         } else if (output === "sss") {
             fontSize: 18;
-            var title1;
+            let title1;
             if(lingua == "it") {
                 title = "Salinità superficiale";
                 title1 = "Salinità superficiale (1/1000)";
@@ -616,8 +615,8 @@ oWebViewInterface1.on("chart", function (cor) {
         } else if (output === "sts") {
             fontSize: 18;
 
-            var title1;
-            var title2;
+            let title1;
+            let title2;
             if(lingua == "it") {
                 title = "Temperatura e salinità superficiale";
                 title1 = "Temperatura superficiale (°C)";
@@ -659,7 +658,7 @@ oWebViewInterface1.on("chart", function (cor) {
         }
     }
 
-    var options= {
+    let options= {
         credits: {
             enabled: false
         },
@@ -682,18 +681,18 @@ oWebViewInterface1.on("chart", function (cor) {
         data: data
     };
 
-    var chart = new CanvasJS.Chart("chartContainer", options);
+    let chart = new CanvasJS.Chart("chartContainer", options);
 
     $.getJSON(timeseriesUrl, function(data){
-            var timeSeries=data['timeseries'];
-            for (var i = 0; i < timeSeries.length; i++) {
-                var date = timeSeries[i].dateTime;
-                var year = date.substring(0,4);
-                var month = date.substring(4, 6);
-                var day = date.substring(6, 8);
-                var hour = date.substring(9, 11);
-                var sDateTime = year + "-" + month + "-" + day + "T" + hour + ":00:00Z";
-                var dateTime = new Date(sDateTime);
+            let timeSeries=data['timeseries'];
+            for (let i = 0; i < timeSeries.length; i++) {
+                let date = timeSeries[i].dateTime;
+                let year = date.substring(0,4);
+                let month = date.substring(4, 6);
+                let day = date.substring(6, 8);
+                let hour = date.substring(9, 11);
+                let sDateTime = year + "-" + month + "-" + day + "T" + hour + ":00:00Z";
+                let dateTime = new Date(sDateTime);
 
                 if (prod==='wrf5') {
                     if (output === "gen" || output === "tsp") {

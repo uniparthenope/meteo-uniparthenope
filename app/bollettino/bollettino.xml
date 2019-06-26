@@ -7,9 +7,9 @@
         <Label class="" text="{{ _L('home_bollettino') }}" fontSize="20"></Label>
     </ActionBar>
 
-    <StackLayout xmlns:accordion="nativescript-accordion">
+    <StackLayout xmlns:accordion="nativescript-accordion" visibility="{{android}}">
         <ScrollView height="100%">
-            <accordion:Accordion id="accordion" items="{{items}}" allowMultiple="false" height="100%">
+            <accordion:Accordion id="accordion" items="{{ items }}" allowMultiple="false" height="100%">
                 <accordion:Accordion.itemHeaderTemplate>
                     <StackLayout horizontalAlignment="center" verticalAlignment="bottom" class="blue_background_report" width="100%">
                         <Label text="{{title}}" horizontalAlignment="center" textWrap="true" margin="5 5 5 5"/>
@@ -23,8 +23,6 @@
                     </StackLayout>
                 </accordion:Accordion.itemContentTemplate>
             </accordion:Accordion>
-
         </ScrollView>
-
     </StackLayout>
 </Page>

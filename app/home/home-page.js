@@ -34,6 +34,7 @@ var longitudine;
 let page;
 var preferiti;
 var myPref = new ObservableArray();
+let lingua;
 
 function setupWebViewInterface(page){
   var webView = page.getViewById('webView');
@@ -46,12 +47,19 @@ exports.pageLoaded = function(args) {
   setupWebViewInterface(page);
   contatore++;
   console.log("Contatore: " + contatore);
+  contatore_detail = 0;
 
   preferiti = JSON.parse(appSetting.getString("preferiti" , "[]"));
 
   home = new Observable.fromObject({
     myPref: myPref
   });
+
+  lingua;
+  if(platformModule.device.language.includes("it"))
+    lingua = "it";
+  else
+    lingua = "en";
 
   console.log("Notifications enabled?" +  messaging.messaging.areNotificationsEnabled());
   messaging.messaging.registerForPushNotifications({
@@ -147,7 +155,7 @@ exports.pageLoaded = function(args) {
     home.set("minDate", new Date(2018, 0, 1));
     home.set("maxDate", max_data);
 
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
       print_data = nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
     else
       print_data = name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
@@ -165,7 +173,7 @@ exports.pageLoaded = function(args) {
     home.set("minDate", new Date(2018, 0, 1));
     home.set("maxDate", max_data);
 
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
       print_data = nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
     else
       print_data = name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
@@ -201,7 +209,7 @@ exports.pageLoaded = function(args) {
                 box_place = false;
 
                 setTimeout(function () {
-                  oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+                  oLangWebViewInterface.emit('language', {lingua: lingua});
                 }, 800);
 
 
@@ -274,7 +282,7 @@ exports.pageLoaded = function(args) {
                     }
 
                     setTimeout(function () {
-                      oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+                      oLangWebViewInterface.emit('language', {lingua: lingua});
                     }, 500);
 
                     setTimeout(function () {
@@ -303,7 +311,7 @@ exports.pageLoaded = function(args) {
             box_place = false;
 
             setTimeout(function () {
-              oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+              oLangWebViewInterface.emit('language', {lingua: lingua});
             }, 800);
 
             setTimeout(function () {
@@ -324,7 +332,7 @@ exports.pageLoaded = function(args) {
         box_place = false;
 
         setTimeout(function () {
-          oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+          oLangWebViewInterface.emit('language', {lingua: lingua});
         }, 800);
 
         setTimeout(function () {
@@ -443,12 +451,12 @@ exports.onTapNext = function() {
 }
 
 function send_data() {
-  if(platformModule.device.language == 'it')
+  if(platformModule.device.language.includes("it"))
     home.set("data", nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
   else
     home.set("data", name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00");
 
-  oLangWebViewInterface.emit('language', {lingua: platformModule.device.language});
+  oLangWebViewInterface.emit('language', {lingua: lingua});
 
   oLangWebViewInterface.emit('new_data', {data:currData});
 
@@ -1045,7 +1053,10 @@ function scan(){
 }
 
 exports.onTapReport = function () {
-  page.frame.navigate("bollettino/bollettino");
+  if(platformModule.isAndroid)
+    page.frame.navigate("bollettino/bollettino");
+  else
+    page.frame.navigate("bollettino_ios/bollettino_ios");
 };
 
 function set_preferiti(){

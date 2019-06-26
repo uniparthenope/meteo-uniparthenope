@@ -15,6 +15,7 @@ let BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
 let barcodescanner = new BarcodeScanner();
 let application = require("tns-core-modules/application");
 
+let lingua;
 var press;
 var temp;
 var single_item;
@@ -69,6 +70,11 @@ function pageLoaded(args) {
 
     drawer = view.getViewById(page,"sideDrawer");
 
+    if(platformModule.device.language.includes("it"))
+        lingua = "it";
+    else
+        lingua = "en";
+
     pageData = new Observable.fromObject({
         temp: temp,
         press: press,
@@ -121,7 +127,6 @@ function pageLoaded(args) {
     step = "0";
     hour = "24";
 
-
     preferiti = JSON.parse(appSetting.getString("preferiti" , "[]"));
     console.log("Preferiti: " + preferiti);
     myPref.splice(0);
@@ -140,7 +145,7 @@ function pageLoaded(args) {
     });
 
     setTimeout(function () {
-        oLangWebViewInterface.emit("lingua", {lingua:platformModule.device.language});
+        oLangWebViewInterface.emit("lingua", {lingua:lingua});
     }, 900);
 
     print_data = get_print_data(data);
@@ -240,7 +245,7 @@ exports.dropDownSelectedIndexChanged2 = function (args) {
     if(step == '1') {
         pageData.set("hours_visibility", "visible");
         hour = "24";
-        if(platformModule.device.language == "it")
+        if(platformModule.device.language.includes('it'))
             pageData.set("hint_hours", "1 giorno");
         else
             pageData.set("hint_hours", "1 day");
@@ -310,7 +315,7 @@ function dayOfWeek(date) {
     let day = date.substring(6, 8);
 
     let dayOfWeek = new Date(year + "-" + month + "-" + day).getDay();
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         return isNaN(dayOfWeek) ? null : ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'][dayOfWeek];
     else
         return isNaN(dayOfWeek) ? null : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
@@ -318,7 +323,7 @@ function dayOfWeek(date) {
 
 function monthOfYear(date) {
     let month = parseInt(date.substring(4, 6)) - 1;
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         return isNaN(month) ? null : ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"][month];
     else
         return isNaN(month) ? null : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month];
@@ -338,7 +343,7 @@ function print_meteo(id, data)
     console.log(url);
 
     var lingua;
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         lingua = 'it';
     else
         lingua = 'en';
@@ -837,7 +842,7 @@ function print_map(id, prod, output, data)
 function print_prod()
 {
     let language;
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         language = 'it';
     else
         language = 'en';
@@ -861,7 +866,7 @@ function print_prod()
 
         console.log(_prod);
 
-        if(platformModule.device.language == "it")
+        if(platformModule.device.language.includes('it'))
             pageData.set("hint_prod", "Meteo alta risoluzione 7 giorni");
         else
             pageData.set("hint_prod", "High resolution weather forecast 7 days");
@@ -874,7 +879,7 @@ function print_prod()
 function print_output(prod)
 {
     let language;
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         language = 'it';
     else
         language = 'en';
@@ -898,11 +903,10 @@ function print_output(prod)
 
         console.log(_out);
 
-        if(platformModule.device.language == "it")
+        if(platformModule.device.language.includes('it'))
             pageData.set("hint_output", "Visualizzazione generale");
         else
             pageData.set("hint_output", "General Forecast");
-        //pageData.set("hint_output", _out);
 
         pageData.set("outputs", outputs);
     });
@@ -913,7 +917,7 @@ function print_steps()
     var key = ['0', '1', '3', '6', '12', '24'];
     var value = null;
 
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         value = ['auto', '1 H', '3 H', '6 H', '12 H', '1 Giorno'];
     else
         value = ['auto', '1 H', '3 H', '6 H', '12 H', '1 Day'];
@@ -938,7 +942,7 @@ function print_hours()
     var key = ['0', '24', '48', '72'];
     var value = null;
 
-    if(platformModule.device.language == 'it')
+    if(platformModule.device.language.includes('it'))
         value = ['Tutte', '1 Giorno', '2 Giorni', '3 Giorni'];
     else
         value = ['All', '1 Day', '2 Days', '3 Days'];
@@ -956,7 +960,7 @@ function print_hours()
 
     pageData.set("hours_visibility", "collapsed");
 
-    if(platformModule.device.language == "it")
+    if(platformModule.device.language.includes('it'))
         pageData.set("hint_hours", "1 giorno");
     else
         pageData.set("hint_hours", "1 day");
@@ -1165,6 +1169,10 @@ if(platformModule.isAndroid)
 exports.didAutoComplete = function (args) {
     id = autocomplete_map.get(args.text);
     global.global_id_detail = id;
+
+    pageData.set("graphic", "collapsed");
+    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isHeigh_graphic", "25");
 
     print_chart(id, prod, output, hour, step);
 

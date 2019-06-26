@@ -10,11 +10,8 @@ let data_selected;
 
 exports.onShownModally = function (args) {
     modal = args.object;
-    /*
-        now you can do modal.getViewById("<id of element>");
-    */
 
-    const context = args.context; // The context that was passed to this modal
+    const context = args.context;
 
     console.log("Context passed was: ");
     console.log(JSON.stringify(context));
@@ -37,7 +34,7 @@ exports.onShownModally = function (args) {
         modal.getViewById("button_back").text = "Back";
         modal.getViewById("data_text").text = "Select hour: ";
     }
-    closeCallback = args.closeCallback; // The closecallback method, which you can call to close the modal
+    closeCallback = args.closeCallback;
 };
 
 exports.close = function (args) {
@@ -61,8 +58,6 @@ exports.onDateSelected = function (args) {
             title : "Attenzione",
             message : "La data selezionata non è corretta. Riprova.",
             okButtonText : "OK"
-        }).then(function () {
-
         });
 
     else{

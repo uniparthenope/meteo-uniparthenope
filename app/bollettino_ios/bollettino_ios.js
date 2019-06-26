@@ -43,11 +43,7 @@ function onNavigatingTo(args) {
                         title: title,
                         date:data,
                         date_text: data.getDate() + "/" +(data.getMonth()+1) + "/" +data.getFullYear() + " " + data.getHours() + ":" +data.getMinutes(),
-                        items: [
-                            {
-                                desc: myHtmlString
-                            }
-                        ]
+                        desc: myHtmlString
                     });
                     items.sort(function (orderA, orderB) {
                         let nameA = orderA.date;
