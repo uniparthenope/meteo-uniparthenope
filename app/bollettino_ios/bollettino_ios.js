@@ -15,12 +15,9 @@ function onNavigatingTo(args) {
     viewModel = Observable.fromObject({
         items:items
     });
-
-    page.set("android", "visible");
-
-    let dest = fs.path.join(fs.knownFolders.currentApp().path, "/rss.xml");
     let url = "https://meteo.uniparthenope.it/rss/weatherreports";
-    httpModule.getFile(url, dest).then(function (r) {
+
+    httpModule.getFile(url).then((r) => {
         let parser = new xml2js.Parser();
         r.readText().then(function  (data){
             parser.parseString(data, function (err, result) {
@@ -53,7 +50,7 @@ function onNavigatingTo(args) {
                 }
             });
         });
-    },function (e) {
+    }, (e) => {
         console.log(e);
     });
 

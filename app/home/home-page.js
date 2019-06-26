@@ -84,7 +84,10 @@ exports.pageLoaded = function(args) {
             if (message.data.contentType) {
               let contentType = message.data.contentType;
               if (contentType === 'bollettino') {
-                route = "bollettino/bollettino";
+                if(platformModule.isAndroid)
+                  route = "bollettino/bollettino";
+                else
+                  route = "bollettino_ios/bollettino_ios";
               }
               page.frame.navigate(route);
             }
