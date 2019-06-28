@@ -192,6 +192,8 @@ exports.pageLoaded = function(args) {
 
     if (global_id == " ") {
       geolocation.enableLocationRequest().then(function () {
+        contatore_detail = 0;
+
         geolocation.isEnabled().then(function (isEnabled) {
           gps_on = isEnabled;
           console.log("GPS: " + gps_on);
@@ -310,6 +312,7 @@ exports.pageLoaded = function(args) {
               }
             }
           }, function (e) {
+            contatore_detail = 0;
             dialog.alert({title: "Errore", message: e.message, okButtonText: "OK"});
             home.set("current_position", "collapsed");
             box_place = false;
@@ -331,6 +334,7 @@ exports.pageLoaded = function(args) {
           });
         });
       }, function (e) {
+        contatore_detail = 0;
         gps_on = false;
         home.set("current_position", "collapsed");
         box_place = false;
