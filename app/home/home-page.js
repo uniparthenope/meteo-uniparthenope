@@ -14,6 +14,7 @@ let BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
 let barcodescanner = new BarcodeScanner();
 let messaging = require("nativescript-plugin-firebase/messaging");
 
+
 var drawer;
 var oLangWebViewInterface;
 var anno;

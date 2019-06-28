@@ -1171,6 +1171,9 @@ exports.didAutoComplete = function (args) {
     global.global_id_detail = id;
 
     pageData.set("graphic", "collapsed");
+    pageData.set("table", "collapsed");
+    pageData.set("isBusy", true);//Load animation
+    pageData.set("isHeigh", "25");
     pageData.set("isBusy_graphic", true);//Load animation
     pageData.set("isHeigh_graphic", "25");
 
