@@ -17,6 +17,7 @@ var geolocation = require("nativescript-geolocation");
 const perm_loc = require("nativescript-advanced-permissions/location");
 let messaging = require("nativescript-plugin-firebase/messaging");
 
+
 let lingua;
 var press;
 var temp;
@@ -99,7 +100,10 @@ function pageLoaded(args) {
                         if (message.data.contentType) {
                             let contentType = message.data.contentType;
                             if (contentType === 'bollettino') {
-                                route = "bollettino/bollettino";
+                                if(platformModule.isAndroid)
+                                    route = "bollettino/bollettino";
+                                else
+                                    route = "bollettino_ios/bollettino_ios";
                             }
                             page.frame.navigate(route);
                         }
@@ -108,13 +112,15 @@ function pageLoaded(args) {
                 });
             }
             else{
-                /**if the message arrived when the app is in the background, this code is executed when the user taps on the notification **/
                 console.log("message", message);
 
                 if (message.data.contentType) {
                     let contentType = message.data.contentType;
                     if (contentType === 'bollettino') {
-                        route = "bollettino/bollettino";
+                        if(platformModule.isAndroid)
+                            route = "bollettino/bollettino";
+                        else
+                            route = "bollettino_ios/bollettino_ios";
                     }
                     page.frame.navigate(route);
                 }
@@ -1488,4 +1494,16 @@ exports.onTapInfo = onTapInfo;
 
 exports.onTapReport = function () {
     page.frame.navigate("bollettino/bollettino");
+};
+
+exports.toggleDrawer = function() {
+    drawer.toggleDrawerState();
+};
+
+exports.onTapMapLeaflet = function () {
+    const nav = {
+        clearHistory : true,
+        moduleName: "home/home-page"
+    };
+    page.frame.navigate(nav);
 };

@@ -1,6 +1,12 @@
 <Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd" xmlns:dd="nativescript-drop-down" xmlns:sd="nativescript-ui-sidedrawer" xmlns:accordion="nativescript-accordion" xmlns:lv="nativescript-ui-autocomplete" xmlns:x="nativescript-statusbar">
-    <ActionBar class="blue_background_action_bar" flat="true">
-        <Label text="{{ titolo }}" fontSize="20"></Label>
+    <ActionBar class="blue_background_action_bar">
+        <Label text="{{ titolo }}" fontSize="20"/>
+        <android>
+            <NavigationButton icon="res://menu" tap="toggleDrawer" />
+        </android>
+        <ios>
+            <ActionItem icon="res://navigation/menu" ios.position="right" tap="toggleDrawer" />
+        </ios>
     </ActionBar>
 
     <x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,1)" />

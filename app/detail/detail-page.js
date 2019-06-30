@@ -1357,3 +1357,7 @@ if(platformModule.isAndroid){
         contatore_detail = 0;
     });
 }
+
+exports.toggleDrawer = function() {
+    drawer.toggleDrawerState();
+};

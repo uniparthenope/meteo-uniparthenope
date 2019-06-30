@@ -3,7 +3,9 @@
         <bitmap android:gravity="fill" android:src="@drawable/background" />
     </item>
     <item>
-        <bitmap android:gravity="center" android:src="@drawable/logo2" />
+        <bitmap android:gravity="center" android:src="@drawable/logo_univers" />
     </item>
-
+    <item android:bottom="100dp">
+        <bitmap android:gravity="bottom" android:src="@drawable/logo_univers1" />
+    </item>
 </layer-list>
