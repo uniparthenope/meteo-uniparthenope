@@ -4,6 +4,7 @@ let xml2js = require('nativescript-xml2js');
 let fs = require("tns-core-modules/file-system");
 const httpModule = require("tns-core-modules/http");
 const platformModule = require("tns-core-modules/platform");
+const webViewModule = require("tns-core-modules/ui/web-view");
 
 let page;
 let viewModel;
@@ -26,18 +27,20 @@ function onNavigatingTo(args) {
             parser.parseString(data, function (err, result) {
                 for(let i=0; i<result.rss.channel[0].item.length; i++)
                 {
-                    let myHtmlString = result.rss.channel[0].item[i].description.toString();
+                    //let myHtmlString = result.rss.channel[0].item[i].description.toString();
                     const title = result.rss.channel[0].item[i].title.toString();
                     const date = result.rss.channel[0].item[i].pubDate.toString();
                     let data = extractData(date);
+                    console.log(result.rss.channel[0].item[i].link[0]);
 
+                    /*
                     let index = myHtmlString.search('img alt');
                     if(index != -1){
                         let temp = myHtmlString.slice(index);
                         let index1 = temp.search('align-left');
                         let string_temp = myHtmlString.slice(index-4, index+index1+88);
                         myHtmlString = myHtmlString.replace(string_temp, " ");
-                    }
+                    }*/
 
                     items.push({
                         title: title,
@@ -45,7 +48,7 @@ function onNavigatingTo(args) {
                         date_text: data.getDate() + "/" +(data.getMonth()+1) + "/" +data.getFullYear() + " " + data.getHours() + ":" +data.getMinutes(),
                         items: [
                             {
-                                desc: myHtmlString
+                                desc : result.rss.channel[0].item[i].link[0]
                             }
                         ]
                     });

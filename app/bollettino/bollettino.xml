@@ -19,7 +19,10 @@
 
                 <accordion:Accordion.itemContentTemplate>
                     <StackLayout>
+                        <!--
                         <HtmlView html="{{ desc }}" color="#009432"></HtmlView>
+                        -->
+                        <WebView id="myWebView" src="{{ desc }}" />
                     </StackLayout>
                 </accordion:Accordion.itemContentTemplate>
             </accordion:Accordion>
