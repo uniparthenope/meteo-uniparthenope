@@ -55,6 +55,48 @@ exports.pageLoaded = function(args) {
     myPref: myPref
   });
 
+  if(contatore == 1) {
+    data = new Date();
+    global_date = data;
+    max_data = new Date(global_date.getFullYear(), global_date.getMonth(), global_date.getDate() + 5);
+
+    ora = data.getHours();
+    if (ora < 10)
+      ora = '0' + ora;
+    mese = data.getMonth() + 1;
+    if (mese < 10)
+      mese = '0' + mese;
+    giorno = data.getDate();
+    if (giorno < 10)
+      giorno = '0' + giorno;
+    anno = data.getFullYear();
+
+    if(platformModule.device.language.includes('it'))
+      print_data = nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
+    else
+      print_data = name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
+
+    currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
+    console.log("Data: " + print_data);
+
+    home.set("data", print_data);
+  }
+  else
+  {
+    data = new Date(anno, mese-1, giorno);
+    max_data = new Date(global_date.getFullYear(), global_date.getMonth(), global_date.getDate() + 5);
+
+    if(platformModule.device.language.includes('it'))
+      print_data = nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
+    else
+      print_data = name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
+
+    currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
+    console.log(print_data);
+
+    home.set("data", print_data);
+  }
+
   lingua;
   if(platformModule.device.language.includes("it"))
     lingua = "it";
@@ -138,55 +180,6 @@ exports.pageLoaded = function(args) {
   drawer = view.getViewById(page,"sideDrawer");
 
   console.log("GLOBAL ID: " + global_id);
-
-  if(contatore == 1) {
-    data = new Date();
-    global_date = data;
-    max_data = new Date(global_date.getFullYear(), global_date.getMonth(), global_date.getDate() + 5);
-
-    ora = data.getHours();
-    if (ora < 10)
-      ora = '0' + ora;
-    mese = data.getMonth() + 1;
-    if (mese < 10)
-      mese = '0' + mese;
-    giorno = data.getDate();
-    if (giorno < 10)
-      giorno = '0' + giorno;
-    anno = data.getFullYear();
-
-    home.set("date_pick", data);
-    home.set("minDate", new Date(2018, 0, 1));
-    home.set("maxDate", max_data);
-
-    if(platformModule.device.language.includes('it'))
-      print_data = nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
-    else
-      print_data = name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
-
-    currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
-    console.log(print_data);
-
-    home.set("data", print_data);
-  }
-  else
-  {
-    data = new Date(anno, mese-1, giorno);
-    max_data = new Date(global_date.getFullYear(), global_date.getMonth(), global_date.getDate() + 5);
-    home.set("date_pick", data);
-    home.set("minDate", new Date(2018, 0, 1));
-    home.set("maxDate", max_data);
-
-    if(platformModule.device.language.includes('it'))
-      print_data = nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00";
-    else
-      print_data = name_day[data.getDay()] + " " + mese + "/" + giorno + "/" + anno + " " + ora + ":00";
-
-    currData = anno + "" + mese + "" + giorno + "Z" + ora + "00";
-    console.log(print_data);
-
-    home.set("data", print_data);
-  }
 
   console.log("LOCATION PERMISSION: ", perm_loc.hasLocationPermissions());
 
@@ -548,7 +541,7 @@ exports.onTapSettings =function(args) {
   const page = button.page;
 
   page.frame.navigate("settings/setting-page");
-}
+};
 
 exports.onTapInfo = function(args) {
     const button = args.object;

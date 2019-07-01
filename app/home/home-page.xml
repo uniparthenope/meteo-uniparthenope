@@ -1,4 +1,16 @@
-<Page actionBarHidden="true" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:sd="nativescript-ui-sidedrawer" loaded="pageLoaded" xmlns:lv="nativescript-ui-autocomplete" xmlns:x="nativescript-statusbar">
+<Page
+        navigatedFrom="onNavigatedFrom"
+        navigatedTo="onNavigatedTo"
+        loaded="pageLoaded"
+        navigatingFrom="onNavigatingFrom"
+        navigatingTo="onNavigatingTo"
+        unloaded="onUnloaded"
+        layoutChanged="onLayoutChanged"
+        actionBarHidden="true"
+        xmlns="http://schemas.nativescript.org/tns.xsd"
+        xmlns:sd="nativescript-ui-sidedrawer"
+        xmlns:lv="nativescript-ui-autocomplete"
+        xmlns:x="nativescript-statusbar">
     <ActionBar title="MeteoUniparthenope"/>
 
     <x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,1)" />
