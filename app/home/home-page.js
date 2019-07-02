@@ -207,28 +207,19 @@ exports.pageLoaded = function(args) {
                 home.set("current_position", "collapsed");
                 box_place = false;
 
-                setTimeout(function () {
-                  oLangWebViewInterface.emit('language', {lingua: lingua});
-                }, 800);
-
+                oLangWebViewInterface.emit('language', {lingua: lingua});
 
                 console.log("Zoom: " + appSetting.getNumber("zoom", 5));
 
-                setTimeout(function () {
-                  oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
-                }, 500);
+                oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
 
-                setTimeout(function () {
-                  oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
-                }, 800);
+                oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
 
-                setTimeout(function () {
-                  oLangWebViewInterface.emit('settings', {
+                oLangWebViewInterface.emit('settings', {
                     gradi: appSetting.getNumber("Temperatura", 0),
                     vento: appSetting.getNumber("Vento", 0),
                     pressione: appSetting.getNumber("Pressione", 0)
                   });
-                }, 800);
               }
               else{
                 fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
@@ -280,25 +271,18 @@ exports.pageLoaded = function(args) {
                       dialog.alert({title: "Errore", message: data1.details, okButtonText: "OK"});
                     }
 
-                    setTimeout(function () {
-                      oLangWebViewInterface.emit('language', {lingua: lingua});
-                    }, 500);
+                    oLangWebViewInterface.emit('language', {lingua: lingua});
 
-                    setTimeout(function () {
-                      oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
-                    }, 500);
+                    oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
 
-                    setTimeout(function () {
-                      oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
-                    }, 500);
+                    oLangWebViewInterface.emit('location', {lat: latitudine, lang: longitudine});
 
-                    setTimeout(function () {
-                      oLangWebViewInterface.emit('settings', {
+
+                    oLangWebViewInterface.emit('settings', {
                         gradi: appSetting.getNumber("Temperatura", 0),
                         vento: appSetting.getNumber("Vento", 0),
                         pressione: appSetting.getNumber("Pressione", 0)
                       });
-                    }, 500);
                   })
                       .catch(error => console.error("[SEARCH] ERROR DATA ", error));
                 });
@@ -310,20 +294,15 @@ exports.pageLoaded = function(args) {
             home.set("current_position", "collapsed");
             box_place = false;
 
-            setTimeout(function () {
-              oLangWebViewInterface.emit('language', {lingua: lingua});
-            }, 800);
+            oLangWebViewInterface.emit('language', {lingua: lingua});
 
-            setTimeout(function () {
-              oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
-            }, 500);
-            setTimeout(function () {
-              oLangWebViewInterface.emit('settings', {
+            oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
+
+            oLangWebViewInterface.emit('settings', {
                 gradi: appSetting.getNumber("Temperatura", 0),
                 vento: appSetting.getNumber("Vento", 0),
                 pressione: appSetting.getNumber("Pressione", 0)
-              });
-            }, 800);
+            });
           });
         });
       }, function (e) {
@@ -332,21 +311,15 @@ exports.pageLoaded = function(args) {
         home.set("current_position", "collapsed");
         box_place = false;
 
-        setTimeout(function () {
-          oLangWebViewInterface.emit('language', {lingua: lingua});
-        }, 800);
+        oLangWebViewInterface.emit('language', {lingua: lingua});
 
-        setTimeout(function () {
-          oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
-        }, 500);
+        oLangWebViewInterface.emit('data', {anno: anno, mese: mese, giorno: giorno, ora: ora, zoom: appSetting.getNumber("zoom", 5), map: appSetting.getString("map", "Satellite"), lat:appSetting.getNumber("lat_center", "40.85"), lang:appSetting.getNumber("lang_center", "14.28")});
 
-        setTimeout(function () {
-          oLangWebViewInterface.emit('settings', {
+        oLangWebViewInterface.emit('settings', {
             gradi: appSetting.getNumber("Temperatura", 0),
             vento: appSetting.getNumber("Vento", 0),
             pressione: appSetting.getNumber("Pressione", 0)
           });
-        }, 800);
         console.log("Error: " + (e.message || e));
       });
     }
@@ -1002,7 +975,6 @@ function scan(){
     }
   }).then(
       function (result) {
-        setTimeout(function () {
           console.log(result.text);
           if(result.text.startsWith("http://")){
             let tmp = result.text.split("=");
@@ -1045,7 +1017,6 @@ function scan(){
             })
                 .catch(error => console.error("[QR-CODE] ERROR", error));}
           }
-          }, 500);
       },
       function (errorMessage) {
         console.log("No scan. " + errorMessage);
