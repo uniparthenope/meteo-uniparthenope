@@ -2,20 +2,26 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width">
+
     <title>App Meteo Parthenope</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link href="../dist/leaflet.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="../css/app.css">
     <link rel="stylesheet" href="../css/w3.css">
     <link rel="stylesheet" href="../dist/leaflet-control-credits.css" />
 
-
     <style>
-        #map
-        {
+        #map {
             height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            position: absolute !important;
         }
     </style>
 </head>
+
 
 <body>
 <div class="app-page " data-page="home">
@@ -27,9 +33,7 @@
 
 <!--vendor-->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<link href="../dist/leaflet.css" rel="stylesheet" type="text/css" />
 <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
-
 <script src="jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 

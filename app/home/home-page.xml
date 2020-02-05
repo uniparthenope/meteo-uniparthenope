@@ -53,16 +53,8 @@
 
         <sd:RadSideDrawer.mainContent>
             <StackLayout>
-                <GridLayout rows="*,auto" columns="*" verticalAlignment="top" width="100%" height="100%">
-                    <ContentView row="0" col="0" rowSpan="3" class="map">
-                        <web-view id="webView"></web-view>
-                    </ContentView>
-
-                    <StackLayout height="30" orientation="vertical" verticalAlignment="center" horizontalAlignment="left" tap="toggleDrawer">
-                        <Image src="~/images/arrow.png"></Image>
-                    </StackLayout>
-
-                    <GridLayout class="blue_background_action_bar" verticalAlignment="top" row="0" col="0" height="50">
+                <GridLayout rows="auto,*,auto" verticalAlignment="top" width="100%" height="100%">
+                    <GridLayout class="blue_background_action_bar" verticalAlignment="top" row="0">
                         <StackLayout width="10%" horizontalAlignment="left" verticalAlignment="center">
                             <Image src="~/images/search.png" width="20" marginLeft="5"></Image>
                         </StackLayout>
@@ -86,7 +78,11 @@
                         </StackLayout>
                     </GridLayout>
 
-                    <StackLayout class="blue_background" marginLeft="10" marginTop="60" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="0" col="0" width="200">
+                    <ContentView row="1" height="99%">
+                        <web-view id="webView"></web-view>
+                    </ContentView>
+
+                    <StackLayout class="blue_background" marginLeft="10" marginTop="10" orientation="vertical" horizontalAlignment="left" verticalAlignment="top" visibility="{{current_position}}" row="1" width="200">
                         <StackLayout verticalAlignment="center" horizontalAlignment="center" tap="onTapDetail" marginTop="10" marginLeft="5" marginRight="5">
                             <Label text="{{ position }}" style="font-weight:bold; flex-grow:1; font-size: 16"/>
                         </StackLayout>
@@ -114,7 +110,7 @@
                         </GridLayout>
                     </StackLayout>
 
-                    <StackLayout orientation="vertical" horizontalAlignment="center" verticalAlignment="bottom" >
+                    <StackLayout orientation="vertical" horizontalAlignment="center" verticalAlignment="bottom" row="1">
                         <StackLayout margin="0 10 15 10" class="blue_background" row="0" col="0" orientation="horizontal" height="50" horizontalAlignment="center">
                             <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
                                 <Image src="~/images/back.png" height="40"></Image>
@@ -186,6 +182,10 @@
                                 <Label col="9" text="50kn" fontSize="11" marginRight="5" color="white"/>
                             </GridLayout>
                         </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout row="1" height="30" orientation="vertical" verticalAlignment="center" horizontalAlignment="left" tap="toggleDrawer">
+                        <Image src="~/images/arrow.png"></Image>
                     </StackLayout>
                 </GridLayout>
             </StackLayout>

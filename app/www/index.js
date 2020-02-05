@@ -1,8 +1,3 @@
-App.load('home');
-App.controller('home', function (page) {
-    history.pushState('home', null, '#home');
-});
-
 var oWebViewInterface1 = window.nsWebViewInterface;
 
 var url_api = "https://api.meteo.uniparthenope.it/";
