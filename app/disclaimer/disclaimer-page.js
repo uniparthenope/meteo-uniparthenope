@@ -11,15 +11,11 @@ function pageLoaded(args)
     const disc = new Observable.fromObject({});
     var url_policy = "https://api.meteo.uniparthenope.it/legal/disclaimer";
     var lingua = platformModule.device.language;
-    if(lingua.includes("it"))
-        lingua = "it";
-    else
-        lingua = "en";
 
     fetch(url_policy)
         .then((response) => response.json())
         .then((data1) => {
-            disc.set("policy", data1['disclaimer'][lingua]);
+            disc.set("policy", data1['i18n']['en-US']['disclaimer']);
         })
         .catch(error => console.error("[DISC] ERROR DATA ", error));
 

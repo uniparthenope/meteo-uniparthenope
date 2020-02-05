@@ -173,8 +173,7 @@ function pageLoaded(args) {
 exports.pageLoaded = pageLoaded;
 
 
-function get_print_data(data)
-{
+function get_print_data(data) {
     let data_final;
     anno = data.substring(0,4);
     mese = data.substring(4, 6);
@@ -279,8 +278,7 @@ exports.dropDownSelectedIndexChanged3 = function (args) {
     print_chart(id, prod, output, hour, step);
 };
 
-function get_beaufort(nodi)
-{
+function get_beaufort(nodi) {
     if(nodi < 1)
         return 0;
     if(nodi>= 1 && nodi<=2)
@@ -329,16 +327,13 @@ function monthOfYear(date) {
         return isNaN(month) ? null : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month];
 };
 
-
-function print_chart(id, prod, output, hour, step)
-{
+function print_chart(id, prod, output, hour, step) {
     setTimeout(function () {
         oLangWebViewInterface.emit("chart", {prod: prod, place:id, hours:hour, step:step, output:output});
     }, 900);
 }
 
-function print_meteo(id, data)
-{
+function print_meteo(id, data) {
     let url = "https://api.meteo.uniparthenope.it/products/wrf5/forecast/" + id + "?date=" + data + "&opt=place";
     console.log(url);
 
@@ -442,8 +437,7 @@ function set_iDate(iDate) {
 }
 
 let temp_alt;
-function print_series(id)
-{
+function print_series(id) {
     items.splice(0);
     pageData.set("altezza", temp_alt);
     pageData.set("table", "collapsed");
@@ -711,8 +705,7 @@ function getDataCache() {
 }
 
 let url_map;
-function print_map(id, prod, output, data)
-{
+function print_map(id, prod, output, data) {
     var curr_data = getDataCache();
     console.log("DATA CACHE: ", curr_data);
 
@@ -836,11 +829,14 @@ function print_map(id, prod, output, data)
         pageData.set("isBusy_map", false);
         pageData.set("isHeigh_map", "0");
         pageData.set("_map", "visible");
-    }).catch(err => {console.log("Errore: " + err);});
+    }).catch(err => {
+        console.log("Errore: " + err);
+        pageData.set("isBusy_map", false);
+        pageData.set("isHeigh_map", "0");
+    });
 }
 
-function print_prod()
-{
+function print_prod() {
     let language;
     if(platformModule.device.language.includes('it'))
         language = 'it';
@@ -876,8 +872,7 @@ function print_prod()
     });
 }
 
-function print_output(prod)
-{
+function print_output(prod) {
     let language;
     if(platformModule.device.language.includes('it'))
         language = 'it';
@@ -912,8 +907,7 @@ function print_output(prod)
     });
 }
 
-function print_steps()
-{
+function print_steps() {
     var key = ['0', '1', '3', '6', '12', '24'];
     var value = null;
 
@@ -937,8 +931,7 @@ function print_steps()
     pageData.set("hint_steps", "auto");
 }
 
-function print_hours()
-{
+function print_hours() {
     var key = ['0', '24', '48', '72'];
     var value = null;
 
@@ -967,8 +960,7 @@ function print_hours()
     //pageData.set("hint_hours", _out);
 };
 
-function onTapNext()
-{
+function onTapNext() {
     if(_data > max_data)
         return;
 
@@ -1006,8 +998,7 @@ function onTapNext()
 }
 exports.onTapNext = onTapNext;
 
-function onTapBack()
-{
+function onTapBack() {
     if((parseInt(ora)-1) < 0)
     {
         ora = "23";
@@ -1042,15 +1033,13 @@ function onTapBack()
 }
 exports.onTapBack = onTapBack;
 
-function setupWebViewInterface(page)
-{
+function setupWebViewInterface(page) {
     var webView = page.getViewById('webView');
     oLangWebViewInterface = new nativescript_webview_interface_1.WebViewInterface(webView, '~/www/chart.html');
     listenLangWebViewEvents();
 }
 
-function listenLangWebViewEvents()
-{
+function listenLangWebViewEvents() {
     oLangWebViewInterface.on('load_chart', function(eventData)
     {
        console.log(eventData.status);
@@ -1126,8 +1115,7 @@ exports.onAutoCompleteTextViewLoaded = function(args){
 };
 
 let autocomplete_map;
-if(platformModule.isIOS)
-{
+if(platformModule.isIOS) {
     var _items = new ObservableArray([]);
     autocomplete_map = new Map();
     function onTextChanged(args)
@@ -1146,8 +1134,7 @@ if(platformModule.isIOS)
     }
     exports.onTextChanged = onTextChanged;
 }
-if(platformModule.isAndroid)
-{
+if(platformModule.isAndroid) {
     var _items;
     function onTextChanged(args)
     {
