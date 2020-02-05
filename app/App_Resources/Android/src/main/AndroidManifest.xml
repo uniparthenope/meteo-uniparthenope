@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="__PACKAGE__"
+          android:versionCode="295"
+          android:versionName="2.95">
+
+    <supports-screens
+            android:smallScreens="true"
+            android:normalScreens="true"
+            android:largeScreens="true"
+            android:xlargeScreens="true"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+
+    <application
+            tools:replace="android:label"
+            android:name="com.tns.NativeScriptApplication"
+            android:allowBackup="true"
+            android:icon="@drawable/icon"
+            android:label="MeteoUniparthenope"
+            android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true">
+
+        <activity
+                android:name="com.tns.NativeScriptActivity"
+                android:label="MeteoUniparthenope"
+                android:windowSoftInputMode = "adjustPan"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:theme="@style/LaunchScreenTheme">
+
+            <meta-data android:name="SET_THEME_ON_LAUNCH" android:resource="@style/AppTheme" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.tns.ErrorReportActivity"/>
+
+        <receiver android:name="com.tns.First"
+                  android:label="5Days">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/my_widget_info" />
+        </receiver>
+
+        <receiver android:name="com.tns.Second"
+                  android:label="5Hours">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/my_widget_info2" />
+        </receiver>
+
+        <receiver android:name="com.tns.Third"
+                  android:label="Winds">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/my_widget_info3" />
+        </receiver>
+
+    </application>
+</manifest>

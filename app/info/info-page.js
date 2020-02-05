@@ -22,7 +22,7 @@ exports.pageLoaded = pageLoaded;
 
 function meteo_web(args)
 {
-    utilityModule.openUrl("https://meteo.uniparthenope.it");
+    utilityModule.openUrl("https://app.meteo.uniparthenope.it");
 }
 exports.meteo_web = meteo_web;
 

@@ -12,7 +12,7 @@
                 <Label text="{{_L('info_version')}}" marginRight="10"></Label>
                 <Label text="{{version}}"></Label>
             </StackLayout>
-            <Label textAlignment="center" textWrap="true" text="https://meteo.uniparthenope.it" marginTop="5" color="blue" tap="meteo_web"></Label>
+            <Label textAlignment="center" textWrap="true" text="https://app.meteo.uniparthenope.it" marginTop="5" color="blue" tap="meteo_web"></Label>
             <Label textAlignment="center" textWrap="true" text="{{ _L('info_dipartimento') }}" marginTop="10"></Label>
             <Label textAlignment="center" textWrap="true" text="Team leader: Raffaele Montella" marginTop="10"></Label>
             <Label textAlignment="center" textWrap="true" text="{{ _L('info_sviluppatori') }}" marginTop="10"></Label>

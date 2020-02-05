@@ -1,0 +1,338 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/widget_background"
+        android:gravity="center"
+        android:padding="4dp"
+        android:id="@+id/go_app">
+
+    <TextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="Napoli"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:layout_gravity="center"/>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dip">
+
+        <ImageView
+                android:id="@+id/image_meteo"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/white_background_wind"
+                android:src="@drawable/icon"/>
+
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+            <TextView
+                    android:id="@+id/text_meteo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:textColor="#ffffff"
+                    android:textSize="14dp"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                <TextView
+                        android:id="@+id/temperatura"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:layout_gravity="center"/>
+
+                <TextView
+                        android:id="@+id/vento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:layout_gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_gravity="center"
+    >
+
+        <!--   1   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+            <ImageView
+                    android:id="@+id/imageDay_1"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:id="@+id/nameDay_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/dir_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+
+                <TextView
+                        android:id="@+id/wind_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--   2   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:layout_weight="1"
+                      android:orientation="horizontal">
+
+            <ImageView
+                    android:id="@+id/imageDay_2"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:id="@+id/nameDay_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/dir_2"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/wind_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--   3   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+            <ImageView
+                    android:id="@+id/imageDay_3"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:id="@+id/nameDay_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/dir_3"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/wind_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--   4   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+            <ImageView
+                    android:id="@+id/imageDay_4"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:id="@+id/nameDay_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/dir_4"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/wind_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--   5   -->
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:gravity="center"
+                      android:layout_weight="1">
+
+            <ImageView
+                    android:id="@+id/imageDay_5"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/white_background_wind"
+                    android:src="@drawable/icon"/>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:id="@+id/nameDay_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/dir_5"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+                <TextView
+                        android:id="@+id/wind_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LUN"
+                        android:textColor="#ffffff"
+                        android:textSize="11dip"
+                        android:layout_gravity="center"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
