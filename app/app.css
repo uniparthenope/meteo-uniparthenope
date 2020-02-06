@@ -26,6 +26,13 @@ SearchBar{
     color: rgba(30,76,117,1);
 }
 
+.button_radius{
+    color: white;
+    background-color: rgba(30,76,117,1);
+    font-size: 18;
+    border-radius: 5 5 5 5;
+}
+
 .home-panel{
     vertical-align: center;
     font-size: 20;
@@ -36,7 +43,7 @@ SearchBar{
     margin-bottom: 15;
 }
 .white_background{
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.7);
     color:rgba(30,76,117,1);
 }
 
@@ -73,7 +80,13 @@ SearchBar{
 .blue_col {
     color: rgba(30,76,117,1);
 }
-
+.left_button{
+    background-color: rgba(30,76,117,0.6);
+    border-radius: 0 20 20 0;
+}
+.left_arrow{
+    opacity: 0.6;
+}
 .class_image_bar{
     background-size: cover;
     background-position: center;

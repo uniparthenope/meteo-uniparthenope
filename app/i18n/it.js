@@ -9,7 +9,7 @@ module.exports = {
     home_impostazioni: 'Impostazioni',
     home_bollettino : 'Bollettini Meteo',
     home_ricerca: 'Ricerca Luogo ...',
-    home_preferiti: 'Preferiti: ',
+    home_preferiti: 'Preferiti ',
     impostazioni_titolo: 'Impostazioni',
     impostazioni_temp: 'Temperatura: ',
     impostazioni_vento: 'Vento: ',
