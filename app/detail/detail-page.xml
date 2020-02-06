@@ -228,7 +228,7 @@
                         <Image src="{{ colorbar2 }}" marginTop="5" visibility="{{ colorbar2_visible }}"/>
                         <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>
 
-                        <StackLayout marginTop="10" marginLeft="5" marginRight="5" marginBottom="10">
+                        <StackLayout marginTop="10" marginLeft="5" marginRight="5" marginBottom="10" visibility="{{ aggregazione }}">
                             <Label text="{{ _L('detail_aggregazione') }}"></Label>
                             <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
                                          hint="{{ hint_steps }}"
