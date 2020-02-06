@@ -105,7 +105,266 @@ let windColors = [
     "#641610"
 ];
 
+let hsColors = [
+    "#01FF84",
+    "#00FFFF",
+    "#00DDDD",
+    "#6363FF",
+    "#0000E1",
+    "#840094",
+    "#B5199D",
+    "#D464C3",
+    "#CE0000",
+    "#FF0000",
+    "#FFC300",
+    "#FFF05A",
+    "#D0D0D0",
+    "#BABABA",
+    "#A1A1A1",
+    "#5A5A5A"
+];
 
+
+let lmColors = [
+    "#00CE7B",
+    "#00AA00",
+    "#7BCE00",
+    "#FFCE00",
+    "#FF6D00",
+    "#DC0000",
+    "#A00000",
+    "#DC84D1",
+    "#B5199D",
+    "#640078",
+    "#DCDCDC",
+    "#AAAAAA",
+    "#6E6E6E",
+    "#464646"
+];
+
+let fpColors = [
+    "#000033",
+    "#641610"
+];
+
+let periodColors = [
+    "#00CE7B",
+    "#00AA00",
+    "#7BCE00",
+    "#FFCE00",
+    "#FF6D00",
+    "#DC0000",
+    "#A00000",
+    "#DC84D1",
+    "#B5199D",
+    "#640078",
+    "#DCDCDC",
+    "#AAAAAA",
+    "#6E6E6E",
+    "#464646"
+];
+
+let rhColors = [
+    "#FF0000",
+    "#FFFF00",
+    "#00FF00",
+    "#00FFFF",
+    "#0078DC",
+    "#FF00FF"
+];
+
+let sweColors = [
+    "#000000",
+    "#DDA0DD",
+    "#DA70D6",
+    "#BA55D3",
+    "#9932CC",
+    "#9400D3"
+];
+
+function swe2color(rh) {
+    let index=0;
+
+    // .5 2.5 5.5 8.5 11.5 15.5
+
+    if (rh<.5) {
+        index=0;
+    } else if (rh>=.5 && rh<2.5) {
+        index=1;
+    } else if (rh>=2.5 && rh<5.5) {
+        index=2;
+    } else if (rh>=5.5 && rh<8.5) {
+        index=3;
+    } else if (rh>=8.5 && rh<11.5) {
+        index=4;
+    } else if (rh>=11.5) {
+        index=5;
+    }
+
+    return sweColors[index];
+}
+
+function rh2color(rh) {
+    let index=0;
+
+    // set clevs  20 40 60 80 99
+
+    if (rh<20) {
+        index=0;
+    } else if (rh>=20 && rh<40) {
+        index=1;
+    } else if (rh>=40 && rh<60) {
+        index=2;
+    } else if (rh>=60 && rh<80) {
+        index=3;
+    } else if (rh>=80 && rh<99) {
+        index=4;
+    } else if (rh>=99 ) {
+        index=5 ;
+    }
+
+    return rhColors[index];
+}
+
+function hs2color(hs) {
+    let index=0;
+
+
+    if (hs<0.1) {
+        index=0;
+    } else if (hs>=0.1 && hs<0.3) {
+        index=1;
+    } else if (hs>=0.3 && hs<0.5) {
+        index=2;
+    } else if (hs>=0.5 && hs<0.8) {
+        index=3;
+    } else if (hs>=0.8 && hs<1.25) {
+        index=4;
+    } else if (hs>=1.25 && hs<1.6) {
+        index=5;
+    } else if (hs>=1.6 && hs<2) {
+        index=6;
+    } else if (hs>=2 && hs<2.5) {
+        index=7;
+    } else if (hs>=2.5 && hs<3) {
+        index=8;
+    } else if (hs>=3 && hs<4) {
+        index=9;
+    } else if (hs>=4 && hs<5) {
+        index=10;
+    } else if (hs>=5 && hs<6) {
+        index=11;
+    } else if (hs>=6 && hs<7) {
+        index=12;
+    } else if (hs>=7 && hs<8) {
+        index=13;
+    } else if (hs>=8 && hs<9) {
+        index=14;
+    } else if (hs>=9 ) {
+        index=15 ;
+    }
+
+    return hsColors[index];
+}
+
+function lm2color(lm) {
+    let index=0;
+
+
+    if (lm<10) {
+        index=0;
+    } else if (lm>=10 && lm<20) {
+        index=1;
+    } else if (lm>=20 && lm<30) {
+        index=2;
+    } else if (lm>=30 && lm<40) {
+        index=3;
+    } else if (lm>=40 && lm<50) {
+        index=4;
+    } else if (lm>=50 && lm<60) {
+        index=5;
+    } else if (lm>=60 && lm<70) {
+        index=6;
+    } else if (lm>=70 && lm<80) {
+        index=7;
+    } else if (lm>=80 && lm<90) {
+        index=8;
+    } else if (lm>=90 && lm<100) {
+        index=9;
+    } else if (lm>=100 && lm<110) {
+        index=10;
+    } else if (lm>=110 && lm<120) {
+        index=11;
+    } else if (lm>=120 && lm<130) {
+        index=12;
+    } else if (lm>=130 ) {
+        index=13 ;
+    }
+
+    return lmColors[index];
+}
+
+function fp2color(fp) {
+    let index=0;
+
+    // 37.5 37.75 38 38.25 38.5 38.75 39
+    if (fp<37.5) {
+        index=0;
+    } else if (fp>=37.5 && fp<37.5) {
+        index=1;
+    } else if (fp>=37.75 && fp<38) {
+        index=2;
+    } else if (fp>=38 && fp<38.25) {
+        index=3;
+    } else if (fp>=38.25 && fp<38.5) {
+        index=4;
+    } else if (fp>=38.5 && fp<38.75) {
+        index=5;
+    } else if (fp>=38.75 && fp<39) {
+        index=6;
+    } else if (fp>=39 ) {
+        index=7 ;
+    }
+
+    return fpColors[index];
+}
+
+function period2color(period) {
+    let index=0;
+
+    // 0 2 3 4 5 6 7 8 9 10 11 12 13 14
+    if (period<2) {
+        index=0;
+    } else if (period>=2 && period<3) {
+        index=1;
+    } else if (period>=3 && period<4) {
+        index=2;
+    } else if (period>=4 && period<5) {
+        index=3;
+    } else if (period>=5 && period<6) {
+        index=4;
+    } else if (period>=6 && period<7) {
+        index=5;
+    } else if (period>=7 && period<8) {
+        index=6;
+    } else if (period>=8 && period<9) {
+        index=7;
+    } else if (period>=9 && period<10) {
+        index=8;
+    } else if (period>=10 && period<11) {
+        index=9;
+    } else if (period>=11 && period<12) {
+        index=10;
+    } else if (period>=12 && period<13) {
+        index=11;
+    } else if (period>=13 && period<14) {
+        index=12;
+    } else if (period>=14 ) {
+        index=13 ;
+    }
+
+    return periodColors[index];
+}
 
 function sss2color(sss) {
     let index=0;
@@ -343,7 +602,14 @@ oWebViewInterface1.on("chart", function (cor) {
     hours = cor.hours;
     step = cor.step;
 
-    let timeseriesUrl=apiBaseUrl+"/products/"+prod+"/timeseries/"+place+"?hours="+hours+"&step="+step;
+    let timeseriesUrl;
+
+    if(prod==="ww33")
+        timeseriesUrl=apiBaseUrl+"/products/"+prod+"/timeseries/"+place;
+    else
+        timeseriesUrl=apiBaseUrl+"/products/"+prod+"/timeseries/"+place+"?hours="+hours+"&step="+step;
+
+    //timeseriesUrl=apiBaseUrl+"/products/"+prod+"/timeseries/"+place+"?hours="+hours+"&step="+step;
 
     console.log("timeseriesUrl: "+timeseriesUrl);
 
@@ -482,6 +748,88 @@ oWebViewInterface1.on("chart", function (cor) {
                 type: "line",
                 axisYType: "secondary",
                 yValueFormatString: "#0.## %",
+                dataPoints: dataPoints2
+            });
+        }
+        else if (output==="rh2") {
+            fontSize: 18;
+            let title1;
+            let title2;
+            if(lingua == "it") {
+                title = "Umidità rilevata a 2m";
+                title1 = "Umidità rilevata a 2m (%)";
+                title2 = "Direzione del vento a 10m (°N)";
+            }
+            else {
+                title = "Relative Humidity at 2m";
+                title1 = "Relative Humidity at 2m (%)";
+                title2 = "Wind Direction at 10m (°N)";
+            }
+            axisY= {
+                title: title1,
+                includeZero: false,
+                maximum: 100,
+                suffix: "%"
+            };
+            axisY2 = {
+                title: title2,
+                maximum: 360,
+                interval: 45,
+                includeZero: true,
+                suffix: " °"
+            };
+            data.push({
+                name: "rh2",
+                type: "column",
+                yValueFormatString: "#0.## %",
+                dataPoints: dataPoints
+            });
+            data.push({
+                name: "wd",
+                type: "line",
+                axisYType: "secondary",
+                yValueFormatString: "#0.## °",
+                dataPoints: dataPoints2
+            });
+        } else if (output==="swe") {
+            fontSize: 18;
+            let title1;
+            let title2;
+            if(lingua == "it") {
+
+                // DA TRADURRE
+                title = "Hourly cumulated snow fall";
+                title1 = "Hourly cumulated snow fall (cm)";
+                title2 = "Wind Direction at 10m (°N)";
+            }
+            else {
+                title = "Hourly cumulated snow fall";
+                title1 = "Hourly cumulated snow fall (cm)";
+                title2 = "Wind Direction at 10m (°N)";
+            }
+            axisY= {
+                title: title1,
+                includeZero: false,
+                suffix: "cm"
+            };
+            axisY2 = {
+                title: title2,
+                maximum: 360,
+                interval: 45,
+                includeZero: true,
+                suffix: " °"
+            };
+            data.push({
+                name: "rh2",
+                type: "column",
+                yValueFormatString: "#0.## %",
+                dataPoints: dataPoints
+            });
+            data.push({
+                name: "wd",
+                type: "line",
+                axisYType: "secondary",
+                yValueFormatString: "#0.## °",
                 dataPoints: dataPoints2
             });
         }
@@ -656,6 +1004,130 @@ oWebViewInterface1.on("chart", function (cor) {
                 dataPoints: dataPoints2
             });
         }
+    } else if (prod==='ww33') { //DA TRADURRE
+        if (output === "gen" || output === "hsd") {
+            fontSize: 18;
+            let title1;
+            let title2;
+            if(lingua == "it") {
+                title = "Altezza e direzione onde";
+                title1 = "Altezza e direzione onde (m)";
+                title2 = "Direzione onde (°N)";
+            }
+            else {
+                title = "Significant wave height and direction";
+                title1 = "Significant wave height (m)";
+                title2 = "Mean wave direction surface (°N)";
+            }
+            axisY = {
+                title: title1,
+                includeZero: false,
+                suffix: " m"
+            };
+            axisY2 = {
+                title: title2,
+                maximum: 360,
+                interval: 45,
+                includeZero: true,
+                suffix: " °"
+            };
+            data.push({
+                name: "hs",
+                type: "column",
+                yValueFormatString: "##.# m",
+                dataPoints: dataPoints
+            });
+            data.push({
+                name: "dir",
+                type: "line",
+                axisYType: "secondary",
+                yValueFormatString: "#0.## °",
+                dataPoints: dataPoints2
+            });
+        } else if (output === "lmd") {
+            title = "Mean wave length and direction";
+            axisY = {
+                title: "Mean wave length (m)",
+                includeZero: false,
+                suffix: " m"
+            };
+            axisY2 = {
+                title: "Mean wave direction surface (°N)",
+                maximum: 360,
+                interval: 45,
+                includeZero: true,
+                suffix: " °"
+            };
+            data.push({
+                name: "lm",
+                type: "column",
+                yValueFormatString: "##.# m",
+                dataPoints: dataPoints
+            });
+            data.push({
+                name: "dir",
+                type: "line",
+                axisYType: "secondary",
+                yValueFormatString: "#0.## °",
+                dataPoints: dataPoints2
+            });
+
+        } else if (output === "fpd") {
+            title = "Peak frequency and direction";
+            axisY = {
+                title: "Peak frequency (s-1)",
+                includeZero: false,
+                suffix: " s-1"
+            };
+            axisY2 = {
+                title: "Mean wave direction surface (°N)",
+                maximum: 360,
+                interval: 45,
+                includeZero: true,
+                suffix: " °"
+            };
+            data.push({
+                name: "fp",
+                type: "line",
+                yValueFormatString: "##.# s-1",
+                dataPoints: dataPoints
+            });
+            data.push({
+                name: "dir",
+                type: "line",
+                axisYType: "secondary",
+                yValueFormatString: "#0.## °",
+                dataPoints: dataPoints2
+            });
+
+        } else if (output === "ppd") {
+            title = "Mean period and direction";
+            axisY = {
+                title: "Mean period (s)",
+                includeZero: false,
+                suffix: " s"
+            };
+            axisY2 = {
+                title: "Mean wave direction surface (°N)",
+                maximum: 360,
+                interval: 45,
+                includeZero: true,
+                suffix: " °"
+            };
+            data.push({
+                name: "period",
+                type: "column",
+                yValueFormatString: "##.# s",
+                dataPoints: dataPoints
+            });
+            data.push({
+                name: "dir",
+                type: "line",
+                axisYType: "secondary",
+                yValueFormatString: "#0.## °",
+                dataPoints: dataPoints2
+            });
+        }
     }
 
     let options= {
@@ -684,6 +1156,7 @@ oWebViewInterface1.on("chart", function (cor) {
     let chart = new CanvasJS.Chart("chartContainer", options);
 
     $.getJSON(timeseriesUrl, function(data){
+        if(data["result"]=="ok"){
             let timeSeries=data['timeseries'];
             for (let i = 0; i < timeSeries.length; i++) {
                 let date = timeSeries[i].dateTime;
@@ -707,6 +1180,8 @@ oWebViewInterface1.on("chart", function (cor) {
                             y: timeSeries[i].t2c,
                             color: temp2color(timeSeries[i].t2c)
                         });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
                     } else if (output=="wn1") {
 
                         dataPoints.push({
@@ -719,6 +1194,8 @@ oWebViewInterface1.on("chart", function (cor) {
                             x: dateTime,
                             y: timeSeries[i].wd10
                         });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
                     } else if (output=="crh") {
 
                         dataPoints.push({
@@ -730,6 +1207,38 @@ oWebViewInterface1.on("chart", function (cor) {
                             x: dateTime,
                             y: timeSeries[i].clf * 100
                         });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    } else if (output=="rh2") {
+
+                        dataPoints.push({
+                            x: dateTime,
+                            y: val.rh2,
+                            color: rh2color(val.rh2)
+                        });
+
+                        dataPoints2.push({
+                            x: dateTime,
+                            y: val.wd10
+                        });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    } else if (output=="swe") {
+
+                        dataPoints.push({
+                            x: dateTime,
+                            y: val.swe,
+                            color: swe2color(val.swe)
+                        });
+
+                        dataPoints2.push({
+                            x: dateTime,
+                            y: val.wd10
+                        });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    } else{
+                        oWebViewInterface1.emit("load_chart", {status:"Error"});
                     }
                 } else if (prod==='wcm3') {
                     if (output === "gen" || output === "con") {
@@ -739,6 +1248,10 @@ oWebViewInterface1.on("chart", function (cor) {
                             y: timeSeries[i].con,
                             color: con2color(timeSeries[i].con)
                         });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    } else{
+                        oWebViewInterface1.emit("load_chart", {status:"Error"});
                     }
                 } else if (prod==='rms3') {
                     if (output === "gen" || output === "scu") {
@@ -752,6 +1265,8 @@ oWebViewInterface1.on("chart", function (cor) {
                             x: dateTime,
                             y: timeSeries[i].scd
                         });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
                     } else if (output === "sst") {
                         dataPoints.push({
                             x: dateTime,
@@ -759,6 +1274,7 @@ oWebViewInterface1.on("chart", function (cor) {
                             color: sst2color(timeSeries[i].sst)
                         });
 
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
                     } else if (output === "sss") {
                         dataPoints.push({
                             x: dateTime,
@@ -766,6 +1282,7 @@ oWebViewInterface1.on("chart", function (cor) {
                             color: sss2color(timeSeries[i].sss)
                         });
 
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
                     } else if (output === "sts") {
                         dataPoints.push({
                             x: dateTime,
@@ -777,12 +1294,76 @@ oWebViewInterface1.on("chart", function (cor) {
                             x: dateTime,
                             y: timeSeries[i].sss
                         });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    }
+                    else{
+                        oWebViewInterface1.emit("load_chart", {status:"Error"});
+                    }
+                } else if (prod==='ww33') {
+                    if (output === "gen" || output === "hsd") {
+                        dataPoints.push({
+                            x: dateTime,
+                            y: timeSeries[i].hs,
+                            color: hs2color(timeSeries[i].hs)
+                        });
+
+                        dataPoints2.push({
+                            x: dateTime,
+                            y: timeSeries[i].dir
+                        });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    } else if (output === "lmd") {
+                        dataPoints.push({
+                            x: dateTime,
+                            y: timeSeries[i].lm,
+                            color: lm2color(timeSeries[i].lm)
+                        });
+
+                        dataPoints2.push({
+                            x: dateTime,
+                            y: timeSeries[i].dir
+                        });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    } else if (output === "fpd") {
+                        dataPoints.push({
+                            x: dateTime,
+                            y: timeSeries[i].fp,
+                            color: fp2color(timeSeries[i].fp)
+                        });
+
+                        dataPoints2.push({
+                            x: dateTime,
+                            y: timeSeries[i].dir
+                        });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    } else if (output === "ppd") {
+                        dataPoints.push({
+                            x: dateTime,
+                            y: timeSeries[i].period,
+                            color: period2color(timeSeries[i].period)
+                        });
+
+                        dataPoints2.push({
+                            x: dateTime,
+                            y: timeSeries[i].dir
+                        });
+
+                        oWebViewInterface1.emit("load_chart", {status:"OK"});
+                    } else{
+                        oWebViewInterface1.emit("load_chart", {status:"Error"});
                     }
                 }
             }
             chart.render();
-
-            oWebViewInterface1.emit("load_chart", {status:"OK"});
-
+        }
+        else{
+            oWebViewInterface1.emit("load_chart", {status:"Error"});
+        }
+        }).catch(err => {
+            oWebViewInterface1.emit("load_chart", {status:"Error"});
         });
 });

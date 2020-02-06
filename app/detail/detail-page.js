@@ -106,6 +106,7 @@ function pageLoaded(args) {
     pageData.set("isBusy_graphic", true);//Load animation
     pageData.set("isHeigh_graphic", "25");
     pageData.set("hours_visibility", "visible");
+    pageData.set("aggregazione", "visible");
     pageData.set("colorbar1_visible", "collapsed");
     pageData.set("colorbar2_visible", "collapsed");
     pageData.set("colorbar3_visible", "collapsed");
@@ -1043,11 +1044,17 @@ function listenLangWebViewEvents() {
     oLangWebViewInterface.on('load_chart', function(eventData)
     {
        console.log(eventData.status);
-       if(eventData.status === "OK")
-       {
+       if(eventData.status === "OK") {
            pageData.set("graphic", "visible");
            pageData.set("isBusy_graphic", false);
            pageData.set("isHeigh_graphic", "0");
+           pageData.set("aggregazione", "visible");
+       }
+       else if(eventData.status === "Error"){
+           pageData.set("graphic", "collapsed");
+           pageData.set("isBusy_graphic", false);
+           pageData.set("isHeigh_graphic", "0");
+           pageData.set("aggregazione", "collapsed");
        }
     });
 }
