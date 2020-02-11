@@ -13,6 +13,7 @@ const Color = require("tns-core-modules/color").Color;
 let BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
 let barcodescanner = new BarcodeScanner();
 let messaging = require("nativescript-plugin-firebase/messaging");
+let Ratings = require("nativescript-ratings").Ratings;
 
 var drawer;
 var oLangWebViewInterface;
@@ -81,8 +82,7 @@ exports.pageLoaded = function(args) {
 
     home.set("data", print_data);
   }
-  else
-  {
+  else {
     data = new Date(anno, mese-1, giorno);
     max_data = new Date(global_date.getFullYear(), global_date.getMonth(), global_date.getDate() + 5);
 
@@ -98,10 +98,41 @@ exports.pageLoaded = function(args) {
   }
 
   lingua;
-  if(platformModule.device.language.includes("it"))
+  let ratings;
+  if(platformModule.device.language.includes("it")){
     lingua = "it";
-  else
+    ratings = new Ratings(
+        {
+          id: "0",
+          showOnCount: 5,
+          title: "Cosa ne pensi?",
+          text: "Se ti piace quest'app, trova un momento per lasciare una recensione positiva. La tua opinione conta per noi.",
+          agreeButtonText: "Vota ora",
+          remindButtonText: "Ricordamelo dopo",
+          declineButtonText: "No, grazie",
+          androidPackageId: "it.uniparthenope.meteo"
+        }
+    );
+  }
+  else{
     lingua = "en";
+
+    ratings = new Ratings(
+        {
+          id: "0",
+          showOnCount: 5,
+          title: "What do you think?",
+          text: "If you like this app, please take a moment to leave a positive rating.",
+          agreeButtonText: "Rate Now",
+          remindButtonText: "Remind Me Later",
+          declineButtonText: "No Thanks",
+          androidPackageId: "it.uniparthenope.meteo"
+        }
+    );
+  }
+
+  ratings.init();
+  ratings.prompt();
 
   console.log("Notifications enabled?" +  messaging.messaging.areNotificationsEnabled());
   messaging.messaging.registerForPushNotifications({
@@ -220,6 +251,8 @@ exports.pageLoaded = function(args) {
                     vento: appSetting.getNumber("Vento", 0),
                     pressione: appSetting.getNumber("Pressione", 0)
                   });
+
+
               }
               else{
                 fetch(url_api + "places/search/bycoords/" + latitudine + "/" + longitudine + "?filter=com").then((response) => response.json()).then((data) => {
