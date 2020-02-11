@@ -1355,3 +1355,9 @@ if(platformModule.isAndroid){
 exports.toggleDrawer = function() {
     drawer.toggleDrawerState();
 };
+ exports.dropDownOpened = function(){
+   page.getViewById("main-dropdown").color = "rgb(30,76,117)";
+ };
+exports.dropDownClosed = function(){
+    page.getViewById("main-dropdown").color = "rgb(255,255,255)";
+};
