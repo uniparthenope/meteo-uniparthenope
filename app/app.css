@@ -92,6 +92,14 @@ SearchBar{
     background-position: center;
     background-repeat: no-repeat;
 }
+.dropdown {
+    border-radius: 9dp;
+    vertical-align: bottom;
+    font-size: 16;
+    height: 30;
+    border-width: 1dp;
+    border-color:rgba(30,76,117,1);
+}
 
 .green_iDate{
     color: #7fff00;
