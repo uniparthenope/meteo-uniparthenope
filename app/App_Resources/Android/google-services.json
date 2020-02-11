@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1055616291823:android:d93fe0b3fc6a274e",
         "android_client_info": {
-          "package_name": "it.meteo.uniparthenope"
+          "package_name": "it.uniparthenope.meteo"
         }
       },
       "oauth_client": [
