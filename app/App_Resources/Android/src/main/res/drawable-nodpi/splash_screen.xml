@@ -5,4 +5,7 @@
     <item>
         <bitmap android:gravity="center" android:src="@drawable/logo_univers_ok" />
     </item>
+    <item android:top="75dp">
+        <bitmap android:gravity="top" android:src="@drawable/logo_100" />
+    </item>
 </layer-list>
