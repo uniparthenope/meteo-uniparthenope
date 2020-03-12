@@ -91,7 +91,7 @@
                         </StackLayout>
                     </GridLayout>
 
-                    <ContentView row="1" height="99%">
+                    <ContentView row="1" height="98%">
                         <web-view id="webView"></web-view>
                     </ContentView>
 

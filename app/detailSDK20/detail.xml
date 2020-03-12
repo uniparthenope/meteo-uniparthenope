@@ -17,36 +17,49 @@
     <sd:RadSideDrawer id="sideDrawer">
         <sd:RadSideDrawer.drawerContent>
             <ScrollView>
-                <StackLayout class="white_background">
-                    <Image src="~/images/logo.png" margin="5 5 5 5" horizontalAlignment="center"></Image>
+                <GridLayout class="white_background" rows="auto,*,*" height="100%">
 
-                    <Label text="Info" tap="onTapInfo" verticalAlignment="center" horizontalAlignment="left" style="flex-grow:1; font-size: 18" marginLeft="15" marginBottom="10"/>
-                    <Label text="{{ _L('home_impostazioni') }}" tap="onTapSettings" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginBottom="10"/>
-                    <Label text="{{ _L('home_bollettino') }}" tap="onTapReport" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15"/>
-
-                    <StackLayout marginTop="20" verticalAlignment="center" horizontalAlignment="left" orientation="horizontal">
-                        <Label text="{{ _L('home_preferiti') }}" style=" flex-grow:1; font-size: 18" marginLeft="15" horizontalAlignment="center"/>
-                        <Image src="~/images/star_pref.png" height="18" marginLeft="5" horizontalAlignment="center"></Image>
+                    <StackLayout class="button_radius" row="0" margin="15 5 40 5" verticalAlignment="top" backgroundColor="rgb(30,76,117)">
+                        <Image class="button_radius" row="0" src="~/images/logo.png" margin="10 5 5 5"></Image>
                     </StackLayout>
-                    <ListView
-                            rowHeight="50"
-                            marginBottom="20"
-                            itemTap="onItemTap"
-                            height="{{ heigt_pref }}"
-                            items="{{ myPref }}"
-                            class="list-group"
-                            id="listView"
-                            itemLoading="onItemLoading"
-                            row="2">
-                        <ListView.itemTemplate>
-                            <StackLayout class="list-group-item" orientation="horizontal">
-                                <Label text="{{ title }}" width="70%" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12" marginLeft="5" horizontalAlignment="left"/>
-                                <Label text=" " width="10%"></Label>
-                                <Image src="~/images/trash.png" horizontalAlignment="right" width="20%" height="20" tap="remove"></Image>
-                            </StackLayout>
-                        </ListView.itemTemplate>
-                    </ListView>
-                </StackLayout>
+
+                    <StackLayout row="1">
+                        <Button textWrap="true" text="{{ _L('home_bollettino') }}" ontap="onTapReport" class="button_radius" margin="5 5 0 5"></Button>
+                        <Button textWrap="true" text="Info" ontap="onTapInfo"  class="button_radius" margin="5 5 0 5"></Button>
+                        <Button textWrap="true" text="{{ _L('home_impostazioni') }}" ontap="onTapSettings" class="button_radius" margin="5 5 0 5"></Button>
+
+                    </StackLayout>
+
+                    <StackLayout row="2" class="button_radius" verticalAlignment="bottom" marginBottom="25" margin="0 5 15 5">
+
+                        <GridLayout rows="*" columns="auto,*" margin="0 5 0 5" height="20%">
+                            <Label row="0" col="0" text="{{ _L('home_preferiti') }}" textAlignment="center" height="20" color="white" fontSize="18" verticalAlignment="center" horizontalAlignment="left" marginLeft="10" />
+                            <Image row="0" col="1" src="~/images/star_pref.png" height="20" marginRight="10" horizontalAlignment="right" verticalAlignment="center"></Image>
+                        </GridLayout>
+
+                        <StackLayout backgroundColor="rgba(255,255,255,0.8)" height="5"/>
+                        <ListView
+                                rowHeight="50"
+                                backgroundColor="rgba(255,255,255,0.8)"
+                                marginBottom="10"
+                                itemTap="onItemTap"
+                                height="{{ heigt_pref }}"
+                                items="{{ myPref }}"
+                                class="list-group"
+                                id="listView"
+                                itemLoading="onItemLoading"
+                        >
+                            <ListView.itemTemplate>
+                                <StackLayout class="list-group-item" orientation="horizontal">
+                                    <Label text="{{ title }}" width="70%" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12" marginLeft="5" horizontalAlignment="left"/>
+                                    <Label text=" " width="10%"></Label>
+                                    <Image src="~/images/trash.png" horizontalAlignment="right" width="20%" height="20" tap="remove"></Image>
+                                </StackLayout>
+                            </ListView.itemTemplate>
+                        </ListView>
+
+                    </StackLayout>
+                </GridLayout>
             </ScrollView>
         </sd:RadSideDrawer.drawerContent>
 

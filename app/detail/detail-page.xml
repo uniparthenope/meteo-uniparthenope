@@ -14,36 +14,49 @@
     <sd:RadSideDrawer id="sideDrawer">
         <sd:RadSideDrawer.drawerContent>
             <ScrollView>
-                <StackLayout class="white_background">
-                    <Image src="~/images/logo.png" margin="5 5 5 5" horizontalAlignment="center"></Image>
+                <GridLayout class="white_background" rows="auto,*,*" height="100%">
 
-                    <Label text="Info" tap="onTapInfo" verticalAlignment="center" horizontalAlignment="left" style="flex-grow:1; font-size: 18" marginLeft="15" marginBottom="10"/>
-                    <Label text="{{ _L('home_impostazioni') }}" tap="onTapSettings" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15" marginBottom="10"/>
-                    <Label text="{{ _L('home_bollettino') }}" tap="onTapReport" verticalAlignment="center" horizontalAlignment="left" style=" flex-grow:1; font-size: 18" marginLeft="15"/>
-
-                    <StackLayout marginTop="20" verticalAlignment="center" horizontalAlignment="left" orientation="horizontal">
-                        <Label text="{{ _L('home_preferiti') }}" style=" flex-grow:1; font-size: 18" marginLeft="15" horizontalAlignment="center"/>
-                        <Image src="~/images/star_pref.png" height="18" marginLeft="5" horizontalAlignment="center"></Image>
+                    <StackLayout class="button_radius" row="0" margin="15 5 40 5" verticalAlignment="top" backgroundColor="rgb(30,76,117)">
+                        <Image class="button_radius" row="0" src="~/images/logo.png" margin="10 5 5 5"></Image>
                     </StackLayout>
-                    <ListView
-                            rowHeight="50"
-                            marginBottom="20"
-                            itemTap="onItemTap"
-                            height="{{ heigt_pref }}"
-                            items="{{ myPref }}"
-                            class="list-group"
-                            id="listView"
-                            itemLoading="onItemLoading"
-                            row="2">
-                        <ListView.itemTemplate>
-                            <StackLayout class="list-group-item" orientation="horizontal">
-                                <Label text="{{ title }}" width="70%" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12" marginLeft="5" horizontalAlignment="left"/>
-                                <Label text=" " width="10%"></Label>
-                                <Image src="~/images/trash.png" horizontalAlignment="right" width="20%" height="20" tap="remove"></Image>
-                            </StackLayout>
-                        </ListView.itemTemplate>
-                    </ListView>
-                </StackLayout>
+
+                    <StackLayout row="1">
+                        <Button textWrap="true" text="{{ _L('home_bollettino') }}" ontap="onTapReport" class="button_radius" margin="5 5 0 5"></Button>
+                        <Button textWrap="true" text="Info" ontap="onTapInfo"  class="button_radius" margin="5 5 0 5"></Button>
+                        <Button textWrap="true" text="{{ _L('home_impostazioni') }}" ontap="onTapSettings" class="button_radius" margin="5 5 0 5"></Button>
+
+                    </StackLayout>
+
+                    <StackLayout row="2" class="button_radius" verticalAlignment="bottom" marginBottom="25" margin="0 5 15 5">
+
+                        <GridLayout rows="*" columns="auto,*" margin="0 5 0 5" height="20%">
+                            <Label row="0" col="0" text="{{ _L('home_preferiti') }}" textAlignment="center" height="20" color="white" fontSize="18" verticalAlignment="center" horizontalAlignment="left" marginLeft="10" />
+                            <Image row="0" col="1" src="~/images/star_pref.png" height="20" marginRight="10" horizontalAlignment="right" verticalAlignment="center"></Image>
+                        </GridLayout>
+
+                        <StackLayout backgroundColor="rgba(255,255,255,0.8)" height="5"/>
+                        <ListView
+                                rowHeight="50"
+                                backgroundColor="rgba(255,255,255,0.8)"
+                                marginBottom="10"
+                                itemTap="onItemTap"
+                                height="{{ heigt_pref }}"
+                                items="{{ myPref }}"
+                                class="list-group"
+                                id="listView"
+                                itemLoading="onItemLoading"
+                        >
+                            <ListView.itemTemplate>
+                                <StackLayout class="list-group-item" orientation="horizontal">
+                                    <Label text="{{ title }}" width="70%" color="rgba(30,76,117,1)" style=" flex-grow:1; font-size: 12" marginLeft="5" horizontalAlignment="left"/>
+                                    <Label text=" " width="10%"></Label>
+                                    <Image src="~/images/trash.png" horizontalAlignment="right" width="20%" height="20" tap="remove"></Image>
+                                </StackLayout>
+                            </ListView.itemTemplate>
+                        </ListView>
+
+                    </StackLayout>
+                </GridLayout>
             </ScrollView>
         </sd:RadSideDrawer.drawerContent>
 
@@ -78,52 +91,52 @@
                         <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
                         <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="10 10 5 10">
-                                <Label text="{{ _L('detail_temp') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_temp') }}" verticalAlignment="center" style="flex-grow:1"/>
                                 <Label text="{{ temperatura }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                                <Label text="{{ _L('detail_meteo') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_meteo') }}" verticalAlignment="center" style=" flex-grow:1" />
                                 <Label text="{{ _meteo }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                                <Label text="{{ _L('detail_nuvole') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_nuvole') }}" verticalAlignment="center" style="flex-grow:1" />
                                 <Label text="{{ cloud }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                                <Label text="{{ _L('detail_umidita') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_umidita') }}" verticalAlignment="center" style="flex-grow:1" />
                                 <Label text="{{ humidity }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                                <Label text="{{ _L('detail_press') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_press') }}" verticalAlignment="center" style=" flex-grow:1" />
                                 <Label text="{{ pressione }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                                <Label text="{{ _L('detail_dir_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_dir_vento') }}" verticalAlignment="center" style="flex-grow:1" />
                                 <Label text="{{ wind_direction }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                                <Label text="{{ _L('detail_vel_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_vel_vento') }}" verticalAlignment="center" style="flex-grow:1" />
                                 <Label text="{{ wind_speed }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 5 10">
-                                <Label text="{{ _L('detail_temp_perc') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_temp_perc') }}" verticalAlignment="center" style="flex-grow:1" />
                                 <Label text="{{ wind_chill }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 10 10">
-                                <Label text="{{ _L('detail_vento') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('detail_vento') }}" verticalAlignment="center" style="flex-grow:1" />
                                 <Label text="{{ wind }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
 
                             <FlexboxLayout class="{{ initialized }}" flexWrap="wrap" flexDirection="row" marginTop="20" margin="5 10 10 10">
-                                <Label text="{{ _L('idate') }}" verticalAlignment="center" style="font-weight:bold; flex-grow:1" />
+                                <Label text="{{ _L('idate') }}" verticalAlignment="center" style="flex-grow:1" />
                                 <Label text="{{ idate }}" verticalAlignment="center" style="font-weight:bold;"/>
                             </FlexboxLayout>
                         </StackLayout>
@@ -185,71 +198,84 @@
                             </accordion:Accordion>
                         </StackLayout>
 
-                        <StackLayout orientation="vertical" marginTop="10">
-                            <StackLayout margin="5 5 5 5">
-                                <dd:DropDown
-                                        items="{{ products }}" selectedIndex="{{ selectedIndex }}"
-                                        hint = "{{ hint_prod }}"
-                                        selectedValue = "{{ selectedValue }}"
-                                        opened="dropDownOpened" closed="dropDownClosed"
-                                        selectedIndexChanged="dropDownSelectedIndexChanged"
-                                        row="0" colSpan="2" />
+                        <StackLayout margin="10 0 5 0" class="white_background_border" >
+                            <StackLayout orientation="vertical">
+                                <StackLayout height="40" class="dropdown" id="main-dropdown" color="white" verticalAlignment="center" backgroundColor="rgb(30,76,117)" margin="0 0 5 0" borderLeftWidth="0" borderRightWidth="0" borderTopWidth="0" borderBottomWidth="2">
+                                    <dd:DropDown
+                                            items="{{ products }}" selectedIndex="{{ selectedIndex }}"
+                                            hint = "{{ hint_prod }}"
+                                            marginLeft="5"
+                                            fontSize="16"
+                                            selectedValue = "{{ selectedValue }}"
+                                            opened="dropDownOpened" closed="dropDownClosed"
+                                            selectedIndexChanged="dropDownSelectedIndexChanged"
+                                            row="0" colSpan="2" />
+                                </StackLayout>
+
+                                <StackLayout class="dropdown" margin="5 5 5 5">
+                                    <dd:DropDown items="{{ outputs }}" selectedIndex="{{ selectedIndex1 }}"
+                                                 hint="{{ hint_output }}"
+                                                 marginLeft="5"
+                                                 fontSize="16"
+                                                 opened="dropDownOpened1" closed="dropDownClosed1"
+                                                 selectedIndexChanged="dropDownSelectedIndexChanged1"
+                                                 row="0" colSpan="2" />
+                                </StackLayout>
                             </StackLayout>
 
-                            <StackLayout margin="5 5 5 5">
-                                <dd:DropDown items="{{ outputs }}" selectedIndex="{{ selectedIndex1 }}"
-                                             hint="{{ hint_output }}"
-                                             opened="dropDownOpened1" closed="dropDownClosed1"
-                                             selectedIndexChanged="dropDownSelectedIndexChanged1"
-                                             row="0" colSpan="2" />
+                            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
+
+                            <StackLayout tap="onTapMap" margin="0 5 0 5">
+                                <Image id="map" src="{{ map }}" visibility="{{ _map }}"/>
                             </StackLayout>
+                            <Image src="{{ colorbar1 }}" marginTop="2" visibility="{{ colorbar1_visible }}"/>
+                            <Image src="{{ colorbar2 }}" marginTop="2" visibility="{{ colorbar2_visible }}"/>
+                            <Image src="{{ colorbar3 }}" marginTop="2" visibility="{{ colorbar3_visible }}"/>
+
+                            <DockLayout class="blue_background_opac" height="50" stretchLastChild="false" width="100%">
+                                <Image dock="left"  src="~/images/back.png" height="40" tap="onTapBack" marginLeft="10"/>
+                                <Image dock="right" src="~/images/next1.png" tap="onTapNext" height="40" marginRight="10"/>
+                                <Label horizontalAlignment="center" marginBottom="10" verticalAlignment="center" fontSize="16" dock="bottom" text="{{ data }}" tap="showModal"/>
+                            </DockLayout>
+
+                    </StackLayout>
+
+                        <StackLayout margin="10 0 5 0" class="white_background_border" >
+
+                            <ContentView class="map" visibility="{{ graphic }}" height="350" width="100%">
+                                <web-view id="webView"/>
+                            </ContentView>
+
+                            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
+
+                            <StackLayout margin="0 15 10 15" visibility="{{ aggregazione }}">
+                                <Label marginLeft="10" marginBottom="5" text="{{ _L('detail_aggregazione') }}"/>
+                                <StackLayout class="dropdown">
+                                    <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
+                                                 hint="{{ hint_steps }}"
+                                                 marginLeft="5"
+                                                 fontSize="16"
+                                                 opened="dropDownOpened2" closed="dropDownClosed2"
+                                                 selectedIndexChanged="dropDownSelectedIndexChanged2"
+                                                 row="0" colSpan="2" />
+
+                                </StackLayout>
+                                <StackLayout marginLeft="15" orientation="vertical" visibility="{{ hours_visibility }}">
+                                    <Label  marginLeft="10" marginBottom="5" text="{{_L('detail_ore')}}"/>
+                                    <StackLayout class="dropdown">
+                                    <dd:DropDown items="{{ hours }}" selectedIndex="{{ selectedIndex3 }}"
+                                                 hint="{{ hint_hours }}"
+                                                 marginLeft="5" marginTop="5"
+                                                 fontSize="16"
+                                                 opened="dropDownOpened3" closed="dropDownClosed3"
+                                                 selectedIndexChanged="dropDownSelectedIndexChanged3"
+                                                 row="0" colSpan="2" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+
                         </StackLayout>
 
-                        <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
-                        <StackLayout marginTop="20" class="blue_background_opac" row="0" col="0" orientation="horizontal" height="50" horizontalAlignment="center">
-                            <StackLayout orientation="horizontal" horizontalAlignment="left" tap="onTapBack" verticalAlignment="center" marginLeft="15" marginRight="15">
-                                <Image src="~/images/back.png" height="40"></Image>
-                            </StackLayout>
-
-                            <StackLayout horizontalAlignment="center" tap="showModal" verticalAlignment="center">
-                                <Label text="{{ data }}"></Label>
-                            </StackLayout>
-
-                            <StackLayout orientation="horizontal" horizontalAlignment="right" tap="onTapNext" verticalAlignment="center" marginLeft="15" marginRight="15">
-                                <Image src="~/images/next1.png" height="40"></Image>
-                            </StackLayout>
-                        </StackLayout>
-
-
-                        <StackLayout tap="onTapMap">
-                            <Image id="map" src="{{ map }}" marginTop="15" visibility="{{ _map }}"/>
-                        </StackLayout>
-                        <Image src="{{ colorbar1 }}" marginTop="5" visibility="{{ colorbar1_visible }}"/>
-                        <Image src="{{ colorbar2 }}" marginTop="5" visibility="{{ colorbar2_visible }}"/>
-                        <Image src="{{ colorbar3 }}" marginTop="5" visibility="{{ colorbar3_visible }}"/>
-
-                        <StackLayout marginTop="10" marginLeft="5" marginRight="5" marginBottom="10" visibility="{{ aggregazione }}">
-                            <Label text="{{ _L('detail_aggregazione') }}"></Label>
-                            <dd:DropDown items="{{ steps }}" selectedIndex="{{ selectedIndex2 }}"
-                                         hint="{{ hint_steps }}"
-                                         opened="dropDownOpened2" closed="dropDownClosed2"
-                                         selectedIndexChanged="dropDownSelectedIndexChanged2"
-                                         row="0" colSpan="2" />
-
-                            <StackLayout orientation="vertical" visibility="{{ hours_visibility }}">
-                                <Label text="{{_L('detail_ore')}}"></Label>
-                                <dd:DropDown items="{{ hours }}" selectedIndex="{{ selectedIndex3 }}"
-                                             hint="{{ hint_hours }}"
-                                             opened="dropDownOpened3" closed="dropDownClosed3"
-                                             selectedIndexChanged="dropDownSelectedIndexChanged3"
-                                             row="0" colSpan="2" />
-                            </StackLayout>
-                        </StackLayout>
-
-                        <ActivityIndicator class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
-                        <ContentView class="map" visibility="{{ graphic }}" height="350" width="100%">
-                            <web-view id="webView"></web-view>
-                        </ContentView>
                     </StackLayout>
                 </ScrollView>
             </StackLayout>
