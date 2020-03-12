@@ -43,6 +43,6 @@
     "tns-i18n": "0.0.10"
   },
   "devDependencies": {
-    "nativescript-dev-webpack": "1.0.1"
+    "nativescript-dev-webpack": "^1.0.1"
   }
 }

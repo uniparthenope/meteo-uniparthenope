@@ -602,6 +602,8 @@ oWebViewInterface1.on("chart", function (cor) {
     hours = cor.hours;
     step = cor.step;
 
+    console.log("[CHART]: Sono qui");
+
     let timeseriesUrl;
 
     if(prod==="ww33")

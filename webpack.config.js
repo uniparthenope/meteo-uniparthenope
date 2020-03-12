@@ -15,6 +15,9 @@ module.exports = env => {
     const appComponents = [
         "tns-core-modules/ui/frame",
         "tns-core-modules/ui/frame/activity",
+        resolve(__dirname, "app/widgets/myWidget.android.js"),
+        resolve(__dirname, "app/widgets/myWidget2.android.js"),
+        resolve(__dirname, "app/widgets/myWidget3.android.js"),
     ];
 
     const platform = env && (env.android && "android" || env.ios && "ios");
