@@ -71,6 +71,7 @@
                     android:resource="@xml/my_widget_info2" />
         </receiver>
 
+        <!--
         <receiver android:name="com.tns.Third"
                   android:label="Winds">
             <intent-filter>
@@ -82,6 +83,7 @@
                     android:name="android.appwidget.provider"
                     android:resource="@xml/my_widget_info3" />
         </receiver>
+        -->
 
     </application>
 </manifest>
