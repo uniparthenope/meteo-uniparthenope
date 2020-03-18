@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <title>App Meteo Parthenope</title>
+
+    <link href="../dist/leaflet.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="../css/w3.css">
+    <link rel="stylesheet" href="../dist/leaflet-control-credits.css" />
+
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            position: absolute !important;
+        }
+    </style>
+</head>
+
+
+<body onload="onLoad()">
+<div class="app-page " data-page="home">
+    <div class="app-content ">
+        <div id='map' ></div>
+    </div>
+</div>
+
+
+<!--vendor-->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+<script src="jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<!-- leaflet-velocity -->
+<script src="leaflet-velocity.js"></script>
+<link rel="stylesheet" href="../dist/leaflet-velocity.css" />
+
+<script type="text/javascript" src="../dist/leaflet-control-credits.js"></script>
+<script type="text/javascript" src="../dist/leaflet-control-credits-src.js"></script>
+
+<!--AppView-->
+<script src="./lib/es6-promise.min.js"></script>
+<script src="./lib/nativescript-webview-interface.js"></script>
+<script src="../dist/app.js"></script>
+<script src="index1.js"></script>
+
+<script src="bower_components/leaflet.active-layers/src/ActiveLayers.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" navigatedTo="navigatedTo" navigatedFrom="navigatedFrom">
+    <StackLayout>
+        <GridLayout height="100%">
+            <web-view id="webView"></web-view>
+        </GridLayout>
+    </StackLayout>
+</Page>

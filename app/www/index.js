@@ -519,7 +519,6 @@ function onClick() {
     oWebViewInterface1.emit('detail', {info_id:info_id});
 }
 
-
 function addWindLayer() {
     var dataCache = getDataCache();
     var url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData + "&rand=" + dataCache;
@@ -744,16 +743,13 @@ oWebViewInterface1.on('data', function (cor) {
         map.setView(center, zoom);
 
         if(m === "Satellite"){
-            var layerInstance = Esri_WorldImagery;
-            layerInstance.addTo(map);
+            Esri_WorldImagery.addTo(map);
         }
         else if(m === "Grey Canvas"){
-            var layerInstance = Esri_DarkGreyCanvas;
-            layerInstance.addTo(map);
+            Esri_DarkGreyCanvas.addTo(map);
         }
         else if(m === "Open Street Map"){
-            var layerInstance = osmLayer;
-            layerInstance.addTo(map);
+            osmLayer.addTo(map);
         }
 
         map.on('zoomend', function () {
