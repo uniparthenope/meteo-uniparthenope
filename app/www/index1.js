@@ -320,6 +320,10 @@
         }
     }
 
+    function onClick() {
+        oWebViewInterface1.emit('detail', {info_id:info_id});
+    }
+
     function addInfoLayer() {
         var dataCache = getDataCache();
 
@@ -361,7 +365,6 @@
                                 humidity = feature.properties.rh2; //umidity
                                 press_sim = null;
                                 meteo =  null;
-
 
                                 if(pressione == 0)
                                 {
@@ -430,23 +433,7 @@
                                 meteo = feature.properties['text'][lingua];
                                 nuvole = (feature.properties.clf * 100).toFixed(2) + " %";
 
-                                popupString = "<div class='popup' onclick='onClick()'>" +
-                                    "<table class='tg' style='undefined;table-layout: fixed; width: 230px'>" +
-                                    "<colgroup>" +
-                                    "<col style='width: 85px'>" +
-                                    "<col style='width: 60px'>" +
-                                    "</colgroup>" +
-                                    "<tr>" +
-                                    "<th class='tg-baqh' colspan='2' align='center' id='citta'>" + city + "</th>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>ID</td>" +
-                                    "<td class='tg-7un6' id='info_id'>" + id + "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>PAESE</td>" +
-                                    "<td class='tg-7un6'>" + country + "</td>" +
-                                    "</tr>";
+                                popupString = "<div id='click_button' class='popup'><table class='tg' style='undefined;table-layout: fixed; width: 230px'><colgroup><col style='width: 85px'><col style='width: 60px'></colgroup><tr><th class='tg-baqh' colspan='2' align='center' id='citta'>" + city + "</th></tr><tr><td class='tg-7un6'>ID</td><td class='tg-7un6' id='info_id'>" + id + "</td></tr><tr><td class='tg-7un6'>PAESE</td><td class='tg-7un6'>" + country + "</td></tr>";
 
                                 //creazione popup place
 
@@ -495,14 +482,22 @@
 
                                 popupString += "</table>" + "</div>";
 
-                                layer.bindPopup(popupString);
+                                //layer.bindPopup(popupString).openPopup();
+                                layer.bindPopup(popupString).on("popupopen", () => {
+                                    $(".popup").on("click", e => {
+                                        e.preventDefault();
+                                        //alert(`now delete layer with id ${feature.properties.id}`);
+                                        console.log("CLICK ON POPUP");
+                                        oWebViewInterface1.emit('detail', {info_id:info_id});
+                                    });
+                                });
 
                                 layer.on("click", function () {
                                     citta = L.DomUtil.get('citta').innerHTML;
                                     info_id = L.DomUtil.get('info_id').innerHTML;
                                     console.log(info_id);
                                     console.log(citta);
-                                })
+                                });
                             }
                         }
                     }).addTo(map);
@@ -512,13 +507,17 @@
                 map.removeLayer(event.tile.geojson);
         });
 
+        map.on('popupopen', function(){
+            var cont = document.getElementsByClassName('leaflet-popup-content')[0];
+            var lst = cont.getElementsByTagName('script');
+            for (var i=0; i<lst.length;i++) {
+                eval(lst[i].innerText)
+            }
+        });
+
         if(Info_State == true)
             map.addLayer(infoLayer);
         controlLayers.addOverlay(infoLayer, "Info");
-    }
-
-    function onClick() {
-        oWebViewInterface1.emit('detail', {info_id:info_id});
     }
 
     function addWindLayer() {
@@ -563,6 +562,7 @@
     }
 
     function addCloudLayer() {
+        console.log(currData);
         var anno = currData.substring(0, 4);
         var mese = currData.substring(4, 6);
         var giorno = currData.substring(6, 8);
@@ -715,26 +715,13 @@
             controlLayers.addOverlay(snowLayer, "Snow");
     }
 
-    function init() {
-        document.body.onload = function(){
-            map = L.map('map').setView([40.85, 14.28], 5);
-
-            Esri_WorldImagery.addTo(map);
-
-            map_functions();
-
-            controlLayers = L.control.activeLayers(baseLayers, overlayMaps, {
-                collapsed: true, position: "topright"}).addTo(map);
-
-            oWebViewInterface1.emit('onload');
-
-            addLayersMap();
-        }
-    }
-
     function map_functions() {
+        controlLayers = L.control.activeLayers(baseLayers, overlayMaps, {
+            collapsed: true, position: "topright"}).addTo(map);
+
         map.on('zoomend', function () {
             zoom = map.getZoom();
+            console.log(zoom);
             change_domain(map.getBounds());
             oWebViewInterface1.emit('zoom', {zoom:zoom});
         });
@@ -749,203 +736,267 @@
             console.log(e.name);
             oWebViewInterface1.emit('layer_map', {map:e.name});
         });
-
-        Info_State = true;
-        Temp_State = false;
-        Nuv_State = true;
-        Pioggia_State = true;
-        Vento_State = true;
-        Neve_State = true;
-
-        map.on({
-            overlayadd: function(e) {
-                if(lingua == "it") {
-                    if (e.name === 'Temperatura') {
-                        Temp_State = true;
-                        oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
-                    }
-                }
-                else {
-                    if (e.name === 'Temperature') {
-                        Temp_State = true;
-                        oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
-                    }
-                }
-            },
-            overlayremove: function(e) {
-                if(lingua == "it") {
-                    if (e.name === 'Temperatura') {
-                        Temp_State = false;
-                        oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
-                    }
-                }
-                else {
-                    if (e.name === 'Temperature') {
-                        Temp_State = false;
-                        oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
-                    }
-                }
-            }
-        });
-
-        map.on({
-            overlayadd: function(e) {
-                if (e.name === 'Info') {
-                    Info_State = true;
-                }
-            },
-            overlayremove: function(e) {
-                if (e.name === 'Info') {
-                    Info_State = false;
-                }
-            }
-        });
-
-        map.on({
-            overlayadd: function(e) {
-                if(lingua == "it")
-                {
-                    if (e.name == 'Nuvolosit&agrave') {
-                        Nuv_State = true;
-                        oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
-                    }
-                }
-                else
-                {
-                    if (e.name == 'Cloudiness') {
-                        Nuv_State = true;
-                        oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
-                    }
-                }
-            },
-            overlayremove: function(e) {
-                if(lingua == "it")
-                {
-                    if (e.name == 'Nuvolosit&agrave') {
-                        Nuv_State = false;
-                        oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
-                    }
-                }
-                else
-                {
-                    if (e.name == 'Cloudiness') {
-                        Nuv_State = false;
-                        oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
-                    }
-                }
-            }
-        });
-
-        map.on({
-            overlayadd: function(e) {
-                if(lingua == "it")
-                {
-                    if (e.name === 'Vento') {
-                        Vento_State = true;
-                        oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
-                    }
-                }
-                else
-                {
-                    if (e.name === 'Wind') {
-                        Vento_State = true;
-                        oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
-                    }
-                }
-            },
-            overlayremove: function(e) {
-                if(lingua == "it")
-                {
-                    if (e.name === 'Vento') {
-                        Vento_State = false;
-                        oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
-                    }
-                }
-                else
-                {
-                    if (e.name === 'Wind') {
-                        Vento_State = false;
-                        oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
-                    }
-                }
-            }
-        });
-
-        map.on({
-            overlayadd: function(e) {
-                if(lingua == "it")
-                {
-                    if (e.name === 'Neve') {
-                        Neve_State = true;
-                        oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
-                    }
-                }
-                else
-                {
-                    if (e.name === 'Snow') {
-                        Neve_State = true;
-                        oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
-                    }
-                }
-            },
-            overlayremove: function(e) {
-                if(lingua == "it")
-                {
-                    if (e.name === 'Neve') {
-                        Neve_State = false;
-                        oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
-                    }
-                }
-                else
-                {
-                    if (e.name === 'Snow') {
-                        Neve_State = false;
-                        oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
-                    }
-                }
-            }
-        });
-
-        map.on({
-            overlayadd: function(e) {
-                if(lingua == "it")
-                {
-                    if (e.name === 'Pioggia') {
-                        Pioggia_State = true;
-                        oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
-                    }
-                }
-                else
-                {
-                    if (e.name === 'Rain') {
-                        Pioggia_State = true;
-                        oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
-                    }
-                }
-            },
-            overlayremove: function(e) {
-                if(lingua == "it")
-                {
-                    if (e.name === 'Pioggia') {
-                        Pioggia_State = false;
-                        oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
-                    }
-                }
-                else
-                {
-                    if (e.name === 'Rain') {
-                        Pioggia_State = false;
-                        oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
-                    }
-                }
-            }
-        });
     }
 
     function addLayersMap() {
         oWebViewInterface1.on('add_layers',  function(cor) {
+            zoom = cor.zoom;
+            let _map = cor.map;
+            console.log("Zoom: " + zoom);
+            console.log("Map: " + _map);
+
+            console.log("[INIT] LAT: " + cor.lat);
+            console.log("[INIT] LANG: " + cor.lang);
+
+            if(_map === "Satellite"){
+                Esri_WorldImagery.addTo(map);
+            }
+            else if(_map === "Grey Canvas"){
+                Esri_DarkGreyCanvas.addTo(map);
+            }
+            else if(_map === "Open Street Map"){
+                osmLayer.addTo(map);
+            }
+
+            if (zoom >= 0 && zoom <= 6)
+            {
+                prefix = 'reg';
+            }
+            else if (zoom >= 7 && zoom <= 10)
+            {
+                prefix = 'prov';
+            }
+            else {
+                prefix = 'com';
+            }
+
             currData = cor.anno + "" + cor.mese + "" + cor.giorno + "Z" + cor.ora + "00";
-            console.log("Data: " + currData);
+            console.log("[Data: " + currData);
+
+            lingua = cor.lingua;
+            console.log("Lingua: " + lingua);
+
+            if(lingua == 'it')
+            {
+                temp_string = "TEMPERATURA";
+                umidita_string = "UMIDIT&Agrave";
+                pressione_string = "PRESSIONE";
+                dir_vento_string = "DIREZIONE VENTO";
+                vento_string = "VENTO";
+                meteo_string = "METEO";
+                nuvole_string = "NUVOLOSIT&Agrave";
+                vel_vento_string = "VEL. VENTO";
+                temp_perc_string = "TEMP. PERCEPITA"
+            }
+            else
+            {
+                temp_string = "TEMPERATURE";
+                umidita_string = "CLOUDINESS";
+                pressione_string = "PRESSURE";
+                dir_vento_string = "WIND DIRECTION";
+                vento_string = "WIND";
+                meteo_string = "WEATHER";
+                nuvole_string = "CLOUDINESS";
+                vel_vento_string = "WIND SPEED";
+                temp_perc_string = "WIND CHILL";
+            }
+
+            gradi = cor.gradi;
+            vento = cor.vento;
+            pressione = cor.pressione;
+
+            Info_State = true;
+            Temp_State = false;
+            Nuv_State = true;
+            Pioggia_State = true;
+            Vento_State = true;
+            Neve_State = true;
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it") {
+                        if (e.name === 'Temperatura') {
+                            Temp_State = true;
+                            oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
+                        }
+                    }
+                    else {
+                        if (e.name === 'Temperature') {
+                            Temp_State = true;
+                            oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it") {
+                        if (e.name === 'Temperatura') {
+                            Temp_State = false;
+                            oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
+                        }
+                    }
+                    else {
+                        if (e.name === 'Temperature') {
+                            Temp_State = false;
+                            oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
+                        }
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if (e.name === 'Info') {
+                        Info_State = true;
+                    }
+                },
+                overlayremove: function(e) {
+                    if (e.name === 'Info') {
+                        Info_State = false;
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name == 'Nuvolosit&agrave') {
+                            Nuv_State = true;
+                            oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name == 'Cloudiness') {
+                            Nuv_State = true;
+                            oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name == 'Nuvolosit&agrave') {
+                            Nuv_State = false;
+                            oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name == 'Cloudiness') {
+                            Nuv_State = false;
+                            oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
+                        }
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Vento') {
+                            Vento_State = true;
+                            oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Wind') {
+                            Vento_State = true;
+                            oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Vento') {
+                            Vento_State = false;
+                            oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Wind') {
+                            Vento_State = false;
+                            oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
+                        }
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Neve') {
+                            Neve_State = true;
+                            oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Snow') {
+                            Neve_State = true;
+                            oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Neve') {
+                            Neve_State = false;
+                            oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Snow') {
+                            Neve_State = false;
+                            oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
+                        }
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Pioggia') {
+                            Pioggia_State = true;
+                            oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Rain') {
+                            Pioggia_State = true;
+                            oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Pioggia') {
+                            Pioggia_State = false;
+                            oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Rain') {
+                            Pioggia_State = false;
+                            oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
+                        }
+                    }
+                }
+            });
+
+            map.setView([cor.lat, cor.lang], zoom);
 
             addInfoLayer();
             addWindLayer();
@@ -954,6 +1005,331 @@
             addRainLayer();
             addSnowLayer();
         });
+    };
+
+    function center() {
+        oWebViewInterface1.on('centro', function(cor) {
+            var url = url_api + "products/wrf5/forecast/" + cor.id +"?opt=place";
+            console.log(url);
+
+            $.getJSON(url, function(data)
+                //fetch(url).then((response) => response.json()).then((data) =>
+            {
+                map.fitBounds([
+                    [data.place.bbox.coordinates[0][1], data.place.bbox.coordinates[0][0]],
+                    [data.place.bbox.coordinates[1][1], data.place.bbox.coordinates[1][0]],
+                    [data.place.bbox.coordinates[2][1], data.place.bbox.coordinates[2][0]],
+                    [data.place.bbox.coordinates[3][1], data.place.bbox.coordinates[3][0]],
+                    [data.place.bbox.coordinates[4][1], data.place.bbox.coordinates[4][0]]
+                ]);
+                zoom = map.getZoom();
+                center = map.getBounds().getCenter();
+
+                addInfoLayer();
+                addWindLayer();
+                addT2CLayer();
+                addCloudLayer();
+                addRainLayer();
+                addSnowLayer();
+            });
+        });
+    };
+
+    function place() {
+        oWebViewInterface1.on('place_searched', function (cor) {
+            fetch( url_api+ "places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
+            {
+                console.log(cor.name);
+                var id;
+                console.log(data.length);
+                for(let i=0; i<data.length; i++)
+                {
+                    let name = data[i].long_name.it;
+                    console.log(name);
+                    let name_new;
+                    let _name;
+                    if (name.includes("Municipalit"))
+                    {
+                        console.log("MUN");
+                        var tmp = name.split("-");
+                        name_new = tmp.pop();
+                        _name = name_new;
+
+                        if(_name === cor.name)
+                            id = i;
+                    }
+                    else
+                    {
+                        console.log("NO MUN");
+                        if(name === cor.name)
+                            id = i;
+                    }
+                }
+                console.log(id);
+
+                map.fitBounds([
+                    [data[id].bbox.coordinates[0][1], data[id].bbox.coordinates[0][0]],
+                    [data[id].bbox.coordinates[1][1], data[id].bbox.coordinates[1][0]],
+                    [data[id].bbox.coordinates[2][1], data[id].bbox.coordinates[2][0]],
+                    [data[id].bbox.coordinates[3][1], data[id].bbox.coordinates[3][0]],
+                    [data[id].bbox.coordinates[4][1], data[id].bbox.coordinates[4][0]]
+                ]);
+                zoom = map.getZoom();
+                center = map.getBounds().getCenter();
+
+                addInfoLayer();
+                addWindLayer();
+                addT2CLayer();
+                addCloudLayer();
+                addRainLayer();
+                addSnowLayer();
+            });
+        });
+    };
+
+    function location(){
+        oWebViewInterface1.on('location', function (cor) {
+            latitudine = cor.lat;
+            longitudine = cor.lang;
+            var DynaMarker = L.marker([cor.lat,cor.lang], {icon: position});
+            DynaMarker.setLatLng([cor.lat, cor.lang]).addTo(map);
+        });
+    };
+
+    function settings() {
+        oWebViewInterface1.on('settings', function (cor) {
+            gradi = cor.gradi;
+            vento = cor.vento;
+            pressione = cor.pressione;
+        });
+    }
+
+    function new_data() {
+        oWebViewInterface1.on('new_data', function (cor) {
+            console.log(cor.data);
+            currData = cor.data;
+
+            map.on('zoomend', function () {
+                zoom = map.getZoom();
+                change_domain(map.getBounds());
+            });
+
+            map.on('moveend', function (e) {
+                center = map.getBounds().getCenter();
+                change_domain(map.getBounds());
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it") {
+                        if (e.name === 'Temperatura') {
+                            Temp_State = true;
+                            oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
+                        }
+                    }
+                    else {
+                        if (e.name === 'Temperature') {
+                            Temp_State = true;
+                            oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it") {
+                        if (e.name === 'Temperatura') {
+                            Temp_State = false;
+                            oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
+                        }
+                    }
+                    else {
+                        if (e.name === 'Temperature') {
+                            Temp_State = false;
+                            oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
+                        }
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if (e.name === 'Info') {
+                        Info_State = true;
+                    }
+                },
+                overlayremove: function(e) {
+                    if (e.name === 'Info') {
+                        Info_State = false;
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name == 'Nuvolosit&agrave') {
+                            Nuv_State = true;
+                            oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name == 'Cloudiness') {
+                            Nuv_State = true;
+                            oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name == 'Nuvolosit&agrave') {
+                            Nuv_State = false;
+                            oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name == 'Cloudiness') {
+                            Nuv_State = false;
+                            oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
+                        }
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Vento') {
+                            Vento_State = true;
+                            oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Wind') {
+                            Vento_State = true;
+                            oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Vento') {
+                            Vento_State = false;
+                            oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Wind') {
+                            Vento_State = false;
+                            oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
+                        }
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Neve') {
+                            Neve_State = true;
+                            oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Snow') {
+                            Neve_State = true;
+                            oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Neve') {
+                            Neve_State = false;
+                            oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Snow') {
+                            Neve_State = false;
+                            oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
+                        }
+                    }
+                }
+            });
+
+            map.on({
+                overlayadd: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Pioggia') {
+                            Pioggia_State = true;
+                            oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Rain') {
+                            Pioggia_State = true;
+                            oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
+                        }
+                    }
+                },
+                overlayremove: function(e) {
+                    if(lingua == "it")
+                    {
+                        if (e.name === 'Pioggia') {
+                            Pioggia_State = false;
+                            oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
+                        }
+                    }
+                    else
+                    {
+                        if (e.name === 'Rain') {
+                            Pioggia_State = false;
+                            oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
+                        }
+                    }
+                }
+            });
+
+            addInfoLayer();
+            addWindLayer();
+            addT2CLayer();
+            addCloudLayer();
+            addRainLayer();
+            addSnowLayer();
+        });
+    }
+
+    function init() {
+        document.body.onload = function(){
+            map = L.map('map', {zoomControl: false, attributionControl:false}).setView([40.85, 14.28], 5);
+
+            Esri_WorldImagery.addTo(map);
+
+            map_functions();
+
+            oWebViewInterface1.emit('onload');
+
+            addLayersMap();
+            center();
+            place();
+            location();
+            settings();
+            new_data();
+            //onClick();
+        }
     }
 
     init();

@@ -1503,7 +1503,7 @@ exports.toggleDrawer = function() {
 exports.onTapMapLeaflet = function () {
     const nav = {
         clearHistory : true,
-        moduleName: "home/home-page"
+        moduleName: "home1/home-page"
     };
     page.frame.navigate(nav);
 };

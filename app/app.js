@@ -63,6 +63,7 @@ application.on(application.suspendEvent, (args) => {
 });
 
 if(platformModule.isAndroid) {
+    /*
     console.log("SDK version: " + platformModule.device.sdkVersion);
     if (platformModule.device.sdkVersion <= 19)
         application.run({moduleName: "app-root1"});
@@ -72,6 +73,8 @@ if(platformModule.isAndroid) {
         else
             application.run({moduleName: "app-root1"});
     }
+     */
+    application.run({moduleName: "app-root"});
 }
 else{
     if(appSettings.getNumber("Mappa", 0) === 0)

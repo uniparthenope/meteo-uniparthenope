@@ -411,10 +411,12 @@ exports.pageLoaded = function(args) {
   page.bindingContext = home;
 };
 
+//OK
 exports.toggleDrawer = function() {
   drawer.toggleDrawerState();
 };
 
+//OK
 exports.onTapNext = function() {
   if(data > max_data)
     return;
@@ -455,8 +457,42 @@ exports.onTapNext = function() {
   }
 
   send_data();
-}
+};
+exports.onTapBack = function() {
+  if((parseInt(ora)-1) < 0)
+  {
+    ora = "23";
+    var endDate = data.setDate(data.getDate() - 1);
+    data = new Date(endDate);
+    console.log(data);
 
+    anno = data.getFullYear();
+    mese = data.getMonth() + 1;
+    if(mese < 10)
+      mese = "0" + mese;
+    giorno = data.getDate();
+    if(giorno < 10)
+      giorno = "0" + giorno;
+    currData = anno+""+mese+""+giorno+"Z"+ora+"00";
+    temp_data = new Date(anno, mese-1, giorno);
+    console.log("Temp Data: " + temp_data);
+    console.log("Data: " + currData);
+  }
+  else
+  {
+    ora--;
+
+    if(ora < 10)
+      ora = "0" + ora;
+
+    currData = anno+""+mese+""+giorno+"Z"+ora+"00";
+    temp_data = new Date(anno, mese-1, giorno);
+    console.log("Temp Data: " + temp_data);
+    console.log("Data: " + currData);
+  }
+
+  send_data();
+};
 function send_data() {
   if(platformModule.device.language.includes("it"))
     home.set("data", nome_giorno[data.getDay()] + " " + giorno + "/" + mese + "/" + anno + " " + ora + ":00");
@@ -506,60 +542,28 @@ function send_data() {
   }
 }
 
-exports.onTapBack = function() {
-  if((parseInt(ora)-1) < 0)
-  {
-    ora = "23";
-    var endDate = data.setDate(data.getDate() - 1);
-    data = new Date(endDate);
-    console.log(data);
 
-    anno = data.getFullYear();
-    mese = data.getMonth() + 1;
-    if(mese < 10)
-      mese = "0" + mese;
-    giorno = data.getDate();
-    if(giorno < 10)
-      giorno = "0" + giorno;
-    currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    temp_data = new Date(anno, mese-1, giorno);
-    console.log("Temp Data: " + temp_data);
-    console.log("Data: " + currData);
-  }
-  else
-  {
-    ora--;
 
-    if(ora < 10)
-      ora = "0" + ora;
-
-    currData = anno+""+mese+""+giorno+"Z"+ora+"00";
-    temp_data = new Date(anno, mese-1, giorno);
-    console.log("Temp Data: " + temp_data);
-    console.log("Data: " + currData);
-  }
-
-  send_data();
-}
-
+//OK
 exports.onTapSettings =function(args) {
   var button = args.object;
   const page = button.page;
 
   page.frame.navigate("settings/setting-page");
 };
-
 exports.onTapInfo = function(args) {
     const button = args.object;
     const  page = button.page;
 
     page.frame.navigate("info/info-page");
-}
+};
 
+//OK
 exports.onTapCenter = function() {
   oLangWebViewInterface.emit('centro', {id:global_id});
-}
+};
 
+//OK
 function get_beaufort(nodi) {
   if(nodi < 1)
     return 0;
@@ -589,6 +593,7 @@ function get_beaufort(nodi) {
     return 12;
 }
 
+//OK
 function listenLangWebViewEvents() {
   oLangWebViewInterface.on('detail', function(eventData)
   {
@@ -656,6 +661,7 @@ function listenLangWebViewEvents() {
   });
 }
 
+//OK
 let autocomplete_map;
 if(platformModule.isIOS) {
   var items = new ObservableArray([]);
@@ -695,7 +701,6 @@ if(platformModule.isAndroid) {
   }
   exports.onTextChanged = onTextChanged;
 }
-
 exports.didAutoComplete = function(args) {
     global_id = autocomplete_map.get(args.text);
 
@@ -762,7 +767,6 @@ exports.didAutoComplete = function(args) {
 
     }).catch(error => console.error("[AUTOCOMPLETE PLACE] ERROR DATA ", error));
 };
-
 exports.onAutoCompleteTextViewLoaded = function(args){
   console.log("QUI");
   const nativeView = (args.object).nativeView;
@@ -779,11 +783,11 @@ exports.onAutoCompleteTextViewLoaded = function(args){
     nativeView.getTextField().setHintTextColor(color.android);
   }
 };
-
 exports.toggleDrawer = function() {
   drawer.toggleDrawerState();
 };
 
+//OK
 exports.onTapDetail = function (args) {
   const button = args.object;
   const  page = button.page;
@@ -803,6 +807,7 @@ exports.onTapDetail = function (args) {
     page.frame.navigate(nav);
 };
 
+//OK
 exports.onTapStar = function() {
   if(home.get("no_pref") == "visible")
   {
@@ -835,6 +840,7 @@ exports.onTapStar = function() {
   }
 };
 
+//OK
 exports.onItemTap = function(args) {
   const index = args.index;
   console.log(myPref.getItem(index).title);
@@ -915,7 +921,6 @@ exports.onItemTap = function(args) {
 
   drawer.closeDrawer();
 };
-
 exports.remove = function (args) {
   var btn = args.object;
   var tappedItemData = btn.bindingContext;
@@ -946,6 +951,7 @@ exports.remove = function (args) {
   });
 };
 
+//OK
 exports.showModal = function (args) {
   const page = args.object.page;
   page.showModal(
@@ -973,6 +979,7 @@ exports.showModal = function (args) {
   );
 };
 
+//OK
 exports.QRCode = function(){
   barcodescanner.hasCameraPermission().then(permitted => {
     if(permitted)
@@ -990,6 +997,7 @@ exports.QRCode = function(){
   });
 };
 
+//OK
 function scan(){
   barcodescanner.scan({
     formats: "QR_CODE",
@@ -1057,6 +1065,7 @@ function scan(){
   );
 }
 
+//OK
 exports.onTapReport = function () {
   if(platformModule.isAndroid)
     page.frame.navigate("bollettino/bollettino");
@@ -1064,6 +1073,7 @@ exports.onTapReport = function () {
     page.frame.navigate("bollettino_ios/bollettino_ios");
 };
 
+//OK
 function set_preferiti(){
   var found = false;
   for(var i=0; i<preferiti.length; i++) {

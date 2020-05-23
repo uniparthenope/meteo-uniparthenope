@@ -1178,6 +1178,7 @@ oWebViewInterface1.on('new_data', function (cor) {
     addSnowLayer();
 });
 
+//OK
 oWebViewInterface1.on('location', function (cor) {
     latitudine = cor.lat;
     longitudine = cor.lang;
@@ -1185,12 +1186,14 @@ oWebViewInterface1.on('location', function (cor) {
     DynaMarker.setLatLng([cor.lat, cor.lang]).addTo(map);
 });
 
+//OK
 oWebViewInterface1.on('settings', function (cor) {
     gradi = cor.gradi;
     vento = cor.vento;
     pressione = cor.pressione;
 });
 
+//OK
 oWebViewInterface1.on('language', function (cor) {
    lingua = cor.lingua;
    console.log("Lingua: " + lingua);
@@ -1221,6 +1224,7 @@ oWebViewInterface1.on('language', function (cor) {
    }
 });
 
+//OK
 oWebViewInterface1.on('centro', function(cor) {
     var url = url_api + "products/wrf5/forecast/" + cor.id +"?opt=place";
     console.log(url);
@@ -1247,6 +1251,7 @@ oWebViewInterface1.on('centro', function(cor) {
     });
 });
 
+//OK
 oWebViewInterface1.on('place_searched', function (cor) {
     fetch( url_api+ "places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
     {
