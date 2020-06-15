@@ -716,7 +716,7 @@ function print_map(id, prod, output, data) {
     pageData.set("isBusy_map", true);
     pageData.set("isHeigh_map", "25");
     pageData.set("_map", "collapsed");
-
+    
     imageSource.fromUrl(url_map)
         .then(function () {
             pageData.map = url_map;
