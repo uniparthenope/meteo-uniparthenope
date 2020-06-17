@@ -16,7 +16,7 @@ Then, build application:
 $ tns build ios
 $ tns build android
 ```
-If you want to run:
+To run:
 ```console
 $ tns run ios
 $ tns run android
