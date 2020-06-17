@@ -8,6 +8,7 @@ $ git clone https://github.com/uniparthenope/meteo-uniparthenope
 ```
 Open directory in your terminal and run (make sure you have installed **Node.js**):
 ```console
+$ cd meteo-uniparthenope
 $ npm install
 ```
 Then, build application:
