@@ -320,14 +320,11 @@
         }
     }
 
-    function onClick() {
-        oWebViewInterface1.emit('detail', {info_id:info_id});
-    }
-
     function addInfoLayer() {
         var dataCache = getDataCache();
 
         var geojsonURL = url_api + 'apps/owm/wrf5/' + prefix + '/{z}/{x}/{y}.geojson?date=' + currData + "&rnad=" + dataCache;
+        console.log(geojsonURL);
 
         if (infoLayer != null) {
             controlLayers.removeLayer(infoLayer);
@@ -1328,7 +1325,6 @@
             location();
             settings();
             new_data();
-            //onClick();
         }
     }
 
