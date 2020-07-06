@@ -88,7 +88,7 @@
 
                 <ScrollView height="100%">
                     <StackLayout margin="10 10 10 10">
-                        <ActivityIndicator class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
+                        <ActivityIndicator visibility="collapsed" class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
                         <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="10 10 5 10">
                                 <Label text="{{ _L('detail_temp') }}" verticalAlignment="center" style="flex-grow:1"/>
@@ -141,7 +141,7 @@
                             </FlexboxLayout>
                         </StackLayout>
 
-                        <ActivityIndicator class="activity-indicator" busy="{{ isBusy }}" height="{{isHeigh}}" />
+                        <ActivityIndicator class="activity-indicator" visibility="collapsed" busy="{{ isBusy }}" height="{{isHeigh}}" />
                         <StackLayout class="white_background_border" marginTop="20" visibility="{{ table }}">
                             <FlexboxLayout flexDirection="row">
                                 <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>

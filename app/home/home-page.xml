@@ -87,7 +87,7 @@
                             </lv:RadAutoCompleteTextView>
                         </StackLayout>
 
-                        <StackLayout width="10%" horizontalAlignment="right" verticalAlignment="top">
+                        <StackLayout width="10%" horizontalAlignment="right" verticalAlignment="center">
                             <Image src="~/images/qr-code.png" width="20" tap="QRCode" marginRight="5"></Image>
                         </StackLayout>
                     </GridLayout>
