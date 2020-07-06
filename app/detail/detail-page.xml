@@ -88,7 +88,7 @@
 
                 <ScrollView height="100%">
                     <StackLayout margin="10 10 10 10">
-                        <ActivityIndicator visibility="collapsed" class="activity-indicator" busy="{{ isBusy_meteo }}" height="{{isHeigh_meteo}}" />
+                        <ActivityIndicator class="activity-indicator" visibility="{{ isBusy_meteo }}" busy="true" height="{{isHeigh_meteo}}" />
                         <StackLayout class="blue_background_opac" visibility="{{ meteo }}">
                             <FlexboxLayout flexWrap="wrap" flexDirection="row" margin="10 10 5 10">
                                 <Label text="{{ _L('detail_temp') }}" verticalAlignment="center" style="flex-grow:1"/>
@@ -141,7 +141,7 @@
                             </FlexboxLayout>
                         </StackLayout>
 
-                        <ActivityIndicator class="activity-indicator" visibility="collapsed" busy="{{ isBusy }}" height="{{isHeigh}}" />
+                        <ActivityIndicator class="activity-indicator" visibility="{{ isBusy }}" height="{{isHeigh}}" busy="true"/>
                         <StackLayout class="white_background_border" marginTop="20" visibility="{{ table }}">
                             <FlexboxLayout flexDirection="row">
                                 <Label flexGrow="1" class="font-weight-bold text-center" text="Forecast" width="40%"/>
@@ -223,7 +223,7 @@
                                 </StackLayout>
                             </StackLayout>
 
-                            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_map }}" height="{{isHeigh_map}}" />
+                            <ActivityIndicator class="activity-indicator" visibility="{{ isBusy_map }}" busy="true" height="{{isHeigh_map}}" />
 
                             <StackLayout tap="onTapMap" margin="0 5 0 5">
                                 <Image id="map" src="{{ map }}" visibility="{{ _map }}"/>
@@ -246,7 +246,7 @@
                                 <web-view id="webView"/>
                             </ContentView>
 
-                            <ActivityIndicator class="activity-indicator" busy="{{ isBusy_graphic }}" height="{{isHeigh_graphic}}" />
+                            <ActivityIndicator class="activity-indicator" visibility="{{ isBusy_graphic }}" busy="true" height="{{isHeigh_graphic}}" />
 
                             <StackLayout margin="0 15 10 15" visibility="{{ aggregazione }}">
                                 <Label marginLeft="10" marginBottom="5" text="{{ _L('detail_aggregazione') }}"/>

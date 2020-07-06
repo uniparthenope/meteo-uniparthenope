@@ -89,21 +89,21 @@ function pageLoaded(args) {
         myPref: myPref
     });
 
-    pageData.set("isBusy", true);//Load animation
+    pageData.set("isBusy", "visible");//Load animation
     pageData.set("isHeigh", "25");
-    pageData.set("isBusy1", true);//Load animation
+    pageData.set("isBusy1", "visible");//Load animation
     pageData.set("isHeigh1", "25");
-    pageData.set("isBusy_graphic1", true);//Load animation
+    pageData.set("isBusy_graphic1", "visible");//Load animation
     pageData.set("isHeigh_graphic1", "25");
-    pageData.set("isBusy_meteo", true);
+    pageData.set("isBusy_meteo", "visible");
     pageData.set("isHeigh_meteo", "25");
-    pageData.set("isBusy_map", true);
+    pageData.set("isBusy_map", "visible");
     pageData.set("isHeigh_map", "25");
     pageData.set("table", "collapsed");
     pageData.set("meteo", "collapsed");
     pageData.set("_map", "collapsed");
     pageData.set("graphic", "collapsed");
-    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isBusy_graphic", "visible");//Load animation
     pageData.set("isHeigh_graphic", "25");
     pageData.set("hours_visibility", "visible");
     pageData.set("aggregazione", "visible");
@@ -214,7 +214,7 @@ exports.dropDownSelectedIndexChanged = function (args) {
     press.splice(0);
 
     pageData.set("graphic", "collapsed");
-    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isBusy_graphic", "visible");//Load animation
     pageData.set("isHeigh_graphic", "25");
     print_chart(id, prod, output, hour, step);
 
@@ -231,7 +231,7 @@ exports.dropDownSelectedIndexChanged1 = function (args) {
     press.splice(0);
 
     pageData.set("graphic", "collapsed");
-    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isBusy_graphic", "visible");//Load animation
     pageData.set("isHeigh_graphic", "25");
     print_chart(id, prod, output, hour, step);
 
@@ -260,7 +260,7 @@ exports.dropDownSelectedIndexChanged2 = function (args) {
     press.splice(0);
 
     pageData.set("graphic", "collapsed");
-    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isBusy_graphic", "visible");//Load animation
     pageData.set("isHeigh_graphic", "25");
     print_chart(id, prod, output, hour, step);
 };
@@ -274,7 +274,7 @@ exports.dropDownSelectedIndexChanged3 = function (args) {
     press.splice(0);
 
     pageData.set("graphic", "collapsed");
-    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isBusy_graphic", "visible");//Load animation
     pageData.set("isHeigh_graphic", "25");
     print_chart(id, prod, output, hour, step);
 };
@@ -405,7 +405,7 @@ function print_meteo(id, data) {
             }
         })
         .then(function () {
-            pageData.set("isBusy_meteo", false);
+            pageData.set("isBusy_meteo", "collapsed");
             pageData.set("isHeigh_meteo", "0");
             pageData.set("meteo", "visible");
         }).catch(error => console.error("ERROR DATA ", error));
@@ -442,7 +442,7 @@ function print_series(id) {
     items.splice(0);
     pageData.set("altezza", temp_alt);
     pageData.set("table", "collapsed");
-    pageData.set("isBusy_meteo", true);
+    pageData.set("isBusy_meteo", "visible");
     pageData.set("isHeigh_meteo", "25");
     fetch("https://api.meteo.uniparthenope.it/products/wrf5/timeseries/" + id + "?hours=0&step=24")
         .then((response) => response.json())
@@ -649,7 +649,7 @@ function print_series(id) {
         })
         .then(function () {
             pageData.set("items", items);
-            pageData.set("isBusy", false);
+            pageData.set("isBusy", "collapsed");
             pageData.set("isHeigh", "0");
             pageData.set("table", "visible");
         }).catch(error => console.error("[LABEL] ERROR DATA", error));
@@ -713,7 +713,7 @@ function print_map(id, prod, output, data) {
     url_map = "https://api.meteo.uniparthenope.it/products/" + prod + "/forecast/" + id + "/plot/image?date=" + data + "&output=" + output + "&rand=" + curr_data;
     console.log("MAP: " + url_map);
 
-    pageData.set("isBusy_map", true);
+    pageData.set("isBusy_map", "visible");
     pageData.set("isHeigh_map", "25");
     pageData.set("_map", "collapsed");
     
@@ -827,12 +827,12 @@ function print_map(id, prod, output, data) {
                 pageData.set("colorbar3_visible", "collapsed");
             }
         }).then(function () {
-        pageData.set("isBusy_map", false);
+        pageData.set("isBusy_map", "collapsed");
         pageData.set("isHeigh_map", "0");
         pageData.set("_map", "visible");
     }).catch(err => {
         console.log("Errore: " + err);
-        pageData.set("isBusy_map", false);
+        pageData.set("isBusy_map", "collapsed");
         pageData.set("isHeigh_map", "0");
     });
 }
@@ -1046,13 +1046,13 @@ function listenLangWebViewEvents() {
        console.log(eventData.status);
        if(eventData.status === "OK") {
            pageData.set("graphic", "visible");
-           pageData.set("isBusy_graphic", false);
+           pageData.set("isBusy_graphic", "collapsed");
            pageData.set("isHeigh_graphic", "0");
            pageData.set("aggregazione", "visible");
        }
        else if(eventData.status === "Error"){
            pageData.set("graphic", "collapsed");
-           pageData.set("isBusy_graphic", false);
+           pageData.set("isBusy_graphic", "collapsed");
            pageData.set("isHeigh_graphic", "0");
            pageData.set("aggregazione", "collapsed");
        }
@@ -1166,9 +1166,9 @@ exports.didAutoComplete = function (args) {
 
     pageData.set("graphic", "collapsed");
     pageData.set("table", "collapsed");
-    pageData.set("isBusy", true);//Load animation
+    pageData.set("isBusy", "visible");//Load animation
     pageData.set("isHeigh", "25");
-    pageData.set("isBusy_graphic", true);//Load animation
+    pageData.set("isBusy_graphic", "visible");//Load animation
     pageData.set("isHeigh_graphic", "25");
 
     print_chart(id, prod, output, hour, step);
