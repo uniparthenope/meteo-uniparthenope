@@ -4,8 +4,8 @@
     </ActionBar>
 
     <ScrollView>
-        <StackLayout orientation="vertical">
-            <StackLayout orientation="horizontal" verticalAlignment="center" >
+        <StackLayout orientation="vertical" margin="5 5 5 5">
+            <StackLayout orientation="horizontal" verticalAlignment="center" marginTop="5">
                 <Label class="blue_col" width="30%" text="{{_L('impostazioni_temp')}}" horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
                 <SegmentedBar width="70%" selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ tempSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
@@ -15,7 +15,7 @@
                 </SegmentedBar>
             </StackLayout>
 
-            <StackLayout orientation="horizontal" verticalAlignment="center">
+            <StackLayout orientation="horizontal" verticalAlignment="center" marginTop="5">
                 <Label class="blue_col" width="30%" text="{{_L('impostazioni_vento')}}" verticalAlignment="center" horizontalAlignment="left" marginRight="5" marginLeft="15" style="font-weight: bold"></Label>
                 <SegmentedBar row="0" width="70%" selectedBackgroundColor="rgba(30,76,117,1)" selectedIndex="{{ windSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
@@ -27,7 +27,7 @@
                 </SegmentedBar>
             </StackLayout>
 
-            <StackLayout orientation="horizontal" verticalAlignment="center">
+            <StackLayout orientation="horizontal" verticalAlignment="center" marginTop="5">
                 <Label class="blue_col" width="30%" text="{{_L('impostazioni_pressione')}}" horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
                 <SegmentedBar width="70%" selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ pressureSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
@@ -38,7 +38,7 @@
                 </SegmentedBar>
             </StackLayout>
 
-            <StackLayout orientation="horizontal" verticalAlignment="center" id="map">
+            <StackLayout orientation="horizontal" verticalAlignment="center" id="map" marginTop="5">
                 <Label class="blue_col" width="30%" text="{{_L('impostazioni_mappa')}}" horizontalAlignment="left" verticalAlignment="center" marginRight="5" marginLeft="10" style="font-weight: bold"></Label>
                 <SegmentedBar width="70%" selectedBackgroundColor="rgba(30,76,117,1)" row="0" selectedIndex="{{ mapSelection }}" horizontalAlignment="right">
                     <SegmentedBar.items>
