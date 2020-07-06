@@ -717,21 +717,27 @@
             collapsed: true, position: "topright"}).addTo(map);
 
         map.on('zoomend', function () {
+            oWebViewInterface1.emit('cursor', {visibility:'visible'});
             zoom = map.getZoom();
             console.log(zoom);
             change_domain(map.getBounds());
             oWebViewInterface1.emit('zoom', {zoom:zoom});
+            oWebViewInterface1.emit('cursor', {visibility:'collapsed'});
         });
 
         map.on('moveend', function (e) {
+            oWebViewInterface1.emit('cursor', {visibility:'visible'});
             center = map.getBounds().getCenter();
             change_domain(map.getBounds());
             oWebViewInterface1.emit('center_map', {center:center});
+            oWebViewInterface1.emit('cursor', {visibility:'collapsed'});
         });
 
         map.on('baselayerchange', function (e) {
+            oWebViewInterface1.emit('cursor', {visibility:'visible'});
             console.log(e.name);
             oWebViewInterface1.emit('layer_map', {map:e.name});
+            oWebViewInterface1.emit('cursor', {visibility:'collapsed'});
         });
     }
 
@@ -1001,6 +1007,8 @@
             addCloudLayer();
             addRainLayer();
             addSnowLayer();
+
+            oWebViewInterface1.emit('cursor', {visibility:'visible'});
         });
     };
 

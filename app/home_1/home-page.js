@@ -823,6 +823,10 @@ function listenLangWebViewEvents(){
     appSetting.setNumber("lat_center", data.center.lat);
     appSetting.setNumber("lang_center", data.center.lng);
   });
+
+  oLangWebViewInterface.on('cursor', function (data) {
+    page.getViewById('is_busy').visibility = data.visibility;
+  })
 }
 
 

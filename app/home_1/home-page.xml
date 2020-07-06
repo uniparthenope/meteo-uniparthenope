@@ -202,8 +202,8 @@
                         <Image class="left_arrow" height="25" src="~/images/arrow.png"></Image>
                     </StackLayout>
 
-                    <StackLayout row="1" height="10%" width="20%" class="blue_background" verticalAlignment="center" horizontalAlignment="center">
-                        <ActivityIndicator id="is_busy" visibility="visible" busy="true" margin="5 5 5 5" />
+                    <StackLayout id="is_busy" visibility="visible" row="1" height="10%" width="20%" class="blue_background" verticalAlignment="center" horizontalAlignment="center">
+                        <ActivityIndicator busy="true" margin="5 5 5 5" />
                     </StackLayout>
 
                 </GridLayout>
