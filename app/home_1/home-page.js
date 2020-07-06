@@ -1092,3 +1092,6 @@ exports.QRCode = function(){
     alert(err);
   });
 };
+exports.onTapSurvey = function () {
+  utils.openUrl("https://forms.gle/AaKh9HjZpvdJLRGJ9");
+};

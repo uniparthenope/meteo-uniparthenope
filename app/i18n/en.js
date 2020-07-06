@@ -10,6 +10,7 @@ module.exports = {
     home_bollettino : 'Weather Reports',
     home_ricerca: 'Search Place ...',
     home_preferiti: 'Favourites: ',
+    home_sondaggio: 'Survey',
     impostazioni_titolo: 'Settings',
     impostazioni_temp: 'Temperature: ',
     impostazioni_vento: 'Wind: ',
