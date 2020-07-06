@@ -25,9 +25,9 @@
 
                     <StackLayout row="1">
                         <Button textWrap="true" text="{{ _L('home_bollettino') }}" ontap="onTapReport" class="button_radius" margin="5 5 0 5"></Button>
+                        <Button textWrap="true" text="{{ _L('home_sondaggio') }}" ontap="onTapSurvey" class="button_radius" margin="5 5 0 5"/>
                         <Button textWrap="true" text="Info" ontap="onTapInfo"  class="button_radius" margin="5 5 0 5"></Button>
                         <Button textWrap="true" text="{{ _L('home_impostazioni') }}" ontap="onTapSettings" class="button_radius" margin="5 5 0 5"></Button>
-
                     </StackLayout>
 
                     <StackLayout row="2" class="button_radius" verticalAlignment="bottom" marginBottom="25" margin="0 5 15 5">
