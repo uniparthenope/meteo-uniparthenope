@@ -201,6 +201,11 @@
                     <StackLayout row="1" class="left_button" height="15%" width="10%" orientation="vertical" verticalAlignment="center" horizontalAlignment="left" tap="toggleDrawer">
                         <Image class="left_arrow" height="25" src="~/images/arrow.png"></Image>
                     </StackLayout>
+
+                    <StackLayout height="10%" width="10%" class="blue_background" verticalAlignment="center" horizontalAlignment="center">
+                        <ActivityIndicator id="is_busy" visibility="visible"/>
+                    </StackLayout>
+
                 </GridLayout>
             </StackLayout>
         </sd:RadSideDrawer.mainContent>
