@@ -748,9 +748,6 @@
             console.log("Zoom: " + zoom);
             console.log("Map: " + _map);
 
-            console.log("[INIT] LAT: " + cor.lat);
-            console.log("[INIT] LANG: " + cor.lang);
-
             if(_map === "Satellite"){
                 Esri_WorldImagery.addTo(map);
             }
@@ -999,7 +996,7 @@
                 }
             });
 
-            map.setView([cor.lat, cor.lang], zoom);
+            map.setView([40.85, 14.28], 5);
 
             addInfoLayer();
             addWindLayer();
@@ -1008,7 +1005,7 @@
             addRainLayer();
             addSnowLayer();
 
-            oWebViewInterface1.emit('cursor', {visibility:'visible'});
+            oWebViewInterface1.emit('cursor', {visibility:'collapsed'});
         });
     };
 
