@@ -42,7 +42,11 @@ SearchBar{
 .description-label{
     margin-bottom: 15;
 }
-.white_background{
+.white_background_ios{
+    background-color: rgb(190,190,190);
+    color:rgba(30,76,117,1);
+}
+.white_background_android{
     background-color: rgba(255,255,255,0.7);
     color:rgba(30,76,117,1);
 }

@@ -13,8 +13,8 @@
 
     <sd:RadSideDrawer id="sideDrawer">
         <sd:RadSideDrawer.drawerContent>
-            <ScrollView>
-                <GridLayout class="white_background" rows="auto,*,*" height="100%">
+            <ScrollView ios:class="white_background_ios" android:class="white_background_android" height="100%">
+            <GridLayout rows="auto,*,*" height="100%">
 
                     <StackLayout class="button_radius" row="0" margin="15 5 40 5" verticalAlignment="top" backgroundColor="rgb(30,76,117)">
                         <Image class="button_radius" row="0" src="~/images/logo.png" margin="10 5 5 5"></Image>
