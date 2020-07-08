@@ -4,8 +4,16 @@
 <dict>
     <key>UIUserInterfaceStyle</key>
     <string>Light</string>
+
     <key>NSCameraUsageDescription</key>
-    <string>Access camera to scan Qr-Code</string>
+    <string>Your camera is needed to scan Qr-Code in order to get weather forecasts of a specific place.</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Your location is used to show local weather.</string>
+
+    <key>NSNotificationCenter</key>
+    <string>Local notifications are used to show you weather reports.</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -20,10 +28,10 @@
 	<string>APPL</string>
 
 	<key>CFBundleShortVersionString</key>
-	<string>1.21</string>
+	<string>1.22</string>
 
 	<key>CFBundleVersion</key>
-    <string>1.21</string>
+    <string>1.22</string>
 
 	<key>CFBundleSignature</key>
 	<string>????</string>
