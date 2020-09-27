@@ -166,7 +166,7 @@
                             <accordion:Accordion id="accordion" class="blue_background_opac" marginTop="5" itemHeaderTap="tapped" height="{{ altezza }}" items="{{items}}" allowMultiple="false">
                                 <accordion:Accordion.itemHeaderTemplate>
                                     <GridLayout>
-                                        <FlexboxLayout flexDirection="row">
+                                        <FlexboxLayout flexDirection="row" backgroundColor="rgb(30,76,117)">
                                             <StackLayout flexGrow="1" class="font-weight-bold text-center" width="39%">
                                                 <Label text="{{ forecast }}"/>
                                                 <Image src="{{ image }}" height="25" width="15"></Image>
@@ -181,16 +181,16 @@
                                 </accordion:Accordion.itemHeaderTemplate>
 
                                 <accordion:Accordion.itemContentTemplate>
-                                    <StackLayout class="white_background">
+                                    <StackLayout class="white_background_ios">
                                         <GridLayout>
-                                            <FlexboxLayout flexDirection="row">
+                                            <FlexboxLayout flexDirection="row" backgroundColor="white">
                                                 <StackLayout flexGrow="1" class="font-weight-bold text-center" width="55%">
-                                                    <Label text="{{ forecast }}"/>
-                                                    <Image src="{{ image }}" height="25" width="15"></Image>
+                                                    <Label text="{{ forecast }}" color="rgb(30,76,117)"/>
+                                                    <Image src="{{ image }}" height="25" width="15"/>
                                                 </StackLayout>
-                                                <Label text="{{ Temperatura }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
-                                                <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" width="15%" textWrap="true"/>
-                                                <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" width="15%"/>
+                                                <Label text="{{ Temperatura }}" flexGrow="1" class="font-weight-bold text-center" color="rgb(30,76,117)" width="15%"/>
+                                                <Label text="{{ Wind }}" flexGrow="1" class="font-weight-bold text-center" color="rgb(30,76,117)" width="15%" textWrap="true"/>
+                                                <Label text="{{ Rain }}" flexGrow="1" class="font-weight-bold text-center" color="rgb(30,76,117)" width="15%"/>
                                             </FlexboxLayout>
                                         </GridLayout>
                                     </StackLayout>
