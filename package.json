@@ -6,16 +6,17 @@
   "nativescript": {
     "id": "it.uniparthenope.meteo",
     "tns-android": {
-      "version": "6.3.1"
+      "version": "6.5.0"
     },
     "tns-ios": {
-      "version": "6.3.0"
+      "version": "6.5.2"
     }
   },
   "scripts": {
     "lint": "eslint \"app/**/*.js\""
   },
   "dependencies": {
+    "nativescript": "^7.0.8",
     "nativescript-accordion": "^6.0.0-beta.2",
     "nativescript-advanced-permissions": "^1.2.0",
     "nativescript-appversion": "^1.4.4",
