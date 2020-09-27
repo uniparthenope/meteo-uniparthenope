@@ -6,13 +6,11 @@ var utilityModule = require("utils/utils");
 var frameModule = require("tns-core-modules/ui/frame");
 var appversion = require("nativescript-appversion");
 
-function pageLoaded(args)
-{
+function pageLoaded(args) {
     const page = args.object;
     const info = new Observable.fromObject({});
     appversion.getVersionName().then(function(v) {
-        console.log(v);
-        info.set("version", v);
+        page.getViewById("version").text = "Versione " + v;
     });
 
     page.bindingContext = info;
@@ -20,17 +18,7 @@ function pageLoaded(args)
 
 exports.pageLoaded = pageLoaded;
 
-function meteo_web(args)
-{
-    utilityModule.openUrl("https://app.meteo.uniparthenope.it");
-}
-exports.meteo_web = meteo_web;
-
-const Button = require("tns-core-modules/ui/button").Button;
-const Page = require("tns-core-modules/ui/page").Page;
-
-function onTapCopy(args)
-{
+function onTapCopy(args) {
     var button = args.object;
     const page = button.page;
 
@@ -38,8 +26,7 @@ function onTapCopy(args)
 }
 exports.onTapCopy = onTapCopy;
 
-function onTapDisclaimer(args)
-{
+function onTapDisclaimer(args) {
     var button = args.object;
     const page = button.page;
 
