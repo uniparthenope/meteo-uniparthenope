@@ -108,6 +108,11 @@ SearchBar{
 .green_iDate{
     color: #7fff00;
 }
+.pic_rounded{
+    border-width: 3dp;
+    border-color:rgba(30,76,117,1);
+    border-radius: 100%;
+}
 
 .orange_iDate{
     color: orange;

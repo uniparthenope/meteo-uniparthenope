@@ -11,9 +11,9 @@
         xmlns:sd="nativescript-ui-sidedrawer"
         xmlns:lv="nativescript-ui-autocomplete"
         xmlns:x="nativescript-statusbar">
-    <ActionBar title="MeteoUniparthenope"/>
+    <ActionBar title="MeteoUniparthenope" class="blue_background_action_bar"/>
 
-    <x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,1)" />
+    <x:StatusBar ios:barStyle="light" barColor="rgba(30,76,117,0)" />
 
     <sd:RadSideDrawer id="sideDrawer">
         <sd:RadSideDrawer.drawerContent>

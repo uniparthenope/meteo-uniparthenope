@@ -14,7 +14,7 @@
 
             <StackLayout>
                 <Label textAlignment="center" textWrap="true" text="meteo@uniparthenope" marginTop="10"/>
-                <Image src="~/images/logoApp.png" width="125" height="125"/>
+                <Image src="~/images/logo.png" width="50%"/>
 
                 <StackLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="5">
                     <Label fontSize="14" id="version" text="Versione "/>
@@ -63,7 +63,7 @@
             </StackLayout>
 
         </GridLayout>
-        <Button textWrap="true" text="Disclaimer" verticalAlignment="bottom" ontap="onTapDisclaimer" class="btn" margin="10 5 0 5"/>
+        <Button textWrap="true" text="Disclaimer" verticalAlignment="bottom" ontap="onTapDisclaimer" class="button_radius" margin="10 5 0 5"/>
 
     </StackLayout>
 
