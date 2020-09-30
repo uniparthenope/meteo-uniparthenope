@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="__PACKAGE__"
-          android:versionCode="299"
-          android:versionName="2.99">
+          android:versionCode="300"
+          android:versionName="3.00">
 
     <supports-screens
             android:smallScreens="true"
