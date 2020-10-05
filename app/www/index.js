@@ -6,133 +6,133 @@
     var sizeIco = [35, 35];
 
     var position = L.icon({
-        iconUrl: '../images/position.png',
+        iconUrl: 'images/position.png',
         iconSize:[25,25],
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var sunny_night_png = L.icon({
-        iconUrl: '../meteo_icon/sunny_night.png',
+        iconUrl: 'images/sunny_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower1_night = L.icon({
-        iconUrl: '../meteo_icon/shower1_night.png',
+        iconUrl: 'images/shower1_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower2_night = L.icon({
-        iconUrl: '../meteo_icon/shower2_night.png',
+        iconUrl: 'images/shower2_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower3_night = L.icon({
-        iconUrl: '../meteo_icon/shower3_night.png',
+        iconUrl: 'images/shower3_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy1_night = L.icon({
-        iconUrl: '../meteo_icon/cloudy1_night.png',
+        iconUrl: 'images/cloudy1_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy2_night = L.icon({
-        iconUrl: '../meteo_icon/cloudy2_night.png',
+        iconUrl: 'images/cloudy2_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy3_night = L.icon({
-        iconUrl: '../meteo_icon/cloudy3_night.png',
+        iconUrl: 'images/cloudy3_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy4_night = L.icon({
-        iconUrl: '../meteo_icon/cloudy4_night.png',
+        iconUrl: 'images/cloudy4_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy5_night = L.icon({
-        iconUrl: '../meteo_icon/cloudy5_night.png',
+        iconUrl: 'images/cloudy5_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var sunny = L.icon({
-        iconUrl: '../meteo_icon/sunny.png',
+        iconUrl: 'images/sunny.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy1 = L.icon({
-        iconUrl: '../meteo_icon/cloudy2.png',
+        iconUrl: 'images/cloudy2.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy2 = L.icon({
-        iconUrl: '../meteo_icon/cloudy1.png',
+        iconUrl: 'images/cloudy1.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy3 = L.icon({
-        iconUrl: '../meteo_icon/cloudy3.png',
+        iconUrl: 'images/cloudy3.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy4 = L.icon({
-        iconUrl: '../meteo_icon/cloudy4.png',
+        iconUrl: 'images/cloudy4.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy5 = L.icon({
-        iconUrl: '../meteo_icon/cloudy5.png',
+        iconUrl: 'images/cloudy5.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower1 = L.icon({
-        iconUrl: '../meteo_icon/shower1.png',
+        iconUrl: 'images/shower1.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower2 = L.icon({
-        iconUrl: '../meteo_icon/shower2.png',
+        iconUrl: 'images/shower2.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower3 = L.icon({
-        iconUrl: '../meteo_icon/shower3.png',
+        iconUrl: 'images/shower3.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
