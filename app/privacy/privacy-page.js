@@ -36,9 +36,6 @@ function onNavigatingTo(args) {
             console.log(result["privacy"]);
             loading.visibility = "collapsed";
             page.getViewById("privacy").html = result.privacy;
-
-            if(platform.isIOS)
-                page.getViewById("privacy").requestLayout();
         }
 
     },(e) => {
