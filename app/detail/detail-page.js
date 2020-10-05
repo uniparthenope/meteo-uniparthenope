@@ -1127,7 +1127,7 @@ if(platformModule.isIOS) {
     autocomplete_map = new Map();
     function onTextChanged(args)
     {
-        fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+        fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + (args.text).replace(/ /g, "%20")).then((response) => response.json()).then((data) =>
         {
             _items.splice(0);
             autocomplete_map.clear();
@@ -1145,7 +1145,7 @@ if(platformModule.isAndroid) {
     var _items;
     function onTextChanged(args)
     {
-        fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+        fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + (args.text).replace(/ /g, "%20")).then((response) => response.json()).then((data) =>
         {
             _items = new ObservableArray([]);
             autocomplete_map = new Map();

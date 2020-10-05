@@ -33,3 +33,11 @@ function onTapDisclaimer(args) {
     page.frame.navigate("disclaimer/disclaimer-page");
 }
 exports.onTapDisclaimer = onTapDisclaimer;
+
+function onTapPrivacy(args) {
+    var button = args.object;
+    const page = button.page;
+
+    page.frame.navigate("privacy/privacy-page");
+}
+exports.onTapPrivacy = onTapPrivacy;

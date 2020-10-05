@@ -838,7 +838,8 @@ if(platformModule.isIOS) {
 
   function onTextChanged(args)
   {
-    fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+    console.log(args.text);
+    fetch("https://api.meteo.uniparthenope.it/places/search/byname/autocomplete?term=" + (args.text).replace(/ /g, "%20")).then((response) => response.json()).then((data) =>
     {
       items.splice(0);
       autocomplete_map.clear();
@@ -856,7 +857,7 @@ if(platformModule.isAndroid) {
   var items;
   function onTextChanged(args)
   {
-    fetch(url_api + "places/search/byname/autocomplete?term=" + args.text).then((response) => response.json()).then((data) =>
+    fetch(url_api + "places/search/byname/autocomplete?term=" + (args.text).replace(/ /g, "%20")).then((response) => response.json()).then((data) =>
     {
       autocomplete_map = new Map();
       items = new ObservableArray([]);

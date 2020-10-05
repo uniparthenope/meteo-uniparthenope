@@ -4,11 +4,6 @@
     </ActionBar>
 
     <StackLayout>
-        <GridLayout class="two-color-gradient" width="100%" height="10%" verticalAlignment="top">
-            <Label class="textPrimary" text="Info" horizontalAlignment="center" verticalAlignment="center"/>
-        </GridLayout>
-
-
         <GridLayout height="80%">
             <Image src="~/images/logo_new.png" horizontalAlignment="center" verticalAlignment="center" margin="20 20 20 20" opacity="0.3"/>
 
@@ -64,7 +59,7 @@
 
         </GridLayout>
         <Button textWrap="true" text="Disclaimer" verticalAlignment="bottom" ontap="onTapDisclaimer" class="button_radius" margin="10 5 0 5"/>
-
+        <Button textWrap="true" text="Privacy" verticalAlignment="bottom" ontap="onTapPrivacy" class="button_radius" margin="10 5 0 5"/>
     </StackLayout>
 
 </Page>
