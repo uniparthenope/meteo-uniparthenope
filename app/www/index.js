@@ -13,126 +13,126 @@
     });
 
     var sunny_night_png = L.icon({
-        iconUrl: 'meteo_icon/sunny_night.png',
+        iconUrl: '../meteo_icon/sunny_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower1_night = L.icon({
-        iconUrl: 'meteo_icon/shower1_night.png',
+        iconUrl: '../meteo_icon/shower1_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower2_night = L.icon({
-        iconUrl: 'meteo_icon/shower2_night.png',
+        iconUrl: '../meteo_icon/shower2_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower3_night = L.icon({
-        iconUrl: 'meteo_icon/shower3_night.png',
+        iconUrl: '../meteo_icon/shower3_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy1_night = L.icon({
-        iconUrl: 'meteo_icon/cloudy1_night.png',
+        iconUrl: '../meteo_icon/cloudy1_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy2_night = L.icon({
-        iconUrl: 'meteo_icon/cloudy2_night.png',
+        iconUrl: '../meteo_icon/cloudy2_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy3_night = L.icon({
-        iconUrl: 'meteo_icon/cloudy3_night.png',
+        iconUrl: '../meteo_icon/cloudy3_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy4_night = L.icon({
-        iconUrl: 'meteo_icon/cloudy4_night.png',
+        iconUrl: '../meteo_icon/cloudy4_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy5_night = L.icon({
-        iconUrl: 'meteo_icon/cloudy5_night.png',
+        iconUrl: '../meteo_icon/cloudy5_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var sunny = L.icon({
-        iconUrl: 'meteo_icon/sunny.png',
+        iconUrl: '../meteo_icon/sunny.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy1 = L.icon({
-        iconUrl: 'meteo_icon/cloudy2.png',
+        iconUrl: '../meteo_icon/cloudy2.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy2 = L.icon({
-        iconUrl: 'meteo_icon/cloudy1.png',
+        iconUrl: '../meteo_icon/cloudy1.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy3 = L.icon({
-        iconUrl: 'meteo_icon/cloudy3.png',
+        iconUrl: '../meteo_icon/cloudy3.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy4 = L.icon({
-        iconUrl: 'meteo_icon/cloudy4.png',
+        iconUrl: '../meteo_icon/cloudy4.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var cloudy5 = L.icon({
-        iconUrl: 'meteo_icon/cloudy5.png',
+        iconUrl: '../meteo_icon/cloudy5.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower1 = L.icon({
-        iconUrl: 'meteo_icon/shower1.png',
+        iconUrl: '../meteo_icon/shower1.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower2 = L.icon({
-        iconUrl: 'meteo_icon/shower2.png',
+        iconUrl: '../meteo_icon/shower2.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
     var shower3 = L.icon({
-        iconUrl: 'meteo_icon/shower3.png',
+        iconUrl: '../meteo_icon/shower3.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
@@ -324,185 +324,176 @@
         var dataCache = getDataCache();
 
         var geojsonURL = url_api + 'apps/owm/wrf5/' + prefix + '/{z}/{x}/{y}.geojson?date=' + currData + "&rnad=" + dataCache;
-        console.log(geojsonURL);
+        console.log("URL GEOJSON",geojsonURL);
 
         if (infoLayer != null) {
             controlLayers.removeLayer(infoLayer);
             map.removeLayer(infoLayer);
         }
 
-        infoLayer = L.tileLayer("", {}).on("tileload", function (event) {
-            fetch(L.Util.template(geojsonURL, event.coords)).then(a => a.ok ? a.json() : null).then(geojson => {
-                if (!geojson || !this._map) return;
+        let geojsonOptions = {
+            style: function (geojson) {
+                return {
+                    "clickable": true,
+                    "color": "#00D",
+                    "fillColor": "#00D",
+                    "weight": 1.0,
+                    "opacity": 0.3,
+                    "fillOpacity": 0.2
+                };
+            },
+            pointToLayer: function (features, latlng) {
+                var file = features.properties.icon;
+                return L.marker(latlng, {icon: img_array[file]});
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties) {
+                    country = feature.properties.country;
+                    city = feature.properties.name;
+                    id = feature.properties.id;
+                    clouds = parseInt(feature.properties.clf * 100); //clouds
+                    dateTime = feature.properties.dateTime;
+                    humidity = feature.properties.rh2; //umidity
+                    press_sim = null;
+                    meteo =  null;
 
-                event.tile.geojson = L.geoJSON(geojson,
+                    if(pressione == 0)
                     {
-                        style: function (geojson) {
-                            return {
-                                "clickable": true,
-                                "color": "#00D",
-                                "fillColor": "#00D",
-                                "weight": 1.0,
-                                "opacity": 0.3,
-                                "fillOpacity": 0.2
-                            };
-                        },
-                        pointToLayer: function (features, latlng) {
-                            var file = features.properties.icon;
-                            //console.log(file);
-                            return L.marker(latlng, {icon: img_array[file]});
-                        },
-                        onEachFeature: function (feature, layer) {
-                            if (feature.properties) {
-                                country = feature.properties.country;
-                                city = feature.properties.name;
-                                id = feature.properties.id;
-                                clouds = parseInt(feature.properties.clf * 100); //clouds
-                                dateTime = feature.properties.dateTime;
-                                humidity = feature.properties.rh2; //umidity
-                                press_sim = null;
-                                meteo =  null;
+                        pressure = feature.properties.slp; //pressure
+                        press_sim = "hPa";
+                    }
+                    else if(pressione == 1)
+                    {
+                        pressure = feature.properties.slp;
+                        press_sim = "millibar";
+                    }
+                    else if(pressione == 2)
+                    {
+                        pressure = (feature.properties.slp * 0.75006).toFixed(2);
+                        press_sim = "mmHg";
+                    }
+                    gradi_sim = null;
+                    wind_sim = null;
+                    temp_chill = null;
 
-                                if(pressione == 0)
-                                {
-                                    pressure = feature.properties.slp; //pressure
-                                    press_sim = "hPa";
-                                }
-                                else if(pressione == 1)
-                                {
-                                    pressure = feature.properties.slp;
-                                    press_sim = "millibar";
-                                }
-                                else if(pressione == 2)
-                                {
-                                    pressure = (feature.properties.slp * 0.75006).toFixed(2);
-                                    press_sim = "mmHg";
-                                }
-                                gradi_sim = null;
-                                wind_sim = null;
-                                temp_chill = null;
+                    if(gradi == 0)
+                    {
+                        temp = feature.properties.t2c; //temp
+                        temp_chill = feature.properties.wchill;
+                        gradi_sim = "&#176C";
+                    }
+                    else if(gradi == 1)
+                    {
+                        temp = ((feature.properties.t2c * 1.8) + 32).toFixed(2);
+                        temp_chill = ((feature.properties.wchill * 1.8) + 32).toFixed(2);
+                        gradi_sim = "&#176F";
+                    }
+                    text = feature.properties.text;
+                    wind_direction = feature.properties.wd10; // wind_deg
+                    if(vento == 0)
+                    {
+                        wind_speed = feature.properties.ws10n; //wind_speed
+                        wind_sim = "kn";
+                    }
+                    else if(vento == 1)
+                    {
+                        wind_speed = (feature.properties.ws10n * 1.852).toFixed(2);
+                        wind_sim = "km/h";
+                    }
+                    else if(vento == 2)
+                    {
+                        wind_speed = (feature.properties.ws10n * 0.514444).toFixed(2);
+                        wind_sim = "m/s";
+                    }
+                    else if(vento == 3)
+                    {
+                        wind_speed = get_beaufort(feature.properties.ws10n);
+                        wind_sim = "beaufort";
+                    }
+                    if(gradi == 0)
+                    {
+                        wind_chill = feature.properties.wchill; //temp
+                        gradi_sim = "&#176C";
+                    }
+                    else if(gradi == 1)
+                    {
+                        wind_chill = ((feature.properties.wchill * 1.8) + 32).toFixed(2);
+                        gradi_sim = "&#176F";
+                    }
+                    winds = feature.properties.winds; //winds
+                    meteo = feature.properties['text'][lingua];
+                    nuvole = (feature.properties.clf * 100).toFixed(2) + " %";
 
-                                if(gradi == 0)
-                                {
-                                    temp = feature.properties.t2c; //temp
-                                    temp_chill = feature.properties.wchill;
-                                    gradi_sim = "&#176C";
-                                }
-                                else if(gradi == 1)
-                                {
-                                    temp = ((feature.properties.t2c * 1.8) + 32).toFixed(2);
-                                    temp_chill = ((feature.properties.wchill * 1.8) + 32).toFixed(2);
-                                    gradi_sim = "&#176F";
-                                }
-                                text = feature.properties.text;
-                                wind_direction = feature.properties.wd10; // wind_deg
-                                if(vento == 0)
-                                {
-                                    wind_speed = feature.properties.ws10n; //wind_speed
-                                    wind_sim = "kn";
-                                }
-                                else if(vento == 1)
-                                {
-                                    wind_speed = (feature.properties.ws10n * 1.852).toFixed(2);
-                                    wind_sim = "km/h";
-                                }
-                                else if(vento == 2)
-                                {
-                                    wind_speed = (feature.properties.ws10n * 0.514444).toFixed(2);
-                                    wind_sim = "m/s";
-                                }
-                                else if(vento == 3)
-                                {
-                                    wind_speed = get_beaufort(feature.properties.ws10n);
-                                    wind_sim = "beaufort";
-                                }
-                                if(gradi == 0)
-                                {
-                                    wind_chill = feature.properties.wchill; //temp
-                                    gradi_sim = "&#176C";
-                                }
-                                else if(gradi == 1)
-                                {
-                                    wind_chill = ((feature.properties.wchill * 1.8) + 32).toFixed(2);
-                                    gradi_sim = "&#176F";
-                                }
-                                winds = feature.properties.winds; //winds
-                                meteo = feature.properties['text'][lingua];
-                                nuvole = (feature.properties.clf * 100).toFixed(2) + " %";
+                    popupString = "<div id='click_button' class='popup'><table class='tg' style='undefined;table-layout: fixed; width: 230px'><colgroup><col style='width: 85px'><col style='width: 60px'></colgroup><tr><th class='tg-baqh' colspan='2' align='center' id='citta'>" + city + "</th></tr><tr><td class='tg-7un6'>ID</td><td class='tg-7un6' id='info_id'>" + id + "</td></tr><tr><td class='tg-7un6'>PAESE</td><td class='tg-7un6'>" + country + "</td></tr>";
 
-                                popupString = "<div id='click_button' class='popup'><table class='tg' style='undefined;table-layout: fixed; width: 230px'><colgroup><col style='width: 85px'><col style='width: 60px'></colgroup><tr><th class='tg-baqh' colspan='2' align='center' id='citta'>" + city + "</th></tr><tr><td class='tg-7un6'>ID</td><td class='tg-7un6' id='info_id'>" + id + "</td></tr><tr><td class='tg-7un6'>PAESE</td><td class='tg-7un6'>" + country + "</td></tr>";
+                    //creazione popup place
 
-                                //creazione popup place
+                    popupString +=
+                        "<tr>" +
+                        "<td class='tg-7un6'>" + temp_string + "</td>" +
+                        "<td class='tg-7un6'>" + temp + " " + gradi_sim + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='tg-7un6'>" + meteo_string + "</td>" +
+                        "<td class='tg-7un6'>" + meteo + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='tg-7un6'>" + nuvole_string + "</td>" +
+                        "<td class='tg-7un6'>" + nuvole + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='tg-7un6'>" + umidita_string + "</td>" +
+                        "<td class='tg-7un6'>" + humidity + "%</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='tg-j0tj'>" + pressione_string + "</td>" +
+                        "<td class='tg-j0tj'>" + pressure + " " + press_sim + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='tg-7un6'>" + dir_vento_string + "</td>" +
+                        "<td class='tg-7un6'>" + wind_direction + " N</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='tg-7un6'>" + vel_vento_string + "</td>" +
+                        "<td class='tg-7un6'>" + wind_speed + " " + wind_sim + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='tg-7un6'>" + temp_perc_string + "</td>" +
+                        "<td class='tg-7un6'>" + temp_chill + " " + gradi_sim + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td class='tg-j0tj'>" + vento_string + "</td>" +
+                        "<td class='tg-j0tj'>" + winds + "</td>" +
+                        "</tr>" +
+                        "</table>" +
+                        "<tr>" +
+                        "<img src='details_button.png' height='25' width='25' align='right' > </img>" +
+                        "</tr>"
+                    "</div>";
 
-                                popupString +=
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>" + temp_string + "</td>" +
-                                    "<td class='tg-7un6'>" + temp + " " + gradi_sim + "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>" + meteo_string + "</td>" +
-                                    "<td class='tg-7un6'>" + meteo + "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>" + nuvole_string + "</td>" +
-                                    "<td class='tg-7un6'>" + nuvole + "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>" + umidita_string + "</td>" +
-                                    "<td class='tg-7un6'>" + humidity + "%</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-j0tj'>" + pressione_string + "</td>" +
-                                    "<td class='tg-j0tj'>" + pressure + " " + press_sim + "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>" + dir_vento_string + "</td>" +
-                                    "<td class='tg-7un6'>" + wind_direction + " N</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>" + vel_vento_string + "</td>" +
-                                    "<td class='tg-7un6'>" + wind_speed + " " + wind_sim + "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-7un6'>" + temp_perc_string + "</td>" +
-                                    "<td class='tg-7un6'>" + temp_chill + " " + gradi_sim + "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                    "<td class='tg-j0tj'>" + vento_string + "</td>" +
-                                    "<td class='tg-j0tj'>" + winds + "</td>" +
-                                    "</tr>" +
-                                    "</table>" +
-                                    "<tr>" +
-                                    "<img src='details_button.png' height='25' width='25' align='right' > </img>" +
-                                    "</tr>"
-                                "</div>";
+                    popupString += "</table>" + "</div>";
 
-                                popupString += "</table>" + "</div>";
+                    //layer.bindPopup(popupString).openPopup();
+                    layer.bindPopup(popupString).on("popupopen", () => {
+                        $(".popup").on("click", e => {
+                            e.preventDefault();
+                            //alert(`now delete layer with id ${feature.properties.id}`);
+                            console.log("CLICK ON POPUP");
+                            oWebViewInterface1.emit('detail', {info_id:info_id});
+                        });
+                    });
 
-                                //layer.bindPopup(popupString).openPopup();
-                                layer.bindPopup(popupString).on("popupopen", () => {
-                                    $(".popup").on("click", e => {
-                                        e.preventDefault();
-                                        //alert(`now delete layer with id ${feature.properties.id}`);
-                                        console.log("CLICK ON POPUP");
-                                        oWebViewInterface1.emit('detail', {info_id:info_id});
-                                    });
-                                });
+                    layer.on("click", function () {
+                        citta = L.DomUtil.get('citta').innerHTML;
+                        info_id = L.DomUtil.get('info_id').innerHTML;
+                        console.log(info_id);
+                        console.log(citta);
+                    });
+                }
+            }
+        }
 
-                                layer.on("click", function () {
-                                    citta = L.DomUtil.get('citta').innerHTML;
-                                    info_id = L.DomUtil.get('info_id').innerHTML;
-                                    console.log(info_id);
-                                    console.log(citta);
-                                });
-                            }
-                        }
-                    }).addTo(map);
-            });
-        }).on("tileunload", function (event) {
-            if (event.tile.geojson && map)
-                map.removeLayer(event.tile.geojson);
-        });
+        infoLayer = L.geoJSONTileLayer(geojsonURL, geojsonOptions);
 
         map.on('popupopen', function(){
             var cont = document.getElementsByClassName('leaflet-popup-content')[0];
