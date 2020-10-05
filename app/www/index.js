@@ -1,144 +1,144 @@
 (function () {
-    var oWebViewInterface1 = window.nsWebViewInterface;
+    let  oWebViewInterface1 = window.nsWebViewInterface;
 
-    var url_api = "http://api.meteo.uniparthenope.it/";
+    let  url_api = "http://api.meteo.uniparthenope.it/";
 
-    var sizeIco = [35, 35];
+    let  sizeIco = [35, 35];
 
-    var position = L.icon({
+    let  position = L.icon({
         iconUrl: 'images/position.png',
         iconSize:[25,25],
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var sunny_night_png = L.icon({
+    let  sunny_night_png = L.icon({
         iconUrl: 'images/sunny_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var shower1_night = L.icon({
+    let  shower1_night = L.icon({
         iconUrl: 'images/shower1_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var shower2_night = L.icon({
+    let  shower2_night = L.icon({
         iconUrl: 'images/shower2_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var shower3_night = L.icon({
+    let  shower3_night = L.icon({
         iconUrl: 'images/shower3_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy1_night = L.icon({
+    let  cloudy1_night = L.icon({
         iconUrl: 'images/cloudy1_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy2_night = L.icon({
+    let  cloudy2_night = L.icon({
         iconUrl: 'images/cloudy2_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy3_night = L.icon({
+    let  cloudy3_night = L.icon({
         iconUrl: 'images/cloudy3_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy4_night = L.icon({
+    let  cloudy4_night = L.icon({
         iconUrl: 'images/cloudy4_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy5_night = L.icon({
+    let  cloudy5_night = L.icon({
         iconUrl: 'images/cloudy5_night.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var sunny = L.icon({
+    let  sunny = L.icon({
         iconUrl: 'images/sunny.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy1 = L.icon({
+    let  cloudy1 = L.icon({
         iconUrl: 'images/cloudy2.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy2 = L.icon({
+    let  cloudy2 = L.icon({
         iconUrl: 'images/cloudy1.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy3 = L.icon({
+    let  cloudy3 = L.icon({
         iconUrl: 'images/cloudy3.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy4 = L.icon({
+    let  cloudy4 = L.icon({
         iconUrl: 'images/cloudy4.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var cloudy5 = L.icon({
+    let  cloudy5 = L.icon({
         iconUrl: 'images/cloudy5.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var shower1 = L.icon({
+    let  shower1 = L.icon({
         iconUrl: 'images/shower1.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var shower2 = L.icon({
+    let  shower2 = L.icon({
         iconUrl: 'images/shower2.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var shower3 = L.icon({
+    let  shower3 = L.icon({
         iconUrl: 'images/shower3.png',
         iconSize: sizeIco,
         iconAnchor: [9, 21],
         popupAnchor: [20, -17]
     });
 
-    var img_array = {
+    let  img_array = {
         'sunny_night.png': sunny_night_png,
         'shower1_night.png': shower1_night,
         'shower2_night.png': shower2_night,
@@ -159,77 +159,78 @@
         'shower3.png': shower3
     };
 
-    var domain = "d01";
-    var prefix = "reg";
-    var map = null;
-    var zoom;
-    var center;
-    var controlLayers = null;
-    var overlayMaps = {};
-    var windLayer = null;
-    var cloudLayer = null;
-    var rainLayer = null;
-    var snowLayer = null;
-    var infoLayer = null;
-    var currData = null;
-    var t2cLayer = null;
-    var gradi;
-    var vento;
-    var pressione;
-    var temp = 0;
-    var wind_speed;
-    var pressure;
-    var latitudine;
-    var longitudine;
-    var info_id = "";
-    var citta = "";
-    var lingua = "";
-    var temp_string;
-    var umidita_string;
-    var pressione_string;
-    var dir_vento_string;
-    var vento_string;
-    var meteo_string;
-    var nuvole_string;
-    var temp_perc_string;
-    var vel_vento_string;
-    var Info_State;
-    var Temp_State;
-    var Nuv_State;
-    var Pioggia_State;
-    var Vento_State;
-    var Neve_State;
+    let  domain = "d01";
+    let  prefix = "reg";
+    let  map = null;
+    let  zoom;
+    let  center;
+    let  controlLayers = null;
+    let  overlayMaps = {};
+    let  windLayer = null;
+    let  cloudLayer = null;
+    let  rainLayer = null;
+    let  snowLayer = null;
+    let  infoLayer = null;
+    let  currData = null;
+    let  t2cLayer = null;
+    let  gradi;
+    let  vento;
+    let  pressione;
+    let  temp = 0;
+    let  wind_speed;
+    let  pressure;
+    let  latitudine;
+    let  longitudine;
+    let  info_id = "";
+    let  citta = "";
+    let  lingua = "";
+    let  temp_string;
+    let  umidita_string;
+    let  pressione_string;
+    let  dir_vento_string;
+    let country_string;
+    let  vento_string;
+    let  meteo_string;
+    let  nuvole_string;
+    let  temp_perc_string;
+    let  vel_vento_string;
+    let  Info_State;
+    let  Temp_State;
+    let  Nuv_State;
+    let  Pioggia_State;
+    let  Vento_State;
+    let  Neve_State;
 
 
-    var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    let  Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: ''
     });
 
-    var Esri_DarkGreyCanvas = L.tileLayer("http://{s}.sm.mapstack.stamen.com/(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/" + "{z}/{x}/{y}.png", {
+    let  Esri_DarkGreyCanvas = L.tileLayer("http://{s}.sm.mapstack.stamen.com/(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/" + "{z}/{x}/{y}.png", {
         attribution: ''
     });
 
-    var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    let  osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: ''
     });
 
-    var baseLayers = {
+    let  baseLayers = {
         "Satellite": Esri_WorldImagery,
         "Grey Canvas": Esri_DarkGreyCanvas,
         "Open Street Map": osmLayer
     };
 
     function getDataCache() {
-        var curr = new Date();
-        var cache_data = " ";
-        var a = curr.getFullYear();
-        var m = curr.getMonth();
+        let  curr = new Date();
+        let  cache_data = " ";
+        let  a = curr.getFullYear();
+        let  m = curr.getMonth();
         if(m < 10)
             m = "0" + m;
-        var g = curr.getDate();
+        let  g = curr.getDate();
         if(g < 10)
             g = "0" + g;
-        var h = curr.getHours();
+        let  h = curr.getHours();
         if(h < 10)
             h = "0" + h;
 
@@ -268,7 +269,7 @@
     }
 
     function change_domain(bounds) {
-        var new_prefix = "reg";
+        let  new_prefix = "reg";
         if (zoom >= 0 && zoom <= 6)
         {
             new_prefix = 'reg';
@@ -293,10 +294,10 @@
             addT2CLayer();
         }
 
-        var new_domain = "d01";
-        var boundsD01 = L.latLngBounds(L.latLng(27.64, -19.68), L.latLng(63.48, 34.80));
-        var boundsD02 = L.latLngBounds(L.latLng(34.40, 3.58), L.latLng(47.83, 22.26));
-        var boundsD03 = L.latLngBounds(L.latLng(39.15, 13.56), L.latLng(41.62, 16.31));
+        let  new_domain = "d01";
+        let  boundsD01 = L.latLngBounds(L.latLng(27.64, -19.68), L.latLng(63.48, 34.80));
+        let  boundsD02 = L.latLngBounds(L.latLng(34.40, 3.58), L.latLng(47.83, 22.26));
+        let  boundsD03 = L.latLngBounds(L.latLng(39.15, 13.56), L.latLng(41.62, 16.31));
 
         if (boundsD03.contains(bounds))
         {
@@ -321,9 +322,9 @@
     }
 
     function addInfoLayer() {
-        var dataCache = getDataCache();
+        let  dataCache = getDataCache();
 
-        var geojsonURL = url_api + 'apps/owm/wrf5/' + prefix + '/{z}/{x}/{y}.geojson?date=' + currData + "&rnad=" + dataCache;
+        let  geojsonURL = url_api + 'apps/owm/wrf5/' + prefix + '/{z}/{x}/{y}.geojson?date=' + currData + "&rnad=" + dataCache;
         console.log("URL GEOJSON",geojsonURL);
 
         if (infoLayer != null) {
@@ -343,11 +344,12 @@
                 };
             },
             pointToLayer: function (features, latlng) {
-                var file = features.properties.icon;
+                let  file = features.properties.icon;
                 return L.marker(latlng, {icon: img_array[file]});
             },
             onEachFeature: function (feature, layer) {
                 if (feature.properties) {
+                    
                     country = feature.properties.country;
                     city = feature.properties.name;
                     id = feature.properties.id;
@@ -357,17 +359,17 @@
                     press_sim = null;
                     meteo =  null;
 
-                    if(pressione == 0)
+                    if(pressione ===   0)
                     {
                         pressure = feature.properties.slp; //pressure
                         press_sim = "hPa";
                     }
-                    else if(pressione == 1)
+                    else if(pressione ===   1)
                     {
                         pressure = feature.properties.slp;
                         press_sim = "millibar";
                     }
-                    else if(pressione == 2)
+                    else if(pressione ===   2)
                     {
                         pressure = (feature.properties.slp * 0.75006).toFixed(2);
                         press_sim = "mmHg";
@@ -376,13 +378,13 @@
                     wind_sim = null;
                     temp_chill = null;
 
-                    if(gradi == 0)
+                    if(gradi ===   0)
                     {
                         temp = feature.properties.t2c; //temp
                         temp_chill = feature.properties.wchill;
                         gradi_sim = "&#176C";
                     }
-                    else if(gradi == 1)
+                    else if(gradi ===   1)
                     {
                         temp = ((feature.properties.t2c * 1.8) + 32).toFixed(2);
                         temp_chill = ((feature.properties.wchill * 1.8) + 32).toFixed(2);
@@ -390,32 +392,32 @@
                     }
                     text = feature.properties.text;
                     wind_direction = feature.properties.wd10; // wind_deg
-                    if(vento == 0)
+                    if(vento ===   0)
                     {
                         wind_speed = feature.properties.ws10n; //wind_speed
                         wind_sim = "kn";
                     }
-                    else if(vento == 1)
+                    else if(vento ===   1)
                     {
                         wind_speed = (feature.properties.ws10n * 1.852).toFixed(2);
                         wind_sim = "km/h";
                     }
-                    else if(vento == 2)
+                    else if(vento ===   2)
                     {
                         wind_speed = (feature.properties.ws10n * 0.514444).toFixed(2);
                         wind_sim = "m/s";
                     }
-                    else if(vento == 3)
+                    else if(vento ===   3)
                     {
                         wind_speed = get_beaufort(feature.properties.ws10n);
                         wind_sim = "beaufort";
                     }
-                    if(gradi == 0)
+                    if(gradi ===   0)
                     {
                         wind_chill = feature.properties.wchill; //temp
                         gradi_sim = "&#176C";
                     }
-                    else if(gradi == 1)
+                    else if(gradi ===   1)
                     {
                         wind_chill = ((feature.properties.wchill * 1.8) + 32).toFixed(2);
                         gradi_sim = "&#176F";
@@ -424,7 +426,7 @@
                     meteo = feature.properties['text'][lingua];
                     nuvole = (feature.properties.clf * 100).toFixed(2) + " %";
 
-                    popupString = "<div id='click_button' class='popup'><table class='tg' style='undefined;table-layout: fixed; width: 230px'><colgroup><col style='width: 85px'><col style='width: 60px'></colgroup><tr><th class='tg-baqh' colspan='2' align='center' id='citta'>" + city + "</th></tr><tr><td class='tg-7un6'>ID</td><td class='tg-7un6' id='info_id'>" + id + "</td></tr><tr><td class='tg-7un6'>PAESE</td><td class='tg-7un6'>" + country + "</td></tr>";
+                    popupString = "<div id='click_button' class='popup'><table class='tg' style='undefined;table-layout: fixed; width: 230px'><colgroup><col style='width: 85px'><col style='width: 60px'></colgroup><tr><th class='tg-baqh' colspan='2' align='center' id='citta'>" + city + "</th></tr><tr><td class='tg-7un6'>ID</td><td class='tg-7un6' id='info_id'>" + id + "</td></tr><tr><td class='tg-7un6'>" + country_string + "</td><td class='tg-7un6'>" + country + "</td></tr>";
 
                     //creazione popup place
 
@@ -496,21 +498,21 @@
         infoLayer = L.geoJSONTileLayer(geojsonURL, geojsonOptions);
 
         map.on('popupopen', function(){
-            var cont = document.getElementsByClassName('leaflet-popup-content')[0];
-            var lst = cont.getElementsByTagName('script');
-            for (var i=0; i<lst.length;i++) {
+            let  cont = document.getElementsByClassName('leaflet-popup-content')[0];
+            let  lst = cont.getElementsByTagName('script');
+            for (let  i=0; i<lst.length;i++) {
                 eval(lst[i].innerText)
             }
         });
 
-        if(Info_State == true)
+        if(Info_State ===   true)
             map.addLayer(infoLayer);
         controlLayers.addOverlay(infoLayer, "Info");
     }
 
     function addWindLayer() {
-        var dataCache = getDataCache();
-        var url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData + "&rand=" + dataCache;
+        let  dataCache = getDataCache();
+        let  url_wind = url_api + 'products/wrf5/forecast/' + domain + '/grib/json?date=' + currData + "&rand=" + dataCache;
 
         $.getJSON(url_wind, function(data){
             //fetch(url_wind).then((response) => response.json()).then((data) =>{
@@ -540,9 +542,9 @@
                     "#BB2018", "#7A1610", "#641610"]
             });
 
-            if(Vento_State == true)
+            if(Vento_State ===   true)
                 map.addLayer(windLayer);
-            if(lingua == 'it')
+            if(lingua ===   'it')
                 controlLayers.addOverlay(windLayer, "Vento");
             else
                 controlLayers.addOverlay(windLayer, "Wind");
@@ -551,17 +553,17 @@
 
     function addCloudLayer() {
         console.log(currData);
-        var anno = currData.substring(0, 4);
-        var mese = currData.substring(4, 6);
-        var giorno = currData.substring(6, 8);
+        let  anno = currData.substring(0, 4);
+        let  mese = currData.substring(4, 6);
+        let  giorno = currData.substring(6, 8);
 
         if (cloudLayer != null) {
             controlLayers.removeLayer(cloudLayer);
             map.removeLayer(cloudLayer);
         }
 
-        var dataCache = getDataCache();
-        var url_cloud = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+        let  dataCache = getDataCache();
+        let  url_cloud = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
         console.log("URL NUVOLE: " + url_cloud);
 
         cloudLayer = L.tileLayer.wms(url_cloud, {
@@ -580,27 +582,27 @@
             }
         );
 
-        if(Nuv_State == true)
+        if(Nuv_State ===   true)
             map.addLayer(cloudLayer);
 
-        if(lingua == 'it')
+        if(lingua ===   'it')
             controlLayers.addOverlay(cloudLayer, "Nuvolosit&agrave");
         else
             controlLayers.addOverlay(cloudLayer, "Cloudiness");
     }
 
     function addT2CLayer() {
-        var anno = currData.substring(0, 4);
-        var mese = currData.substring(4, 6);
-        var giorno = currData.substring(6, 8);
+        let  anno = currData.substring(0, 4);
+        let  mese = currData.substring(4, 6);
+        let  giorno = currData.substring(6, 8);
 
         if (t2cLayer != null) {
             controlLayers.removeLayer(t2cLayer);
             map.removeLayer(t2cLayer);
         }
 
-        var dataCache = getDataCache();
-        var url_temp = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+        let  dataCache = getDataCache();
+        let  url_temp = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
         t2cLayer = L.tileLayer.wms(url_temp, {
                 layers: 'T2C',
@@ -618,27 +620,27 @@
             }
         );
 
-        if(Temp_State == true)
+        if(Temp_State ===   true)
             map.addLayer(t2cLayer);
 
-        if(lingua == 'it')
+        if(lingua ===   'it')
             controlLayers.addOverlay(t2cLayer, "Temperatura");
         else
             controlLayers.addOverlay(t2cLayer, "Temperature");
     }
 
     function addRainLayer() {
-        var anno = currData.substring(0, 4);
-        var mese = currData.substring(4, 6);
-        var giorno = currData.substring(6, 8);
+        let  anno = currData.substring(0, 4);
+        let  mese = currData.substring(4, 6);
+        let  giorno = currData.substring(6, 8);
 
         if (rainLayer != null) {
             controlLayers.removeLayer(rainLayer);
             map.removeLayer(rainLayer);
         }
 
-        var dataCache = getDataCache();
-        var url_rain = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+        let  dataCache = getDataCache();
+        let  url_rain = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
         rainLayer = L.tileLayer.wms(url_rain, {
                 layers: 'DELTA_RAIN',
@@ -656,27 +658,27 @@
             }
         );
 
-        if(Pioggia_State == true)
+        if(Pioggia_State ===   true)
             map.addLayer(rainLayer);
 
-        if(lingua == 'it')
+        if(lingua ===   'it')
             controlLayers.addOverlay(rainLayer, "Pioggia");
         else
             controlLayers.addOverlay(rainLayer, "Rain");
     }
 
     function addSnowLayer() {
-        var anno = currData.substring(0, 4);
-        var mese = currData.substring(4, 6);
-        var giorno = currData.substring(6, 8);
+        let  anno = currData.substring(0, 4);
+        let  mese = currData.substring(4, 6);
+        let  giorno = currData.substring(6, 8);
 
         if (snowLayer != null) {
             controlLayers.removeLayer(snowLayer);
             map.removeLayer(snowLayer);
         }
 
-        var dataCache = getDataCache();
-        var url_snow = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
+        let  dataCache = getDataCache();
+        let  url_snow = 'http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/' + domain + '/archive/' + anno + '/' + mese + '/' + giorno + '/wrf5_' + domain + '_' + currData + '.nc';
 
         snowLayer = L.tileLayer.wms(url_snow, {
                 layers: 'HOURLY_SWE',
@@ -694,10 +696,10 @@
             }
         );
 
-        if(Neve_State == true)
+        if(Neve_State ===   true)
             map.addLayer(snowLayer);
 
-        if(lingua == 'it')
+        if(lingua ===   'it')
             controlLayers.addOverlay(snowLayer, "Neve");
         else
             controlLayers.addOverlay(snowLayer, "Snow");
@@ -739,13 +741,13 @@
             console.log("Zoom: " + zoom);
             console.log("Map: " + _map);
 
-            if(_map === "Satellite"){
+            if(_map  ===  "Satellite"){
                 Esri_WorldImagery.addTo(map);
             }
-            else if(_map === "Grey Canvas"){
+            else if(_map  ===  "Grey Canvas"){
                 Esri_DarkGreyCanvas.addTo(map);
             }
-            else if(_map === "Open Street Map"){
+            else if(_map  ===  "Open Street Map"){
                 osmLayer.addTo(map);
             }
 
@@ -767,8 +769,9 @@
             lingua = cor.lingua;
             console.log("Lingua: " + lingua);
 
-            if(lingua == 'it')
+            if(lingua ===   'it')
             {
+                country_string = "PAESE";
                 temp_string = "TEMPERATURA";
                 umidita_string = "UMIDIT&Agrave";
                 pressione_string = "PRESSIONE";
@@ -781,8 +784,9 @@
             }
             else
             {
+                country_string = "COUNTRY";
                 temp_string = "TEMPERATURE";
-                umidita_string = "CLOUDINESS";
+                umidita_string = "HUMIDITY";
                 pressione_string = "PRESSURE";
                 dir_vento_string = "WIND DIRECTION";
                 vento_string = "WIND";
@@ -805,28 +809,28 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it") {
-                        if (e.name === 'Temperatura') {
+                    if(lingua ===   "it") {
+                        if (e.name  ===  'Temperatura') {
                             Temp_State = true;
                             oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                         }
                     }
                     else {
-                        if (e.name === 'Temperature') {
+                        if (e.name  ===  'Temperature') {
                             Temp_State = true;
                             oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it") {
-                        if (e.name === 'Temperatura') {
+                    if(lingua ===   "it") {
+                        if (e.name  ===  'Temperatura') {
                             Temp_State = false;
                             oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                         }
                     }
                     else {
-                        if (e.name === 'Temperature') {
+                        if (e.name  ===  'Temperature') {
                             Temp_State = false;
                             oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                         }
@@ -836,12 +840,12 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if (e.name === 'Info') {
+                    if (e.name  ===  'Info') {
                         Info_State = true;
                     }
                 },
                 overlayremove: function(e) {
-                    if (e.name === 'Info') {
+                    if (e.name  ===  'Info') {
                         Info_State = false;
                     }
                 }
@@ -849,32 +853,32 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name == 'Nuvolosit&agrave') {
+                        if (e.name ===   'Nuvolosit&agrave') {
                             Nuv_State = true;
                             oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                         }
                     }
                     else
                     {
-                        if (e.name == 'Cloudiness') {
+                        if (e.name ===   'Cloudiness') {
                             Nuv_State = true;
                             oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name == 'Nuvolosit&agrave') {
+                        if (e.name ===   'Nuvolosit&agrave') {
                             Nuv_State = false;
                             oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                         }
                     }
                     else
                     {
-                        if (e.name == 'Cloudiness') {
+                        if (e.name ===   'Cloudiness') {
                             Nuv_State = false;
                             oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                         }
@@ -884,32 +888,32 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Vento') {
+                        if (e.name  ===  'Vento') {
                             Vento_State = true;
                             oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Wind') {
+                        if (e.name  ===  'Wind') {
                             Vento_State = true;
                             oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Vento') {
+                        if (e.name  ===  'Vento') {
                             Vento_State = false;
                             oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Wind') {
+                        if (e.name  ===  'Wind') {
                             Vento_State = false;
                             oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                         }
@@ -919,32 +923,32 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Neve') {
+                        if (e.name  ===  'Neve') {
                             Neve_State = true;
                             oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Snow') {
+                        if (e.name  ===  'Snow') {
                             Neve_State = true;
                             oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Neve') {
+                        if (e.name  ===  'Neve') {
                             Neve_State = false;
                             oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Snow') {
+                        if (e.name  ===  'Snow') {
                             Neve_State = false;
                             oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                         }
@@ -954,32 +958,32 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Pioggia') {
+                        if (e.name  ===  'Pioggia') {
                             Pioggia_State = true;
                             oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Rain') {
+                        if (e.name  ===  'Rain') {
                             Pioggia_State = true;
                             oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Pioggia') {
+                        if (e.name  ===  'Pioggia') {
                             Pioggia_State = false;
                             oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Rain') {
+                        if (e.name  ===  'Rain') {
                             Pioggia_State = false;
                             oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                         }
@@ -1000,9 +1004,9 @@
         });
     };
 
-    function center() {
+    function center_f() {
         oWebViewInterface1.on('centro', function(cor) {
-            var url = url_api + "products/wrf5/forecast/" + cor.id +"?opt=place";
+            let  url = url_api + "products/wrf5/forecast/" + cor.id +"?opt=place";
             console.log(url);
 
             $.getJSON(url, function(data)
@@ -1033,7 +1037,7 @@
             fetch( url_api+ "places/search/byname/" + cor.name).then((response) => response.json()).then((data) =>
             {
                 console.log(cor.name);
-                var id;
+                let  id;
                 console.log(data.length);
                 for(let i=0; i<data.length; i++)
                 {
@@ -1044,17 +1048,17 @@
                     if (name.includes("Municipalit"))
                     {
                         console.log("MUN");
-                        var tmp = name.split("-");
+                        let  tmp = name.split("-");
                         name_new = tmp.pop();
                         _name = name_new;
 
-                        if(_name === cor.name)
+                        if(_name  ===  cor.name)
                             id = i;
                     }
                     else
                     {
                         console.log("NO MUN");
-                        if(name === cor.name)
+                        if(name  ===  cor.name)
                             id = i;
                     }
                 }
@@ -1084,7 +1088,7 @@
         oWebViewInterface1.on('location', function (cor) {
             latitudine = cor.lat;
             longitudine = cor.lang;
-            var DynaMarker = L.marker([cor.lat,cor.lang], {icon: position});
+            let  DynaMarker = L.marker([cor.lat,cor.lang], {icon: position});
             DynaMarker.setLatLng([cor.lat, cor.lang]).addTo(map);
         });
     };
@@ -1114,28 +1118,28 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it") {
-                        if (e.name === 'Temperatura') {
+                    if(lingua ===   "it") {
+                        if (e.name  ===  'Temperatura') {
                             Temp_State = true;
                             oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                         }
                     }
                     else {
-                        if (e.name === 'Temperature') {
+                        if (e.name  ===  'Temperature') {
                             Temp_State = true;
                             oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it") {
-                        if (e.name === 'Temperatura') {
+                    if(lingua ===   "it") {
+                        if (e.name  ===  'Temperatura') {
                             Temp_State = false;
                             oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                         }
                     }
                     else {
-                        if (e.name === 'Temperature') {
+                        if (e.name  ===  'Temperature') {
                             Temp_State = false;
                             oWebViewInterface1.emit('layer_temp', {flag:Temp_State});
                         }
@@ -1145,12 +1149,12 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if (e.name === 'Info') {
+                    if (e.name  ===  'Info') {
                         Info_State = true;
                     }
                 },
                 overlayremove: function(e) {
-                    if (e.name === 'Info') {
+                    if (e.name  ===  'Info') {
                         Info_State = false;
                     }
                 }
@@ -1158,32 +1162,32 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name == 'Nuvolosit&agrave') {
+                        if (e.name ===   'Nuvolosit&agrave') {
                             Nuv_State = true;
                             oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                         }
                     }
                     else
                     {
-                        if (e.name == 'Cloudiness') {
+                        if (e.name ===   'Cloudiness') {
                             Nuv_State = true;
                             oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name == 'Nuvolosit&agrave') {
+                        if (e.name ===   'Nuvolosit&agrave') {
                             Nuv_State = false;
                             oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                         }
                     }
                     else
                     {
-                        if (e.name == 'Cloudiness') {
+                        if (e.name ===   'Cloudiness') {
                             Nuv_State = false;
                             oWebViewInterface1.emit('layer_nuvole', {flag:Nuv_State});
                         }
@@ -1193,32 +1197,32 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Vento') {
+                        if (e.name  ===  'Vento') {
                             Vento_State = true;
                             oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Wind') {
+                        if (e.name  ===  'Wind') {
                             Vento_State = true;
                             oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Vento') {
+                        if (e.name  ===  'Vento') {
                             Vento_State = false;
                             oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Wind') {
+                        if (e.name  ===  'Wind') {
                             Vento_State = false;
                             oWebViewInterface1.emit('layer_vento', {flag:Vento_State});
                         }
@@ -1228,32 +1232,32 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Neve') {
+                        if (e.name  ===  'Neve') {
                             Neve_State = true;
                             oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Snow') {
+                        if (e.name  ===  'Snow') {
                             Neve_State = true;
                             oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Neve') {
+                        if (e.name  ===  'Neve') {
                             Neve_State = false;
                             oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Snow') {
+                        if (e.name  ===  'Snow') {
                             Neve_State = false;
                             oWebViewInterface1.emit('layer_neve', {flag:Neve_State});
                         }
@@ -1263,32 +1267,32 @@
 
             map.on({
                 overlayadd: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Pioggia') {
+                        if (e.name  ===  'Pioggia') {
                             Pioggia_State = true;
                             oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Rain') {
+                        if (e.name  ===  'Rain') {
                             Pioggia_State = true;
                             oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                         }
                     }
                 },
                 overlayremove: function(e) {
-                    if(lingua == "it")
+                    if(lingua ===   "it")
                     {
-                        if (e.name === 'Pioggia') {
+                        if (e.name  ===  'Pioggia') {
                             Pioggia_State = false;
                             oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                         }
                     }
                     else
                     {
-                        if (e.name === 'Rain') {
+                        if (e.name  ===  'Rain') {
                             Pioggia_State = false;
                             oWebViewInterface1.emit('layer_pioggia', {flag:Pioggia_State});
                         }
@@ -1316,7 +1320,7 @@
             oWebViewInterface1.emit('onload');
 
             addLayersMap();
-            center();
+            center_f();
             place();
             location();
             settings();
