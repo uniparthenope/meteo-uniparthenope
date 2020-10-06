@@ -163,7 +163,8 @@ exports.pageLoaded = function(args) {
           agreeButtonText: "Vota ora",
           remindButtonText: "Ricordamelo dopo",
           declineButtonText: "No, grazie",
-          androidPackageId: "it.uniparthenope.meteo"
+          androidPackageId: "it.uniparthenope.meteo",
+          iTunesAppId: "it.parthenope.meteo"
         }
     );
   }
@@ -177,7 +178,8 @@ exports.pageLoaded = function(args) {
           agreeButtonText: "Rate Now",
           remindButtonText: "Remind Me Later",
           declineButtonText: "No Thanks",
-          androidPackageId: "it.uniparthenope.meteo"
+          androidPackageId: "it.uniparthenope.meteo",
+          iTunesAppId: "it.parthenope.meteo"
         }
     );
   }
