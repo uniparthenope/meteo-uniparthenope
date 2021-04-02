@@ -9,17 +9,17 @@
       "android": "it.uniparthenope.meteo"
     },
     "tns-android": {
-      "version": "6.5.0"
+      "version": "6.5.3"
     },
     "tns-ios": {
-      "version": "6.5.2"
+      "version": "6.5.3"
     }
   },
   "scripts": {
     "lint": "eslint \"app/**/*.js\""
   },
   "dependencies": {
-    "nativescript": "^7.0.8",
+    "nativescript": "^6.8.0",
     "nativescript-accordion": "^6.0.0-beta.2",
     "nativescript-advanced-permissions": "^1.2.0",
     "nativescript-appversion": "^1.4.4",
@@ -41,12 +41,13 @@
     "nativescript-ui-sidedrawer": "^8.0.1",
     "nativescript-webview-interface": "^1.4.3",
     "nativescript-xml2js": "^0.5.2",
-    "tns-core-modules": "^6.5.8",
+    "npm": "^6.14.5",
+    "tns-core-modules": "^6.5.18",
     "tns-i18n": "0.0.10"
   },
   "devDependencies": {
-    "nativescript-dev-webpack": "^1.0.1",
-    "tns-android": "6.5.0",
-    "tns-ios": "6.5.2"
+    "nativescript-dev-webpack": "^1.5.1",
+    "tns-android": "6.5.3",
+    "tns-ios": "6.5.3"
   }
 }

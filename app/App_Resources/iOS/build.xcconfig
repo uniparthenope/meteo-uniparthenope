@@ -6,5 +6,6 @@
 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
+VALIDATE_WORKSPACE = YES;
 
 // CODE_SIGN_ENTITLEMENTS = MeteoUniparthenope/MeteoUniparthenope.entitlements
